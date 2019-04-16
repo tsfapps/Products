@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+        <LinearLayout
+            android:layout_marginTop="0dp"
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/ll_total_report"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            style="@style/ll_main">
+            <TextView
+                android:textColor="@color/white"
+                style="@style/tv_cash_label"
+                android:text="Total"/>
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/tv_total_cash_count"
+                style="@style/tv_cash_label"
+                android:textStyle="bold"
+                android:text="0"/>
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/tv_cash_sum"
+                style="@style/tv_cash_label"
+                android:text="0"
+                />
+        </LinearLayout>
+<ScrollView
+    android:layout_below="@+id/ll_total_report"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <LinearLayout
+
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+           android:id="@+id/tv_cash_2k"
+          style="@style/tv_cash_label"
+           android:text="2000"/>
+    <LinearLayout
+       style="@style/ll_cash_counter">
+    <Button
+        android:id="@+id/btn_less_2000"
+       style="@style/btn_less" />
+    <TextView
+        android:id="@+id/tv_count_2000"
+       style="@style/tv_cash_counter"/>
+    <Button
+        android:id="@+id/btn_add_2000"
+        style="@style/btn_add"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sum_2k"
+       style="@style/tv_cash_label"
+        android:text="0"
+        />
+</LinearLayout>
+<LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+          style="@style/tv_cash_label"
+           android:text="500"/>
+    <LinearLayout
+       style="@style/ll_cash_counter">
+    <Button
+        android:id="@+id/btn_less_500"
+        style="@style/btn_less" />
+    <TextView
+        android:id="@+id/tv_count_500"
+       style="@style/tv_cash_counter"/>
+    <Button
+        android:id="@+id/btn_add_500"
+        style="@style/btn_add"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sum_500"
+       style="@style/tv_cash_label"
+        android:text="0"
+        />
+</LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            style="@style/ll_main">
+            <TextView
+                style="@style/tv_cash_label"
+                android:text="200"/>
+            <LinearLayout
+
+                style="@style/ll_cash_counter">
+                <Button
+                    android:id="@+id/btn_less_twoHundred"
+                    style="@style/btn_less"/>
+                <TextView
+                    android:id="@+id/tv_cash_count_twoHundred"
+                    style="@style/tv_cash_counter"/>
+                <Button
+                    android:id="@+id/btn_add_twoHundred"
+                    style="@style/btn_add"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_sum_twoHundred"
+                style="@style/tv_cash_label"
+                android:text="0"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+          style="@style/tv_cash_label"
+           android:text="100"/>
+    <LinearLayout
+
+       style="@style/ll_cash_counter">
+    <Button
+        android:id="@+id/btn_less_hundred"
+        style="@style/btn_less" />
+    <TextView
+        android:id="@+id/tv_cash_count_hundred"
+       style="@style/tv_cash_counter"/>
+    <Button
+        android:id="@+id/btn_add_hundred"
+        style="@style/btn_add"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sum_hundred"
+       style="@style/tv_cash_label"
+        android:text="0"
+        />
+</LinearLayout>
+<LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+          style="@style/tv_cash_label"
+           android:text="50"/>
+    <LinearLayout
+
+       style="@style/ll_cash_counter">
+    <Button
+        android:id="@+id/btn_less_fifty"
+        style="@style/btn_less" />
+    <TextView
+        android:id="@+id/tv_cash_count_fifty"
+       style="@style/tv_cash_counter"/>
+    <Button
+        android:id="@+id/btn_add_fifty"
+        style="@style/btn_add"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sum_fifty"
+       style="@style/tv_cash_label"
+        android:text="0"
+        />
+</LinearLayout>
+<LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+          style="@style/tv_cash_label"
+           android:text="20"/>
+    <LinearLayout
+
+       style="@style/ll_cash_counter">
+    <Button
+        android:id="@+id/btn_less_twenty"
+        style="@style/btn_less" />
+    <TextView
+        android:id="@+id/tv_cash_count_twenty"
+       style="@style/tv_cash_counter"/>
+    <Button
+        android:id="@+id/btn_add_twenty"
+        style="@style/btn_add"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sum_twenty"
+       style="@style/tv_cash_label"
+        android:text="0"
+        />
+</LinearLayout>
+<LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+          style="@style/tv_cash_label"
+           android:text="10"/>
+    <LinearLayout
+
+       style="@style/ll_cash_counter">
+    <Button
+        android:id="@+id/btn_less_ten"
+        style="@style/btn_less" />
+    <TextView
+        android:id="@+id/tv_cash_count_ten"
+       style="@style/tv_cash_counter"/>
+    <Button
+        android:id="@+id/btn_add_ten"
+        style="@style/btn_add"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sum_ten"
+       style="@style/tv_cash_label"
+        android:text="0"
+        />
+</LinearLayout>
+<LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+          style="@style/tv_cash_label"
+           android:text="5"/>
+    <LinearLayout
+
+       style="@style/ll_cash_counter">
+    <Button
+        android:id="@+id/btn_less_five"
+        style="@style/btn_less"/>
+    <TextView
+        android:id="@+id/tv_cash_count_five"
+       style="@style/tv_cash_counter"/>
+    <Button
+        android:id="@+id/btn_add_five"
+        style="@style/btn_add"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sum_five"
+       style="@style/tv_cash_label"
+        android:text="0"
+        />
+</LinearLayout>
+<LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+          style="@style/tv_cash_label"
+           android:text="2"/>
+    <LinearLayout
+
+       style="@style/ll_cash_counter">
+    <Button
+        android:id="@+id/btn_less_two"
+        style="@style/btn_less"/>
+    <TextView
+        android:id="@+id/tv_cash_count_two"
+       style="@style/tv_cash_counter"/>
+    <Button
+        android:id="@+id/btn_add_two"
+        style="@style/btn_add"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sum_two"
+       style="@style/tv_cash_label"
+        android:text="0"
+        />
+</LinearLayout>
+<LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+          style="@style/tv_cash_label"
+           android:text="1"/>
+    <LinearLayout
+
+       style="@style/ll_cash_counter">
+    <Button
+        android:id="@+id/btn_less_one"
+        style="@style/btn_less" />
+    <TextView
+        android:id="@+id/tv_cash_count_one"
+       style="@style/tv_cash_counter"/>
+    <Button
+        android:id="@+id/btn_add_one"
+        style="@style/btn_add"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sum_one"
+       style="@style/tv_cash_label"
+        android:text="0"
+        />
+</LinearLayout>
+        <View
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginTop="@dimen/margin_top"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+        <Button
+            android:id="@+id/btn_cash_submit"
+            android:layout_marginBottom="@dimen/margin_top"
+            style="@style/btn_main"/>
+    </LinearLayout>
+</ScrollView>
+</RelativeLayout>

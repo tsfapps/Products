@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/main_height"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+<LinearLayout
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_dispatch_distance"
+           style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_route"
+        />
+    <TextView
+        android:text="Distance Upload"
+       style="@style/tv_dash_label" />
+
+    <ImageView
+        android:id="@+id/iv_dispatch_cash_collection"
+           style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_rupee"
+        />
+    <TextView
+        android:text="Cash Collection Report"
+        style="@style/tv_dash_label" />
+
+</LinearLayout>
+<LinearLayout
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content">
+
+
+
+    <ImageView
+        android:id="@+id/iv_dispatch_route"
+        style="@style/iv_dashboard"
+        android:src="@drawable/ic_main_order"
+        />
+    <TextView
+        android:text="Today's Route"
+        style="@style/tv_dash_label" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/iv_dash_cold_call"
+           style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_cold_call"
+        />
+    <TextView
+        android:visibility="gone"
+        android:text="Cold Call"
+        style="@style/tv_dash_label" />
+    <ImageView
+        android:id="@+id/iv_dispatch_expenses"
+           style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_expenses"
+        />
+    <TextView
+        android:text="Expenses"
+        style="@style/tv_dash_label" />
+
+</LinearLayout>
+        </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white"
+    android:padding="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+<LinearLayout
+   android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_distance_last_day"
+            android:background="@drawable/bg_et"
+            android:gravity="center"
+            android:text="0 Km"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_width="60dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:id="@+id/tv_distance_last_day_label"
+            android:width="150dp"
+            android:gravity="center"
+            android:textStyle="italic"
+            android:textSize="12sp"
+            android:layout_alignParentStart="true"
+            android:text="@string/dis_previous_day"
+            android:textColor="@color/black"
+            android:minLines="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:background="@drawable/bg_iv_dis"
+            android:layout_marginTop="16dp"
+       android:id="@+id/iv_upload_start"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/ic_sales_photo_add"
+        android:layout_width="match_parent"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
+            android:padding="2dp"
+            android:scaleType="fitXY"
+        android:layout_height="150dp" />
+    <TextView
+        android:textSize="12sp"
+        android:id="@+id/tv_upload_start_label"
+        android:width="150dp"
+        android:gravity="center"
+        android:layout_below="@+id/iv_upload_start"
+        android:text="@string/starting_kilometer"
+        android:textColor="@color/colorPrimaryDark"
+        android:minLines="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_distance_startKm"
+        android:textStyle="bold"
+        android:inputType="number"
+        android:textSize="18sp"
+        android:maxLength="4"
+        android:gravity="center"
+        android:layout_width="150dp"
+        style="@style/et_main"
+        android:hint="@string/enter_starting_kilometer"
+        android:background="@drawable/bg_iv_dis"/>
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_distance_last_month"
+            android:background="@drawable/bg_et"
+            android:gravity="center"
+            android:text="0 Km"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/black"
+            android:layout_width="60dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:textStyle="italic"
+            android:textSize="12sp"
+            android:layout_below="@id/tv_distance_last_month"
+            android:id="@+id/tv_distance_last_month_label"
+            android:width="150dp"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:text="@string/dis_previous_month"
+            android:textColor="@color/black"
+            android:minLines="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:padding="2dp"
+            android:background="@drawable/bg_iv_dis"
+            android:layout_marginTop="16dp"
+        android:id="@+id/iv_upload_end"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_sales_photo_add"
+        android:layout_width="match_parent"
+            android:scaleType="fitXY"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
+        android:layout_height="150dp" />
+    <TextView
+        android:textSize="12sp"
+        android:id="@+id/tv_upload_end_label"
+        android:width="150dp"
+        android:gravity="center"
+        android:text="@string/ending_kilometer"
+        android:textColor="@color/colorPrimaryDark"
+        android:minLines="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_distance_endingKm"
+        android:textStyle="bold"
+        android:inputType="number"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:maxLength="4"
+        style="@style/et_main"
+        android:layout_width="150dp"
+        android:hint="@string/enter_ending_kilometer"
+        android:background="@drawable/bg_iv_dis"/>
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_distance_submit"
+        style="@style/btn_main"/>
+</LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

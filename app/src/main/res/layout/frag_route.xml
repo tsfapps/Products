@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/grey"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_route_routeNameLabel"
+            android:hint="Today's Route"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="SmallSp" />
+        <TextView
+            android:id="@+id/tv_route_routeName"
+            android:layout_below="@+id/tv_route_routeNameLabel"
+            android:text="Route"
+            android:textColor="@color/colorBlack"
+            android:paddingStart="8dp"
+            android:paddingBottom="8dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_alignParentEnd="true"
+            android:id="@+id/tv_route_todayLabel"
+            android:hint="Today is"
+            android:paddingEnd="8dp"
+            android:paddingTop="8dp"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="SmallSp" />
+        <TextView
+            android:id="@+id/tv_route_presentDay"
+            android:layout_below="@+id/tv_route_routeNameLabel"
+            android:layout_alignParentEnd="true"
+            android:text="Present Day"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:paddingEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_route"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+</LinearLayout>

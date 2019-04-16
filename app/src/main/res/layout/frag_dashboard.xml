@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/tv_dashboard_user_name"
+        android:text="User Name"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/margin_top"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_marginTop="0dp"
+            android:id="@+id/iv_dash_attendance"
+           style="@style/iv_dashboard"
+            android:src="@drawable/ic_salse_attendence"
+        />
+    <TextView
+        android:id="@+id/tv_dash_attendance"
+        android:text="Attendance Report"
+       style="@style/tv_dash_label" />
+    <ImageView
+        android:id="@+id/iv_dash_route"
+        style="@style/iv_dashboard"
+        android:src="@drawable/ic_main_order"
+        />
+    <TextView
+        android:text="Today's Route"
+        style="@style/tv_dash_label" />
+    <ImageView
+
+        android:id="@+id/iv_dash_meeting"
+        style="@style/iv_dashboard"
+        android:src="@drawable/ic_main_meeting"
+        />
+    <TextView
+        android:text="Meeting"
+        style="@style/tv_dash_label" />
+
+
+
+    <ImageView
+        android:id="@+id/iv_dash_cash_collection"
+           style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_rupee"
+        />
+    <TextView
+        android:text="Cash Collection Report"
+        style="@style/tv_dash_label" />
+
+</LinearLayout>
+<LinearLayout
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_marginTop="0dp"
+        android:id="@+id/iv_dash_distance"
+        style="@style/iv_dashboard"
+        android:src="@drawable/ic_main_route"
+        />
+    <TextView
+        android:text="Distance Upload"
+        style="@style/tv_dash_label" />
+
+
+    <ImageView
+        android:id="@+id/iv_dash_lead_generation"
+           style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_lead"
+        />
+    <TextView
+        android:text="Lead Generation"
+        style="@style/tv_dash_label" />
+
+    <ImageView
+        android:id="@+id/iv_dash_cold_call"
+           style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_cold_call"
+        />
+    <TextView
+        android:text="Cold Call"
+        style="@style/tv_dash_label" />
+
+    <ImageView
+        android:id="@+id/iv_dash_expenses"
+           style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_expenses"
+        />
+    <TextView
+        android:text="Expenses"
+        style="@style/tv_dash_label" />
+
+</LinearLayout>
+        </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_marginTop="0dp"
+            android:id="@+id/iv_route_dispatch_delivery"
+            style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_delivery"
+            />
+        <TextView
+            android:text="Delivery"
+            style="@style/tv_dash_label" />
+        <ImageView
+            android:id="@+id/iv_route_dispatch_salesReturn"
+            style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_order"
+            />
+        <TextView
+            android:text="Sales Return"
+            style="@style/tv_dash_label" />
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_route_dispatch_receipt"
+            style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_receipt"
+            />
+        <TextView
+            android:text="Receipt"
+            style="@style/tv_dash_label" />
+
+        <ImageView
+            android:id="@+id/iv_route_complain_dispatch"
+            style="@style/iv_dashboard"
+            android:src="@drawable/ic_main_receipt"
+            />
+        <TextView
+            android:text="@string/feedback_complain"
+            style="@style/tv_dash_label" />
+
+    </LinearLayout>
+
+</LinearLayout>

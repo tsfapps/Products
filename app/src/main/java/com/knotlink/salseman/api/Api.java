@@ -1,0 +1,154 @@
+package com.knotlink.salseman.api;
+
+import com.knotlink.salseman.model.ModelCash;
+import com.knotlink.salseman.model.ModelColdCall;
+import com.knotlink.salseman.model.ModelDistance;
+import com.knotlink.salseman.model.ModelExpenses;
+import com.knotlink.salseman.model.ModelFeedback;
+import com.knotlink.salseman.model.ModelLead;
+import com.knotlink.salseman.model.ModelMeeting;
+import com.knotlink.salseman.model.ModelShopList;
+import com.knotlink.salseman.model.ModelSpecialRequest;
+import com.knotlink.salseman.model.user.ModelUser;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
+
+public interface Api{
+    @FormUrlEncoded
+    @POST("api/api_login.php")
+    Call<ModelUser> getUserDetail(
+            @Field("user_phone") String phone_no,
+            @Field("user_password") String user_password
+    );
+ @FormUrlEncoded
+    @POST("api/api_shop_details.php")
+    Call<List<ModelShopList>> getShopDetail(
+            @Field("user_id") String user_id,
+            @Field("present_day") String present_day
+    );
+ @FormUrlEncoded
+    @POST("api/api_special_request.php")
+    Call<ModelSpecialRequest> uploadSpecialRequest(
+            @Field("special_request_type") String special_request_type,
+            @Field("shop_id") String shop_id,
+            @Field("remarks") String remarks
+    );
+ @FormUrlEncoded
+    @POST("api/api_complaint.php")
+    Call<ModelFeedback> uploadFeedback(
+            @Field("shop_id") String shop_id,
+            @Field("user_id") String user_id,
+           // @Field("audio_url") String audio_url,
+           // @Field("video_url") String video_url,
+            @Field("image_url") String image_url,
+            @Field("remarks") String remarks
+    );
+
+ @FormUrlEncoded
+    @POST("api/api_distance_upload.php")
+    Call<ModelDistance> uploadDistance(
+            @Field("user_id") String user_id,
+            @Field("starting_km") String starting_km,
+            @Field("starting_img") String starting_img,
+            @Field("start_lat") String start_lat,
+            @Field("start_long") String start_long,
+            @Field("starting_address") String starting_address
+    );
+
+ @FormUrlEncoded
+    @POST("api/api_cold_call.php")
+    Call<ModelColdCall> uploadColdCall(
+            @Field("user_id") String user_id,
+            @Field("org_name") String org_name,
+            @Field("contact_name") String contact_name,
+            @Field("contact_number") String contact_number,
+            @Field("address") String address,
+            @Field("email") String email,
+          //  @Field("city_id") String city_id,
+            @Field("remarks") String remarks
+//            @Field("latitude") String latitude,
+//            @Field("longitude") String longitude
+    );
+ @FormUrlEncoded
+    @POST("api/api_lead_generation.php")
+    Call<ModelLead> uploadLead(
+
+            @Field("user_id") String user_id,
+            @Field("vendor_type") String vendor_type,
+            @Field("org_name") String org_name,
+            @Field("contact_name") String contact_name,
+            @Field("contact_no") String contact_no,
+            @Field("address") String address,
+            @Field("email") String email,
+          //  @Field("city_id") String city_id,
+            @Field("remarks") String remarks,
+            @Field("image") String image
+//            @Field("latitude") String latitude,
+//            @Field("longitude") String longitude
+    );
+    @FormUrlEncoded
+    @POST("api/api_meeting.php")
+    Call<ModelMeeting> uploadMeeting(
+
+            @Field("user_id") String user_id,
+            @Field("vendor_type") String vendor_type,
+            @Field("org_name") String org_name,
+            @Field("contact_name") String contact_name,
+            @Field("contact_no") String contact_no,
+            @Field("address") String address,
+            @Field("email") String email,
+          //  @Field("city_id") String city_id,
+            @Field("remarks") String remarks
+           // @Field("image") String image
+//            @Field("latitude") String latitude,
+//            @Field("longitude") String longitude
+    );
+    @FormUrlEncoded
+    @POST("api/api_cashcollection.php")
+    Call<ModelCash> uploadCashCollection(
+            @Field("user_id") String user_id,
+            @Field("cash_2000") String cash_2000,
+            @Field("cash_500") String cash_500,
+            @Field("cash_200") String cash_200,
+            @Field("cash_100") String cash_100,
+            @Field("cash_50") String cash_50,
+            @Field("cash_20") String cash_20,
+            @Field("cash_10") String cash_10,
+            @Field("cash_5") String cash_5,
+            @Field("cash_2") String cash_2,
+            @Field("cash_1") String cash_1,
+            @Field("total") String total
+//            @Field("latitude") String latitude,
+//            @Field("longitude") String longitude
+    );
+    @FormUrlEncoded
+    @POST("api/api_cashcollection.php")
+    Call<ModelExpenses> uploadExpenses(
+            @Field("user_id") String user_id,
+            @Field("breakfast") String breakfast,
+          //  @Field("breakfast_image") String breakfast_image,
+            @Field("lunch") String lunch,
+          //  @Field("lunch_image") String lunch_image,
+            @Field("dinner") String dinner,
+          //  @Field("dinner_image") String dinner_image,
+            @Field("mobile") String mobile,
+           // @Field("mobile_image") String mobile_image,
+            @Field("parking") String parking,
+           // @Field("parking_image") String parking_image,
+            @Field("road_toll_fee") String road_toll_fee,
+           // @Field("road_toll_fee_image") String road_toll_fee_image,
+            @Field("petty_cash") String petty_cash,
+           // @Field("petty_cash_image") String petty_cash_image,
+            @Field("others") String others,
+           // @Field("others_image") String others_image,
+            @Field("total") String total,
+            @Field("remarks") String remarks
+//            @Field("latitude") String latitude,
+//            @Field("longitude") String longitude
+    );
+}

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_margin="30dp"
+        app:cardCornerRadius="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ScrollView
+                android:fillViewport="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_welcome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="Welcome "
+                        android:textSize="16sp"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_att_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/tv_welcome"
+                        android:text="Name"
+                        android:textSize="28dp"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </RelativeLayout>
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_centerInParent="true"
+                        app:cardBackgroundColor="@color/colorPrimaryDark"
+                        android:id="@+id/cvTime"
+                        android:layout_width="190dp"
+                        android:layout_height="190dp"
+                        app:cardCornerRadius="95dp"
+                        android:layout_marginTop="30dp"
+                        >
+                        <LinearLayout
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:id="@+id/tv_user_msg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="10dp"
+                                android:text="Shift "
+                                android:textColor="@color/colorWhite"
+                                />
+                            <TextView
+                                android:id="@+id/tv_att_WorkingHour"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="08 : 44 : 56"
+                                android:textSize="26sp"
+                                android:textColor="@color/colorBlack"
+                                android:textStyle="bold" />
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="hrs    mins    sec"
+                                android:textSize="14sp"
+                                android:textColor="@color/colorWhite"
+                                android:textStyle="bold"
+                                />
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_marginTop="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+                        <TextView
+                            android:id="@+id/tv_checkIn_desc"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorBlack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="You clocked in at "/>
+                        <TextView
+                            android:id="@+id/tv_checkedInTime"
+                            android:textSize="20sp"
+                            android:textColor="#fd0202"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textStyle="bold"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_margin="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="14sp"
+                            android:textColor="@color/colorBlack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Starting Timing :  "/>
+                        <TextView
+                            android:id="@+id/tv_att_shiftTime"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            />
+                        <!-- <TextView
+                             android:id="@+id/tv_shiftEndTime"
+                             android:textSize="16sp"
+                             android:textColor="@color/white"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="06 : 30 PM "
+                             />-->
+                    </LinearLayout>
+
+                            <Button
+                                android:layout_marginTop="30dp"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:drawableStart="@drawable/ic_logout"
+                                android:background="@drawable/bg_btn_main"
+                                android:id="@+id/btn_att_check_in_out"
+                                android:layout_width="225dp"
+                                android:layout_height="50dp"
+                                android:text="Check In"
+                                android:padding="3dp"
+                                android:textSize="25dp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
