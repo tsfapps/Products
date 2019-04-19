@@ -79,12 +79,11 @@
         android:textColor="@color/colorWhite"
         android:gravity="center"
         android:layout_height="match_parent" />
-    <TextView
-        android:id="@+id/tv_feedback_image"
+    <ImageView
+        android:src="@drawable/ic_white_camera"
+        android:id="@+id/iv_feedback_image"
         android:paddingEnd="2dp"
         android:paddingStart="4dp"
-        android:text="@string/image"
-        android:drawableLeft="@drawable/ic_white_camera"
         android:background="@drawable/bg_btn_main"
         android:layout_margin="1dp"
         android:layout_width="0dp"

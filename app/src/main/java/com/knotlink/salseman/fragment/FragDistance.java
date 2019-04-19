@@ -180,13 +180,15 @@ public class FragDistance extends Fragment {
         if (gpsTracker.getIsGPSTrackingEnabled()) {
             String stringLatitude = String.valueOf(gpsTracker.latitude);
             String stringLongitude = String.valueOf(gpsTracker.longitude);
+            String strCity = gpsTracker.getLocality(tContext);
+            String strPinCode = gpsTracker.getPostalCode(tContext);
             String addressLine = gpsTracker.getAddressLine(tContext);
             CustomLog.d(Constant.TAG, "Latitude : "+ stringLatitude +"\nLongitude : "+stringLongitude+"\nAddress Line : "+addressLine);
             String strUserId = tSharedPrefManager.getUserId();
 
         String strImg = imageToString();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelDistance> call = api.uploadDistance(strUserId, strStartKm, strImg, stringLatitude, stringLongitude, addressLine);
+        Call<ModelDistance> call = api.uploadDistance(strUserId, strStartKm, strImg, stringLatitude, stringLongitude,  strPinCode, strCity, addressLine);
         call.enqueue(new Callback<ModelDistance>() {
             @Override
             public void onResponse(Call<ModelDistance> call, Response<ModelDistance> response) {

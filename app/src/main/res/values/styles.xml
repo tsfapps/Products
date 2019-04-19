@@ -28,19 +28,18 @@
         <item name="android:background">@drawable/ic_remove</item>
     </style>
     <style name="iv_dashboard">
-        <item name="android:layout_marginTop">@dimen/margin_top</item>
-        <item name="android:scaleType">fitXY</item>
-        <item name="android:layout_height">80dp</item>
-        <item name="android:layout_width">80dp</item>
-        <item name="android:padding">24dp</item>
-        <item name="android:background">@drawable/bg_iv</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="android:layout_width">75dp</item>
+        <item name="android:padding">8dp</item>
+
     </style>
 
     <style name="tv_dash_label">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">-8dp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+
         <item name="android:textStyle">bold</item>
     </style>
     <style name="tv_cash_label">
@@ -192,5 +191,19 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <style name="card_dash" parent="Base.CardView">
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+    <style name="ll_dash">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
 
 </resources>

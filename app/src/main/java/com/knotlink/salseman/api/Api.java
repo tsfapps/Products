@@ -1,5 +1,6 @@
 package com.knotlink.salseman.api;
 
+import com.knotlink.salseman.model.ModelAttendance;
 import com.knotlink.salseman.model.ModelCash;
 import com.knotlink.salseman.model.ModelColdCall;
 import com.knotlink.salseman.model.ModelDistance;
@@ -24,6 +25,27 @@ public interface Api{
     Call<ModelUser> getUserDetail(
             @Field("user_phone") String phone_no,
             @Field("user_password") String user_password
+    );
+
+    @FormUrlEncoded
+    @POST("api/api_attendance.php")
+    Call<ModelAttendance> uploadLogin(
+            @Field("user_id") String user_id,
+            @Field("login_city") String login_city,
+            @Field("login_pincode") String login_pincode,
+            @Field("login_address") String login_address,
+            @Field("login_latitude") String login_latitude,
+            @Field("login_longitude") String login_longitude
+    );
+    @FormUrlEncoded
+    @POST("api/api_attendance.php")
+    Call<ModelAttendance> uploadLogout(
+            @Field("user_id") String user_id,
+            @Field("logout_city") String logout_city,
+            @Field("logout_pincode") String logout_pincode,
+            @Field("logout_address") String logout_address,
+            @Field("logout_latitude") String logout_latitude,
+            @Field("logout_longitude") String logout_longitude
     );
  @FormUrlEncoded
     @POST("api/api_shop_details.php")
@@ -52,11 +74,20 @@ public interface Api{
  @FormUrlEncoded
     @POST("api/api_distance_upload.php")
     Call<ModelDistance> uploadDistance(
+//            starting_pincode
+//
+//
+//
+//ending_pincode
+//
+//ending_city
             @Field("user_id") String user_id,
             @Field("starting_km") String starting_km,
             @Field("starting_img") String starting_img,
             @Field("start_lat") String start_lat,
             @Field("start_long") String start_long,
+            @Field("starting_pincode") String starting_pincode,
+            @Field("starting_city") String starting_city,
             @Field("starting_address") String starting_address
     );
 

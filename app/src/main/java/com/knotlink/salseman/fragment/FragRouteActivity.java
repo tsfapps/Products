@@ -2,10 +2,17 @@ package com.knotlink.salseman.fragment;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +20,10 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.adapter.AdapterFeedback;
@@ -24,9 +34,13 @@ import com.knotlink.salseman.model.ModelFeedback;
 import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.model.ModelSpecialRequest;
 import com.knotlink.salseman.storage.SharedPrefManager;
+import com.knotlink.salseman.utils.CheckPermission;
+import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomToast;
+import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -34,6 +48,8 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_CANCELED;
 
 public class FragRouteActivity extends Fragment {
 
@@ -50,9 +66,11 @@ public class FragRouteActivity extends Fragment {
     private AdapterSpecialRequest tAdapter;
     private AdapterFeedback tAdapterFeedback;
     private EditText edittext;
-    private EditText etFeedback;
+    private EditText  etFeedback;
     private Spinner spinner;
-    private Spinner spnFeedback;
+    private Bitmap tBitmap;
+    private ImageView ivFeedback;
+   // private Spinner spnFeedback;
 
 
     public static FragRouteActivity newInstance(List<ModelShopList> tModels, int i) {
@@ -144,16 +162,12 @@ public class FragRouteActivity extends Fragment {
                 else {
                     CustomToast.toastTop(tContext, tSpecialModels.getMessage());
                 }
-
             }
-
             @Override
             public void onFailure(Call<ModelSpecialRequest> call, Throwable t) {
-
             }
         });
     }
-
     //Feedback clicked
     @OnClick(R.id.iv_route_complain)
     public void feedbackSubmit(View view) {
@@ -165,21 +179,17 @@ public class FragRouteActivity extends Fragment {
 
         // set the custom dialog components - text, image and button
 //        spnFeedback =  dialog.findViewById(R.id.spn_feedback);
+        ivFeedback = dialog.findViewById(R.id.iv_feedback_image);
         etFeedback =  dialog.findViewById(R.id.et_feedback);
         Button button =  dialog.findViewById(R.id.btn_feedback);
-        spnFeedback.setAdapter(tAdapterFeedback);
-//        spnFeedback.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                spinner_item_feedback = strFeedback[position];
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+
+
+        ivFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPictureDialog();
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,14 +199,21 @@ public class FragRouteActivity extends Fragment {
         });
         dialog.show();
     }
+    private String imageToString(){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        tBitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+        byte[] imByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imByte,Base64.DEFAULT);
+    }
 
     //Feedback Api Call
     private void callApiFeedback(){
         String strUserId = tSharedPrefManger.getUserId();
         String strSHopId = tModels.get(i).getShopId();
         String strRemarks = etFeedback.getText().toString().trim();
+        String strImage = imageToString();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelFeedback> requestCall = api.uploadFeedback(strSHopId, strUserId,"image url", strRemarks);
+        Call<ModelFeedback> requestCall = api.uploadFeedback(strSHopId, strUserId,strImage, strRemarks);
         requestCall.enqueue(new Callback<ModelFeedback>() {
             @Override
             public void onResponse(Call<ModelFeedback> call, Response<ModelFeedback> response) {
@@ -217,6 +234,71 @@ public class FragRouteActivity extends Fragment {
         });
     }
 
+
+    private void showPictureDialog(){
+        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
+        pictureDialog.setTitle("Select Action");
+        String[] pictureDialogItems = {"Photo Gallery", "Camera" };
+        pictureDialog.setItems(pictureDialogItems,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                choosePhotoFromGallery();
+                                break;
+                            case 1:
+                                takePhotoFromCamera();
+                                break;
+                        }
+                    }
+                });
+        pictureDialog.show();
+    }
+    private void choosePhotoFromGallery() {
+        if (CheckPermission.isReadStorageAllowed(getContext())) {
+            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, Constant.GALLERY);
+            return;
+        }
+        CheckPermission.requestStoragePermission(getActivity());
+    }
+    private void takePhotoFromCamera() {
+        if (CheckPermission.isCameraAllowed(getContext())) {
+            Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, Constant.CAMERA);
+            return;
+        }
+        CheckPermission.requestCameraPermission(getActivity());
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED) {
+            return;
+        }
+        if (requestCode == Constant.GALLERY) {
+            if (data != null) {
+                SetImage.setGalleryImage(tContext, ivFeedback, data);
+                BitmapDrawable drawable = (BitmapDrawable)ivFeedback.getDrawable();
+                tBitmap = drawable.getBitmap();
+            }
+
+        } else if (requestCode == Constant.CAMERA) {
+            SetImage.setCameraImage(ivFeedback, data);
+            tBitmap = (Bitmap) data.getExtras().get("data");
+            ivFeedback.setImageBitmap(tBitmap);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == Constant.STORAGE_PERMISSION_CODE) {
+            if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getContext(), "You  denied the permission...", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
 
 

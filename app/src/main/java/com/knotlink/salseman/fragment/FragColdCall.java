@@ -90,9 +90,7 @@ public class FragColdCall extends Fragment {
                 else {
                     CustomToast.toastTop(tContext, tModels.getMessage());
                 }
-
             }
-
             @Override
             public void onFailure(Call<ModelColdCall> call, Throwable t) {
                 CustomLog.d(Constant.TAG, "Not Responding ColdCall : "+t);
