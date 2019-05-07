@@ -90,14 +90,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         strUserType = tSharedPrefManager.getUserType();
         switch (strUserType) {
             case "1":
-                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance("1")).commit();
                 break;
             case "2":
-                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new FragDispatcher()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance("2")).commit();
                 break;
         }
         requestLocation();
-
     }
     @OnClick(R.id.iv_bottom_dashboard)
     public void onDashboardClicked(){

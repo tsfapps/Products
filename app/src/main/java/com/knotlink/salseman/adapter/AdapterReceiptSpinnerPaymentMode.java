@@ -1,30 +1,29 @@
 package com.knotlink.salseman.adapter;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 
-public class AdapterReportSpinnerActivity extends BaseAdapter {
+public class AdapterReceiptSpinnerPaymentMode extends BaseAdapter {
     private Context tContext;
-    private int flags[];
-    private String[] countryNames;
-    private LayoutInflater inflter;
+    private String[] strPaymentMode;
+    private LayoutInflater inflater;
 
-    public AdapterReportSpinnerActivity(Context tContext, int[] flags, String[] countryNames) {
+    public AdapterReceiptSpinnerPaymentMode(Context tContext, String[] strPaymentMode) {
         this.tContext = tContext;
-        this.flags = flags;
-        this.countryNames = countryNames;
-        inflter = (LayoutInflater.from(tContext));
+        this.strPaymentMode = strPaymentMode;
+        inflater = (LayoutInflater.from(tContext));
     }
+
 
     @Override
     public int getCount() {
-        return flags.length;
+        return strPaymentMode.length;
     }
 
     @Override
@@ -37,14 +36,14 @@ public class AdapterReportSpinnerActivity extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflter.inflate(R.layout.custom_spn_reports, null);
-        ImageView icon =  view.findViewById(R.id.iv_report_spinner_activity);
+        view = inflater.inflate(R.layout.spn_receipt_payment_mode, null);
+//        ImageView icon =  view.findViewById(R.id.iv_report_spinner_activity);
         TextView names =  view.findViewById(R.id.tv_report_spinner_activity);
-        icon.setImageResource(flags[i]);
-        names.setText(countryNames[i]);
+//        icon.setImageResource(flags[i]);
+        names.setText(strPaymentMode[i]);
         return view;
     }
-
 }

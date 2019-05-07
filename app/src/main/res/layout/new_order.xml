@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:id="@+id/sv_order"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:padding="16dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:padding="4dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <!--<TextView-->
+                <!--style="@style/tv_report"-->
+                <!--android:hint="Shop Name"/>-->
+                <!--<TextView-->
+                <!--style="@style/tv_report"-->
+                <!--android:hint="Gst Number"/>-->
+                <!--<TextView-->
+                <!--style="@style/tv_report"-->
+                <!--android:hint="Contact Name"/>-->
+                <!--<TextView-->
+                <!--style="@style/tv_report"-->
+                <!--android:hint="Contact Number"/>-->
+                <!--<TextView-->
+                <!--style="@style/tv_report"-->
+                <!--android:hint="Email Id"/>-->
+                <!--<TextView-->
+                <!--style="@style/tv_report"-->
+                <!--android:hint="Land Line Number"/>-->
+                <!--<TextView-->
+                <!--style="@style/tv_report"-->
+                <!--android:hint="WhatsApp Number"/>-->
+                <!--<TextView-->
+                <!--style="@style/tv_report"-->
+                <!--android:hint="City"/>-->
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <!--<TextView-->
+                <!--android:id="@+id/tv_order_shop_gst_number"-->
+                <!--style="@style/tv_report"-->
+                <!--android:text="Gst Number"/>-->
+                <!--<TextView-->
+                <!--android:id="@+id/tv_order_contact_name"-->
+                <!--style="@style/tv_report"-->
+                <!--android:text="Contact Name"/>-->
+                <!--<TextView-->
+                <!--android:id="@+id/tv_order_contact_number"-->
+                <!--style="@style/tv_report"-->
+                <!--android:text="Contact Number"/>-->
+                <!--<TextView-->
+                <!--android:id="@+id/tv_order_email"-->
+                <!--style="@style/tv_report"-->
+                <!--android:text="Email Id"/>-->
+                <!--<TextView-->
+                <!--android:id="@+id/tv_order_landLineNumber"-->
+                <!--style="@style/tv_report"-->
+                <!--android:text="Land Line Numbere"/>-->
+                <!--<TextView-->
+                <!--android:id="@+id/tv_order_whatsAppNumber"-->
+                <!--style="@style/tv_report"-->
+                <!--android:text="WhatsApp Number"/>-->
+                <!--<TextView-->
+                <!--android:id="@+id/tv_order_city"-->
+                <!--style="@style/tv_report"-->
+                <!--android:text="City"/>-->
+            </LinearLayout>
+        </LinearLayout>
+        <!--<TextView-->
+        <!--style="@style/tv_report"-->
+        <!--android:hint="Address"/>-->
+        <!--<TextView-->
+        <!--android:layout_marginTop="0dp"-->
+        <!--android:id="@+id/tv_order_address"-->
+        <!--style="@style/tv_report"-->
+        <!--android:text="Address"/>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_order_shop_name"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Shop Name"/>
+
+        <TextView
+            android:id="@+id/tv_order_select_product"
+            android:hint="Select Products"
+            android:entries="@array/meeting_status"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            style="@style/et_main" />
+        <TextView
+            android:layout_marginTop="12dp"
+            android:text="Date of Delivery"
+            style="@style/tv_report" />
+        <TextView
+            android:id="@+id/tv_order_date_of_delivery"
+            android:hint="Date of Delivery"
+            android:layout_marginTop="0dp"
+            style="@style/et_main" />
+        <RelativeLayout
+            android:id="@+id/rl_report_spinner_activity"
+            style="@style/rl_spinner_main">
+            <Spinner
+                android:entries="@array/payment_mode"
+                style="@style/spinner_main" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_order_request_label"
+                android:layout_marginTop="@dimen/margin_top"
+                style="@style/tv_dash_label"
+                android:text="Remarks"/>
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:id="@+id/tv_order_image_label"
+                android:layout_marginTop="@dimen/margin_top"
+                style="@style/tv_dash_label"
+                android:text="Upload Image"/>
+        </RelativeLayout>
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
+
+            <EditText
+                android:inputType="textCapCharacters"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:padding="4dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_et"/>
+
+            <ImageView
+                android:id="@+id/iv_upload_order"
+                android:scaleType="fitXY"
+                android:padding="2dp"
+                android:layout_marginStart="-2dp"
+                android:layout_width="0dp"
+                android:layout_weight=".6"
+                android:src="@drawable/ic_sales_photo_add"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_et"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/orderGetSignature"
+            android:layout_marginTop="16dp"
+            style="@style/tv_dash_label"
+            android:text="Get Signature"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tvOrderSignMessage"
+            android:layout_marginTop="16dp"
+            style="@style/tv_dash_label"
+            android:text="Get Signature"/>
+        <RelativeLayout
+            android:padding="2dp"
+            android:background="@drawable/bg_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.kyanogen.signatureview.SignatureView
+                xmlns:sign="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/signature_view_order"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                sign:penSize="3dp"
+                sign:backgroundColor="@color/white"
+                sign:penColor="@color/black"
+                sign:enableSignature="true"/>
+            <ImageView
+                android:id="@+id/iv_order_clear_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_delete"
+                android:layout_alignParentEnd="true"
+                android:textAllCaps="false"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_order_submit"
+            style="@style/btn_main"/>
+    </LinearLayout>
+
+</ScrollView>

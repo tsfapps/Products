@@ -28,8 +28,8 @@
         <item name="android:background">@drawable/ic_remove</item>
     </style>
     <style name="iv_dashboard">
-        <item name="android:layout_height">75dp</item>
-        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">50dp</item>
         <item name="android:padding">8dp</item>
 
     </style>
@@ -125,13 +125,13 @@
     </style>
     <style name="tv_report_top">
         <item name="android:layout_height">35dp</item>
-        <item name="android:layout_margin">2dp</item>
+        <item name="android:layout_margin">1dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/bg_simple_dark</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">8sp</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="btn_main">
@@ -145,9 +145,8 @@
         <item name="android:text">Submit</item>
     </style>
     <style name="et_main">
-        <item name="android:layout_marginTop">@dimen/margin_top</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:padding">10dp</item>
         <item name="android:background">@drawable/bg_et</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
@@ -180,7 +179,7 @@
     <style name="spinner_main">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:spinnerMode">dropdown</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_centerInParent">true</item>
     </style>
@@ -205,5 +204,29 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
     </style>
+    <style name="card_dash_report" parent="Base.CardView">
+        <item name="android:layout_margin">1dp</item>
+        <item name="cardCornerRadius">4dp</item>
+        <item name="cardElevation">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
 
+    <style name="ll_dash_report">
+
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="tv_report">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
 </resources>

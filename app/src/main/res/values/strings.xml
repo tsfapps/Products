@@ -63,13 +63,13 @@
     <string-array name="city_list">
         <item>--Select City--</item>
         <item>Bangalore</item>
-        <item>Mysore</item>
-        <item>Hosur</item>
-        <item>Sarjapur</item>
-        <item>Bangalore</item>
-        <item>Mysore</item>
-        <item>Hosur</item>
-        <item>Sarjapur</item>
+        <!--<item>Mysore</item>-->
+        <!--<item>Hosur</item>-->
+        <!--<item>Sarjapur</item>-->
+        <!--<item>Bangalore</item>-->
+        <!--<item>Mysore</item>-->
+        <!--<item>Hosur</item>-->
+        <!--<item>Sarjapur</item>-->
     </string-array>
     <string-array name="payment_mode">
         <item>--Select Payment Mode--</item>
@@ -135,9 +135,9 @@
 
     <string-array name="special_request">
         <item>--select your request--</item>
-        <item>Browser</item>
+        <item>Brochure</item>
         <item>Banner</item>
-        <item>Paper Banner</item>
+        <item>Pamphlet</item>
     </string-array>
     <string-array name="str_arr_feedback">
         <item>--select type--</item>

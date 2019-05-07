@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
 import butterknife.BindView;
@@ -32,26 +33,33 @@ public class FragDashboard extends Fragment {
     private Context tContext;
     private FragmentManager tFragmentManager;
     private SharedPrefManager tSharedPrefManager;
-    @BindView(R.id.tv_dashboard_user_name)
-    protected TextView tvDashboardUserName;
+//    @BindView(R.id.tv_dashboard_user_name)
+//    protected TextView tvDashboardUserName;
     @BindView(R.id.tv_dash_attendance)
     protected TextView tvDashAttendance;
+
+    private String userType;
+    public static FragDashboard newInstance(String userType) {
+
+        FragDashboard fragment = new FragDashboard();
+        fragment.userType = userType;
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_dashboard, container, false);
         ButterKnife.bind(this, view);
         initFrag();
-        tFragmentManager = getFragmentManager();
         return view;
     }
-
     private void initFrag(){
         tContext = getContext();
         checkLocationPermission();
-        SetTitle.tbTitle("Dashboard", getActivity());
         tSharedPrefManager = new SharedPrefManager(tContext);
-        tvDashboardUserName.setText("Hello "+tSharedPrefManager.getUserName());
+        SetTitle.tbTitle("Dashboard", getActivity());
+        tFragmentManager = getFragmentManager();
     }
     @OnClick(R.id.iv_dash_attendance)
     public void dashAttendanceClicked(View view){

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:background="@drawable/bg_tv"
+    android:gravity="center_vertical"
+    android:elevation="22dp"
+    app:cardCornerRadius="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+            android:padding="4dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Date"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Vendor Name"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Contact Name"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Contact Number"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Email Id"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Telephone"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="WhatsApp Number"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Address"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Cold Call Status"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Remarks"/>
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_report_coldCall_date"
+                    style="@style/tv_report"
+                    android:text="Date"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_vendorName"
+                    style="@style/tv_report"
+                    android:text="Vendor Name"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_contactName"
+                    style="@style/tv_report"
+                    android:text="Contact Name"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_contactNumber"
+                    style="@style/tv_report"
+                    android:text="Contact Number"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_emailId"
+                    style="@style/tv_report"
+                    android:text="Email Id"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_telephone"
+                    style="@style/tv_report"
+                    android:text="Telephone"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_whatsAppNumber"
+                    style="@style/tv_report"
+                    android:text="WhatsApp Number"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_address"
+                    style="@style/tv_report"
+                    android:text="Address"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_status"
+                    style="@style/tv_report"
+                    android:text="Cold Call Status"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_remarks"
+                    style="@style/tv_report"
+                    android:text="Remarks"/>
+
+            </LinearLayout>
+        </LinearLayout>
+</android.support.v7.widget.CardView>

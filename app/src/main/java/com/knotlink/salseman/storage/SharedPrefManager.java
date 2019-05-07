@@ -27,7 +27,28 @@ public class SharedPrefManager {
     }
 
 
-    public void setBannerId(String id){
+    public void setShiftTime(String startTime, String startTimeLabel){
+        SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        tEditor = tSharedPreferences.edit();
+        tEditor.putString(Constant.START_TIME, startTime);
+        tEditor.putString(Constant.START_TIME_LABEL, startTimeLabel);
+        tEditor.apply();
+    }
+    public String getShiftTime(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        return sp.getString(Constant.START_TIME, Constant.EMPTY);
+    }
+    public String getShiftTimeLabel(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        return sp.getString(Constant.START_TIME_LABEL, Constant.EMPTY);
+    }
+
+    public void setStatus(Boolean status)
+    {
+        SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        tEditor = tSharedPreferences.edit();
+        tEditor.putBoolean(Constant.CHECK_IN_STATUS, status);
+        tEditor.apply();
 
     }
     public void setUserData(String strUserId, String strName, String strAddress, String strPhone, String strEmail,
@@ -132,6 +153,10 @@ public class SharedPrefManager {
     public String getUserType(){
         SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
        return sp.getString(Constant.USER_TYPE, Constant.EMPTY);
+    }
+    public Boolean getCheckInStatus(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+       return sp.getBoolean(Constant.CHECK_IN_STATUS, Constant.EMPTY_BOOL);
     }
 
     public void clear(){

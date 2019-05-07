@@ -72,6 +72,7 @@ public class FragRoute extends Fragment {
 
         String strUserId = tSharedPrefManager.getUserId();
         String strPresentDay = DateUtils.getPresentDay();
+        CustomLog.d(Constant.TAG, "\nUser ID : "+ strUserId+"\nPresent Day : "+strPresentDay);
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<List<ModelShopList>> call = api.getShopDetail(strUserId, strPresentDay);
         call.enqueue(new Callback<List<ModelShopList>>() {
@@ -87,7 +88,7 @@ public class FragRoute extends Fragment {
 
             @Override
             public void onFailure(Call<List<ModelShopList>> call, Throwable t) {
-                CustomLog.e(Constant.TAG, "Not Responding : "+t);
+                CustomLog.e(Constant.TAG, "ShopList Not Responding : "+t);
             }
         });
     }

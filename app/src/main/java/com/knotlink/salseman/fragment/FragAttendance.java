@@ -21,6 +21,7 @@ import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomToast;
+import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetTitle;
 
 import butterknife.BindView;
@@ -37,6 +38,10 @@ public class FragAttendance extends Fragment {
     private ModelAttendance tModels;
     @BindView(R.id.tv_att_user_name)
     protected TextView tvAttUserName;
+     @BindView(R.id.tv_att_time_label)
+    protected TextView tvAttTimeLabel;
+    @BindView(R.id.tv_att_time)
+    protected TextView tvShiftingTime;
     @BindView(R.id.btn_att_check_in_out)
     protected Button btnAttCheckInOut;
     private boolean isLoggedIn = false;
@@ -54,21 +59,36 @@ public class FragAttendance extends Fragment {
         tGpsTracker = new GPSTracker(tContext);
         tSharedPrefManager = new SharedPrefManager(tContext);
         tvAttUserName.setText(tSharedPrefManager.getUserName());
+        if (!tSharedPrefManager.getCheckInStatus()){
+            btnAttCheckInOut.setText(Constant.BTN_CHECK_IN);
+        }
+        else{ btnAttCheckInOut.setText(Constant.BTN_CHECK_OUT);}
+        tvShiftingTime.setText(tSharedPrefManager.getShiftTime());
+        tvAttTimeLabel.setText(tSharedPrefManager.getShiftTimeLabel());
     }
 
     @SuppressLint("SetTextI18n")
     @OnClick(R.id.btn_att_check_in_out)
     public void checkedInAtt(View view){
 
-        if (!isLoggedIn) {
+        if (!tSharedPrefManager.getCheckInStatus()) {
             callLoginApi();
             btnAttCheckInOut.setText("Check Out");
-            isLoggedIn = true;
+          //  isLoggedIn = true;
+            tSharedPrefManager.setStatus(true);
+            tvAttTimeLabel.setText(Constant.START_LABEL);
+            tSharedPrefManager.setShiftTime(DateUtils.getCurrentTime(), Constant.START_LABEL);
+            tvShiftingTime.setText(DateUtils.getCurrentTime());
         }
         else {
             callLogoutApi();
             btnAttCheckInOut.setText("Check In");
-            isLoggedIn = false;
+           // isLoggedIn = false;
+            tSharedPrefManager.setStatus(false);
+            tvAttTimeLabel.setText(Constant.FINISH_LABEL);
+            tSharedPrefManager.setShiftTime(DateUtils.getCurrentTime(), Constant.FINISH_LABEL);
+            tvShiftingTime.setText(DateUtils.getCurrentTime());
+
         }
     }
 
@@ -88,11 +108,9 @@ public class FragAttendance extends Fragment {
                 tModels = response.body();
                 if (!tModels.getError()){
                     CustomToast.toastTop(tContext, tModels.getMessage());
-                    CustomLog.e(Constant.TAG, "Not an Error Message : "+tModels.getMessage());
                 }
                 else {
                     CustomToast.toastTop(tContext, tModels.getMessage());
-                    CustomLog.e(Constant.TAG, "Error Message : "+tModels.getMessage());
                 }
             }
             @Override
@@ -117,11 +135,9 @@ public class FragAttendance extends Fragment {
                 tModels = response.body();
                 if (!tModels.getError()){
                     CustomToast.toastTop(tContext, tModels.getMessage());
-                    CustomLog.e(Constant.TAG, "Not an Error Message : "+tModels.getMessage());
                 }
                 else {
                     CustomToast.toastTop(tContext, tModels.getMessage());
-                    CustomLog.e(Constant.TAG, "Error Message : "+tModels.getMessage());
                 }
         }
             @Override

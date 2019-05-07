@@ -1,7 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.CardView android:background="@drawable/bg_tv"
+    android:gravity="center_vertical"
+    android:elevation="22dp"
+    app:cardCornerRadius="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:padding="4dp"
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Task Type"/>
+
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Task Assigned Date"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Task Due Date"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Appointment Time"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Contact Name"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Contact Number"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Task Status"/>
+
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Next Followup Date"/>
 
 
-</LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_task_remarks"
+                    style="@style/tv_report"
+                    android:text="Task Type"/>
+
+                <TextView
+                    android:id="@+id/tv_task_assignedDate"
+                    style="@style/tv_report"
+                    android:text="Task Assigned Date"/>
+                <TextView
+                    android:id="@+id/tv_task_dueDate"
+                    style="@style/tv_report"
+                    android:text="Task Due Date"/>
+                <TextView
+                    android:id="@+id/tv_task_time"
+                    style="@style/tv_report"
+                    android:text="Task Time"/>
+                <TextView
+                    android:id="@+id/tv_task_contactName"
+                    style="@style/tv_report"
+                    android:text="Contact Name"/>
+                <TextView
+                    android:id="@+id/tv_task_contactNumber"
+                    style="@style/tv_report"
+                    android:text="Contact Number"/>
+                <TextView
+                    android:id="@+id/tv_task_status"
+                    style="@style/tv_report"
+                    android:text="Task Status"/>
+                <TextView
+                    android:id="@+id/tv_task_completionDate"
+                    style="@style/tv_report"
+                    android:text="Next Followup Date"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            style="@style/tv_report"
+            android:hint="Address"/>
+        <TextView
+            android:layout_marginTop="0dp"
+            android:id="@+id/tv_task_address"
+            style="@style/tv_report"
+            android:text="Address"/>
+        <RelativeLayout
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            style="@style/tv_report"
+            android:text="User Remarks"/>
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:id="@+id/tv_task_remarksDate"
+                style="@style/tv_report"
+                android:text="Remarks Date"/>
+
+        </RelativeLayout>
+        <EditText
+            android:layout_marginTop="0dp"
+            android:padding="4dp"
+            android:id="@+id/et_task_userRemarks"
+            style="@style/tv_report"
+            android:background="@drawable/bg_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="5"
+            android:gravity="start"
+            android:hint="User Remarks"/>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

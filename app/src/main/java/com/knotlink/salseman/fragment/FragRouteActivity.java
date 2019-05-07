@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
@@ -101,11 +100,11 @@ public class FragRouteActivity extends Fragment {
 
     @OnClick(R.id.iv_route_new_order)
     public void routeOrderClicked(View view){
-        getFragmentManager().beginTransaction().replace(R.id.container_main, FragOrder.newInstance(tModels, i)).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container_main, FragNewOrder.newInstance(tModels, i)).addToBackStack(null).commit();
     }
     @OnClick(R.id.iv_dash_receipt)
     public void receiptClicked(View view){
-        getFragmentManager().beginTransaction().replace(R.id.container_main, new FragReceipt()).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container_main, FragReceipt.newInstance(tModels, i)).addToBackStack(null).commit();
     }
 
     //Special request clicked

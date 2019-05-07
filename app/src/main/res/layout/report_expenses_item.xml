@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:background="@drawable/bg_tv"
+    android:gravity="center_vertical"
+    android:elevation="22dp"
+    app:cardCornerRadius="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:padding="4dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+        <TextView
+           style="@style/tv_report"
+            android:text="Date"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Petty Cash"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Food"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Parking"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Road Toll Tax"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Petrol"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Others"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Total"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Remarks"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_report_expenses_date"
+           style="@style/tv_report"
+            android:text="Date"/>
+        <TextView
+            android:id="@+id/tv_report_expenses_pettyCash"
+            style="@style/tv_report"
+            android:text="Petty Cash"/>
+        <TextView
+            android:id="@+id/tv_report_expenses_food"
+            style="@style/tv_report"
+            android:text="Food"/>
+        <TextView
+            android:id="@+id/tv_report_expenses_parking"
+            style="@style/tv_report"
+            android:text="Parking"/>
+        <TextView
+            android:id="@+id/tv_report_expenses_roadToll"
+            style="@style/tv_report"
+            android:text="Road Toll Tax"/>
+        <TextView
+            android:id="@+id/tv_report_expenses_petrol"
+            style="@style/tv_report"
+            android:text="Petrol"/>
+        <TextView
+            android:id="@+id/tv_report_expenses_others"
+            style="@style/tv_report"
+            android:text="Others"/>
+        <TextView
+            android:id="@+id/tv_report_expenses_total"
+            style="@style/tv_report"
+            android:text="Total"/>
+        <TextView
+            android:id="@+id/tv_report_expenses_remarks"
+            style="@style/tv_report"
+            android:text="Remarks"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class ModelShopList {
+
     @SerializedName("shop_name")
     @Expose
     private String shopName;
@@ -226,4 +227,5 @@ public class ModelShopList {
     public void setInvoiceNo(List<String> invoiceNo) {
         this.invoiceNo = invoiceNo;
     }
+
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:background="@drawable/bg_tv"
+    android:gravity="center_vertical"
+    android:elevation="22dp"
+    app:cardCornerRadius="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:padding="4dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+        <TextView
+           style="@style/tv_report"
+            android:text="Date"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Login Time"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Logout Time"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Working Hour"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_report_attendance_date"
+           style="@style/tv_report"
+            android:text="Date"/>
+        <TextView
+            android:id="@+id/tv_report_attendance_startKm"
+            style="@style/tv_report"
+            android:text="Login Time"/>
+        <TextView
+            android:id="@+id/tv_report_attendance_endKm"
+            style="@style/tv_report"
+            android:text="Logout Time"/>
+        <TextView
+            android:id="@+id/tv_report_attendance_disTravelled"
+            style="@style/tv_report"
+            android:text="Working Hour"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

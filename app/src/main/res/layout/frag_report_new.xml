@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:background="@color/colorPrimaryDark"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="2dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/tv_report_date_from"
+                android:textSize="10sp"
+                android:text="FromDate"
+                android:textColor="@color/colorWhite"
+                android:drawableEnd="@drawable/ic_calender"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_et_white"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/tv_report_date_to"
+                android:text="To Date"
+                android:textSize="10sp"
+                android:textColor="@color/colorWhite"
+                android:drawableEnd="@drawable/ic_calender"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/bg_et_white"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report">
+                    <LinearLayout
+                        style="@style/ll_dash_report">
+                        <ImageView
+                            android:id="@+id/iv_report_attendance"
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_salse_attendence"/>
+                        <TextView
+                            android:text="Attendance Report"
+                            style="@style/tv_dash_label" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report">
+                    <LinearLayout
+                        style="@style/ll_dash_report">
+                        <ImageView
+                            android:id="@+id/iv_report_route"
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_main_route"
+                            />
+                        <TextView
+                            android:text="Route Travelled Report"
+                            style="@style/tv_dash_label" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report">
+                    <LinearLayout
+                        style="@style/ll_dash_report">
+                        <ImageView
+
+                            android:id="@+id/iv_report_meeting"
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_main_meeting"
+                            />
+                        <TextView
+                            android:text="Meeting Report"
+                            style="@style/tv_dash_label" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report">
+                    <LinearLayout
+                        style="@style/ll_dash_report">
+                        <ImageView
+                            android:id="@+id/iv_report_cashCollection"
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_main_rupee"
+                            />
+                        <TextView
+                            android:text="Cash Collection Report"
+                            style="@style/tv_dash_label" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report">
+                    <LinearLayout
+                        style="@style/ll_dash_report">
+                        <ImageView
+                            android:id="@+id/iv_report_distance"
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_main_distance"/>
+                        <TextView
+                            android:text="Distance Report"
+                            style="@style/tv_dash_label" />
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report">
+                    <LinearLayout
+                        style="@style/ll_dash_report">
+                        <ImageView
+                            android:id="@+id/iv_report_leadGeneration"
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_main_lead"
+                            />
+                        <TextView
+                            android:text="Lead GenerationReport"
+                            style="@style/tv_dash_label" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report">
+                    <LinearLayout
+                        style="@style/ll_dash_report">
+                        <ImageView
+                            android:id="@+id/iv_report_coldCall"
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_main_cold_call"
+                            />
+                        <TextView
+                            android:text="Cold Call Report"
+                            style="@style/tv_dash_label" />
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report"
+                    >
+                    <LinearLayout
+                        style="@style/ll_dash_report"
+                        >
+                        <ImageView
+                            android:id="@+id/iv_report_expenses"
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_main_expenses"
+                            />
+                        <TextView
+                            android:text="Expenses Report"
+                            style="@style/tv_dash_label" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

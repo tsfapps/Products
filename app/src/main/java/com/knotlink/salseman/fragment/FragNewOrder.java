@@ -1,5 +1,6 @@
 package com.knotlink.salseman.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -39,8 +41,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -50,9 +54,11 @@ import butterknife.OnTouch;
 
 import static android.app.Activity.RESULT_CANCELED;
 
-public class FragOrder extends Fragment {
+public class FragNewOrder extends Fragment {
 
     private Context tContext;
+    final Calendar myCalendar = Calendar.getInstance();
+
     @BindView(R.id.iv_upload_order)
     protected ImageView ivUploadOrder;
     @BindView(R.id.tvOrderSignMessage)
@@ -64,21 +70,29 @@ public class FragOrder extends Fragment {
 
     @BindView(R.id.tv_order_shop_name)
     protected TextView tvOrderShopName;
-
-    @BindView(R.id.tv_order_contact_name)
-    protected TextView tvOrderContactName;
-
-    @BindView(R.id.tv_order_contact_number)
-    protected TextView tvOrderContactNumber;
-
-    @BindView(R.id.tv_order_address)
-    protected TextView tvOrderAddress;
-
-    @BindView(R.id.tv_order_email)
-    protected TextView tvOrderEmail;
-
-    @BindView(R.id.tv_order_city)
-    protected TextView tvOrderCity;
+//    @BindView(R.id.tv_order_shop_gst_number)
+//    protected TextView tvOrderShopGstNumber;
+//
+//    @BindView(R.id.tv_order_contact_name)
+//    protected TextView tvOrderContactName;
+//
+//    @BindView(R.id.tv_order_contact_number)
+//    protected TextView tvOrderContactNumber;
+//
+//    @BindView(R.id.tv_order_landLineNumber)
+//    protected TextView tvOrderTelephone;
+//
+//    @BindView(R.id.tv_order_whatsAppNumber)
+//    protected TextView tvOrderWhatsAppNumber;
+//
+//    @BindView(R.id.tv_order_address)
+//    protected TextView tvOrderAddress;
+//
+//    @BindView(R.id.tv_order_email)
+//    protected TextView tvOrderEmail;
+//
+//    @BindView(R.id.tv_order_city)
+//    protected TextView tvOrderCity;
 
    @BindView(R.id.tv_order_date_of_delivery)
     protected TextView tvOrderDateOfDelivery;
@@ -89,9 +103,9 @@ public class FragOrder extends Fragment {
     private List<ModelShopList> tModels;
     private int i;
 
-    public static FragOrder newInstance(List<ModelShopList> tModels, int i) {
+    public static FragNewOrder newInstance(List<ModelShopList> tModels, int i) {
 
-        FragOrder fragment = new FragOrder();
+        FragNewOrder fragment = new FragNewOrder();
         fragment.tModels = tModels;
         fragment.i = i;
         return fragment;
@@ -100,28 +114,63 @@ public class FragOrder extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_order, container, false);
+        View view = inflater.inflate(R.layout.frag_new_order, container, false);
         ButterKnife.bind(this, view);
         initFrag();
-
         return view;
     }
-
-
     public void initFrag() {
         tContext = getContext();
         SetTitle.tbTitle("New Order", getActivity());
         tvOrderShopName.setText(tModels.get(i).getShopName());
-        tvOrderContactName.setText(tModels.get(i).getContactName());
-        tvOrderContactNumber.setText(tModels.get(i).getContactNo());
-        tvOrderAddress.setText(tModels.get(i).getShopAddress());
-        tvOrderEmail.setText(tModels.get(i).getEmail());
-        tvOrderCity.setText(tModels.get(i).getCity());
+        String strTaskShopName = tModels.get(i).getShopName();
+        String strTaskContactName = tModels.get(i).getContactName();
+        String strTaskContactNo = tModels.get(i).getContactNo();
+        String strTaskGstNo = tModels.get(i).getGstNo();
+        String strTaskLandLineNo = tModels.get(i).getLandlineNo();
+        String strTaskWhatsAppNo = tModels.get(i).getWhatsappNo();
+        String strTaskEmail = tModels.get(i).getEmail();
+        String strTaskCity = tModels.get(i).getCity();
+        String strTaskAddress = tModels.get(i).getShopAddress();
+//        tvOrderContactName.setText(tModels.get(i).getContactName());
+//        tvOrderContactNumber.setText(tModels.get(i).getContactNo());
+//        tvOrderShopGstNumber.setText(tModels.get(i).getGstNo());
+//        tvOrderTelephone.setText(tModels.get(i).getLandlineNo());
+//        tvOrderWhatsAppNumber.setText(tModels.get(i).getWhatsAppNo());
+//        tvOrderEmail.setText(tModels.get(i).getEmail());
+//        tvOrderCity.setText(tModels.get(i).getCity());
+//        tvOrderAddress.setText(tModels.get(i).getShopAddress());
         String strTodayDate = DateUtils.getTodayDate();
         tvOrderDateOfDelivery.setText(DateUtils.getDeliveryDate(strTodayDate));
-        CustomLog.e(Constant.TAG, "Present Day : "+DateUtils.getPresentDay());
-
     }
+
+    @OnClick(R.id.tv_order_date_of_delivery)
+    public void deliverDateClicked(View view)
+    {
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                String strCurrentDate = DateUtils.getTodayDate();
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY, Locale.UK);
+                String strMyDate = sdf.format(myCalendar.getTime());
+                if (strMyDate.compareTo(strCurrentDate)>1) {
+                    tvOrderDateOfDelivery.setText(strMyDate);
+                }
+                else {
+                    CustomToast.toastMid(tContext, Constant.DATE_DELIVERY);
+                }
+            }
+        };
+        new DatePickerDialog(getContext(), date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
     @OnClick(R.id.iv_order_clear_sign)
     public void clrSignClicked(View view){
         signatureViewOrder.clearCanvas();
@@ -135,7 +184,6 @@ public class FragOrder extends Fragment {
         storeImage(bitmapSign);
         CustomToast.toastMid(tContext, "Signature Saved Successfully...");
     }
-
     @OnTouch(R.id.signature_view_order)
     public boolean onTouchSign(View view, MotionEvent motionEvent){
         int action = motionEvent.getAction();
@@ -176,10 +224,13 @@ public class FragOrder extends Fragment {
     private  File getOutputMediaFile(){
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
-                + "/Android/data/"
-                + Objects.requireNonNull(getActivity()).getPackageName()
-                + "/Files");
+        File mediaStorageDir = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                    + "/Android/data/"
+                    + Objects.requireNonNull(getActivity()).getPackageName()
+                    + "/Files");
+        }
 
         // This location works best if you want the created images to be shared
         // between applications and persist after your app has been uninstalled.

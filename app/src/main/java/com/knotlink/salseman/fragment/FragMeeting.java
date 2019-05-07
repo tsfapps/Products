@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
@@ -28,6 +29,7 @@ import com.knotlink.salseman.utils.CheckPermission;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomToast;
+import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -65,6 +67,9 @@ public class FragMeeting extends Fragment {
     @BindView(R.id.rg_meeting)
     protected RadioGroup rgMeeting;
 
+  @BindView(R.id.tv_meeting_time)
+    protected TextView tvMeetingTime;
+
 
     @Nullable
     @Override
@@ -97,6 +102,8 @@ public class FragMeeting extends Fragment {
                 }
             }
         });
+
+        tvMeetingTime.setText(DateUtils.getCurrentTime());
 
     }
 

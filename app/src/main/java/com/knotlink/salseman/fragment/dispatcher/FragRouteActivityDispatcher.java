@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.fragment.FragOrder;
+import com.knotlink.salseman.fragment.FragNewOrder;
 import com.knotlink.salseman.fragment.FragReceipt;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -34,7 +34,7 @@ public class FragRouteActivityDispatcher extends Fragment {
 
     @OnClick(R.id.iv_route_dispatch_delivery)
     public void routeOrderClicked(View view){
-        getFragmentManager().beginTransaction().replace(R.id.container_main, new FragOrder()).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container_main, new FragNewOrder()).addToBackStack(null).commit();
     }
     @OnClick(R.id.iv_route_dispatch_receipt)
     public void receiptClicked(View view){

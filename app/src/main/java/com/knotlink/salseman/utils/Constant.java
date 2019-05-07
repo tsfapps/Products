@@ -9,10 +9,13 @@ public class Constant {
     public static final int CAMERA = 2;
     public static boolean UPLOAD_START = false;
     public static final String DATE_FORMAT_DD_MMM_YYYY = "dd MMM yyyy";
+    public static final String DATE_FORMAT_dd_MMMM_yyyy = "dd MMMM yyyy";
+    public static final String TIME_FORMAT_hh_mm = "hh:mm a";
     public static final int xOffSet = 0 ;
     public static final int yOffSet =50 ;
     public static final int yOffSetMid =500 ;
-    public static final String DATE_TOAST = "Enter the valid date";
+    public static final String DATE_TOAST = "Enter the valid date...";
+    public static final String DATE_DELIVERY = "Delivery must be after 2 days of order...";
 
     public static final String EXOTIC_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String EXOTIC_DATE_FORMAT_SEND = "yyyy-MM-dd'T'00:00:00";
@@ -20,6 +23,8 @@ public class Constant {
     public static final String EXOTIC_TIME_FORMAT = "hh:mm a";
 
     //User Detail
+    public static final  String CHECK_IN_STATUS = "check_in_status";
+    public static final  Boolean EMPTY_BOOL = false;
     public static final  String USER_ID = "user_id";
     public static final  String USER_NAME = "user_name";
     public static  final  String USER_EMAIL="user_email";
@@ -39,6 +44,13 @@ public class Constant {
     public static final long FUSED_API_DEFAULT_VALUE = 2000;
 
     public static  final  String SHOP_LOCATION="shop_location";
+    public static  final  String BTN_CHECK_IN="Check In";
+    public static  final  String BTN_CHECK_OUT="Check Out";
+    public static  final  String START_TIME="Started Time";
+    public static  final  String START_TIME_LABEL="You Started At";
+    public static  final  String FINISH_TIME_LABEL="You Finished At";
+    public static  final  String START_LABEL="You Started At";
+    public static  final  String FINISH_LABEL="You Finished At";
 
 
     //        "status": "0",

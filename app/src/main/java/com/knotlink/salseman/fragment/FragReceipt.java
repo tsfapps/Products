@@ -1,5 +1,6 @@
 package com.knotlink.salseman.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,15 +16,22 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.adapter.AdapterReceiptSpinnerInvoice;
+import com.knotlink.salseman.adapter.AdapterReceiptSpinnerPaymentMode;
+import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.utils.CheckPermission;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomToast;
 import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetImage;
@@ -32,6 +40,7 @@ import com.kyanogen.signatureview.SignatureView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -41,7 +50,7 @@ import butterknife.OnTouch;
 
 import static android.app.Activity.RESULT_CANCELED;
 
-public class FragReceipt extends Fragment {
+public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedListener{
     private Context tContext;
     @BindView(R.id.iv_upload_receipt)
     protected ImageView ivUploadReceipt;
@@ -51,19 +60,51 @@ public class FragReceipt extends Fragment {
     protected ScrollView svReceipt;
     @BindView(R.id.tv_receipt_check_date)
     protected TextView tvReceiptCheckDate;
+    @BindView(R.id.tv_receipt_shop_name)
+    protected TextView tvReceiptShopName;
+    @BindView(R.id.tv_receipt_totalOutstandingAmount)
+    protected TextView tvReceiptTotalOutstandingAmount;
+    @BindView(R.id.spn_receipt_invoiceNumber)
+    protected Spinner spnReceiptInvoiceNumber;
+    @BindView(R.id.spn_receipt_paymentMode)
+    protected Spinner spnReceiptPaymentMode;
+    @BindView(R.id.ll_receipt_chequeDetail)
+    protected LinearLayout llReceiptChequeDetail;
     final Calendar myCalendar = Calendar.getInstance();
+
+    String[] strPaymentMode ={"--select the payment mode--","Cash","NEFT","Cheque"};
+    private List<ModelShopList> tModels;
+    private int i;
+    public static FragReceipt newInstance(List<ModelShopList> tModels, int i) {
+        FragReceipt fragment = new FragReceipt();
+        fragment.tModels = tModels;
+        fragment.i = i;
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_receipt, container, false);
         ButterKnife.bind(this, view);
+
         initFrag();
+        AdapterReceiptSpinnerPaymentMode adapterReceiptSpinnerPaymentMode = new AdapterReceiptSpinnerPaymentMode(tContext, strPaymentMode);
+        spnReceiptPaymentMode.setAdapter(adapterReceiptSpinnerPaymentMode);
+        spnReceiptPaymentMode.setOnItemSelectedListener(this);
+
+        AdapterReceiptSpinnerInvoice adapterReceiptSpinnerInvoice = new AdapterReceiptSpinnerInvoice(tContext, tModels, i);
+        spnReceiptInvoiceNumber.setAdapter(adapterReceiptSpinnerInvoice);
+        spnReceiptInvoiceNumber.setOnItemSelectedListener(this);
         return view;
     }
-
+    @SuppressLint("SetTextI18n")
     public void initFrag() {
         tContext = getContext();
         SetTitle.tbTitle("Receipt", getActivity());
+        tvReceiptShopName.setText(tModels.get(i).getShopName());
+        tvReceiptTotalOutstandingAmount.setText("Rs. "+tModels.get(i).getTotalOutstandingAmount());
+        llReceiptChequeDetail.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.tv_receipt_check_date)
@@ -91,8 +132,6 @@ public class FragReceipt extends Fragment {
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
-
-
     @OnClick(R.id.iv_receipt_clear_sign)
     public void clrSignReceipt(View view){
         signatureViewReceipt.clearCanvas();
@@ -124,12 +163,10 @@ public class FragReceipt extends Fragment {
                 return true;
         }
     }
-
     @OnClick(R.id.iv_upload_receipt)
     public void onUploadReceiptClicked(View view){
         showPictureDialog();
     }
-
     private void showPictureDialog(){
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
         pictureDialog.setTitle("Select Action");
@@ -176,13 +213,10 @@ public class FragReceipt extends Fragment {
             if (data != null) {
                 SetImage.setGalleryImage(tContext, ivUploadReceipt, data);
             }
-
         } else if (requestCode == Constant.CAMERA) {
-
             SetImage.setCameraImage(ivUploadReceipt, data);
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constant.STORAGE_PERMISSION_CODE) {
@@ -190,5 +224,28 @@ public class FragReceipt extends Fragment {
                 Toast.makeText(getContext(), "You  denied the permission...", Toast.LENGTH_LONG).show();
             }
         }
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+        if (strPaymentMode[position].equals("Cheque")){
+                CustomToast.toastTop(tContext, "Kindly fill the information... ");
+                llReceiptChequeDetail.setVisibility(View.VISIBLE);
+        }
+        else llReceiptChequeDetail.setVisibility(View.GONE);
+
+//        switch (view.getId()){
+//            case R.id.spn_receipt_paymentMode :
+//                CustomLog.d(Constant.TAG, "Payment Mode : "+ strPaymentMode[position]);
+//
+//                break;
+//            case R.id.spn_receipt_invoiceNumber:
+//                CustomLog.d(Constant.TAG, "Invoice Number : "+ tModels.get(i).getInvoiceNo().get(position));
+//                break;
+//        }
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
     }
 }

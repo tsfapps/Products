@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
    >
 
     <LinearLayout
         android:layout_margin="4dp"
-        android:gravity="bottom"
+        android:gravity="center"
         android:paddingBottom="2dp"
-        android:background="@drawable/bg_et"
         android:orientation="horizontal"
         android:id="@+id/ll_report_top"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_report_top_activity"
             android:drawableLeft="@drawable/ic_top_activity"
@@ -25,9 +24,9 @@
             android:text="Route"
             style="@style/tv_report_top"/>
         <TextView
-            android:id="@+id/tv_report_top_login"
+            android:id="@+id/tv_report_top_att"
             android:drawableLeft="@drawable/ic_top_fingerprint"
-            android:text="Login"
+            android:text="Attendance"
             style="@style/tv_report_top"/>
         <TextView
             android:id="@+id/tv_report_top_map"
@@ -37,8 +36,8 @@
     </LinearLayout>
 <LinearLayout
     android:id="@+id/ll_report_body"
-    android:paddingEnd="35dp"
-    android:paddingStart="35dp"
+    android:layout_margin="4dp"
+
     android:layout_below="@+id/ll_report_top"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -57,11 +56,12 @@
         style="@style/spinner_main"
         />
     <RelativeLayout
+        android:layout_marginTop="0dp"
         android:id="@+id/rl_report_spinner_activity"
       style="@style/rl_spinner_main">
     <Spinner
-        android:background="@drawable/bg_simple_dark"
         android:id="@+id/spinner_report_activity"
+        android:background="@drawable/bg_simple_dark"
         android:visibility="visible"
         style="@style/spinner_main"
         />
@@ -73,42 +73,60 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <LinearLayout
-        style="@style/ll_main">
+        android:padding="2dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="4dp"
+        android:layout_height="40dp">
+
         <TextView
             android:id="@+id/tv_report_date_from"
             android:hint="From Date"
+            android:textSize="10sp"
             android:drawableEnd="@drawable/ic_calender"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginEnd="@dimen/margin_top"
-          style="@style/et_main" />
-
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_et"
+            android:gravity="center"/>
         <TextView
             android:id="@+id/tv_report_date_to"
             android:hint="To Date"
+            android:textSize="10sp"
             android:drawableEnd="@drawable/ic_calender"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginStart="@dimen/margin_top"
-          style="@style/et_main" />
+          android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_et"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/btn_report_view"
+            android:text="View"
+            android:layout_width="0dp"
+            android:layout_weight=".6"
+            android:textSize="12sp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_btn_main"
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false"
+            android:gravity="center" />
 
     </LinearLayout>
-    <Button
-        android:text="View"
-        style="@style/btn_main" />
 </LinearLayout>
     <View
         android:id="@+id/view_report_separate"
         android:layout_below="@+id/ll_report_body"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height=".5dp"/>
     <TextView
         android:id="@+id/tv_report_detail"
-        android:layout_below="@+id/view_report_separate"
-        android:layout_centerHorizontal="true"
+       android:layout_gravity="center"
+        android:layout_marginTop="4dp"
        style="@style/tv_dash_label"
         android:text="Activity Report"/>
 
-</RelativeLayout>
+</LinearLayout>

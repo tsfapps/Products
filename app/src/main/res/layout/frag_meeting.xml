@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RadioButton
+                android:checked="true"
                 android:id="@+id/rb_meeting_customer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -37,33 +38,58 @@
                 android:layout_weight="1"
                 android:text="Prospect"/>
         </RadioGroup>
+        <TextView
+            android:hint="Organisation Name*"
+            style="@style/tv_report" />
         <EditText
             android:id="@+id/et_meeting_orgName"
             android:hint="Organisation Name*"
             android:inputType="textPersonName"
             style="@style/et_main" />
+        <TextView
+            android:hint="Contact Name*"
+            style="@style/tv_report" />
+
         <EditText
             android:id="@+id/et_meeting_contactName"
 
             android:hint="Contact Name*"
             android:inputType="textPersonName"
             style="@style/et_main" />
+        <TextView
+            android:hint="Contact Number*"
+            style="@style/tv_report" />
+
         <EditText
             android:id="@+id/et_meeting_contactNumber"
-            android:hint="Contact Number*"
+            android:hint="Contact Number"
             android:inputType="phone"
             style="@style/et_main" />
-        <EditText
-            android:id="@+id/et_meeting_address"
-            android:hint="Address"
-            android:inputType="textPersonName"
-            style="@style/et_main" />
+        <TextView
+            android:hint="Email"
+            style="@style/tv_report" />
+
         <EditText
             android:id="@+id/et_meeting_email"
             android:hint="Email"
             android:inputType="textEmailAddress"
             style="@style/et_main" />
+        <TextView
+            android:hint="Address"
+            style="@style/tv_report" />
+
+        <EditText
+            android:id="@+id/et_meeting_address"
+            android:hint="Address"
+            android:inputType="textPersonName"
+            style="@style/et_main" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <RelativeLayout
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
             android:id="@+id/rl_meeting_spinner_city"
             style="@style/rl_spinner_main">
         <Spinner
@@ -77,6 +103,8 @@
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
         <RelativeLayout
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
             android:id="@+id/rl_meeting_spinner_status"
             style="@style/rl_spinner_main">
         <Spinner
@@ -89,34 +117,29 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
-        <EditText
-            android:id="@+id/et_meeting_time"
+        </LinearLayout>
+        <TextView
+            android:hint="Meeting Time"
+            style="@style/tv_report" />
+
+        <TextView
+            android:id="@+id/tv_meeting_time"
             android:hint="Meeting Time"
             style="@style/et_main" />
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-            android:layout_marginTop="16dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:textSize="10sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
             android:text="Meeting Comments"
-            android:layout_height="wrap_content"
-            tools:ignore="SmallSp" />
+            style="@style/tv_report"
+            />
         <TextView
-            android:layout_marginTop="16dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold|italic"
-            android:textSize="12dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
+            style="@style/tv_report"
             android:text="@string/upload_image"
-            android:layout_height="wrap_content" />
-        </LinearLayout>
+           />
+        </RelativeLayout>
         <LinearLayout
             android:background="@drawable/bg_et"
             android:orientation="horizontal"

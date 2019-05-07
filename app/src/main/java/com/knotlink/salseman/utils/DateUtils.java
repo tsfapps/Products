@@ -3,39 +3,89 @@ package com.knotlink.salseman.utils;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.widget.DatePicker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class DateUtils {
 
     public static String getTodayDate() {
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY, Locale.getDefault());
-        String formattedDate = df.format(c);
-        return formattedDate;
+        SimpleDateFormat df = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+        return df.format(c);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String getFirstDateOfMonthOreo() {
+
+        LocalDate todaydate = LocalDate.now();
+        System.out.println("Months first date in yyyy-mm-dd: " +todaydate.withDayOfMonth(1));
+        return String.valueOf(todaydate.withDayOfMonth(1));
+    }
+    public static String getFirstDateOfMonth() {
+        Calendar aCalendar = Calendar.getInstance();
+
+        aCalendar.set(Calendar.DATE, 1);
+        aCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        aCalendar.set(Calendar.MINUTE, 0);
+        aCalendar.set(Calendar.SECOND, 0);
+
+        Date firstDateOfCurrentMonth = aCalendar.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+       // sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        String dayFirst = sdf.format(firstDateOfCurrentMonth);
+//        System.out.println(dayFirst);
+        return sdf.format(firstDateOfCurrentMonth);
     }
 
     public static String getCurrentTime() {
 
-        final Calendar c = Calendar.getInstance();
-        int currentTime =     (c.get(Calendar.HOUR_OF_DAY) * 10000) + (c.get(Calendar.MINUTE) * 100) + (c.get(Calendar.SECOND));
-
-        return(String.valueOf(currentTime));
-
-    }
-
-    public static String getTodaysDate() {
-
-        final Calendar c = Calendar.getInstance();
-        int todaysDate =     (c.get(Calendar.YEAR) * 10000) + ((c.get(Calendar.MONTH) + 1) * 100) + (c.get(Calendar.DAY_OF_MONTH));
-        return(String.valueOf(todaysDate));
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat(Constant.TIME_FORMAT_hh_mm, Locale.getDefault());
+        String currentTime = df.format(c);
+        return currentTime;
 
     }
+    public static Boolean compareDate(String valid_until) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+        Date strDate = null;
+        try {
+            strDate = sdf.parse(valid_until);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return System.currentTimeMillis() > strDate.getTime();
+    }
+    public static Boolean compareDateEqual(String valid_until) {
+        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+        Date strDate = null;
+        try {
+            strDate = sdf.parse(valid_until);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return System.currentTimeMillis() < strDate.getTime();
+    }
+    public static Boolean compareDateBefore(String valid_until) {
+        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+        Date strDate = null;
+        try {
+            strDate = sdf.parse(valid_until);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return System.currentTimeMillis() < strDate.getTime();
+    }
+
 
     public static String getDeliveryDate(String dateToday) {
 

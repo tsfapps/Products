@@ -11,7 +11,8 @@
     <color name="seek_bar_secondary_progress">#3399CC</color>
     <color name="green">#037e01</color>
     <color name="blue">#000cb4</color>
-    <color name="grey">#cfcfcf</color>
+    <color name="grey">#e9e8e8</color>
+    <color name="colorGrey">#939393</color>
 
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>

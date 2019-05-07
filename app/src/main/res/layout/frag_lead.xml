@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RadioButton
+                android:checked="true"
                 android:id="@+id/rb_lead_org"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

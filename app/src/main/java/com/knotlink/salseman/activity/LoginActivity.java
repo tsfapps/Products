@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                                 strDob, strDoj, strImage, strVehicleNo, strUserType);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(getApplicationContext(), tModels.getMessage(), Toast.LENGTH_LONG).show();
                     }

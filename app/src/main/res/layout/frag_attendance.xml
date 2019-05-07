@@ -58,10 +58,9 @@
                         android:layout_centerInParent="true"
                         app:cardBackgroundColor="@color/colorPrimaryDark"
                         android:id="@+id/cvTime"
-                        android:layout_width="190dp"
-                        android:layout_height="190dp"
-                        app:cardCornerRadius="95dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        app:cardCornerRadius="80dp"
                         >
                         <LinearLayout
                             android:gravity="center"
@@ -69,7 +68,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/tv_user_msg"
+                                android:id="@+id/tv_att_time_label"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
@@ -78,22 +77,22 @@
                                 android:textColor="@color/colorWhite"
                                 />
                             <TextView
-                                android:id="@+id/tv_att_WorkingHour"
+                                android:id="@+id/tv_att_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="08 : 44 : 56"
+                                android:text="08 : 44 AM"
                                 android:textSize="26sp"
-                                android:textColor="@color/colorBlack"
-                                android:textStyle="bold" />
-                            <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="hrs    mins    sec"
-                                android:textSize="14sp"
                                 android:textColor="@color/colorWhite"
-                                android:textStyle="bold"
-                                />
+                                android:textStyle="bold" />
+                            <!--<TextView-->
+
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="hrs    mins    sec"-->
+                                <!--android:textSize="14sp"-->
+                                <!--android:textColor="@color/colorWhite"-->
+                                <!--android:textStyle="bold"-->
+                                <!--/>-->
 
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
@@ -120,34 +119,35 @@
                             android:textStyle="bold"
                             />
                     </LinearLayout>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_margin="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textSize="14sp"
-                            android:textColor="@color/colorBlack"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Starting Timing :  "/>
-                        <TextView
-                            android:id="@+id/tv_att_shiftTime"
-                            android:textSize="16sp"
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            />
-                        <!-- <TextView
-                             android:id="@+id/tv_shiftEndTime"
-                             android:textSize="16sp"
-                             android:textColor="@color/white"
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:text="06 : 30 PM "
-                             />-->
-                    </LinearLayout>
+                    <!--<LinearLayout-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:layout_margin="10dp"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content">-->
+                        <!--<TextView-->
+                            <!--android:textSize="14sp"-->
+                            <!--android:textColor="@color/colorBlack"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="Starting Timing :  "/>-->
+                        <!--<TextView-->
+                            <!--android:id="@+id/tv_att_shiftTime"-->
+                            <!--android:textSize="16sp"-->
+                            <!---->
+                            <!--android:textColor="@color/colorPrimaryDark"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="Shift Time"-->
+                            <!--/>-->
+                        <!--&lt;!&ndash; <TextView-->
+                             <!--android:id="@+id/tv_shiftEndTime"-->
+                             <!--android:textSize="16sp"-->
+                             <!--android:textColor="@color/white"-->
+                             <!--android:layout_width="wrap_content"-->
+                             <!--android:layout_height="wrap_content"-->
+                             <!--android:text="06 : 30 PM "-->
+                             <!--/>&ndash;&gt;-->
+                    <!--</LinearLayout>-->
 
                             <Button
                                 android:id="@+id/btn_att_check_in_out"

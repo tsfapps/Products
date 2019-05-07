@@ -78,8 +78,7 @@
     <EditText
         android:id="@+id/et_distance_startKm"
         android:textStyle="bold"
-        android:inputType="number"
-        android:textSize="18sp"
+         android:textSize="18sp"
         android:maxLength="4"
         android:gravity="center"
         android:layout_width="150dp"

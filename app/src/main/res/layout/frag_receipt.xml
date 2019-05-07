@@ -9,18 +9,58 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <EditText
-            android:hint="Organisation Name*"
-            android:inputType="textPersonName"
-            style="@style/et_main" />
         <TextView
-            android:hint="Customer Id*"
-            style="@style/et_main" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_receipt_shop_name"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Shop Name"/>
+
+        <!--<TextView-->
+            <!--android:hint="Organisation Name"-->
+            <!--android:inputType="textPersonName"-->
+            <!--style="@style/et_main" />-->
+        <!--<TextView-->
+            <!--android:hint="Customer Id"-->
+            <!--style="@style/et_main" />-->
+        <!--<TextView-->
+            <!--android:hint="GST Number"-->
+            <!--style="@style/et_main" />-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:hint="Total Outstanding Amount"
+            style="@style/tv_report" />
+        <TextView
+            android:layout_alignParentEnd="true"
+            android:hint="Total Balance Amount"
+            style="@style/tv_report" />
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_receipt_totalOutstandingAmount"
+                android:layout_weight="1"
+                android:hint="80000"
+                style="@style/et_main" />
+            <TextView
+                android:id="@+id/tv_receipt_pendingOutstandingAmount"
+                android:layout_weight="1"
+                android:hint="50000"
+                style="@style/et_main" />
+        </LinearLayout>
+
         <RelativeLayout
             style="@style/rl_spinner_main">
             <Spinner
-                android:entries="@array/invoice_number"
+                android:id="@+id/spn_receipt_invoiceNumber"
                 style="@style/spinner_main" />
             <ImageView
                 android:layout_width="wrap_content"
@@ -28,87 +68,164 @@
                 android:src="@drawable/ic_arrow_down"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:hint="Invoice Date"
+            style="@style/tv_report" />
+        <TextView
+            android:gravity="end"
+            android:layout_weight="1"
+            android:hint="Total Invoice Amount"
+            style="@style/tv_report" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_receipt_invoice_date"
+                android:layout_weight="1"
+                style="@style/et_main"
+                android:hint="26 April 2019" />
+        <TextView
+            android:id="@+id/tv_receipt_totalInvoiceAmount"
+            android:layout_weight="1"
+            android:hint="70000"
+            style="@style/et_main" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/margin_top"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:hint="Received Amount*"
+                android:layout_weight="1"
+                style="@style/tv_report" />
 
+            <TextView
+                android:gravity="end"
+                android:layout_weight="1"
+                android:hint="Pending Invoice Amount"
+                style="@style/tv_report" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_receipt_receivedAmount"
+                android:hint="Enter Received Amount*"
+                android:inputType="numberDecimal"
+                android:layout_weight="1"
+                style="@style/et_main" />
+            <TextView
+                android:id="@+id/tv_receipt_pendingInvoiceAmount"
+                android:layout_weight="1"
+                android:hint="20000"
+                style="@style/et_main" />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/rl_report_spinner_activity"
+            style="@style/rl_spinner_main">
+            <Spinner
+                android:id="@+id/spn_receipt_paymentMode"
+                style="@style/spinner_main" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
         </RelativeLayout>
 
-        <TextView
-            android:hint="Invoice Date"
-            style="@style/et_main" />
-        <TextView
-            android:hint="Total Outstanding Amount"
-            style="@style/et_main" />
-        <TextView
-            android:hint="Total Invoice Amount"
-            style="@style/et_main" />
-        <EditText
-            android:hint="Enter Received Amount*"
-            android:inputType="numberDecimal"
-            style="@style/et_main" />
-        <TextView
-            android:hint="Pending Outstanding Amount"
-            style="@style/et_main" />
+<LinearLayout
+    android:id="@+id/ll_receipt_chequeDetail"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
         <TextView
             android:layout_marginTop="16dp"
             style="@style/tv_dash_label"
-            android:text="Cheque#"/>
+            android:text="Cheque Detail"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:hint="Cheque Date"
+            style="@style/tv_report" />
+        <TextView
+            android:layout_alignParentEnd="true"
+            android:hint="Cheque Number"
+            style="@style/tv_report" />
 
-        <EditText
-            android:layout_marginTop="0dp"
-            android:hint="Bank Name"
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_receipt_check_date"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/ic_calender"
+            android:hint="Cheque Date"
             style="@style/et_main" />
         <EditText
+            android:layout_weight="1"
+            android:id="@+id/et_receipt_chequeNumber"
             android:hint="Cheque Number"
             style="@style/et_main" />
-
-        <LinearLayout
-            android:background="@drawable/bg_et"
+    </LinearLayout>
+        <RelativeLayout
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tv_receipt_check_date"
-                android:gravity="center"
-                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginTop="0dp"
+             style="@style/tv_report"
+                android:hint="Name of Bank"
+                />
+
+            <TextView
+                android:layout_marginTop="0dp"
+                android:layout_alignParentEnd="true"
+                style="@style/tv_report"
+                android:hint="@string/upload_image"
+                />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_receipt_bankName"
+                style="@style/et_main"
                 android:textSize="12sp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:hint="Cheque Date"
-                android:drawableEnd="@drawable/ic_calender"
-                android:paddingEnd="32dp"
-                android:paddingStart="32dp"
-                android:layout_height="match_parent" />
-<View
-    android:background="@color/colorPrimaryDark"
-    android:layout_width="1dp"
-    android:layout_height="match_parent"/>
-            <!--<TextView-->
-                <!--android:id="@+id/tv_receipt_check_date_entry"-->
-                <!--android:gravity="center"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:background="@drawable/bg_tv"-->
-                <!--/>-->
-            <TextView
-                android:gravity="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold|italic"
-                android:textSize="12dp"
-                android:layout_width="0dp"
-                android:layout_weight=".2"
-                android:hint="@string/upload_image"
-                android:layout_height="match_parent" />
+                android:hint="Bank Name"
+                />
+
             <ImageView
                 android:id="@+id/iv_upload_receipt"
+                style="@style/et_main"
                 android:padding="2dp"
                 android:scaleType="fitXY"
                 android:layout_width="0dp"
                 android:layout_weight=".25"
                 android:src="@drawable/ic_sales_photo_add"
-                android:layout_height="match_parent" />
+                 />
 
         </LinearLayout>
+</LinearLayout>
         <TextView
             android:layout_marginTop="16dp"
             style="@style/tv_dash_label"
