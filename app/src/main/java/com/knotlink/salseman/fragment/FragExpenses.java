@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelExpenses;
@@ -204,12 +205,12 @@ public class FragExpenses extends Fragment {
 
                 tModels = response.body();
                 if (!tModels.getError()){
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragExpenses.this).commit();
                     getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
                 }
                 else {
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
 
                 }
             }

@@ -15,10 +15,11 @@ public class Constant {
     public static final int yOffSet =50 ;
     public static final int yOffSetMid =500 ;
     public static final String DATE_TOAST = "Enter the valid date...";
-    public static final String DATE_DELIVERY = "Delivery must be after 2 days of order...";
+    public static final String DATE_DELIVERY = "Choose the correct date...";
 
     public static final String EXOTIC_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String EXOTIC_DATE_FORMAT_SEND = "yyyy-MM-dd'T'00:00:00";
+    public static final String DATE_FORMAT_dd_MM_yyyy = " dd MM yyyy";
     public static final String EXOTIC_INPUT_DATE_FORMAT = "dd-MMM-yyyy";
     public static final String EXOTIC_TIME_FORMAT = "hh:mm a";
 

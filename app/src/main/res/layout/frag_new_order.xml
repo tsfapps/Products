@@ -69,6 +69,7 @@
             android:layout_height="120dp">
 
             <EditText
+                android:id="@+id/et_order_remarks"
                 android:inputType="textCapCharacters"
                 android:textSize="12sp"
                 android:layout_width="0dp"

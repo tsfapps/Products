@@ -61,9 +61,17 @@
         </RelativeLayout>
 
         <EditText
+            android:layout_marginTop="@dimen/margin_top"
+            android:minLines="5"
             android:id="@+id/et_cold_remarks"
             android:hint="Cold Call Comments"
-            style="@style/et_main" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_et"
+            android:textSize="12sp"
+            android:gravity="start"
+            android:padding="4dp"
+             />
         <Button
             android:id="@+id/btn_cold_submit"
             style="@style/btn_main"/>

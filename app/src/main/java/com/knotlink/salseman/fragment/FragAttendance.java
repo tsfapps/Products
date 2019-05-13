@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelAttendance;
@@ -107,10 +108,10 @@ public class FragAttendance extends Fragment {
             public void onResponse(Call<ModelAttendance> call, Response<ModelAttendance> response) {
                 tModels = response.body();
                 if (!tModels.getError()){
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }
                 else {
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }
             }
             @Override
@@ -134,10 +135,10 @@ public class FragAttendance extends Fragment {
             public void onResponse(Call<ModelAttendance> call, Response<ModelAttendance> response) {
                 tModels = response.body();
                 if (!tModels.getError()){
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }
                 else {
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }
         }
             @Override

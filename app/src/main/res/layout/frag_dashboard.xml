@@ -38,9 +38,9 @@
     <android.support.v7.widget.CardView
         style="@style/card_dash">
     <LinearLayout
-       style="@style/ll_dash">
+        android:id="@+id/ll_dash_attendance"
+        style="@style/ll_dash">
         <ImageView
-            android:id="@+id/iv_dash_attendance"
             style="@style/iv_dashboard"
             android:src="@drawable/dash_attendance"
             />
@@ -54,9 +54,9 @@
     <android.support.v7.widget.CardView
         style="@style/card_dash">
     <LinearLayout
+        android:id="@+id/ll_dash_route"
         style="@style/ll_dash">
     <ImageView
-        android:id="@+id/iv_dash_route"
         style="@style/iv_dashboard"
         android:src="@drawable/dash_today_route"
         />
@@ -68,10 +68,9 @@
     <android.support.v7.widget.CardView
         style="@style/card_dash">
     <LinearLayout
+        android:id="@+id/ll_dash_meeting"
         style="@style/ll_dash">
         <ImageView
-
-            android:id="@+id/iv_dash_meeting"
             style="@style/iv_dashboard"
             android:src="@drawable/dash_meeting"
             />
@@ -84,9 +83,9 @@
     <android.support.v7.widget.CardView
         style="@style/card_dash">
     <LinearLayout
+        android:id="@+id/ll_dash_cash_collection"
         style="@style/ll_dash">
         <ImageView
-            android:id="@+id/iv_dash_cash_collection"
             style="@style/iv_dashboard"
             android:src="@drawable/dash_cash_collection"
             />
@@ -107,9 +106,9 @@
     <android.support.v7.widget.CardView
         style="@style/card_dash">
         <LinearLayout
+            android:id="@+id/ll_dash_distance"
             style="@style/ll_dash">
             <ImageView
-                android:id="@+id/iv_dash_distance"
                 style="@style/iv_dashboard"
                 android:src="@drawable/dash_dist_upload"
                 />
@@ -123,9 +122,9 @@
     <android.support.v7.widget.CardView
         style="@style/card_dash">
         <LinearLayout
+            android:id="@+id/ll_dash_lead_generation"
             style="@style/ll_dash">
             <ImageView
-                android:id="@+id/iv_dash_lead_generation"
                 style="@style/iv_dashboard"
                 android:src="@drawable/dash_leads"
                 />
@@ -138,9 +137,9 @@
     <android.support.v7.widget.CardView
         style="@style/card_dash">
         <LinearLayout
+            android:id="@+id/ll_dash_cold_call"
             style="@style/ll_dash">
             <ImageView
-                android:id="@+id/iv_dash_cold_call"
                 style="@style/iv_dashboard"
                 android:src="@drawable/dash_cold_call"
                 />
@@ -154,9 +153,9 @@
     <android.support.v7.widget.CardView
         style="@style/card_dash">
         <LinearLayout
+            android:id="@+id/ll_dash_expenses"
             style="@style/ll_dash">
             <ImageView
-                android:id="@+id/iv_dash_expenses"
                 style="@style/iv_dashboard"
                 android:src="@drawable/dash_expenses"
                 />

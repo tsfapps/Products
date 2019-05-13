@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelLead;
@@ -90,12 +91,12 @@ public class FragMeeting extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.rb_meeting_customer:
-                        CustomToast.toastTop(tContext, "Customer Selected");
+                        CustomToast.toastTop(getActivity(), "Customer Selected");
                         etMeetingOrgName.setHint("Organisation Name*");
                         strVendorType = "Customer";
                         break;
                     case R.id.rb_meeting_prospect:
-                        CustomToast.toastTop(tContext, "Prospect Selected");
+                        CustomToast.toastTop(getActivity(), "Prospect Selected");
                         etMeetingOrgName.setHint("Prospect Name*");
                         strVendorType = "Prospect";
                         break;
@@ -196,12 +197,12 @@ public class FragMeeting extends Fragment {
             public void onResponse(Call<ModelMeeting> call, Response<ModelMeeting> response) {
                 tModels = response.body();
                 if (!tModels.getError()){
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragMeeting.this).commit();
                     getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
                 }
                 else {
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }
             }
             @Override

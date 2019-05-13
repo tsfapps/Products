@@ -26,8 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.AdapterReceiptSpinnerInvoice;
-import com.knotlink.salseman.adapter.AdapterReceiptSpinnerPaymentMode;
+import com.knotlink.salseman.adapter.spinner.AdapterReceiptSpinnerInvoice;
+import com.knotlink.salseman.adapter.spinner.AdapterReceiptSpinnerPaymentMode;
+import com.knotlink.salseman.api.Api;
+import com.knotlink.salseman.api.ApiClients;
+import com.knotlink.salseman.model.ModelInvoice;
 import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.utils.CheckPermission;
 import com.knotlink.salseman.utils.Constant;
@@ -38,8 +41,10 @@ import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
 import com.kyanogen.signatureview.SignatureView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,10 +52,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
 
 public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedListener{
+
+
+
     private Context tContext;
     @BindView(R.id.iv_upload_receipt)
     protected ImageView ivUploadReceipt;
@@ -64,6 +75,10 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     protected TextView tvReceiptShopName;
     @BindView(R.id.tv_receipt_totalOutstandingAmount)
     protected TextView tvReceiptTotalOutstandingAmount;
+    @BindView(R.id.tv_receipt_invoice_date)
+    protected TextView tvReceiptInvoiceDate;
+    @BindView(R.id.tv_receipt_totalInvoiceAmount)
+    protected TextView tvReceiptTotalInvoiceAmount;
     @BindView(R.id.spn_receipt_invoiceNumber)
     protected Spinner spnReceiptInvoiceNumber;
     @BindView(R.id.spn_receipt_paymentMode)
@@ -95,7 +110,35 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
 
         AdapterReceiptSpinnerInvoice adapterReceiptSpinnerInvoice = new AdapterReceiptSpinnerInvoice(tContext, tModels, i);
         spnReceiptInvoiceNumber.setAdapter(adapterReceiptSpinnerInvoice);
-        spnReceiptInvoiceNumber.setOnItemSelectedListener(this);
+        spnReceiptInvoiceNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String strInvoiceNo = tModels.get(i).getInvoiceNo().get(position);
+                String strShopId = tModels.get(i).getShopId();
+                Api api = ApiClients.getApiClients().create(Api.class);
+                Call<ModelInvoice> call = api.viewInvoice(strShopId, strInvoiceNo);
+                call.enqueue(new Callback<ModelInvoice>() {
+                    @Override
+                    public void onResponse(Call<ModelInvoice> call, Response<ModelInvoice> response) {
+                        ModelInvoice modelInvoice = response.body();
+                        tvReceiptInvoiceDate.setText(modelInvoice.getInvoiceDate());
+                        tvReceiptTotalInvoiceAmount.setText(modelInvoice.getInvoiceAmount());
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ModelInvoice> call, Throwable t) {
+
+                        CustomLog.d(Constant.TAG, "Invoice Not Responding : "+t);
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return view;
     }
     @SuppressLint("SetTextI18n")
@@ -113,19 +156,28 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 String strCurrentDate = DateUtils.getTodayDate();
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY, Locale.UK);
-                String strMyDate = sdf.format(myCalendar.getTime());
-                if (strMyDate.compareTo(strCurrentDate)<0) {
-                    tvReceiptCheckDate.setText(strMyDate);
+                SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+                try {
+                    Date myDate = sdf.parse(strCurrentDate);
+                    // long millis = myDate.getTime();
+                    String strMyDate = sdf.format(myCalendar.getTime());
+                    Date selDate = sdf.parse(strMyDate);
+                    if (selDate.compareTo(myDate)>0) {
+                        tvReceiptCheckDate.setText(strMyDate);
+                    }
+                    else {
+                        CustomToast.toastMid(getActivity(), Constant.DATE_DELIVERY);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                else {
-                    CustomToast.toastMid(tContext, Constant.DATE_TOAST);
-                }
+
+
+
             }
         };
         new DatePickerDialog(getContext(), date, myCalendar
@@ -139,7 +191,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     @OnClick(R.id.btn_receipt_submit)
     public void btnSubmitClicked(View view){
         if (signatureViewReceipt.isBitmapEmpty()){
-            CustomToast.toastTop(tContext, "Can't submit without signature...");
+            CustomToast.toastTop(getActivity(), "Can't submit without signature...");
         }
         Bitmap bitmapSign = signatureViewReceipt.getSignatureBitmap();
     }
@@ -221,7 +273,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constant.STORAGE_PERMISSION_CODE) {
             if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "You  denied the permission...", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "You  denied the permission...", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -230,7 +282,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
 
 
         if (strPaymentMode[position].equals("Cheque")){
-                CustomToast.toastTop(tContext, "Kindly fill the information... ");
+                CustomToast.toastTop(getActivity(), "Kindly fill the information... ");
                 llReceiptChequeDetail.setVisibility(View.VISIBLE);
         }
         else llReceiptChequeDetail.setVisibility(View.GONE);

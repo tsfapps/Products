@@ -16,7 +16,10 @@ public class SetImage {
     public static void setGalleryImage(Context tContext, ImageView imageView, Intent data){
         Uri contentURI = data.getData();
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(tContext).getContentResolver(), contentURI);
+            Bitmap bitmap = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(tContext).getContentResolver(), contentURI);
+            }
             imageView.setImageBitmap(bitmap);
         } catch (IOException e) {
             e.printStackTrace();

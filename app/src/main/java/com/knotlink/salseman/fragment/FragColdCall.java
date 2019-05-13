@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelColdCall;
@@ -59,6 +60,7 @@ public class FragColdCall extends Fragment {
 
     private void initFrag(){
         tContext = getContext();
+
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Cold Call", getActivity());
     }
@@ -83,12 +85,12 @@ public class FragColdCall extends Fragment {
             public void onResponse(Call<ModelColdCall> call, Response<ModelColdCall> response) {
                 tModels = response.body();
                 if (!tModels.getError()){
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragColdCall.this).commit();
                     getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
                 }
                 else {
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }
             }
             @Override

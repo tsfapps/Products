@@ -33,11 +33,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-            android:hint="Total Outstanding Amount"
+            android:hint="Total Outstanding Amount (₹)"
             style="@style/tv_report" />
         <TextView
             android:layout_alignParentEnd="true"
-            android:hint="Total Balance Amount"
+            android:hint="Total Balance Amount (₹)"
             style="@style/tv_report" />
         </RelativeLayout>
         <LinearLayout
@@ -80,7 +80,7 @@
         <TextView
             android:gravity="end"
             android:layout_weight="1"
-            android:hint="Total Invoice Amount"
+            android:hint="Total Invoice Amount (₹)"
             style="@style/tv_report" />
         </LinearLayout>
         <LinearLayout
@@ -104,14 +104,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:hint="Received Amount*"
+                android:hint="Received Amount* (₹)"
                 android:layout_weight="1"
                 style="@style/tv_report" />
 
             <TextView
                 android:gravity="end"
                 android:layout_weight="1"
-                android:hint="Pending Invoice Amount"
+                android:hint="Pending Invoice Amount (₹)"
                 style="@style/tv_report" />
         </LinearLayout>
         <LinearLayout
@@ -182,25 +182,35 @@
             android:hint="Cheque Number"
             style="@style/et_main" />
     </LinearLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_marginTop="0dp"
+                android:layout_weight="1"
              style="@style/tv_report"
                 android:hint="Name of Bank"
                 />
+            <TextView
+                android:layout_toStartOf="@+id/tv_receipt_image_label"
+                android:layout_weight=".15"
+                android:layout_marginTop="0dp"
+             style="@style/tv_report"
+                android:hint="Amount (₹)"
+                />
 
             <TextView
+                android:id="@+id/tv_receipt_image_label"
+                android:layout_weight=".05"
                 android:layout_marginTop="0dp"
                 android:layout_alignParentEnd="true"
                 style="@style/tv_report"
                 android:hint="@string/upload_image"
                 />
 
-        </RelativeLayout>
+        </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -213,6 +223,14 @@
                 android:layout_weight="1"
                 android:hint="Bank Name"
                 />
+            <EditText
+                android:id="@+id/et_receipt_chequeAmount"
+                style="@style/et_main"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_weight=".40"
+                android:hint="400000"
+                />
 
             <ImageView
                 android:id="@+id/iv_upload_receipt"
@@ -220,7 +238,7 @@
                 android:padding="2dp"
                 android:scaleType="fitXY"
                 android:layout_width="0dp"
-                android:layout_weight=".25"
+                android:layout_weight=".35"
                 android:src="@drawable/ic_sales_photo_add"
                  />
 

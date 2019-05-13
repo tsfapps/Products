@@ -1,5 +1,4 @@
-package com.knotlink.salseman.adapter;
-import android.annotation.SuppressLint;
+package com.knotlink.salseman.adapter.spinner;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,22 +7,27 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.model.ModelShopList;
 
-public class AdapterReceiptSpinnerPaymentMode extends BaseAdapter {
+import java.util.List;
+
+public class AdapterReceiptSpinnerInvoice extends BaseAdapter {
     private Context tContext;
-    private String[] strPaymentMode;
+    private String[] strInvoice;
+    private List<ModelShopList> tModels;
     private LayoutInflater inflater;
+    private int modelIndex;
 
-    public AdapterReceiptSpinnerPaymentMode(Context tContext, String[] strPaymentMode) {
+    public AdapterReceiptSpinnerInvoice(Context tContext, List<ModelShopList> tModels, int modelIndex) {
         this.tContext = tContext;
-        this.strPaymentMode = strPaymentMode;
+        this.tModels = tModels;
+        this.modelIndex = modelIndex;
         inflater = (LayoutInflater.from(tContext));
     }
 
-
     @Override
     public int getCount() {
-        return strPaymentMode.length;
+        return tModels.get(modelIndex).getInvoiceNo().size();
     }
 
     @Override
@@ -36,14 +40,14 @@ public class AdapterReceiptSpinnerPaymentMode extends BaseAdapter {
         return 0;
     }
 
-    @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.spn_receipt_payment_mode, null);
 //        ImageView icon =  view.findViewById(R.id.iv_report_spinner_activity);
         TextView names =  view.findViewById(R.id.tv_report_spinner_activity);
 //        icon.setImageResource(flags[i]);
-        names.setText(strPaymentMode[i]);
+        names.setText(tModels.get(modelIndex).getInvoiceNo().get(i));
         return view;
     }
+
 }

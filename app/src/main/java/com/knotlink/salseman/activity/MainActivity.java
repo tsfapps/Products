@@ -102,10 +102,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onDashboardClicked(){
         switch (strUserType) {
             case "1":
-                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance("1")).commit();
                 break;
             case "2":
-                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new FragDispatcher()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance("2")).commit();
                 break;
         }
     }

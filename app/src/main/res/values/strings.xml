@@ -5,7 +5,7 @@
     <string name="ending_kilometer">Click to upload\n Ending Kilometer</string>
     <string name="enter_ending_kilometer">Ending KM</string>
     <string name="enter_starting_kilometer">Starting KM</string>
-    <string name="dis_previous_month">Distance Travelled\n(Previous Month)</string>
+    <string name="dis_previous_month">Excess Distance\n(Previous Month)</string>
     <string name="dis_previous_day">Distance Travelled\n(Previous Day)</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

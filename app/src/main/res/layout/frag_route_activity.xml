@@ -16,9 +16,9 @@
         <android.support.v7.widget.CardView
             style="@style/card_dash">
             <LinearLayout
+                android:id="@+id/ll_route_new_order"
                 style="@style/ll_dash">
                 <ImageView
-                    android:id="@+id/iv_route_new_order"
                     style="@style/iv_dashboard"
                     android:src="@drawable/dash_new_order"
                     />
@@ -30,9 +30,9 @@
         <android.support.v7.widget.CardView
             style="@style/card_dash">
             <LinearLayout
+                android:id="@+id/ll_route_special_request"
                 style="@style/ll_dash">
                 <ImageView
-                    android:id="@+id/iv_route_special_request"
                     style="@style/iv_dashboard"
                     android:src="@drawable/dash_route_special_request"
                     />
@@ -57,9 +57,9 @@
         <android.support.v7.widget.CardView
             style="@style/card_dash">
             <LinearLayout
+                android:id="@+id/ll_dash_receipt"
                 style="@style/ll_dash">
                 <ImageView
-                    android:id="@+id/iv_dash_receipt"
                     style="@style/iv_dashboard"
                     android:src="@drawable/dash_route_receipt"
                     />
@@ -72,9 +72,9 @@
         <android.support.v7.widget.CardView
             style="@style/card_dash">
             <LinearLayout
+                android:id="@+id/ll_route_complain"
                 style="@style/ll_dash">
                 <ImageView
-                    android:id="@+id/iv_route_complain"
                     style="@style/iv_dashboard"
                     android:src="@drawable/ic_main_receipt"
                     />

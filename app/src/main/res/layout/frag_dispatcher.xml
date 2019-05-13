@@ -58,7 +58,7 @@
 
     <ImageView
         android:visibility="gone"
-        android:id="@+id/iv_dash_cold_call"
+        android:id="@+id/ll_dash_cold_call"
            style="@style/iv_dashboard"
             android:src="@drawable/ic_main_cold_call"
         />

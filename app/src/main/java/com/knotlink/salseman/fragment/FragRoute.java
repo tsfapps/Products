@@ -69,10 +69,8 @@ public class FragRoute extends Fragment {
     }
 
     private void callApi(){
-
         String strUserId = tSharedPrefManager.getUserId();
         String strPresentDay = DateUtils.getPresentDay();
-        CustomLog.d(Constant.TAG, "\nUser ID : "+ strUserId+"\nPresent Day : "+strPresentDay);
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<List<ModelShopList>> call = api.getShopDetail(strUserId, strPresentDay);
         call.enqueue(new Callback<List<ModelShopList>>() {

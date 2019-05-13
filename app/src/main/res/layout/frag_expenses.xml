@@ -83,7 +83,7 @@
         <LinearLayout
            style="@style/ll_expenses">
         <TextView
-            android:text="Cleaning Items"
+            android:text="Vehicle Expenses"
             style="@style/tv_expense_label" />
         <EditText
             android:id="@+id/et_cleaning_items"

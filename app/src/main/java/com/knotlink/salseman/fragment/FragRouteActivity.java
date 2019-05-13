@@ -52,7 +52,7 @@ import static android.app.Activity.RESULT_CANCELED;
 
 public class FragRouteActivity extends Fragment {
 
-    Context tContext;
+    private Context tContext;
     private List<ModelShopList> tModels;
     private ModelSpecialRequest tSpecialModels;
     private ModelFeedback tModelsFeedback;
@@ -98,17 +98,17 @@ public class FragRouteActivity extends Fragment {
         SetTitle.tbTitle("Route Activity", getActivity());
     }
 
-    @OnClick(R.id.iv_route_new_order)
+    @OnClick(R.id.ll_route_new_order)
     public void routeOrderClicked(View view){
         getFragmentManager().beginTransaction().replace(R.id.container_main, FragNewOrder.newInstance(tModels, i)).addToBackStack(null).commit();
     }
-    @OnClick(R.id.iv_dash_receipt)
+    @OnClick(R.id.ll_dash_receipt)
     public void receiptClicked(View view){
         getFragmentManager().beginTransaction().replace(R.id.container_main, FragReceipt.newInstance(tModels, i)).addToBackStack(null).commit();
     }
 
     //Special request clicked
-    @OnClick(R.id.iv_route_special_request)
+    @OnClick(R.id.ll_route_special_request)
     public void requestClicked(View view) {
         final Dialog dialog = new Dialog(tContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -156,10 +156,10 @@ public class FragRouteActivity extends Fragment {
             public void onResponse(Call<ModelSpecialRequest> call, Response<ModelSpecialRequest> response) {
                 tSpecialModels = response.body();
                 if (!tSpecialModels.getError()){
-                    CustomToast.toastTop(tContext, tSpecialModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tSpecialModels.getMessage());
                 }
                 else {
-                    CustomToast.toastTop(tContext, tSpecialModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tSpecialModels.getMessage());
                 }
             }
             @Override
@@ -168,7 +168,7 @@ public class FragRouteActivity extends Fragment {
         });
     }
     //Feedback clicked
-    @OnClick(R.id.iv_route_complain)
+    @OnClick(R.id.ll_route_complain)
     public void feedbackSubmit(View view) {
         final Dialog dialog = new Dialog(tContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -218,10 +218,10 @@ public class FragRouteActivity extends Fragment {
             public void onResponse(Call<ModelFeedback> call, Response<ModelFeedback> response) {
                 tModelsFeedback = response.body();
                 if (!tModelsFeedback.getError()){
-                    CustomToast.toastTop(tContext, tModelsFeedback.getMessage());
+                    CustomToast.toastTop(getActivity(), tModelsFeedback.getMessage());
                 }
                 else {
-                    CustomToast.toastTop(tContext, tModelsFeedback.getMessage());
+                    CustomToast.toastTop(getActivity(), tModelsFeedback.getMessage());
                 }
 
             }

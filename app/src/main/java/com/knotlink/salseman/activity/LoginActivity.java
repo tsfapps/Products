@@ -42,12 +42,10 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         tSharedPrefManager = new SharedPrefManager(this);
     }
-
     @OnClick(R.id.btn_login)
     public void onButtonClick(View view) {
         submitBtn();
     }
-
     private void submitBtn() {
         String mPhoneNo = et_phone.getText().toString().trim();
         String mPass = et_password.getText().toString().trim();
@@ -82,16 +80,17 @@ public class LoginActivity extends AppCompatActivity {
                                 strDob, strDoj, strImage, strVehicleNo, strUserType);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
+
                         finish();
-                    } else {
+
+                    }
+                    else {
                         Toast.makeText(getApplicationContext(), tModels.getMessage(), Toast.LENGTH_LONG).show();
                     }
-
                 }
                 @Override
                 public void onFailure(Call<ModelUser> call, Throwable t) {
                     CustomLog.e(Constant.TAG, "Not responding : " + t);
-
                 }
             });
 

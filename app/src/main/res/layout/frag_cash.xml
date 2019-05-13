@@ -289,6 +289,26 @@
         android:text="0"
         />
 </LinearLayout>
+<LinearLayout
+    android:orientation="horizontal"
+    style="@style/ll_main">
+       <TextView
+          style="@style/tv_cash_label"
+           android:text="Cheques"/>
+    <LinearLayout
+
+       style="@style/ll_cash_counter">
+    <EditText
+        android:id="@+id/et_cheque_number"
+       style="@style/tv_cash_counter"/>
+    </LinearLayout>
+    <EditText
+        android:id="@+id/et_cheque_amount"
+        android:textSize="10sp"
+       style="@style/tv_cash_counter"
+        android:hint="Total Amount"
+        />
+</LinearLayout>
         <View
             android:background="@color/colorPrimaryDark"
             android:layout_marginTop="@dimen/margin_top"

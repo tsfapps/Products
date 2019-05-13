@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
-import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
 import butterknife.BindView;
@@ -61,24 +60,24 @@ public class FragDashboard extends Fragment {
         SetTitle.tbTitle("Dashboard", getActivity());
         tFragmentManager = getFragmentManager();
     }
-    @OnClick(R.id.iv_dash_attendance)
+    @OnClick(R.id.ll_dash_attendance)
     public void dashAttendanceClicked(View view){
         tFragmentManager.beginTransaction().replace(R.id.container_main, new FragAttendance()).addToBackStack(null).commit();
     }
-    @OnClick(R.id.iv_dash_distance)
+    @OnClick(R.id.ll_dash_distance)
     public void disClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragDistance()).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragVehicleList()).addToBackStack(null).commit();
     }
-    @OnClick(R.id.iv_dash_meeting)
+    @OnClick(R.id.ll_dash_meeting)
     public void meetingClicked(View view){
         tFragmentManager.beginTransaction().replace(R.id.container_main, new FragMeeting()).addToBackStack(null).commit();
     }
- @OnClick(R.id.iv_dash_route)
+ @OnClick(R.id.ll_dash_route)
     public void orderClicked(View view){
         tFragmentManager.beginTransaction().replace(R.id.container_main, new FragRoute()).addToBackStack(null).commit();
     }
 
-    @OnClick(R.id.iv_dash_lead_generation)
+    @OnClick(R.id.ll_dash_lead_generation)
     public void leadClicked(View view){
         tFragmentManager.beginTransaction().replace(R.id.container_main, new FragLead()).addToBackStack(null).commit();
     }
@@ -86,15 +85,15 @@ public class FragDashboard extends Fragment {
 //    public void receiptClicked(View view){
 //        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragReceipt()).addToBackStack(null).commit();
 //    }
- @OnClick(R.id.iv_dash_cold_call)
+ @OnClick(R.id.ll_dash_cold_call)
     public void coldClicked(View view){
         tFragmentManager.beginTransaction().replace(R.id.container_main, new FragColdCall()).addToBackStack(null).commit();
     }
- @OnClick(R.id.iv_dash_cash_collection)
+ @OnClick(R.id.ll_dash_cash_collection)
     public void cashClicked(View view){
         tFragmentManager.beginTransaction().replace(R.id.container_main, new FragCash()).addToBackStack(null).commit();
     }
- @OnClick(R.id.iv_dash_expenses)
+ @OnClick(R.id.ll_dash_expenses)
     public void expensesClicked(View view){
         tFragmentManager.beginTransaction().replace(R.id.container_main, new FragExpenses()).addToBackStack(null).commit();
     }

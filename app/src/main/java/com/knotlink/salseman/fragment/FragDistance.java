@@ -1,6 +1,6 @@
 package com.knotlink.salseman.fragment;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelDistance;
@@ -32,7 +33,8 @@ import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomToast;
 import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
-import com.kosalgeek.android.photoutil.GalleryPhoto;
+
+
 
 import android.content.Intent;
 import android.widget.Toast;
@@ -51,6 +53,7 @@ import static android.app.Activity.RESULT_CANCELED;
 public class FragDistance extends Fragment {
 
 
+
     @BindView(R.id.iv_upload_start)
     protected ImageView ivUploadStart;
     @BindView(R.id.iv_upload_end)
@@ -58,7 +61,6 @@ public class FragDistance extends Fragment {
     @BindView(R.id.et_distance_startKm)
     protected EditText etDistanceStartKm;
     private Context tContext;
-    private Activity tActivity;
     private Bitmap tBitmap;
     private SharedPrefManager tSharedPrefManager;
 
@@ -74,7 +76,7 @@ public class FragDistance extends Fragment {
     }
 
     private void initFrag(){
-        tActivity = getActivity();
+
         tContext = getContext();
         getLocation();
         tSharedPrefManager = new SharedPrefManager(tContext);
@@ -194,12 +196,12 @@ public class FragDistance extends Fragment {
             public void onResponse(Call<ModelDistance> call, Response<ModelDistance> response) {
                 ModelDistance tModels = response.body();
                 if (!tModels.getError()){
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragDistance .this).commit();
                     getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
                 }
                 else {
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }
             }
             @Override

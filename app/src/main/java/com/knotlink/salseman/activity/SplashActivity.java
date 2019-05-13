@@ -25,6 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         tSharedPrefManager = new SharedPrefManager(getApplicationContext());
+        startHandler();
     }
 
     public void startHandler()
@@ -46,63 +47,63 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 2000);
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkLocationPermissions();
-        if (!isServiceRunning(NetworkStateService.class)) {
-            startNetworkService();
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        checkLocationPermissions();
+//        if (!isServiceRunning(NetworkStateService.class)) {
+//            startNetworkService();
+//        }
+//    }
 
-    private void startNetworkService() {
-        Intent intent = new Intent(this, NetworkStateService.class);
-        startService(intent);
-    }
+//    private void startNetworkService() {
+//        Intent intent = new Intent(this, NetworkStateService.class);
+//        startService(intent);
+//    }
 
-    private boolean isServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                CustomLog.d(TAG,"NetworkService is running");
-                return true;
-            }
-        }
-        CustomLog.d(TAG,"NetworkService is not running");
-        return false;
-    }
-    private void checkLocationPermissions() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        } else {
-            startHandler();
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startHandler();
-                } else {
-                    CustomLog.d(TAG,"onRequestPermission result denied finishing activity");
-                    // todo  need to correct logic..
-                  /*  if (sharePref.getPermissionSettingPage()) {
-                        openAppPermissionSetting();
-                    } else {
-                        sharePref.setPermissionSettingPage(true);
-                        finish();
-                    }*/
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request.
-        }
-    }
+//    private boolean isServiceRunning(Class<?> serviceClass) {
+//        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+//            if (serviceClass.getName().equals(service.service.getClassName())) {
+//                CustomLog.d(TAG,"NetworkService is running");
+//                return true;
+//            }
+//        }
+//        CustomLog.d(TAG,"NetworkService is not running");
+//        return false;
+//    }
+//    private void checkLocationPermissions() {
+//        if (ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+//        } else {
+//
+//        }
+//    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+//        switch (requestCode) {
+//            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    startHandler();
+//                } else {
+//                    CustomLog.d(TAG,"onRequestPermission result denied finishing activity");
+//                    // todo  need to correct logic..
+//                  /*  if (sharePref.getPermissionSettingPage()) {
+//                        openAppPermissionSetting();
+//                    } else {
+//                        sharePref.setPermissionSettingPage(true);
+//                        finish();
+//                    }*/
+//                }
+//                return;
+//            }
+//
+//            // other 'case' lines to check for other
+//            // permissions this app might request.
+//        }
+//    }
 
 }

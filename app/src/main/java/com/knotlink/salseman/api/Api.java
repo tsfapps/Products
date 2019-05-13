@@ -6,11 +6,14 @@ import com.knotlink.salseman.model.ModelColdCall;
 import com.knotlink.salseman.model.ModelDistance;
 import com.knotlink.salseman.model.ModelExpenses;
 import com.knotlink.salseman.model.ModelFeedback;
+import com.knotlink.salseman.model.ModelInvoice;
 import com.knotlink.salseman.model.ModelLead;
 import com.knotlink.salseman.model.ModelMeeting;
+import com.knotlink.salseman.model.ModelNewOrder;
 import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.model.ModelSpecialRequest;
 import com.knotlink.salseman.model.ModelTask;
+import com.knotlink.salseman.model.ModelVehicleList;
 import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.model.report.ModelReportColdCall;
 import com.knotlink.salseman.model.report.ModelReportDistance;
@@ -26,6 +29,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface Api{
@@ -83,13 +87,7 @@ public interface Api{
  @FormUrlEncoded
     @POST("api/api_distance_upload.php")
     Call<ModelDistance> uploadDistance(
-//            starting_pincode
-//
-//
-//
-//ending_pincode
-//
-//ending_city
+
             @Field("user_id") String user_id,
             @Field("starting_km") String starting_km,
             @Field("starting_img") String starting_img,
@@ -99,7 +97,24 @@ public interface Api{
             @Field("starting_city") String starting_city,
             @Field("starting_address") String starting_address
     );
+    @POST("api/api_vehicle.php")
+    Call<List<ModelVehicleList>> vehicleList(
+    );
 
+
+ @FormUrlEncoded
+    @POST("api/api_new_order.php")
+    Call<ModelNewOrder> uploadNewOrder(
+            @Field("user_id") String user_id,
+            @Field("shop_id") String shop_id,
+            @Field("date_of_delivery") String date_of_delivery,
+            @Field("remarks") String remarks,
+            @Field("signature") String signature,
+            @Field("ordered_image") String ordered_image,
+          //  @Field("product_id") String product_id
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude
+    );
  @FormUrlEncoded
     @POST("api/api_cold_call.php")
     Call<ModelColdCall> uploadColdCall(
@@ -127,7 +142,8 @@ public interface Api{
             @Field("email") String email,
           //  @Field("city_id") String city_id,
             @Field("remarks") String remarks,
-            @Field("image") String image
+            @Field("image") String image,
+            @Field("next_meeting_date") String next_meeting_date
 //            @Field("latitude") String latitude,
 //            @Field("longitude") String longitude
     );
@@ -261,5 +277,11 @@ public interface Api{
             @Field("table") String table_name,
             @Field("from_date") String from_date,
             @Field("to_date") String to_date
+    );
+ @FormUrlEncoded
+    @POST("api/api_invoice_fetch.php")
+    Call<ModelInvoice> viewInvoice(
+            @Field("shop_id") String shop_id,
+            @Field("invoice_no") String invoice_no
     );
 }

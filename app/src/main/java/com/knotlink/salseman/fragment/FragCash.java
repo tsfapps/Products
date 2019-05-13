@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelCash;
@@ -30,6 +31,7 @@ import retrofit2.Response;
 public class FragCash extends Fragment {
 
     private Context tContext;
+
     private SharedPrefManager tSharedPrefManager;
     private ModelCash tModels;
     private int countTwoTh = 0;
@@ -392,11 +394,11 @@ public class FragCash extends Fragment {
             public void onResponse(Call<ModelCash> call, Response<ModelCash> response) {
                 tModels = response.body();
                 if (!tModels.getError()) {
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragCash.this).commit();
                     getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
                 } else {
-                    CustomToast.toastTop(tContext, tModels.getMessage());
+                    CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }
         }
             @Override

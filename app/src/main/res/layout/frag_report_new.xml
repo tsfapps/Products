@@ -58,9 +58,9 @@
                 <android.support.v7.widget.CardView
                     style="@style/card_dash_report">
                     <LinearLayout
+                        android:id="@+id/ll_report_attendance"
                         style="@style/ll_dash_report">
                         <ImageView
-                            android:id="@+id/iv_report_attendance"
                             style="@style/iv_dashboard"
                             android:src="@drawable/ic_salse_attendence"/>
                         <TextView
@@ -71,9 +71,9 @@
                 <android.support.v7.widget.CardView
                     style="@style/card_dash_report">
                     <LinearLayout
+                        android:id="@+id/ll_report_route"
                         style="@style/ll_dash_report">
                         <ImageView
-                            android:id="@+id/iv_report_route"
                             style="@style/iv_dashboard"
                             android:src="@drawable/ic_main_route"
                             />
@@ -85,10 +85,9 @@
                 <android.support.v7.widget.CardView
                     style="@style/card_dash_report">
                     <LinearLayout
+                        android:id="@+id/ll_report_meeting"
                         style="@style/ll_dash_report">
                         <ImageView
-
-                            android:id="@+id/iv_report_meeting"
                             style="@style/iv_dashboard"
                             android:src="@drawable/ic_main_meeting"
                             />
@@ -101,14 +100,28 @@
                 <android.support.v7.widget.CardView
                     style="@style/card_dash_report">
                     <LinearLayout
+                        android:id="@+id/ll_report_cashCollection"
                         style="@style/ll_dash_report">
                         <ImageView
-                            android:id="@+id/iv_report_cashCollection"
                             style="@style/iv_dashboard"
-                            android:src="@drawable/ic_main_rupee"
+                            android:src="@drawable/ic_main_rupee" />
+                        <TextView
+                            android:text="Collection Report"
+                            style="@style/tv_dash_label" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report">
+                    <LinearLayout
+                        android:id="@+id/ll_report_vehicleReport"
+                        style="@style/ll_dash_report">
+                        <ImageView
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_vehicle"
                             />
                         <TextView
-                            android:text="Cash Collection Report"
+                            android:text="Vehicle Report"
                             style="@style/tv_dash_label" />
 
                     </LinearLayout>
@@ -128,9 +141,9 @@
                 <android.support.v7.widget.CardView
                     style="@style/card_dash_report">
                     <LinearLayout
+                        android:id="@+id/ll_report_distance"
                         style="@style/ll_dash_report">
                         <ImageView
-                            android:id="@+id/iv_report_distance"
                             style="@style/iv_dashboard"
                             android:src="@drawable/ic_main_distance"/>
                         <TextView
@@ -143,9 +156,9 @@
                 <android.support.v7.widget.CardView
                     style="@style/card_dash_report">
                     <LinearLayout
+                        android:id="@+id/ll_report_leadGeneration"
                         style="@style/ll_dash_report">
                         <ImageView
-                            android:id="@+id/iv_report_leadGeneration"
                             style="@style/iv_dashboard"
                             android:src="@drawable/ic_main_lead"
                             />
@@ -158,9 +171,9 @@
                 <android.support.v7.widget.CardView
                     style="@style/card_dash_report">
                     <LinearLayout
+                        android:id="@+id/ll_report_coldCall"
                         style="@style/ll_dash_report">
                         <ImageView
-                            android:id="@+id/iv_report_coldCall"
                             style="@style/iv_dashboard"
                             android:src="@drawable/ic_main_cold_call"
                             />
@@ -175,17 +188,32 @@
                     style="@style/card_dash_report"
                     >
                     <LinearLayout
+                        android:id="@+id/ll_report_expenses"
                         style="@style/ll_dash_report"
                         >
                         <ImageView
-                            android:id="@+id/iv_report_expenses"
                             style="@style/iv_dashboard"
                             android:src="@drawable/ic_main_expenses"
                             />
                         <TextView
                             android:text="Expenses Report"
                             style="@style/tv_dash_label" />
-
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    style="@style/card_dash_report"
+                    >
+                    <LinearLayout
+                        android:id="@+id/ll_report_guestLogin"
+                        style="@style/ll_dash_report"
+                        >
+                        <ImageView
+                            style="@style/iv_dashboard"
+                            android:src="@drawable/ic_guest_login"
+                            />
+                        <TextView
+                            android:text="Guest Login Report"
+                            style="@style/tv_dash_label" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>
