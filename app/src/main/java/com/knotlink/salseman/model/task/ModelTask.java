@@ -1,4 +1,4 @@
-package com.knotlink.salseman.model;
+package com.knotlink.salseman.model.task;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,6 +7,9 @@ public class ModelTask {
     @SerializedName("id")
     @Expose
     private String id;
+    @SerializedName("task_id")
+    @Expose
+    private String taskId;
     @SerializedName("user_id")
     @Expose
     private String userId;
@@ -18,7 +21,7 @@ public class ModelTask {
     private String taskDueDate;
     @SerializedName("task_completion_date")
     @Expose
-    private String taskCompletionDate;
+    private Object taskCompletionDate;
     @SerializedName("task_time")
     @Expose
     private String taskTime;
@@ -36,13 +39,34 @@ public class ModelTask {
     private String remarks;
     @SerializedName("user_remarks")
     @Expose
-    private String userRemarks;
-    @SerializedName("remarks_date")
-    @Expose
-    private String remarksDate;
+    private Object userRemarks;
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("route_id")
+    @Expose
+    private Object routeId;
+    @SerializedName("whatsapp_no")
+    @Expose
+    private String whatsappNo;
+    @SerializedName("latitude")
+    @Expose
+    private String latitude;
+    @SerializedName("longitude")
+    @Expose
+    private String longitude;
+    @SerializedName("city")
+    @Expose
+    private String city;
+    @SerializedName("pincode")
+    @Expose
+    private String pincode;
+    @SerializedName("task_type")
+    @Expose
+    private String taskType;
+    @SerializedName("vendor_type")
+    @Expose
+    private Object vendorType;
 
     public String getId() {
         return id;
@@ -50,6 +74,14 @@ public class ModelTask {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     public String getUserId() {
@@ -76,11 +108,11 @@ public class ModelTask {
         this.taskDueDate = taskDueDate;
     }
 
-    public String getTaskCompletionDate() {
+    public Object getTaskCompletionDate() {
         return taskCompletionDate;
     }
 
-    public void setTaskCompletionDate(String taskCompletionDate) {
+    public void setTaskCompletionDate(Object taskCompletionDate) {
         this.taskCompletionDate = taskCompletionDate;
     }
 
@@ -124,20 +156,12 @@ public class ModelTask {
         this.remarks = remarks;
     }
 
-    public String getUserRemarks() {
+    public Object getUserRemarks() {
         return userRemarks;
     }
 
-    public void setUserRemarks(String userRemarks) {
+    public void setUserRemarks(Object userRemarks) {
         this.userRemarks = userRemarks;
-    }
-
-    public String getRemarksDate() {
-        return remarksDate;
-    }
-
-    public void setRemarksDate(String remarksDate) {
-        this.remarksDate = remarksDate;
     }
 
     public String getStatus() {
@@ -148,4 +172,67 @@ public class ModelTask {
         this.status = status;
     }
 
+    public Object getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(Object routeId) {
+        this.routeId = routeId;
+    }
+
+    public String getWhatsappNo() {
+        return whatsappNo;
+    }
+
+    public void setWhatsappNo(String whatsappNo) {
+        this.whatsappNo = whatsappNo;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
+
+    public Object getVendorType() {
+        return vendorType;
+    }
+
+    public void setVendorType(Object vendorType) {
+        this.vendorType = vendorType;
+    }
 }

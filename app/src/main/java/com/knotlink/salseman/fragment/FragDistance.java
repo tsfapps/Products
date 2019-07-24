@@ -2,29 +2,30 @@ package com.knotlink.salseman.fragment;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.ModelDistance;
+import com.knotlink.salseman.model.distance.ModelDistance;
+import com.knotlink.salseman.model.ModelVehicleList;
+import com.knotlink.salseman.model.distance.ModelDistanceUpdate;
 import com.knotlink.salseman.services.GPSTracker;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.CheckPermission;
@@ -37,9 +38,10 @@ import com.knotlink.salseman.utils.SetTitle;
 
 
 import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +51,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragDistance extends Fragment {
 
@@ -56,22 +59,44 @@ public class FragDistance extends Fragment {
 
     @BindView(R.id.iv_upload_start)
     protected ImageView ivUploadStart;
+    @BindView(R.id.btn_distance_submitStart)
+    protected Button btn_distance_submitStart;
+    @BindView(R.id.btn_distance_submitEnding)
+    protected Button btn_distance_submitEnding;
     @BindView(R.id.iv_upload_end)
     protected ImageView ivUploadEnd;
     @BindView(R.id.et_distance_startKm)
     protected EditText etDistanceStartKm;
+    @BindView(R.id.et_distance_endingKm)
+    protected EditText etDistanceEndingKm;
+    @BindView(R.id.tv_distance_vehicleNumber)
+    protected TextView tv_distance_vehicleNumber;
     private Context tContext;
-    private Bitmap tBitmap;
+    private Bitmap tBitmapStart;
+    private Bitmap tBitmapEnd;
+
     private SharedPrefManager tSharedPrefManager;
 
+    private Drawable drawable;
+    private String strVehicleNo;
+    private String strStartKm;
+    private String strEndingKm;
+    private List<ModelVehicleList> tLists;
+    private int i;
 
+    public static FragDistance newInstance(List<ModelVehicleList> tLists, int i) {
+
+        FragDistance fragment = new FragDistance();
+        fragment.tLists = tLists;
+        fragment.i = i;
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_distance, container, false);
         ButterKnife.bind(this, view);
         initFrag();
-
         return view;
     }
 
@@ -81,47 +106,43 @@ public class FragDistance extends Fragment {
         getLocation();
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Upload Distance", getActivity());
+        etDistanceStartKm.setText(tSharedPrefManager.getStartKm());
+        if (!tSharedPrefManager.getStartKm().equals("")){
+            btn_distance_submitStart.setVisibility(View.GONE);
+            btn_distance_submitEnding.setVisibility(View.VISIBLE);
+            strStartKm = tSharedPrefManager.getStartKm();
+
+        }
+        if (!tSharedPrefManager.getStartImage().equals("")) {
+
+            ivUploadStart.setImageBitmap(getBitImage(tSharedPrefManager.getStartImage()));
+
+        }
+        if (!tSharedPrefManager.getVehicleNo().equals("")){
+            tv_distance_vehicleNumber.setText(tSharedPrefManager.getVehicleNo());
+
+        }else {
+
+                strVehicleNo = tLists.get(i).getVehicleNo();
+                tv_distance_vehicleNumber.setText(strVehicleNo);
+
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @OnClick(R.id.iv_upload_start)
     public void onUploadClick(View view){
-       showPictureDialog();
-       Constant.UPLOAD_START = true;
+//       showPictureDialog();
+        takePhotoFromCamera();
+
+        Constant.UPLOAD_START = true;
     }
 
     @OnClick(R.id.iv_upload_end)
     public void onUploadEndClick(View view){
-        showPictureDialog();
+       // showPictureDialog();
+        takePhotoFromCamera();
         Constant.UPLOAD_START = false;
-    }
-    private void showPictureDialog(){
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-        pictureDialog.setTitle("Select Action");
-        String[] pictureDialogItems = {"Photo Gallery", "Camera" };
-        pictureDialog.setItems(pictureDialogItems,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                choosePhotoFromGallery();
-                                break;
-                            case 1:
-                                takePhotoFromCamera();
-                                break;
-                        }
-                    }
-                });
-        pictureDialog.show();
-    }
-    private void choosePhotoFromGallery() {
-        if (CheckPermission.isReadStorageAllowed(getContext())) {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, Constant.GALLERY);
-            return;
-        }
-        CheckPermission.requestStoragePermission(getActivity());
     }
     private void takePhotoFromCamera() {
         if (CheckPermission.isCameraAllowed(getContext())) {
@@ -137,27 +158,15 @@ public class FragDistance extends Fragment {
         if (resultCode == RESULT_CANCELED) {
             return;
         }
-        if (requestCode == Constant.GALLERY) {
-            if (data != null) {
-                if (Constant.UPLOAD_START) {
-                    SetImage.setGalleryImage(tContext, ivUploadStart, data);
-                    BitmapDrawable drawable = (BitmapDrawable)ivUploadStart.getDrawable();
-                    tBitmap = drawable.getBitmap();
-                }
-                else {
-                    SetImage.setGalleryImage(tContext, ivUploadEnd, data);
-                }
-            }
-        } else if (requestCode == Constant.CAMERA) {
             if (Constant.UPLOAD_START) {
-
-                tBitmap = (Bitmap) data.getExtras().get("data");
-                ivUploadStart.setImageBitmap(tBitmap);
+                SetImage.setCameraImage(ivUploadStart, data);
+                tBitmapStart = (Bitmap) data.getExtras().get("data");
+                ivUploadStart.setImageBitmap(tBitmapStart);
             }else {
                 SetImage.setCameraImage(ivUploadEnd, data);
-
+                tBitmapEnd = (Bitmap) data.getExtras().get("data");
+                ivUploadEnd.setImageBitmap(tBitmapEnd);
             }
-        }
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -168,59 +177,124 @@ public class FragDistance extends Fragment {
         }
     }
 
-    private String imageToString(){
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        tBitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-        byte[] imByte = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imByte,Base64.DEFAULT);
-    }
 
-    private void callApi(){
-
-        String strStartKm = etDistanceStartKm.getText().toString().trim();
-        GPSTracker gpsTracker = new GPSTracker(tContext);
-        if (gpsTracker.getIsGPSTrackingEnabled()) {
-            String stringLatitude = String.valueOf(gpsTracker.latitude);
-            String stringLongitude = String.valueOf(gpsTracker.longitude);
-            String strCity = gpsTracker.getLocality(tContext);
-            String strPinCode = gpsTracker.getPostalCode(tContext);
-            String addressLine = gpsTracker.getAddressLine(tContext);
-            CustomLog.d(Constant.TAG, "Latitude : "+ stringLatitude +"\nLongitude : "+stringLongitude+"\nAddress Line : "+addressLine);
-            String strUserId = tSharedPrefManager.getUserId();
-
-        String strImg = imageToString();
-        Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelDistance> call = api.uploadDistance(strUserId, strStartKm, strImg, stringLatitude, stringLongitude,  strPinCode, strCity, addressLine);
-        call.enqueue(new Callback<ModelDistance>() {
-            @Override
-            public void onResponse(Call<ModelDistance> call, Response<ModelDistance> response) {
-                ModelDistance tModels = response.body();
-                if (!tModels.getError()){
-                    CustomToast.toastTop(getActivity(), tModels.getMessage());
-                    getFragmentManager().beginTransaction().remove(FragDistance .this).commit();
-                    getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
-                }
-                else {
-                    CustomToast.toastTop(getActivity(), tModels.getMessage());
-                }
-            }
-            @Override
-            public void onFailure(Call<ModelDistance> call, Throwable t) {
-                CustomLog.e(Constant.TAG, "Not Responding : "+t);
-            }
-        });
+    private void callStartingApi() {
+        final String strImgStart = imageToString(tBitmapStart, ivUploadStart);
+        strStartKm = etDistanceStartKm.getText().toString().trim();
+        if (strImgStart.equals("")){
+            CustomToast.toastTop(getActivity(), "Please upload your speedometer image before starting the trip...");
         }
         else
-        {
-            gpsTracker.showSettingsAlert();
+       if (strStartKm.equals("")) {
+            etDistanceStartKm.setError("Enter the last four digit of speedometer reading...");
+        } else {
+           GPSTracker gpsTracker = new GPSTracker(tContext);
+            if (gpsTracker.getIsGPSTrackingEnabled()) {
+                String stringLatitude = String.valueOf(gpsTracker.latitude);
+                String stringLongitude = String.valueOf(gpsTracker.longitude);
+                String strCity = gpsTracker.getCity(tContext);
+                String strPinCode = gpsTracker.getPostalCode(tContext);
+                String addressLine = gpsTracker.getAddressLine(tContext);
+                String strUserId = tSharedPrefManager.getUserId();
+                Api api = ApiClients.getApiClients().create(Api.class);
+                Call<ModelDistance> call = api.uploadDistance(strUserId, strStartKm, strImgStart, stringLatitude, stringLongitude, strPinCode, strCity, addressLine, strVehicleNo);
+                call.enqueue(new Callback<ModelDistance>() {
+                    @Override
+                    public void onResponse(Call<ModelDistance> call, Response<ModelDistance> response) {
+                        ModelDistance tModels = response.body();
+                        if (!tModels.getError()) {
+                            CustomToast.toastTop(getActivity(), tModels.getMessage());
+                            getFragmentManager().beginTransaction().remove(FragDistance.this).commit();
+                            getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+                            btn_distance_submitStart.setVisibility(View.GONE);
+                            btn_distance_submitEnding.setVisibility(View.VISIBLE);
+                            tSharedPrefManager.setStartingKm(strStartKm, strVehicleNo, strImgStart);
+                        } else {
+                            CustomToast.toastTop(getActivity(), tModels.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ModelDistance> call, Throwable t) {
+                        CustomLog.e(Constant.TAG, "Not Responding : " + t);
+                    }
+                });
+            } else {
+                gpsTracker.showSettingsAlert();
+            }
         }
     }
-    @OnClick(R.id.btn_distance_submit)
-    public void uploadImage(View view){
-        callApi();
+    //
+    @OnClick(R.id.btn_distance_submitStart)
+    public void uploadStartData(View view){
+        callStartingApi();
+    }
+    private void callEndingApi(){
+        String strVehicleNumber = tv_distance_vehicleNumber.getText().toString().trim();
+        CustomLog.e(Constant.TAG, "Vehicle Number : "+strVehicleNumber);
+        strEndingKm = etDistanceEndingKm.getText().toString().trim();
+        String strImgEnd = imageToString(tBitmapEnd, ivUploadEnd);
+        if (strImgEnd.equals("")){
+            CustomToast.toastTop(getActivity(), "Upload the speedometer image before ending the trip...");
+        }
+        else
+        if (strEndingKm.equals("")){
+            etDistanceEndingKm.setError("Enter the last four digit of speedometer reading...");
+        }
+        else
+        if (Integer.parseInt(strEndingKm) < Integer.parseInt(strStartKm))
+        {
+            etDistanceEndingKm.setError("Ending kilometer must be greater than starting kilometer...");
+        }
+        else {
+            CustomLog.e(Constant.TAG, "Image to string : "+strImgEnd);
+            final int totalDistance = Integer.parseInt(strEndingKm) - Integer.parseInt(strStartKm);
+            GPSTracker gpsTracker = new GPSTracker(tContext);
+            if (gpsTracker.getIsGPSTrackingEnabled()) {
+                String stringLatitude = String.valueOf(gpsTracker.latitude);
+                String stringLongitude = String.valueOf(gpsTracker.longitude);
+                String strCity = gpsTracker.getCity(tContext);
+                String strPinCode = gpsTracker.getPostalCode(tContext);
+                String addressLine = gpsTracker.getAddressLine(tContext);
+                String strUserId = tSharedPrefManager.getUserId();
 
+                Api api = ApiClients.getApiClients().create(Api.class);
+                Call<ModelDistanceUpdate> call = api.uploadDistanceEnding(strUserId, strEndingKm, strImgEnd, stringLatitude, stringLongitude, strPinCode, strCity, addressLine, strVehicleNumber);
+                call.enqueue(new Callback<ModelDistanceUpdate>() {
+                    @Override
+                    public void onResponse(Call<ModelDistanceUpdate> call, Response<ModelDistanceUpdate> response) {
+                        ModelDistanceUpdate tModels = response.body();
+                        if (!tModels.getError()) {
+                            CustomToast.toastTop(getActivity(), "Today you travelled "+totalDistance+" KM");
+                            tSharedPrefManager.clearDistanceStatus();
+                            getFragmentManager().beginTransaction().remove(FragDistance.this).commit();
+                            getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+
+                        } else {
+                            CustomToast.toastTop(getActivity(), tModels.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ModelDistanceUpdate> call, Throwable t) {
+                        CustomLog.e(Constant.TAG, "Not Responding : " + t);
+                    }
+                });
+            } else {
+                gpsTracker.showSettingsAlert();
+            }
+        }
+    }
+    @OnClick(R.id.btn_distance_submitEnding)
+    public void uploadEndData(View view){
+            callEndingApi();
     }
 
+    public static Bitmap getBitImage(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
     private void getLocation(){
         GPSTracker gpsTracker = new GPSTracker(tContext);
 
@@ -232,20 +306,15 @@ public class FragDistance extends Fragment {
 
             String country = gpsTracker.getCountryName(tContext);
 
-            String city = gpsTracker.getLocality(tContext);
+            String city = gpsTracker.getCity(tContext);
 
             String postalCode = gpsTracker.getPostalCode(tContext);
 
             String addressLine = gpsTracker.getAddressLine(tContext);
 
-            CustomLog.d(Constant.TAG, "Latitude : "+ stringLatitude +"\nLongitude : "+stringLongitude+"\nCountry : "+country
-            +"\nCity : "+city+"\nPin Code : "+postalCode+"\nAddress Line : "+addressLine);
         }
         else
         {
-            // can't get location
-            // GPS or Network is not enabled
-            // Ask user to enable GPS/network in settings
             gpsTracker.showSettingsAlert();
         }
     }

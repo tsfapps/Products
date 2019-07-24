@@ -1,6 +1,10 @@
 package com.knotlink.salseman.utils;
 
 public class Constant {
+
+
+    public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 101;
+
     public static final String TAG = "tsfapps";
     public static String SIGN_STATUS = "signDone";
     public static final String TSF_SHARED_PREFENCE = "apartment_shared_pref";
@@ -8,6 +12,7 @@ public class Constant {
     public static final int GALLERY = 1200;
     public static final int CAMERA = 2;
     public static boolean UPLOAD_START = false;
+    public static final String IS_UPLOAD_IMAGE = "Upload Image";
     public static final String DATE_FORMAT_DD_MMM_YYYY = "dd MMM yyyy";
     public static final String DATE_FORMAT_dd_MMMM_yyyy = "dd MMMM yyyy";
     public static final String TIME_FORMAT_hh_mm = "hh:mm a";
@@ -48,12 +53,18 @@ public class Constant {
     public static  final  String BTN_CHECK_IN="Check In";
     public static  final  String BTN_CHECK_OUT="Check Out";
     public static  final  String START_TIME="Started Time";
+
     public static  final  String START_TIME_LABEL="You Started At";
     public static  final  String FINISH_TIME_LABEL="You Finished At";
     public static  final  String START_LABEL="You Started At";
     public static  final  String FINISH_LABEL="You Finished At";
 
 
+    //Distance Upload
+    public static  final  String START_KM="Starting Km";
+    public static  final  String START_IMAGE="Starting Image";
+    public static  final  String START_VEHICLE_NO="Vehicle No";
+    public static  final  String ENDING_KM="Ending Km";
     //        "status": "0",
     //        "image": "user.png",
 

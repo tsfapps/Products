@@ -39,7 +39,7 @@
             <TextView
                 android:layout_weight="1"
                 android:layout_marginTop="0dp"
-                android:id="@+id/tv_order_select_product"
+                android:id="@+id/tvOrderSelectProduct"
                 android:hint="Select Products"
                 android:layout_height="match_parent"
                 android:layout_width="120dp"
@@ -52,13 +52,13 @@
             android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_order_request_label"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="@dimen/margin_8"
             style="@style/tv_dash_label"
             android:text="Remarks"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:id="@+id/tv_order_image_label"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="@dimen/margin_8"
             style="@style/tv_dash_label"
             android:text="Upload Image"/>
         </RelativeLayout>
@@ -79,16 +79,20 @@
                android:layout_height="match_parent"
                 android:background="@drawable/bg_et"/>
 
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_weight=".6"
+                android:background="@drawable/ic_sales_photo_add"
+                android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/iv_upload_order"
                 android:scaleType="fitXY"
                 android:padding="2dp"
                 android:layout_marginStart="-2dp"
-                android:layout_width="0dp"
-                android:layout_weight=".6"
-                android:src="@drawable/ic_sales_photo_add"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_et"/>
+                />
+            </FrameLayout>
         </LinearLayout>
         <TextView
             android:id="@+id/orderGetSignature"

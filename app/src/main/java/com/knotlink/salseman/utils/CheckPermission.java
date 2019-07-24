@@ -3,11 +3,15 @@ package com.knotlink.salseman.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 
-public class CheckPermission {
+public class CheckPermission extends AppCompatActivity {
 
 //    private Activity tActivity;
 //    private Context tContext;
@@ -45,6 +49,16 @@ public class CheckPermission {
         String permission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
         int res = tContext.checkCallingOrSelfPermission(permission);
         return (res == PackageManager.PERMISSION_GRANTED);
+    }
+
+
+
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
     }
 
 }

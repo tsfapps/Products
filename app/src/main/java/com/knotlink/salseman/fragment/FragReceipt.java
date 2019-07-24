@@ -113,25 +113,33 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
         spnReceiptInvoiceNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String strInvoiceNo = tModels.get(i).getInvoiceNo().get(position);
-                String strShopId = tModels.get(i).getShopId();
-                Api api = ApiClients.getApiClients().create(Api.class);
-                Call<ModelInvoice> call = api.viewInvoice(strShopId, strInvoiceNo);
-                call.enqueue(new Callback<ModelInvoice>() {
-                    @Override
-                    public void onResponse(Call<ModelInvoice> call, Response<ModelInvoice> response) {
-                        ModelInvoice modelInvoice = response.body();
-                        tvReceiptInvoiceDate.setText(modelInvoice.getInvoiceDate());
-                        tvReceiptTotalInvoiceAmount.setText(modelInvoice.getInvoiceAmount());
 
-                    }
 
-                    @Override
-                    public void onFailure(Call<ModelInvoice> call, Throwable t) {
 
-                        CustomLog.d(Constant.TAG, "Invoice Not Responding : "+t);
-                    }
-                });
+                    String strInvoiceNo = tModels.get(i).getInvoiceNo().get(position);
+                    String strShopId = tModels.get(i).getShopId();
+                    Api api = ApiClients.getApiClients().create(Api.class);
+                if (!strInvoiceNo.equalsIgnoreCase("")) {
+                    Call<ModelInvoice> call = api.viewInvoice(strShopId, strInvoiceNo);
+                    call.enqueue(new Callback<ModelInvoice>() {
+                        @Override
+                        public void onResponse(Call<ModelInvoice> call, Response<ModelInvoice> response) {
+                            ModelInvoice modelInvoice = response.body();
+                            tvReceiptInvoiceDate.setText(modelInvoice.getInvoiceDate());
+                            tvReceiptTotalInvoiceAmount.setText(modelInvoice.getInvoiceAmount());
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<ModelInvoice> call, Throwable t) {
+
+                            CustomLog.d(Constant.TAG, "Invoice Not Responding : " + t);
+                        }
+                    });
+                }else {
+                    CustomToast.toastTop(getActivity(), "Invoice data is not available...");
+                }
+
             }
 
             @Override

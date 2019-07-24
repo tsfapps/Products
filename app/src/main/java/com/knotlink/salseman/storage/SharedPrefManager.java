@@ -26,7 +26,48 @@ public class SharedPrefManager {
         return mInstance;
     }
 
+    //Distance Upload
+    public void setStartingKm(String startTime, String vehicleNo, String strImageStart){
+        SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        tEditor = tSharedPreferences.edit();
+        tEditor.putString(Constant.START_KM, startTime);
+        tEditor.putString(Constant.START_VEHICLE_NO, vehicleNo);
+        tEditor.putString(Constant.IS_UPLOAD_IMAGE, strImageStart);
+       // tEditor.putString(Constant.ENDING_KM, startTimeLabel);
+        tEditor.apply();
+    }
+    public String getStartKm(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        return sp.getString(Constant.START_KM, Constant.EMPTY);
+    }
+    public String getStartImage(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        return sp.getString(Constant.START_IMAGE, Constant.EMPTY);
+    }
+    public boolean getIsImageUpload(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        return sp.getBoolean(Constant.IS_UPLOAD_IMAGE, Constant.EMPTY_BOOL);
+    }
+    public String getEndingKm(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        return sp.getString(Constant.ENDING_KM, Constant.EMPTY);
+    }
+    public String getVehicleNo(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        return sp.getString(Constant.START_VEHICLE_NO, Constant.EMPTY);
+    }
+    public void clearDistanceStatus(){
+        SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        tEditor = tSharedPreferences.edit();
+        tEditor.remove(Constant.START_KM);
+        tEditor.remove(Constant.START_VEHICLE_NO);
+        tEditor.remove(Constant.IS_UPLOAD_IMAGE);
+        tEditor.apply();
+        tEditor.clear();
+    }
 
+
+    //Attendance
     public void setShiftTime(String startTime, String startTimeLabel){
         SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
         tEditor = tSharedPreferences.edit();
@@ -34,6 +75,7 @@ public class SharedPrefManager {
         tEditor.putString(Constant.START_TIME_LABEL, startTimeLabel);
         tEditor.apply();
     }
+    //Attendance
     public String getShiftTime(){
         SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
         return sp.getString(Constant.START_TIME, Constant.EMPTY);

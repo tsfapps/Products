@@ -58,13 +58,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragNewOrder extends Fragment {
 
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
     private Bitmap tBitmap;
-    private  Bitmap bitmapSign;
     private GPSTracker tGpsTracker;
     private String strLat;
     private String strLong;
@@ -222,8 +222,6 @@ public class FragNewOrder extends Fragment {
                 return true;
         }
     }
-
-
     @OnClick(R.id.iv_upload_order)
     public void onUploadOrderClick() {
         showPictureDialog();
@@ -249,7 +247,6 @@ public class FragNewOrder extends Fragment {
                 });
         pictureDialog.show();
     }
-
     private void choosePhotoFromGallery() {
         if (CheckPermission.isReadStorageAllowed(getContext())) {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -258,7 +255,6 @@ public class FragNewOrder extends Fragment {
         }
         CheckPermission.requestStoragePermission(getActivity());
     }
-
     private void takePhotoFromCamera() {
         if (CheckPermission.isCameraAllowed(getContext())) {
             Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -267,7 +263,6 @@ public class FragNewOrder extends Fragment {
         }
         CheckPermission.requestCameraPermission(getActivity());
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -288,15 +283,8 @@ public class FragNewOrder extends Fragment {
             ivUploadOrder.setImageBitmap(tBitmap);
         }
     }
-    private String imageToString(){
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        tBitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-        byte[] imByte = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imByte,Base64.DEFAULT);
-    }
     private String signImageToString(){
-
-        bitmapSign = signatureViewOrder.getSignatureBitmap();
+        Bitmap bitmapSign = signatureViewOrder.getSignatureBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmapSign.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
         byte[] imByte = byteArrayOutputStream.toByteArray();
@@ -305,7 +293,7 @@ public class FragNewOrder extends Fragment {
 public void callApi(){
         String strDol = tvOrderDateOfDelivery.getText().toString().trim();
         String strRemarks = etOrderRemarks.getText().toString().trim();
-        String strImage = imageToString();
+        String strImage = imageToString(tBitmap, ivUploadOrder);
         String strImageSign = signImageToString();
 
     Api api = ApiClients.getApiClients().create(Api.class);
@@ -321,33 +309,23 @@ public void callApi(){
             }
             else {
                 CustomToast.toastMid(getActivity(), tModels.getMessage());
-
             }
         }
         @Override
         public void onFailure(Call<ModelNewOrder> call, Throwable t) {
             CustomLog.d(Constant.TAG, "New Order Not Responding :"+t);
-
         }
     });
-
-
 }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Constant.STORAGE_PERMISSION_CODE) {
-            if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "You  denied the permission...", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
 
+ @OnClick(R.id.tvOrderSelectProduct)
+    public void tvOrderSelectProductClicked(View view){
+        CustomToast.toastTop(getActivity(), "There is no product list uploaded...");
+ }
 
 
 }

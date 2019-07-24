@@ -79,19 +79,19 @@
         android:textColor="@color/colorWhite"
         android:gravity="center"
         android:layout_height="match_parent" />
-    <ImageView
-        android:src="@drawable/ic_white_camera"
-        android:id="@+id/iv_feedback_image"
-        android:paddingEnd="2dp"
-        android:paddingStart="4dp"
-        android:background="@drawable/bg_btn_main"
-        android:layout_margin="1dp"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:textSize="14sp"
-        android:textColor="@color/colorWhite"
-        android:gravity="center"
-        android:layout_height="match_parent" />
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_sales_photo_add"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/iv_feedback_image"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/colorWhite"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
 </LinearLayout>
     <TextView
         android:layout_marginTop="16dp"

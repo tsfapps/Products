@@ -68,14 +68,13 @@
                             android:id="@+id/et_phone_login"
                             android:inputType="phone"
                             android:hint="Phone Number"
-                            android:ems="150"
                             android:drawableStart="@drawable/ic_phone"
                             style="@style/et_main" />
                     </android.support.design.widget.TextInputLayout>
                     <android.support.design.widget.TextInputLayout
                         android:layout_marginTop="15dp"
                         app:passwordToggleEnabled="true"
-                        app:passwordToggleDrawable="@drawable/ic_pass_show"
+                        app:passwordToggleTint="@color/colorPrimary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <EditText

@@ -270,7 +270,7 @@ public class GPSTracker extends Service implements LocationListener {
      * Try to get Locality
      * @return null or locality
      */
-    public String getLocality(Context context) {
+    public String getCity(Context context) {
         List<Address> addresses = getGeocoderAddress(context);
 
         if (addresses != null && addresses.size() > 0) {

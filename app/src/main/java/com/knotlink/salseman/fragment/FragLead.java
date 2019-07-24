@@ -25,10 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelLead;
+import com.knotlink.salseman.services.GPSTracker;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.CheckPermission;
 import com.knotlink.salseman.utils.Constant;
@@ -53,12 +53,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragLead extends Fragment {
     private ModelLead tModels;
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
     private Bitmap tBitmap;
+    private GPSTracker tGpsTracker;
+    private String strLat;
+    private String strLong;
+    private String strPinCode;
+    private String strCity;
+    private String strAdders;
     final Calendar myCalendar = Calendar.getInstance();
 
     @BindView(R.id.tv_lead_orgNameLabel)
@@ -69,12 +76,14 @@ public class FragLead extends Fragment {
     protected EditText etLeadContactName;
     @BindView(R.id.et_lead_contactNumber)
     protected EditText etLeadContactNumber;
-    @BindView(R.id.et_lead_address)
-    protected EditText etLeadAddress;
+    @BindView(R.id.et_lead_whatsAppNo)
+    protected EditText etLeadWhatsApp;
     @BindView(R.id.et_lead_email)
     protected EditText etLeadEmail;
     @BindView(R.id.et_lead_comments)
     protected EditText etLeadComments;
+    @BindView(R.id.et_lead_landLine)
+    protected EditText etLeadLandLine;
     @BindView(R.id.tv_lead_nextMeetingDate)
     protected TextView tvLeadNextMeetingDate;
     @BindView(R.id.btn_lead_submit)
@@ -113,38 +122,17 @@ public class FragLead extends Fragment {
                 }
             }
         });
+
+        tGpsTracker = new GPSTracker(tContext);
+        strLat = String.valueOf(tGpsTracker.latitude);
+        strLong = String.valueOf(tGpsTracker.longitude);
+        strCity = tGpsTracker.getCity(tContext);
+        strPinCode = tGpsTracker.getPostalCode(tContext);
+        strAdders = tGpsTracker.getAddressLine(tContext);
     }
     @OnClick(R.id.iv_upload_lead)
     public void onUploadLeadClicked(View view){
-        showPictureDialog();
-    }
-    private void showPictureDialog(){
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-        pictureDialog.setTitle("Select Action");
-        String[] pictureDialogItems = {"Photo Gallery", "Camera" };
-        pictureDialog.setItems(pictureDialogItems,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                choosePhotoFromGallery();
-                                break;
-                            case 1:
-                                takePhotoFromCamera();
-                                break;
-                        }
-                    }
-                });
-        pictureDialog.show();
-    }
-    private void choosePhotoFromGallery() {
-        if (CheckPermission.isReadStorageAllowed(getContext())) {
-            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, Constant.GALLERY);
-            return;
-        }
-        CheckPermission.requestStoragePermission(getActivity());
+        takePhotoFromCamera();
     }
     private void takePhotoFromCamera() {
         if (CheckPermission.isCameraAllowed(getContext())) {
@@ -160,19 +148,9 @@ public class FragLead extends Fragment {
         if (resultCode == RESULT_CANCELED) {
             return;
         }
-        if (requestCode == Constant.GALLERY) {
-            if (data != null) {
-                SetImage.setGalleryImage(tContext, ivUploadLead, data);
-                BitmapDrawable drawable = (BitmapDrawable)ivUploadLead.getDrawable();
-                tBitmap = drawable.getBitmap();
-
-            }
-
-        } else if (requestCode == Constant.CAMERA) {
             SetImage.setCameraImage(ivUploadLead, data);
             tBitmap = (Bitmap) data.getExtras().get("data");
             ivUploadLead.setImageBitmap(tBitmap);
-        }
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -182,18 +160,10 @@ public class FragLead extends Fragment {
             }
         }
     }
-    private String imageToString(){
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        tBitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-        byte[] imByte = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imByte,Base64.DEFAULT);
-    }
     @OnClick(R.id.btn_lead_submit)
     public void leadSubmit(View view){
         callApi();
     }
-
-
     @OnClick(R.id.tv_lead_nextMeetingDate)
     public void leadNextDateSelected(View view){
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -206,7 +176,6 @@ public class FragLead extends Fragment {
                 SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
                 try {
                     Date myDate = sdf.parse(strCurrentDate);
-                    // long millis = myDate.getTime();
                     String strMyDate = sdf.format(myCalendar.getTime());
                     Date selDate = sdf.parse(strMyDate);
                     if (selDate.compareTo(myDate)>0) {
@@ -232,13 +201,15 @@ public class FragLead extends Fragment {
         String strOrgName = etLeadOrgName.getText().toString().trim();
         String strContactName = etLeadContactName.getText().toString().trim();
         String strContactNumber = etLeadContactNumber.getText().toString().trim();
-        String strAddress = etLeadAddress.getText().toString().trim();
+        String strWhatsApp = etLeadWhatsApp.getText().toString().trim();
         String strEmail = etLeadEmail.getText().toString().trim();
         String strRemarks = etLeadComments.getText().toString().trim();
+        String strLandLine = etLeadLandLine.getText().toString().trim();
         String strNextMeetDate = tvLeadNextMeetingDate.getText().toString().trim();
-        String strImage = imageToString();
+        String strImage = imageToString(tBitmap, ivUploadLead);
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelLead> call = api.uploadLead(strUserId, strVendorType, strOrgName, strContactName, strContactNumber, strAddress, strEmail, strRemarks, strImage, strNextMeetDate);
+        Call<ModelLead> call = api.uploadLead(strUserId, strVendorType, strOrgName, strContactName, strContactNumber, strAdders,
+                strEmail,strCity,strPinCode,strNextMeetDate,strWhatsApp,strLandLine, strRemarks, strImage,strLat, strLong );
         call.enqueue(new Callback<ModelLead>() {
             @Override
             public void onResponse(Call<ModelLead> call, Response<ModelLead> response) {

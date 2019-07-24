@@ -3,7 +3,9 @@ package com.knotlink.salseman.api;
 import com.knotlink.salseman.model.ModelAttendance;
 import com.knotlink.salseman.model.ModelCash;
 import com.knotlink.salseman.model.ModelColdCall;
-import com.knotlink.salseman.model.ModelDistance;
+import com.knotlink.salseman.model.ModelExpenseList;
+import com.knotlink.salseman.model.ModelVisit;
+import com.knotlink.salseman.model.distance.ModelDistance;
 import com.knotlink.salseman.model.ModelExpenses;
 import com.knotlink.salseman.model.ModelFeedback;
 import com.knotlink.salseman.model.ModelInvoice;
@@ -12,8 +14,9 @@ import com.knotlink.salseman.model.ModelMeeting;
 import com.knotlink.salseman.model.ModelNewOrder;
 import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.model.ModelSpecialRequest;
-import com.knotlink.salseman.model.ModelTask;
+import com.knotlink.salseman.model.task.ModelTask;
 import com.knotlink.salseman.model.ModelVehicleList;
+import com.knotlink.salseman.model.distance.ModelDistanceUpdate;
 import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.model.report.ModelReportColdCall;
 import com.knotlink.salseman.model.report.ModelReportDistance;
@@ -22,6 +25,7 @@ import com.knotlink.salseman.model.report.ModelReportLeadGeneration;
 import com.knotlink.salseman.model.report.ModelReportMeeting;
 import com.knotlink.salseman.model.report.ModelReportNewOrder;
 import com.knotlink.salseman.model.report.ModelReportReceipt;
+import com.knotlink.salseman.model.task.ModelTaskReschedule;
 import com.knotlink.salseman.model.user.ModelUser;
 
 import java.util.List;
@@ -29,7 +33,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface Api{
@@ -66,6 +69,14 @@ public interface Api{
             @Field("user_id") String user_id,
             @Field("present_day") String present_day
     );
+
+ @FormUrlEncoded
+    @POST("api/api_shop_not_visit.php")
+    Call<ModelVisit> getShopNotVisit(
+            @Field("remarks") String remarks,
+            @Field("user_id") String user_id,
+            @Field("shop_id") String shop_id
+    );
  @FormUrlEncoded
     @POST("api/api_special_request.php")
     Call<ModelSpecialRequest> uploadSpecialRequest(
@@ -87,7 +98,6 @@ public interface Api{
  @FormUrlEncoded
     @POST("api/api_distance_upload.php")
     Call<ModelDistance> uploadDistance(
-
             @Field("user_id") String user_id,
             @Field("starting_km") String starting_km,
             @Field("starting_img") String starting_img,
@@ -95,7 +105,22 @@ public interface Api{
             @Field("start_long") String start_long,
             @Field("starting_pincode") String starting_pincode,
             @Field("starting_city") String starting_city,
-            @Field("starting_address") String starting_address
+            @Field("starting_address") String starting_address,
+            @Field("vehicle_no") String vehicle_no
+    );
+ @FormUrlEncoded
+    @POST("api/api_distance_upload_update.php")
+    Call<ModelDistanceUpdate> uploadDistanceEnding(
+            @Field("user_id") String user_id,
+            @Field("ending_km") String ending_km,
+            @Field("ending_img") String ending_img,
+            @Field("end_lat") String end_lat,
+            @Field("end_long") String end_long,
+            @Field("ending_pincode") String ending_pincode,
+            @Field("ending_city") String ending_city,
+            @Field("ending_address") String ending_address,
+            @Field("vehicle_no") String vehicle_no
+
     );
     @POST("api/api_vehicle.php")
     Call<List<ModelVehicleList>> vehicleList(
@@ -121,31 +146,34 @@ public interface Api{
             @Field("user_id") String user_id,
             @Field("org_name") String org_name,
             @Field("contact_name") String contact_name,
-            @Field("contact_number") String contact_number,
+            @Field("contact_no") String contact_no,
+            @Field("landline_no") String landline_no,
             @Field("address") String address,
             @Field("email") String email,
-          //  @Field("city_id") String city_id,
+            @Field("city") String city,
+            @Field("nxt_meeting_date") String nxt_meeting_date,
             @Field("remarks") String remarks
-//            @Field("latitude") String latitude,
-//            @Field("longitude") String longitude
     );
  @FormUrlEncoded
     @POST("api/api_lead_generation.php")
     Call<ModelLead> uploadLead(
 
-            @Field("user_id") String user_id,
-            @Field("vendor_type") String vendor_type,
-            @Field("org_name") String org_name,
-            @Field("contact_name") String contact_name,
-            @Field("contact_no") String contact_no,
-            @Field("address") String address,
-            @Field("email") String email,
-          //  @Field("city_id") String city_id,
-            @Field("remarks") String remarks,
-            @Field("image") String image,
-            @Field("next_meeting_date") String next_meeting_date
-//            @Field("latitude") String latitude,
-//            @Field("longitude") String longitude
+         @Field("user_id") String user_id,
+         @Field("vendor_type") String vendor_type,
+         @Field("org_name") String org_name,
+         @Field("contact_name") String contact_name,
+         @Field("contact_no") String contact_no,
+         @Field("address") String address,
+         @Field("email") String email,
+         @Field("city") String city,
+         @Field("pincode") String pincode,
+         @Field("nxt_meeting_date") String nxt_meeting_date,
+         @Field("whatsapp_no") String whatsapp_no,
+         @Field("landline_no") String landline_no,
+         @Field("remarks") String remarks,
+         @Field("image") String image,
+         @Field("latitude") String latitude,
+         @Field("longitude") String longitude
     );
     @FormUrlEncoded
     @POST("api/api_meeting.php")
@@ -157,11 +185,15 @@ public interface Api{
             @Field("contact_no") String contact_no,
             @Field("address") String address,
             @Field("email") String email,
-          //  @Field("city_id") String city_id,
-            @Field("remarks") String remarks
-           // @Field("image") String image
-//            @Field("latitude") String latitude,
-//            @Field("longitude") String longitude
+            @Field("city") String city,
+            @Field("pincode") String pincode,
+            @Field("nxt_meeting_date") String nxt_meeting_date,
+            @Field("whatsapp_no") String whatsapp_no,
+            @Field("landline_no") String landline_no,
+            @Field("remarks") String remarks,
+            @Field("image") String image,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude
     );
     @FormUrlEncoded
     @POST("api/api_cashcollection.php")
@@ -177,40 +209,26 @@ public interface Api{
             @Field("cash_5") String cash_5,
             @Field("cash_2") String cash_2,
             @Field("cash_1") String cash_1,
-            @Field("total") String total
-//            @Field("latitude") String latitude,
-//            @Field("longitude") String longitude
-    );
-    @FormUrlEncoded
-    @POST("api/api_cashcollection.php")
-    Call<ModelExpenses> uploadExpenses(
-            @Field("user_id") String user_id,
-            @Field("breakfast") String breakfast,
-          //  @Field("breakfast_image") String breakfast_image,
-            @Field("lunch") String lunch,
-          //  @Field("lunch_image") String lunch_image,
-            @Field("dinner") String dinner,
-          //  @Field("dinner_image") String dinner_image,
-            @Field("mobile") String mobile,
-           // @Field("mobile_image") String mobile_image,
-            @Field("parking") String parking,
-           // @Field("parking_image") String parking_image,
-            @Field("road_toll_fee") String road_toll_fee,
-           // @Field("road_toll_fee_image") String road_toll_fee_image,
-            @Field("petty_cash") String petty_cash,
-           // @Field("petty_cash_image") String petty_cash_image,
-            @Field("others") String others,
-           // @Field("others_image") String others_image,
             @Field("total") String total,
-            @Field("remarks") String remarks
-//            @Field("latitude") String latitude,
-//            @Field("longitude") String longitude
+            @Field("total_amount") String total_amount,
+            @Field("no_cheque") String no_cheque,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude,
+            @Field("pin_code") String pin_code,
+            @Field("address") String address
     );
 
     @FormUrlEncoded
     @POST("api/api_assign_task.php")
     Call<List<ModelTask>> assignedTask(
             @Field("user_id") String user_id
+    );
+    @FormUrlEncoded
+    @POST("api/api_assign_task_update.php")
+    Call<ModelTaskReschedule> assignedTaskReschedule(
+            @Field("task_id") String task_id,
+            @Field("user_remarks") String user_remarks,
+            @Field("nxt_meeting_date") String nxt_meeting_date
     );
     @FormUrlEncoded
     @POST("api/api_activity_report.php")
@@ -269,7 +287,7 @@ public interface Api{
             @Field("table") String table_name,
             @Field("from_date") String from_date,
             @Field("to_date") String to_date
-    );
+     );
  @FormUrlEncoded
     @POST("api/api_activity_report.php")
     Call<List<ModelReportLeadGeneration>> viewReportLead(
@@ -280,8 +298,25 @@ public interface Api{
     );
  @FormUrlEncoded
     @POST("api/api_invoice_fetch.php")
-    Call<ModelInvoice> viewInvoice(
+    Call<ModelInvoice>  viewInvoice(
             @Field("shop_id") String shop_id,
             @Field("invoice_no") String invoice_no
     );
+
+ @POST("api/api_expense_type.php")
+    Call<List<ModelExpenseList>>  expenseList(
+    );
+
+    @FormUrlEncoded
+    @POST("api/api_expenses.php")
+    Call<ModelExpenses> uploadExpenses(
+            @Field("user_id") String user_id,
+            @Field("expense_type") String expense_type,
+            @Field("amount") String amount,
+            @Field("remarks") String remarks,
+            @Field("image") String image
+//          @Field("latitude") String latitude,
+//          @Field("longitude") String longitude
+    );
+
 }

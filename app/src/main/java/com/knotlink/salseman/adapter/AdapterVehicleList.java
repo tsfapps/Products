@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 public class AdapterVehicleList extends RecyclerView.Adapter<AdapterVehicleList.VehicleViewHolder> {
 
     private List<ModelVehicleList> tLists;
-    private  Context tContext;
+    private Context tContext;
     private FragmentManager tFragmentManager;
 
     public AdapterVehicleList(List<ModelVehicleList> tLists, Context tContext, FragmentManager tFragmentManager) {
@@ -41,16 +41,15 @@ public class AdapterVehicleList extends RecyclerView.Adapter<AdapterVehicleList.
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.frag_distance_vecicle_item, viewGroup, false);
         return new VehicleViewHolder(view);
     }
-
     @Override
-    public void onBindViewHolder(@NonNull VehicleViewHolder vehicleViewHolder, int i) {
+    public void onBindViewHolder(@NonNull VehicleViewHolder vehicleViewHolder, final int i) {
         ModelVehicleList tModel = tLists.get(i);
         vehicleViewHolder.tv_vehicleList_vehicleBrand.setText(tModel.getBrand());
         vehicleViewHolder.tv_vehicleList_vehicleNumber.setText(tModel.getVehicleNo());
         vehicleViewHolder.llVehicleList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tFragmentManager.beginTransaction().replace(R.id.container_main, new FragDistance()).addToBackStack(null).commit();
+                tFragmentManager.beginTransaction().replace(R.id.container_main, FragDistance.newInstance(tLists, i)).addToBackStack(null).commit();
 
             }
         });

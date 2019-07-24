@@ -43,9 +43,7 @@ public class AdapterReceiptSpinnerInvoice extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.spn_receipt_payment_mode, null);
-//        ImageView icon =  view.findViewById(R.id.iv_report_spinner_activity);
         TextView names =  view.findViewById(R.id.tv_report_spinner_activity);
-//        icon.setImageResource(flags[i]);
         names.setText(tModels.get(modelIndex).getInvoiceNo().get(i));
         return view;
     }

@@ -1,9 +1,11 @@
 package com.knotlink.salseman.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -20,11 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.ModelLead;
 import com.knotlink.salseman.model.ModelMeeting;
+import com.knotlink.salseman.services.GPSTracker;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.CheckPermission;
 import com.knotlink.salseman.utils.Constant;
@@ -34,6 +36,12 @@ import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,36 +50,48 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragMeeting extends Fragment {
     private ModelMeeting tModels;
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
+    private Bitmap tBitmap;
+    private GPSTracker tGpsTracker;
+    private String strLat;
+    private String strLong;
+    private String strPinCode;
+    private String strCity;
+    private String strAdders;
+
+    final Calendar myCalendar = Calendar.getInstance();
+
     String strVendorType;
 
+    @BindView(R.id.tv_meeting_orgName)
+    protected TextView tvMeetingOrgName;
     @BindView(R.id.et_meeting_orgName)
     protected EditText etMeetingOrgName;
     @BindView(R.id.et_meeting_contactName)
     protected EditText etMeetingContactName;
     @BindView(R.id.et_meeting_contactNumber)
     protected EditText etMeetingContactNumber;
-    @BindView(R.id.et_meeting_address)
-    protected EditText etMeetingAddress;
+    @BindView(R.id.et_meeting_whatsapp_no)
+    protected EditText etMeetingWhatsAppNo;
     @BindView(R.id.et_meeting_email)
     protected EditText etMeetingEmail;
     @BindView(R.id.et_meeting_remarks)
     protected EditText etMeetingComments;
+     @BindView(R.id.et_meeting_landLine)
+    protected EditText et_meeting_landLine;
     @BindView(R.id.btn_meeting_submit)
     protected Button btnMeetingSubmit;
     @BindView(R.id.iv_upload_meeting)
     protected ImageView ivUploadMeeting;
     @BindView(R.id.rg_meeting)
     protected RadioGroup rgMeeting;
-
-  @BindView(R.id.tv_meeting_time)
-    protected TextView tvMeetingTime;
-
-
+    @BindView(R.id.tv_meeting_next_date)
+    protected TextView tvMeetingNextDate;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,23 +112,58 @@ public class FragMeeting extends Fragment {
                 switch (checkedId){
                     case R.id.rb_meeting_customer:
                         CustomToast.toastTop(getActivity(), "Customer Selected");
-                        etMeetingOrgName.setHint("Organisation Name*");
+                        tvMeetingOrgName.setText("Organisation Name*");
                         strVendorType = "Customer";
                         break;
                     case R.id.rb_meeting_prospect:
                         CustomToast.toastTop(getActivity(), "Prospect Selected");
-                        etMeetingOrgName.setHint("Prospect Name*");
+                        tvMeetingOrgName.setText("Prospect Name*");
                         strVendorType = "Prospect";
                         break;
                 }
             }
         });
 
-        tvMeetingTime.setText(DateUtils.getCurrentTime());
-
+        tGpsTracker = new GPSTracker(tContext);
+        strLat = String.valueOf(tGpsTracker.latitude);
+        strLong = String.valueOf(tGpsTracker.longitude);
+        strCity = tGpsTracker.getCity(tContext);
+        strPinCode = tGpsTracker.getPostalCode(tContext);
+        strAdders = tGpsTracker.getAddressLine(tContext);
     }
+    @OnClick(R.id.tv_meeting_next_date)
+    public void selectMeetingdDate(View view){
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                String strCurrentDate = DateUtils.getTodayDate();
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+                try {
+                    Date myDate = sdf.parse(strCurrentDate);
+                    // long millis = myDate.getTime();
+                    String strMyDate = sdf.format(myCalendar.getTime());
+                    Date selDate = sdf.parse(strMyDate);
+                    if (selDate.compareTo(myDate)>0) {
+                        tvMeetingNextDate.setText(strMyDate);
+                    }
+                    else {
+                        CustomToast.toastMid(getActivity(), Constant.DATE_DELIVERY);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
 
+
+            }
+        };
+        new DatePickerDialog(getContext(), date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
     @OnClick(R.id.iv_upload_meeting)
     public void onUploadMeetingClicked(View view){
         showPictureDialog();
@@ -159,14 +214,15 @@ public class FragMeeting extends Fragment {
         if (requestCode == Constant.GALLERY) {
             if (data != null) {
                 SetImage.setGalleryImage(tContext, ivUploadMeeting, data);
+                tBitmap = (Bitmap) data.getExtras().get("data");
+                ivUploadMeeting.setImageBitmap(tBitmap);
             }
-
         } else if (requestCode == Constant.CAMERA) {
-
             SetImage.setCameraImage(ivUploadMeeting, data);
+            tBitmap = (Bitmap) data.getExtras().get("data");
+            ivUploadMeeting.setImageBitmap(tBitmap);
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constant.STORAGE_PERMISSION_CODE) {
@@ -175,23 +231,24 @@ public class FragMeeting extends Fragment {
             }
         }
     }
-
     @OnClick(R.id.btn_meeting_submit)
     public void meetingSubmit(View view){
         callApi();
     }
-
-
     private void callApi(){
+        String strImage = imageToString(tBitmap, ivUploadMeeting);
         String strUserId = tSharedPrefManager.getUserId();
         String strOrgName = etMeetingOrgName.getText().toString().trim();
         String strContactName = etMeetingContactName.getText().toString().trim();
         String strContactNumber = etMeetingContactNumber.getText().toString().trim();
-        String strAddress = etMeetingAddress.getText().toString().trim();
+        String strWhatsAppNo = etMeetingWhatsAppNo.getText().toString().trim();
+        String strLandLineNo = et_meeting_landLine.getText().toString().trim();
         String strEmail = etMeetingEmail.getText().toString().trim();
         String strRemarks = etMeetingComments.getText().toString().trim();
+        String strNextMeetDate = tvMeetingNextDate.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelMeeting> call = api.uploadMeeting(strUserId, strVendorType, strOrgName, strContactName, strContactNumber, strAddress, strEmail, strRemarks);
+        Call<ModelMeeting> call = api.uploadMeeting(strUserId, strVendorType, strOrgName, strContactName, strContactNumber, strAdders,
+                strEmail,strCity,strPinCode,strNextMeetDate,strWhatsAppNo,strLandLineNo, strRemarks, strImage, strLat, strLong);
         call.enqueue(new Callback<ModelMeeting>() {
             @Override
             public void onResponse(Call<ModelMeeting> call, Response<ModelMeeting> response) {

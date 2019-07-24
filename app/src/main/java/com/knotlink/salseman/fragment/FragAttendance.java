@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelAttendance;
@@ -46,6 +45,9 @@ public class FragAttendance extends Fragment {
     @BindView(R.id.btn_att_check_in_out)
     protected Button btnAttCheckInOut;
     private boolean isLoggedIn = false;
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,7 +99,7 @@ public class FragAttendance extends Fragment {
         String strUserId = tSharedPrefManager.getUserId();
         String strLat = String.valueOf(tGpsTracker.latitude);
         String strLong = String.valueOf(tGpsTracker.longitude);
-        String strCity = tGpsTracker.getLocality(tContext);
+        String strCity = tGpsTracker.getCity(tContext);
         String strPinCode = tGpsTracker.getPostalCode(tContext);
         String strAddress = tGpsTracker.getAddressLine(tContext);
         Api api = ApiClients.getApiClients().create(Api.class);
@@ -124,7 +126,7 @@ public class FragAttendance extends Fragment {
         String strUserIdLogout = tSharedPrefManager.getUserId();
         String strLogoutLat = String.valueOf(tGpsTracker.latitude);
         String strLogoutLong = String.valueOf(tGpsTracker.longitude);
-        String strLogoutCity = tGpsTracker.getLocality(tContext);
+        String strLogoutCity = tGpsTracker.getCity(tContext);
         String strLogoutPinCode = tGpsTracker.getPostalCode(tContext);
         String strLogoutAddress = tGpsTracker.getAddressLine(tContext);
         Api api = ApiClients.getApiClients().create(Api.class);

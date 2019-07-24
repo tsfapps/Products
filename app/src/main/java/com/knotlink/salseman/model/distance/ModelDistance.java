@@ -1,4 +1,4 @@
-package com.knotlink.salseman.model;
+package com.knotlink.salseman.model.distance;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

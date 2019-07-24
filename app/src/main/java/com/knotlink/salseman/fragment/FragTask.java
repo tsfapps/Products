@@ -1,5 +1,6 @@
 package com.knotlink.salseman.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,11 +14,9 @@ import android.view.ViewGroup;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.adapter.AdapterTask;
-import com.knotlink.salseman.adapter.report.AdapterReportColdCall;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.ModelTask;
-import com.knotlink.salseman.model.report.ModelReportColdCall;
+import com.knotlink.salseman.model.task.ModelTask;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
@@ -36,6 +35,7 @@ public class FragTask extends Fragment {
     private AdapterTask tAdapterTask;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
+    private Activity tActivity;
     private List<ModelTask> tModelTask;
     @BindView(R.id.rvTask)
     protected RecyclerView rvTask;
@@ -49,6 +49,7 @@ public class FragTask extends Fragment {
     }
     private void initFrag(){
         tContext = getContext();
+        tActivity = getActivity();
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Task Assigned", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
@@ -63,7 +64,7 @@ public class FragTask extends Fragment {
             @Override
             public void onResponse(Call<List<ModelTask>> call, Response<List<ModelTask>> response) {
                 tModelTask =response.body();
-                tAdapterTask = new AdapterTask(tModelTask, tContext);
+                tAdapterTask = new AdapterTask(tModelTask, tContext, tActivity);
                 rvTask.setAdapter(tAdapterTask);
             }
             @Override

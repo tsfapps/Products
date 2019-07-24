@@ -66,7 +66,14 @@ public class FragDashboard extends Fragment {
     }
     @OnClick(R.id.ll_dash_distance)
     public void disClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragVehicleList()).addToBackStack(null).commit();
+        if (!tSharedPrefManager.getStartKm().equals(""))
+        {
+            tFragmentManager.beginTransaction().replace(R.id.container_main, new FragDistance()).addToBackStack(null).commit();
+
+        }
+        else {
+            tFragmentManager.beginTransaction().replace(R.id.container_main, new FragVehicleList()).addToBackStack(null).commit();
+        }
     }
     @OnClick(R.id.ll_dash_meeting)
     public void meetingClicked(View view){

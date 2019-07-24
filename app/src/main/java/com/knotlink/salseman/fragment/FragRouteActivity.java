@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ import android.widget.Toast;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.adapter.AdapterFeedback;
-import com.knotlink.salseman.adapter.AdapterSpecialRequest;
+import com.knotlink.salseman.adapter.baseadapter.AdapterSpecialRequest;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelFeedback;
@@ -39,7 +38,6 @@ import com.knotlink.salseman.utils.CustomToast;
 import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -49,6 +47,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragRouteActivity extends Fragment {
 
@@ -66,7 +65,6 @@ public class FragRouteActivity extends Fragment {
     private AdapterFeedback tAdapterFeedback;
     private EditText edittext;
     private EditText  etFeedback;
-    private Spinner spinner;
     private Bitmap tBitmap;
     private ImageView ivFeedback;
    // private Spinner spnFeedback;
@@ -117,7 +115,7 @@ public class FragRouteActivity extends Fragment {
         dialog.setCancelable(true);
 
         // set the custom dialog components - text, image and button
-        spinner =  dialog.findViewById(R.id.spn_specialRequest);
+        Spinner spinner = dialog.findViewById(R.id.spn_specialRequest);
         edittext =  dialog.findViewById(R.id.et_specialRequest);
         Button button =  dialog.findViewById(R.id.btn_specialRequest);
         spinner.setAdapter(tAdapter);
@@ -139,18 +137,18 @@ public class FragRouteActivity extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                callApi();
+                callSpecialRequestApi();
             }
         });
         dialog.show();
     }
 
     //Special Request Api Call
-    private void callApi(){
-        String strSHopId = tModels.get(i).getShopId();
+    private void callSpecialRequestApi(){
+        String strShopId = tModels.get(i).getShopId();
         String strRemarks = edittext.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelSpecialRequest> requestCall = api.uploadSpecialRequest(spinner_item, strSHopId, strRemarks);
+        Call<ModelSpecialRequest> requestCall = api.uploadSpecialRequest(spinner_item, strShopId, strRemarks);
         requestCall.enqueue(new Callback<ModelSpecialRequest>() {
             @Override
             public void onResponse(Call<ModelSpecialRequest> call, Response<ModelSpecialRequest> response) {
@@ -172,7 +170,7 @@ public class FragRouteActivity extends Fragment {
     public void feedbackSubmit(View view) {
         final Dialog dialog = new Dialog(tContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.row_feedback);
+        dialog.setContentView(R.layout.frag_route_activity_feedback);
         dialog.setTitle("Special Request");
         dialog.setCancelable(true);
 
@@ -198,19 +196,19 @@ public class FragRouteActivity extends Fragment {
         });
         dialog.show();
     }
-    private String imageToString(){
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        tBitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-        byte[] imByte = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imByte,Base64.DEFAULT);
-    }
+//    private String imageToString(){
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        tBitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+//        byte[] imByte = byteArrayOutputStream.toByteArray();
+//        return Base64.encodeToString(imByte,Base64.DEFAULT);
+//    }
 
     //Feedback Api Call
     private void callApiFeedback(){
         String strUserId = tSharedPrefManger.getUserId();
         String strSHopId = tModels.get(i).getShopId();
         String strRemarks = etFeedback.getText().toString().trim();
-        String strImage = imageToString();
+        String strImage = imageToString(tBitmap, ivFeedback);
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<ModelFeedback> requestCall = api.uploadFeedback(strSHopId, strUserId,strImage, strRemarks);
         requestCall.enqueue(new Callback<ModelFeedback>() {

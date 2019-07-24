@@ -6,17 +6,6 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 public class CustomToast {
-//    private Context tCtx;
-//    private String message;
-//
-//    public CustomToast(Context tCtx, String message) {
-//        this.tCtx = tCtx;
-//        this.message = message;
-//    }
-
-//    public st CustomToast(Context tCtx) {
-//        this.tCtx = tCtx;
-//    }
 
     public static void toastTop(Activity tActivity, String message){
         Toast toast = Toast.makeText(tActivity, message, Toast.LENGTH_SHORT);

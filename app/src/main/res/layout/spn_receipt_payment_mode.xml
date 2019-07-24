@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:gravity="center_vertical"
     android:background="@drawable/bg_spinner_custom"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -7,10 +8,11 @@
     android:layout_height="50dp">
     <TextView
         android:id="@+id/tv_report_spinner_activity"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:text="Demo"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        tools:ignore="RtlSymmetry" />
 </LinearLayout>

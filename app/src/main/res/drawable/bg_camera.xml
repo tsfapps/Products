@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape android:shape="rectangle" android:padding="10dp">
+            <stroke
+                android:width=".5dp"
+                android:color="@color/colorBlack"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_sales_photo_add" />
+</layer-list>

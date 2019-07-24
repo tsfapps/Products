@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:padding="@dimen/margin_top"
+    android:padding="@dimen/margin_8"
     android:background="@color/colorWhite"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"

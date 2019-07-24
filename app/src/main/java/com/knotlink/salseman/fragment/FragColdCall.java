@@ -1,5 +1,6 @@
 package com.knotlink.salseman.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.activity.MainActivity;
@@ -20,7 +23,14 @@ import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomToast;
+import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetTitle;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,16 +45,24 @@ public class FragColdCall extends Fragment {
     private ModelColdCall tModels;
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
+    final Calendar myCalendar = Calendar.getInstance();
+
     @BindView(R.id.et_cold_orgName)
     protected EditText etColdOrgName;
      @BindView(R.id.et_cold_contactName)
     protected EditText etColdContactName;
      @BindView(R.id.et_cold_contactNumber)
     protected EditText etColdContactNumber;
+     @BindView(R.id.et_cold_landLine)
+    protected EditText et_cold_landLine;
+     @BindView(R.id.et_cold_city)
+    protected EditText et_cold_city;
      @BindView(R.id.et_cold_address)
     protected EditText etColdAddress;
      @BindView(R.id.et_cold_email)
     protected EditText etColdEmail;
+     @BindView(R.id.tv_coldCall_nextMeetingDate)
+    protected TextView tv_coldCall_nextMeetingDate;
      @BindView(R.id.et_cold_remarks)
     protected EditText etColdRemarks;
      @BindView(R.id.btn_cold_submit)
@@ -64,22 +82,59 @@ public class FragColdCall extends Fragment {
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Cold Call", getActivity());
     }
+
+    @OnClick(R.id.tv_coldCall_nextMeetingDate)
+    public void coldCallMeetingDate(View view){
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                String strCurrentDate = DateUtils.getTodayDate();
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+                try {
+                    Date myDate = sdf.parse(strCurrentDate);
+                    String strMyDate = sdf.format(myCalendar.getTime());
+                    Date selDate = sdf.parse(strMyDate);
+                    if (selDate.compareTo(myDate)>0) {
+                        tv_coldCall_nextMeetingDate.setText(strMyDate);
+                    }
+                    else {
+                        CustomToast.toastMid(getActivity(), Constant.DATE_DELIVERY);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+        };
+        new DatePickerDialog(getContext(), date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
     @OnClick(R.id.btn_cold_submit)
     public void coldSubmit(View view){
         callApi();
     }
 
     private void callApi() {
-
         String strUserId = tSharedPrefManager.getUserId();
         String strOrgName = etColdOrgName.getText().toString().trim();
         String strContactName = etColdContactName.getText().toString().trim();
         String strContactNumber = etColdContactNumber.getText().toString().trim();
+        String strLandLineNo = et_cold_landLine.getText().toString().trim();
         String strAddress = etColdAddress.getText().toString().trim();
+        String strCity = et_cold_city.getText().toString().trim();
         String strEmail = etColdEmail.getText().toString().trim();
+        String strMeetingDate = tv_coldCall_nextMeetingDate.getText().toString().trim();
         String strRemarks = etColdRemarks.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelColdCall> call = api.uploadColdCall(strUserId, strOrgName, strContactName, strContactNumber, strAddress, strEmail, strRemarks);
+        Call<ModelColdCall> call = api.uploadColdCall(strUserId, strOrgName, strContactName, strContactNumber,strLandLineNo, strAddress,
+                strEmail, strCity, strMeetingDate, strRemarks);
         call.enqueue(new Callback<ModelColdCall>() {
             @Override
             public void onResponse(Call<ModelColdCall> call, Response<ModelColdCall> response) {

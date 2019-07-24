@@ -31,30 +31,21 @@
                 android:layout_weight="1"
                 android:text="Prospect"/>
         </RadioGroup>
-        <TextView
-            android:id="@+id/tv_lead_orgNameLabel"
-            android:layout_weight="1"
-            android:text="Organisation Name*"
-            style="@style/tv_report" />
 
-        <EditText
-            android:id="@+id/et_lead_orgName"
-            android:hint="Maskn Traders"
-            android:inputType="textPersonName"
-            style="@style/et_main" />
 
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/tv_lead_orgNameLabel"
                 android:layout_weight="1"
-                android:hint="Contact Name*"
+                android:text="Organisation Name*"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
                 android:layout_weight="1"
-                android:hint="Contact Number*"
+                android:hint="Contact Name*"
                 style="@style/tv_report" />
         </RelativeLayout>
         <LinearLayout
@@ -62,81 +53,104 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
+                android:id="@+id/et_lead_orgName"
+                android:hint="Maskn Traders"
+                android:inputType="textPersonName"
+                style="@style/et_main"
+                android:layout_weight="1"/>
+            <EditText
                 android:layout_weight="1"
                 android:id="@+id/et_lead_contactName"
-                android:hint="Contact Name*"
+                android:hint="Rameez Akhtar"
                 android:inputType="textPersonName"
+                style="@style/et_main" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:hint="Contact Number*"
+                style="@style/tv_report" />
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:hint="Email*"
+                style="@style/tv_report" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_weight="1.5"
+                android:id="@+id/et_lead_contactNumber"
+                android:hint="9709080680"
+                android:maxLength="10"
+                android:inputType="phone"
+                style="@style/et_main" />
+            <EditText
+                android:id="@+id/et_lead_email"
+                android:hint="admin@gmail.com"
+                android:inputType="textEmailAddress"
+                style="@style/et_main"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:hint="Whats App Number"
+                style="@style/tv_report" />
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:hint="Land Line Number"
+                style="@style/tv_report" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_weight="1"
+                android:id="@+id/et_lead_whatsAppNo"
+                android:hint="7004774488"
+                android:maxLength="10"
+                android:inputType="phone"
                 style="@style/et_main" />
             <EditText
                 android:layout_weight="1"
-                android:id="@+id/et_lead_contactNumber"
-                android:hint="Contact Number*"
+                android:id="@+id/et_lead_landLine"
+                android:hint="0651-2807584"
                 android:inputType="phone"
                 style="@style/et_main" />
         </LinearLayout>
 
 
+
+
+
         <TextView
-            android:layout_weight="1"
-            android:hint="Email*"
-            style="@style/tv_report" />
-
-
-        <EditText
-            android:id="@+id/et_lead_email"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            style="@style/et_main" />
-        <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_weight="1"
-            android:hint="Address*"
-            style="@style/tv_report" />
-
-        <EditText
-            android:id="@+id/et_lead_address"
-            android:hint="Address"
-            android:inputType="textPersonName"
-            style="@style/et_main" />
-        <RelativeLayout
-            style="@style/rl_spinner_main">
-        <Spinner
-            android:entries="@array/city_list"
-            style="@style/spinner_main" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_down"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
-        <RelativeLayout
-            style="@style/rl_spinner_main">
-        <Spinner
-            android:entries="@array/lead_status"
-            style="@style/spinner_main" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_down"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
-
-    </RelativeLayout>
-        <TextView
-            android:layout_marginTop="@dimen/margin_top"
-            android:id="@+id/tv_lead_nextMeetingDate"
             android:hint="Next Meeting Date"
-            style="@style/et_main" />
+            style="@style/tv_report" />
+
+            <TextView
+                android:background="@drawable/bg_simple_ascent"
+                android:id="@+id/tv_lead_nextMeetingDate"
+                android:text="20 October 2087"
+                android:textColor="@color/white"
+                style="@style/et_main" />
 
         <RelativeLayout
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
             <TextView
                 style="@style/tv_report"
                 android:textSize="12dp"
@@ -165,14 +179,22 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_et"/>
-
-
-            <ImageView
-                android:id="@+id/iv_upload_lead"
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_sales_photo_add"
-                android:layout_height="match_parent" />
+                android:background="@drawable/ic_sales_photo_add"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/iv_upload_lead"
+                    android:scaleType="fitXY"
+                    android:padding="2dp"
+                    android:layout_marginStart="-2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </FrameLayout>
+
+
 
         </LinearLayout>
 

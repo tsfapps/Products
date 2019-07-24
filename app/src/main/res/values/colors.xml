@@ -9,12 +9,15 @@
     <color name="seek_bar_background">#ababab</color>
     <color name="seek_bar_progress">#037e01</color>
     <color name="seek_bar_secondary_progress">#3399CC</color>
-    <color name="green">#037e01</color>
+
     <color name="blue">#000cb4</color>
     <color name="grey">#e9e8e8</color>
     <color name="colorGrey">#939393</color>
 
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
+    <color name="green">#037e01</color>
+    <color name="tan_yellow">#e6a504</color>
     <color name="red">#f40101</color>
+    <color name="colorEmpty">#00FCF9F9</color>
 </resources>

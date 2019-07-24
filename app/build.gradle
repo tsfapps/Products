@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.knotlink.salseman"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -48,4 +48,8 @@ dependencies {
     implementation 'com.github.satyan:sugar:1.5'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.kyanogen.signatureview:signature-view:1.2'
+
+//Customize Alert Dialog
+    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
+
 }

@@ -19,7 +19,7 @@
         android:layout_height="match_parent">
         <TextView
             android:gravity="center_vertical"
-            android:id="@+id/tv_route_phone_no"
+            android:id="@+id/tvRoutePhoneNo"
             android:textSize="12sp"
             android:layout_weight="1"
             android:layout_width="wrap_content"

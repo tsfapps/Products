@@ -47,11 +47,11 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="ll_expenses">
-        <item name="android:layout_marginTop">@dimen/margin_top</item>
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">30dp</item>
         <item name="android:layout_gravity">center_horizontal</item>
@@ -64,13 +64,13 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_marginStart">@dimen/margin_top</item>
-        <item name="android:layout_marginEnd">@dimen/margin_top</item>
+        <item name="android:layout_marginStart">@dimen/margin_8</item>
+        <item name="android:layout_marginEnd">@dimen/margin_8</item>
     </style>
     <style name="et_expense_label">
         <item name="android:text">0</item>
-        <item name="android:layout_marginStart">@dimen/margin_top</item>
-        <item name="android:layout_marginEnd">@dimen/margin_top</item>
+        <item name="android:layout_marginStart">@dimen/margin_8</item>
+        <item name="android:layout_marginEnd">@dimen/margin_8</item>
         <item name="android:inputType">number</item>
         <item name="android:maxLength">4</item>
         <item name="android:maxLines">1</item>
@@ -135,33 +135,54 @@
         <item name="android:gravity">center</item>
     </style>
     <style name="btn_main">
-        <item name="android:layout_marginTop">@dimen/margin_top</item>
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_width">120dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:background">@drawable/bg_btn_main</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:text">Submit</item>
     </style>
+    <style name="btn_main_list">
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:background">@drawable/bg_btn_main</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
     <style name="et_main">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:ems">150</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:layout_height">40dp</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:layout_marginStart">4dp</item>
         <item name="android:background">@drawable/bg_et</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="et_main_login">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:background">@drawable/bg_et</item>
+        <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textSize">12sp</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="ll_main">
-        <item name="android:layout_marginTop">@dimen/margin_top</item>
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="rl_main_spinner">
-        <item name="android:layout_marginTop">@dimen/margin_top</item>
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
@@ -184,9 +205,10 @@
         <item name="android:layout_centerInParent">true</item>
     </style>
     <style name="rl_spinner_main">
-        <item name="android:background">@drawable/bg_simple_aceent</item>
-        <item name="android:layout_marginTop">@dimen/margin_top</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:background">@drawable/bg_simple_ascent</item>
+        <item name="android:layout_height">@dimen/main_height</item>
         <item name="android:layout_width">match_parent</item>
     </style>
 
@@ -229,4 +251,28 @@
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:textColor">@color/colorGrey</item>
     </style>
+    <style name="tv_detail">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+
+
+    </style>
+
+
+    <style name="spn_item_count">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/margin_32</item>
+        <item name="android:layout_marginEnd">@dimen/margin_32</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/bg_et</item>
+        <item name="android:textSize">14sp</item>
+
+    </style>
+
 </resources>

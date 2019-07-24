@@ -17,6 +17,20 @@ import java.util.TimeZone;
 
 public class DateUtils {
 
+
+    public static long dateToMiliSeconds(String strDate){
+        String myDate = strDate;
+        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+        Date date = null;
+        try {
+            date = sdf.parse(myDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
+
+    }
+
     public static String getTodayDate() {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);

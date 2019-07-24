@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -52,6 +53,8 @@ import static com.knotlink.salseman.utils.DateUtils.getTodayDate;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private long lastPressedTime;
+    private static final int PERIOD = 2000;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
 
@@ -202,4 +205,24 @@ private void requestLocation(){
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+//            switch (event.getAction()) {
+//                case KeyEvent.ACTION_DOWN:
+//                    if (event.getDownTime() - lastPressedTime < PERIOD) {
+//                        finish();
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), "Press again to exit.",
+//                                Toast.LENGTH_SHORT).show();
+//                        lastPressedTime = event.getEventTime();
+//                    }
+//                    return true;
+//            }
+//        }
+//        return false;
+//    }
+
 }

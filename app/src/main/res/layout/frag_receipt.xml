@@ -99,7 +99,7 @@
             style="@style/et_main" />
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="@dimen/margin_8"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -229,18 +229,21 @@
                 android:textSize="12sp"
                 android:layout_width="0dp"
                 android:layout_weight=".40"
-                android:hint="400000"
-                />
-
-            <ImageView
-                android:id="@+id/iv_upload_receipt"
-                style="@style/et_main"
-                android:padding="2dp"
-                android:scaleType="fitXY"
+                android:hint="400000" />
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_weight=".35"
-                android:src="@drawable/ic_sales_photo_add"
-                 />
+                android:background="@drawable/ic_sales_photo_add"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/iv_upload_receipt"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+
 
         </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.knotlink.salseman.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,6 +35,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragRoute extends Fragment {
+
+    private Activity tActivity;
     @BindView(R.id.rv_route)
     protected RecyclerView rvRoute;
     @BindView(R.id.tv_route_routeName)
@@ -54,22 +58,22 @@ public class FragRoute extends Fragment {
     }
     private void initFrag() {
         tContext = getContext();
+        tActivity = getActivity();
         tFragmentManager = getFragmentManager();
         tSharedPrefManager = new SharedPrefManager(tContext);
         tvRoutePresnetDay.setText(DateUtils.getPresentDay());
         callApi();
-        SetTitle.tbTitle("Shop List", getActivity());
+        SetTitle.tbTitle("Vendor List", getActivity());
         initRvRoute();
     }
 
     private void initRvRoute(){
         RecyclerView.LayoutManager tManager = new LinearLayoutManager(tContext);
         rvRoute.setLayoutManager(tManager);
-
     }
 
     private void callApi(){
-        String strUserId = tSharedPrefManager.getUserId();
+        final String strUserId = tSharedPrefManager.getUserId();
         String strPresentDay = DateUtils.getPresentDay();
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<List<ModelShopList>> call = api.getShopDetail(strUserId, strPresentDay);
@@ -80,7 +84,7 @@ public class FragRoute extends Fragment {
                 if (tModels.size()!=0) {
                     tvRouteName.setText(tModels.get(0).getRouteName());
                 }
-                AdapterRoute tAdapter = new AdapterRoute(tContext,tFragmentManager, tModels);
+                AdapterRoute tAdapter = new AdapterRoute(tActivity, tContext,tFragmentManager, tModels, strUserId);
                 rvRoute.setAdapter(tAdapter);
             }
 
@@ -90,4 +94,8 @@ public class FragRoute extends Fragment {
             }
         });
     }
+
+
+
+
 }
