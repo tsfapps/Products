@@ -5,12 +5,15 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,9 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.adapter.baseadapter.AdapterConvertCustomer;
 import com.knotlink.salseman.adapter.baseadapter.AdapterTaskReSchedule;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
+import com.knotlink.salseman.fragment.FragNewCustomer;
 import com.knotlink.salseman.model.task.ModelTask;
 import com.knotlink.salseman.model.task.ModelTaskReschedule;
 import com.knotlink.salseman.utils.Constant;
@@ -44,20 +49,26 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
     private List<ModelTask> tModelTask;
     private Context tContext;
     private Activity tActivity;
-    private Spinner spnTaskReSchStatus;
+//    private Spinner spnTaskReSchStatus;
+    private Spinner spnCustomerConvert;
     private EditText etTaskSchRem;
     private EditText etTaskCompleted;
-    private AdapterTaskReSchedule tAdapter;
-    private String[] taskStatus;
-    private String spnTaskStatusItem;
+//    private AdapterTaskReSchedule tAdapter;
+    private AdapterConvertCustomer tAdapter;
+//    private String[] taskStatus;
+    private String[] statusCustomer;
+    private String strCustomerStatus;
+//    private String spnTaskStatusItem;
     private TextView tvTaskSchDate;
     private TextView tvTaskCompletedDate;
     private int modelIndex;
+    private FragmentManager tFragmentManager;
 
-    public AdapterTask(List<ModelTask> tModelTask, Context tContext, Activity tActivity) {
+    public AdapterTask(List<ModelTask> tModelTask, Context tContext, Activity tActivity, FragmentManager tFragmentManager) {
         this.tModelTask = tModelTask;
         this.tContext = tContext;
         this.tActivity = tActivity;
+        this.tFragmentManager = tFragmentManager;
     }
 
     @NonNull
@@ -73,8 +84,8 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
 
 
         modelIndex = taskViewHolder.getAdapterPosition();
-        taskStatus = tContext.getResources().getStringArray(R.array.task_status);
-        tAdapter = new AdapterTaskReSchedule(tContext, taskStatus);
+        statusCustomer = tContext.getResources().getStringArray(R.array.str_customer_status);
+        tAdapter = new AdapterConvertCustomer(tContext, statusCustomer);
 
         taskViewHolder.tv_task_type.setText(tModel.getTaskType());
         taskViewHolder.tvTaskAssignedDae.setText(tModel.getTaskAssignDate());
@@ -125,9 +136,6 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
                 dialog.setContentView(R.layout.row_task_reshcedule);
                 dialog.setTitle("Special Request");
                 dialog.setCancelable(true);
-
-                // set the custom dialog components - text, image and button
-//                spnTaskReSchStatus =  dialog.findViewById(R.id.spn_taskRescheduleStatus);
                 etTaskSchRem =  dialog.findViewById(R.id.et_taskRescheduleRemarks);
                tvTaskSchDate =  dialog.findViewById(R.id.tv_taskRescheduleDate);
                 tvTaskSchDate.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +173,7 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
 
                     }
                 });
+
 
 
                 Button button =  dialog.findViewById(R.id.btn_taskRescheduleSubmit);
@@ -216,21 +225,52 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
 
                 // set the custom dialog components - text, image and button
 //                spnTaskReSchStatus =  dialog.findViewById(R.id.spn_taskRescheduleStatus);
+                spnCustomerConvert =  dialog.findViewById(R.id.spnCustomerConvert);
+                spnCustomerConvert.setAdapter(tAdapter);
                 etTaskCompleted =  dialog.findViewById(R.id.et_taskCompletedRemarks);
                 tvTaskCompletedDate =  dialog.findViewById(R.id.tv_taskCompletedDate);
                 tvTaskCompletedDate.setText(DateUtils.getTodayDate());
 
-                Button btnCompleted =  dialog.findViewById(R.id.btn_taskCompletedSubmit);
+                spnCustomerConvert.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d(Constant.TAG, "You Clicked : "+position);
+                       switch (position){
+                           case 0:
+                               strCustomerStatus = "";
+                               CustomToast.toastBottom(tActivity, "Select the status");
+                               break;
+                           case 1:
+                               tFragmentManager.beginTransaction().replace(R.id.container_main, new FragNewCustomer()).addToBackStack(null).commit();
+                               dialog.dismiss();
+                               break;
+                           case 2:
+                               strCustomerStatus = statusCustomer[2];
+                               break;
+                               default:
+                       }
+                    }
 
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                Button btnCompleted =  dialog.findViewById(R.id.btn_taskCompletedSubmit);
                 btnCompleted.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
-                        String strTaskId = tModel.getTaskId();
-                        String strRemarks = etTaskCompleted.getText().toString().trim();
-                        Api api = ApiClients.getApiClients().create(Api.class);
-
-                        CustomToast.toastTop(tActivity, "Task completed successfully...");
+                        if (!strCustomerStatus.equalsIgnoreCase("")) {
+                            dialog.dismiss();
+                            String strTaskId = tModel.getTaskId();
+                            String strRemarks = etTaskCompleted.getText().toString().trim();
+                            Api api = ApiClients.getApiClients().create(Api.class);
+                            CustomToast.toastTop(tActivity, "Task completed successfully...");
+                        }
+                        else {
+                            CustomToast.toastTop(tActivity, "Select the status first.");
+                        }
 
                     }
                 });

@@ -14,18 +14,22 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.adapter.baseadapter.AdapterRouteSelect;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelMeeting;
+import com.knotlink.salseman.model.ModelRoute;
 import com.knotlink.salseman.services.GPSTracker;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.CheckPermission;
@@ -40,6 +44,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -52,7 +57,7 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_CANCELED;
 import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
-public class FragMeeting extends Fragment {
+public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedListener {
     private ModelMeeting tModels;
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
@@ -63,6 +68,10 @@ public class FragMeeting extends Fragment {
     private String strPinCode;
     private String strCity;
     private String strAdders;
+    private String strRouteId;
+    private List<ModelRoute> tModelsRoute;
+    private AdapterRouteSelect tAdapterRoute;
+
 
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -92,12 +101,13 @@ public class FragMeeting extends Fragment {
     protected RadioGroup rgMeeting;
     @BindView(R.id.tv_meeting_next_date)
     protected TextView tvMeetingNextDate;
+    @BindView(R.id.spnMeetingRoute)
+    protected Spinner spnMeetingRoute;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_meeting, container, false);
         ButterKnife.bind(this, view);
-
         initFrag();
         return view;
     }
@@ -105,6 +115,9 @@ public class FragMeeting extends Fragment {
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Meeting", getActivity());
+        tvMeetingNextDate.setText(DateUtils.getTodayDate());
+
+        strVendorType = "Customer";
 
         rgMeeting.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -130,9 +143,32 @@ public class FragMeeting extends Fragment {
         strCity = tGpsTracker.getCity(tContext);
         strPinCode = tGpsTracker.getPostalCode(tContext);
         strAdders = tGpsTracker.getAddressLine(tContext);
+        callApiRoute();
+        spnMeetingRoute.setOnItemSelectedListener(this);
     }
+
+    private void callApiRoute(){
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<List<ModelRoute>> call = api.allRouteList();
+        call.enqueue(new Callback<List<ModelRoute>>() {
+            @Override
+            public void onResponse(Call<List<ModelRoute>> call, Response<List<ModelRoute>> response) {
+                tModelsRoute = response.body();
+                tAdapterRoute = new AdapterRouteSelect(tContext, tModelsRoute);
+                spnMeetingRoute.setAdapter(tAdapterRoute);
+            }
+
+            @Override
+            public void onFailure(Call<List<ModelRoute>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+
     @OnClick(R.id.tv_meeting_next_date)
-    public void selectMeetingdDate(View view){
+    public void selectMeetingDate(View view){
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
@@ -247,7 +283,7 @@ public class FragMeeting extends Fragment {
         String strRemarks = etMeetingComments.getText().toString().trim();
         String strNextMeetDate = tvMeetingNextDate.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelMeeting> call = api.uploadMeeting(strUserId, strVendorType, strOrgName, strContactName, strContactNumber, strAdders,
+        Call<ModelMeeting> call = api.uploadMeeting(strUserId, strRouteId, strVendorType, strOrgName, strContactName, strContactNumber, strAdders,
                 strEmail,strCity,strPinCode,strNextMeetDate,strWhatsAppNo,strLandLineNo, strRemarks, strImage, strLat, strLong);
         call.enqueue(new Callback<ModelMeeting>() {
             @Override
@@ -268,5 +304,15 @@ public class FragMeeting extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        strRouteId = tModelsRoute.get(position).getId();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

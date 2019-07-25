@@ -4,6 +4,7 @@ import com.knotlink.salseman.model.ModelAttendance;
 import com.knotlink.salseman.model.ModelCash;
 import com.knotlink.salseman.model.ModelColdCall;
 import com.knotlink.salseman.model.ModelExpenseList;
+import com.knotlink.salseman.model.ModelRoute;
 import com.knotlink.salseman.model.ModelVisit;
 import com.knotlink.salseman.model.distance.ModelDistance;
 import com.knotlink.salseman.model.ModelExpenses;
@@ -136,7 +137,7 @@ public interface Api{
             @Field("remarks") String remarks,
             @Field("signature") String signature,
             @Field("ordered_image") String ordered_image,
-          //  @Field("product_id") String product_id
+          //@Field("product_id") String product_id
             @Field("latitude") String latitude,
             @Field("longitude") String longitude
     );
@@ -144,6 +145,7 @@ public interface Api{
     @POST("api/api_cold_call.php")
     Call<ModelColdCall> uploadColdCall(
             @Field("user_id") String user_id,
+            @Field("route_id") String route_id,
             @Field("org_name") String org_name,
             @Field("contact_name") String contact_name,
             @Field("contact_no") String contact_no,
@@ -157,8 +159,8 @@ public interface Api{
  @FormUrlEncoded
     @POST("api/api_lead_generation.php")
     Call<ModelLead> uploadLead(
-
          @Field("user_id") String user_id,
+         @Field("route_id") String route_id,
          @Field("vendor_type") String vendor_type,
          @Field("org_name") String org_name,
          @Field("contact_name") String contact_name,
@@ -179,6 +181,7 @@ public interface Api{
     @POST("api/api_meeting.php")
     Call<ModelMeeting> uploadMeeting(
             @Field("user_id") String user_id,
+            @Field("route_id") String route_id,
             @Field("vendor_type") String vendor_type,
             @Field("org_name") String org_name,
             @Field("contact_name") String contact_name,
@@ -217,12 +220,19 @@ public interface Api{
             @Field("pin_code") String pin_code,
             @Field("address") String address
     );
-
     @FormUrlEncoded
     @POST("api/api_assign_task.php")
     Call<List<ModelTask>> assignedTask(
             @Field("user_id") String user_id
     );
+    @FormUrlEncoded
+    @POST("api/api_user_route.php")
+    Call<List<ModelRoute>> userRouteList(
+            @Field("user_id") String user_id
+    );
+    @POST("api/api_route.php")
+    Call<List<ModelRoute>> allRouteList();
+
     @FormUrlEncoded
     @POST("api/api_assign_task_update.php")
     Call<ModelTaskReschedule> assignedTaskReschedule(
@@ -239,7 +249,7 @@ public interface Api{
             @Field("to_date") String to_date
     );
 
- @FormUrlEncoded
+    @FormUrlEncoded
     @POST("api/api_activity_report.php")
     Call<List<ModelReportDistance>> viewReportDistance(
             @Field("user_id") String user_id,
@@ -248,7 +258,7 @@ public interface Api{
             @Field("to_date") String to_date
     );
 
- @FormUrlEncoded
+    @FormUrlEncoded
     @POST("api/api_activity_report.php")
     Call<List<ModelReportNewOrder>> viewReportNewOrder(
             @Field("user_id") String user_id,
@@ -264,7 +274,7 @@ public interface Api{
             @Field("from_date") String from_date,
             @Field("to_date") String to_date
     );
- @FormUrlEncoded
+    @FormUrlEncoded
     @POST("api/api_activity_report.php")
     Call<List<ModelReportColdCall>> viewReportColdCall(
             @Field("user_id") String user_id,
@@ -272,7 +282,7 @@ public interface Api{
             @Field("from_date") String from_date,
             @Field("to_date") String to_date
     );
- @FormUrlEncoded
+    @FormUrlEncoded
     @POST("api/api_activity_report.php")
     Call<List<ModelReportMeeting>> viewReportMeeting(
             @Field("user_id") String user_id,
@@ -280,7 +290,7 @@ public interface Api{
             @Field("from_date") String from_date,
             @Field("to_date") String to_date
     );
- @FormUrlEncoded
+    @FormUrlEncoded
     @POST("api/api_activity_report.php")
     Call<List<ModelReportExpenses>> viewReportExpenses(
             @Field("user_id") String user_id,
@@ -288,7 +298,7 @@ public interface Api{
             @Field("from_date") String from_date,
             @Field("to_date") String to_date
      );
- @FormUrlEncoded
+    @FormUrlEncoded
     @POST("api/api_activity_report.php")
     Call<List<ModelReportLeadGeneration>> viewReportLead(
             @Field("user_id") String user_id,
@@ -296,14 +306,14 @@ public interface Api{
             @Field("from_date") String from_date,
             @Field("to_date") String to_date
     );
- @FormUrlEncoded
+    @FormUrlEncoded
     @POST("api/api_invoice_fetch.php")
     Call<ModelInvoice>  viewInvoice(
             @Field("shop_id") String shop_id,
             @Field("invoice_no") String invoice_no
     );
 
- @POST("api/api_expense_type.php")
+    @POST("api/api_expense_type.php")
     Call<List<ModelExpenseList>>  expenseList(
     );
 

@@ -9,28 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RadioGroup
-            android:id="@+id/rg_lead"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:checked="true"
-                android:id="@+id/rb_lead_org"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Customer"/>
-            <RadioButton
-                android:id="@+id/rb_lead_prospect"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Prospect"/>
-        </RadioGroup>
 
 
         <RelativeLayout
@@ -40,7 +18,7 @@
             <TextView
                 android:id="@+id/tv_lead_orgNameLabel"
                 android:layout_weight="1"
-                android:text="Organisation Name*"
+                android:text="Shop Name*"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
@@ -53,13 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:id="@+id/et_lead_orgName"
+                android:id="@+id/etNewCustomerShopName"
                 android:inputType="textPersonName"
                 style="@style/et_main"
                 android:layout_weight="1"/>
             <EditText
                 android:layout_weight="1"
-                android:id="@+id/et_lead_contactName"
+                android:id="@+id/etNewCustomerContactName"
                 android:inputType="textPersonName"
                 style="@style/et_main" />
         </LinearLayout>
@@ -83,12 +61,12 @@
             android:layout_height="wrap_content">
             <EditText
                 android:layout_weight="1.5"
-                android:id="@+id/et_lead_contactNumber"
+                android:id="@+id/etNewCustomerContactNumber"
                 android:maxLength="10"
                 android:inputType="phone"
                 style="@style/et_main" />
             <EditText
-                android:id="@+id/et_lead_email"
+                android:id="@+id/etNewCustomerEmail"
                 android:inputType="textEmailAddress"
                 style="@style/et_main"
                 android:layout_weight="1"/>
@@ -103,7 +81,7 @@
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="Land Line Number"
+                android:hint="GST Number"
                 style="@style/tv_report" />
 
         </RelativeLayout>
@@ -113,45 +91,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:layout_weight="1"
-                android:id="@+id/et_lead_whatsAppNo"
+                android:layout_weight="1.5"
+                android:id="@+id/etNewCustomerWhatsAppNo"
                 android:maxLength="10"
                 android:inputType="phone"
                 style="@style/et_main" />
             <EditText
                 android:layout_weight="1"
-                android:id="@+id/et_lead_landLine"
-                android:inputType="phone"
+                android:id="@+id/etNewCustomerGst"
+                android:inputType="number"
                 style="@style/et_main" />
         </LinearLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:hint="Next Meeting Date"
-        style="@style/tv_report" />
-    <TextView
-        android:layout_alignParentEnd="true"
-        android:hint="Select Route Name"
-        style="@style/tv_report" />
-
-</RelativeLayout>
-        <LinearLayout
+ <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tv_lead_nextMeetingDate"
-                android:layout_weight="1.5"
-                android:text="20 October 2087"
-                style="@style/tv_disable" />
+                android:hint="City"
+                style="@style/tv_report" />
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:hint="Route"
+                style="@style/tv_report" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <RelativeLayout
-                android:layout_weight="1"
+                android:layout_weight="1.5"
+                android:layout_marginEnd="@dimen/margin_4"
+                android:layout_width="wrap_content"
+                style="@style/rl_spinner_main">
+                <Spinner
+                    android:id="@+id/spnNewCustomerCity"
+                    style="@style/spinner_main" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1.5"
                 android:layout_marginStart="@dimen/margin_4"
                 android:layout_width="wrap_content"
                 style="@style/rl_spinner_main">
                 <Spinner
-                    android:id="@+id/spnLeadRoute"
+                    android:id="@+id/spnNewCustomerRoute"
                     style="@style/spinner_main"/>
                 <ImageView
                     android:layout_width="wrap_content"
@@ -162,58 +152,144 @@
             </RelativeLayout>
 
         </LinearLayout>
-
         <RelativeLayout
-            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                style="@style/tv_report"
-                android:text="Meeting Comments"
-                />
+                android:hint="Address"
+                style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                style="@style/tv_report"
+                android:hint="Land Line Number"
+                style="@style/tv_report" />
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
                 android:layout_weight="1"
-                android:text="@string/upload_image" />
+                android:id="@+id/etNewCustomerAddress"
+                style="@style/et_main" />
+            <EditText
+                android:layout_weight="2"
+                android:id="@+id/etNewCustomerLandLine"
+                android:inputType="phone"
+                style="@style/et_main" />
+        </LinearLayout>
+<RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:hint="Area"
+                style="@style/tv_report" />
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:hint="PinCode"
+                style="@style/tv_report" />
 
         </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_weight="1"
+                android:id="@+id/etNewCustomerArea"
+                style="@style/et_main" />
+            <EditText
+                android:layout_weight="2"
+                android:id="@+id/etNewCustomerPinCode"
+                android:inputType="number"
+                style="@style/et_main" />
+        </LinearLayout>
+
+
+
+
+
+
+
+
+            <TextView
+                style="@style/tv_report"
+                android:text="Remarks" />
+
         <LinearLayout
             android:background="@drawable/bg_et"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="120dp">
             <EditText
-                android:id="@+id/et_lead_comments"
+                android:id="@+id/etNewCustomerRemarks"
                 android:textSize="14sp"
                 android:gravity="start"
-                android:padding="2dp"
+                android:padding="4dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_et"/>
+
+
+
+        </LinearLayout>
+        <TextView
+            android:layout_alignParentEnd="true"
+            style="@style/tv_report"
+            android:layout_weight="1"
+            android:text="Upload Images" />
+
+        <LinearLayout
+            android:background="@drawable/bg_et"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_sales_photo_add"
                 android:layout_height="match_parent">
                 <ImageView
-                    android:id="@+id/iv_upload_lead"
+                    android:id="@+id/ivNewCustomerFirst"
                     android:scaleType="fitXY"
                     android:padding="2dp"
-                    android:layout_marginStart="-2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
             </FrameLayout>
-
-
-
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_sales_photo_add"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/ivNewCustomerSecond"
+                    android:scaleType="fitXY"
+                    android:padding="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_sales_photo_add"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/ivNewCustomerThird"
+                    android:scaleType="fitXY"
+                    android:padding="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </FrameLayout>
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_lead_submit"
+            android:id="@+id/btnNewCustomerSubmit"
             style="@style/btn_main"/>
     </LinearLayout>
 

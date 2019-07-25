@@ -20,4 +20,6 @@
     <color name="tan_yellow">#e6a504</color>
     <color name="red">#f40101</color>
     <color name="colorEmpty">#00FCF9F9</color>
+    <color name="spn_bg">#C5C5C5</color>
+    <color name="spn_bg_stroke">#AAAAAA</color>
 </resources>

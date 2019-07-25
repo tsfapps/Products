@@ -9,16 +9,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.activity.MainActivity;
+import com.knotlink.salseman.adapter.baseadapter.AdapterRouteSelect;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelColdCall;
+import com.knotlink.salseman.model.ModelRoute;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
@@ -30,6 +33,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -39,13 +43,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragColdCall extends Fragment {
+public class FragColdCall extends Fragment implements AdapterView.OnItemSelectedListener {
 
 
     private ModelColdCall tModels;
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
     final Calendar myCalendar = Calendar.getInstance();
+
+    private String strRouteId;
+    private List<ModelRoute> tModelsRoute;
+    private AdapterRouteSelect tAdapterRoute;
 
     @BindView(R.id.et_cold_orgName)
     protected EditText etColdOrgName;
@@ -62,11 +70,14 @@ public class FragColdCall extends Fragment {
      @BindView(R.id.et_cold_email)
     protected EditText etColdEmail;
      @BindView(R.id.tv_coldCall_nextMeetingDate)
-    protected TextView tv_coldCall_nextMeetingDate;
+    protected TextView tvColdCallNextMeetingDate;
      @BindView(R.id.et_cold_remarks)
     protected EditText etColdRemarks;
      @BindView(R.id.btn_cold_submit)
     protected Button btnColdSubmit;
+    @BindView(R.id.spnColdCallRoute)
+    protected Spinner spnColdCallRoute;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,7 +92,31 @@ public class FragColdCall extends Fragment {
 
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Cold Call", getActivity());
+
+        tvColdCallNextMeetingDate.setText(DateUtils.getTodayDate());
+        callApiRoute();
+        spnColdCallRoute.setOnItemSelectedListener(this);
+
     }
+
+    private void callApiRoute(){
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<List<ModelRoute>> call = api.allRouteList();
+        call.enqueue(new Callback<List<ModelRoute>>() {
+            @Override
+            public void onResponse(Call<List<ModelRoute>> call, Response<List<ModelRoute>> response) {
+                tModelsRoute = response.body();
+                tAdapterRoute = new AdapterRouteSelect(tContext, tModelsRoute);
+                spnColdCallRoute.setAdapter(tAdapterRoute);
+            }
+
+            @Override
+            public void onFailure(Call<List<ModelRoute>> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     @OnClick(R.id.tv_coldCall_nextMeetingDate)
     public void coldCallMeetingDate(View view){
@@ -98,7 +133,7 @@ public class FragColdCall extends Fragment {
                     String strMyDate = sdf.format(myCalendar.getTime());
                     Date selDate = sdf.parse(strMyDate);
                     if (selDate.compareTo(myDate)>0) {
-                        tv_coldCall_nextMeetingDate.setText(strMyDate);
+                        tvColdCallNextMeetingDate.setText(strMyDate);
                     }
                     else {
                         CustomToast.toastMid(getActivity(), Constant.DATE_DELIVERY);
@@ -130,10 +165,10 @@ public class FragColdCall extends Fragment {
         String strAddress = etColdAddress.getText().toString().trim();
         String strCity = et_cold_city.getText().toString().trim();
         String strEmail = etColdEmail.getText().toString().trim();
-        String strMeetingDate = tv_coldCall_nextMeetingDate.getText().toString().trim();
+        String strMeetingDate = tvColdCallNextMeetingDate.getText().toString().trim();
         String strRemarks = etColdRemarks.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelColdCall> call = api.uploadColdCall(strUserId, strOrgName, strContactName, strContactNumber,strLandLineNo, strAddress,
+        Call<ModelColdCall> call = api.uploadColdCall(strUserId, strRouteId, strOrgName, strContactName, strContactNumber,strLandLineNo, strAddress,
                 strEmail, strCity, strMeetingDate, strRemarks);
         call.enqueue(new Callback<ModelColdCall>() {
             @Override
@@ -153,5 +188,15 @@ public class FragColdCall extends Fragment {
                 CustomLog.d(Constant.TAG, "Not Responding ColdCall : "+t);
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        strRouteId = tModelsRoute.get(position).getId();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

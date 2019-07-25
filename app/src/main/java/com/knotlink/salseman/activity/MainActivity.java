@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private String strUserType;
     @BindView(R.id.toolbar)
     protected Toolbar tToolbar;
+    @BindView(R.id.ivToolbarLogo)
+    protected ImageView ivToolbarLogo;
     @BindView(R.id.tvToolbar)
     protected TextView tTitle;
     @BindView(R.id.tv_date_main)
@@ -101,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
         requestLocation();
     }
+
+    @OnClick(R.id.ivToolbarLogo)
+    public void ivToolbarLogoClicked(View view){
+        startActivity(new Intent(tContext, MainActivity.class));
+    }
+
     @OnClick(R.id.iv_bottom_dashboard)
     public void onDashboardClicked(){
         switch (strUserType) {

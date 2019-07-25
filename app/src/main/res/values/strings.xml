@@ -152,6 +152,25 @@
         <item>Video</item>
         <item>Text</item>
     </string-array>
+    <string-array name="str_customer_status">
+        <item>--select status--</item>
+        <item>Convert to Customer</item>
+        <item>Declined</item>
+    </string-array>
+
+
+    <string-array name="route_list">
+        <item>--select route--</item>
+        <item>Route A</item>
+        <item>Route B</item>
+        <item>Route D</item>
+        <item>Route E</item>
+        <item>Route F</item>
+        <item>Route G</item>
+        <item>Route H</item>
+        <item>Route I</item>
+    </string-array>
+
 
 
 

@@ -17,60 +17,31 @@
             android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!--<TextView-->
-                <!--android:text="Task Reschedule"-->
-                <!--android:gravity="center"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:background="@color/colorPrimaryDark"-->
-                <!--android:textSize="16sp"-->
-                <!--android:textStyle="bold"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="40dp" />-->
-            <RelativeLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <!--<TextView-->
-                    <!--style="@style/tv_report"-->
-                    <!--android:text="Update Status"/>-->
                 <TextView
                     style="@style/tv_report"
                     android:text="Date of completion"/>
 
-            </RelativeLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <!--<RelativeLayout-->
-                <!--android:layout_weight="1"-->
-                <!--android:id="@+id/rl_spinner_taskStatus"-->
-                <!--style="@style/rl_spinner_main">-->
-                <!--<Spinner-->
-                    <!--android:id="@+id/spn_taskRescheduleStatus"-->
-                    <!--style="@style/spinner_main"-->
-                    <!--android:layout_height="40dp"/>-->
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:src="@drawable/ic_arrow_down"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_centerVertical="true"/>-->
-            <!--</RelativeLayout>-->
-            <RelativeLayout
-                android:layout_weight="1"
-                android:id="@+id/rl_taskRescheduleDate"
-                style="@style/rl_spinner_main">
                <TextView
                    android:id="@+id/tv_taskCompletedDate"
-                   android:layout_width="match_parent"
-                   android:layout_height="@dimen/main_height"
-                   android:textColor="@color/white"
-                   android:gravity="center"
+                  style="@style/tv_disable"
                    android:text="25 May 2019"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Select your request"/>
+            <RelativeLayout
+                android:id="@+id/rl_meeting_spinner_city"
+                style="@style/rl_spinner_main">
+                <Spinner
+                    android:id="@+id/spnCustomerConvert"
+                    style="@style/spinner_main"
+                    android:layout_height="40dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
-            </LinearLayout>
     <TextView
         android:layout_marginTop="16dp"
         android:textSize="12sp"

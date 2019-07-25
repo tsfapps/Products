@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class FragTask extends Fragment {
     private RecyclerView.LayoutManager tLayoutManager;
     private AdapterTask tAdapterTask;
     private SharedPrefManager tSharedPrefManager;
+    private FragmentManager tFragmentManager;
     private Context tContext;
     private Activity tActivity;
     private List<ModelTask> tModelTask;
@@ -51,6 +53,7 @@ public class FragTask extends Fragment {
         tContext = getContext();
         tActivity = getActivity();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        tFragmentManager = getFragmentManager();
         SetTitle.tbTitle("Task Assigned", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvTask.setLayoutManager(tLayoutManager);
@@ -64,7 +67,7 @@ public class FragTask extends Fragment {
             @Override
             public void onResponse(Call<List<ModelTask>> call, Response<List<ModelTask>> response) {
                 tModelTask =response.body();
-                tAdapterTask = new AdapterTask(tModelTask, tContext, tActivity);
+                tAdapterTask = new AdapterTask(tModelTask, tContext, tActivity, tFragmentManager);
                 rvTask.setAdapter(tAdapterTask);
             }
             @Override

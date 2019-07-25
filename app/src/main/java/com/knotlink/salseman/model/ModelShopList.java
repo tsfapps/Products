@@ -6,7 +6,19 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class ModelShopList {
-
+// {
+//        "dispatcher_id": "EMP_1033",
+//        "pincode": null,
+//        "latitude": "0",
+//        "longitude": "0",
+//        "route_name": "GANGANAGAR (8123010201)",
+//        "gst_no": "29000000000",
+//        "landline_no": null,
+//        "whatsapp_no": null,
+//        "invoice_no": [
+//            ""
+//        ]
+//    },
     @SerializedName("shop_name")
     @Expose
     private String shopName;

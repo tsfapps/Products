@@ -17,61 +17,16 @@
             android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!--<TextView-->
-                <!--android:text="Task Reschedule"-->
-                <!--android:gravity="center"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:background="@color/colorPrimaryDark"-->
-                <!--android:textSize="16sp"-->
-                <!--android:textStyle="bold"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="40dp" />-->
-            <RelativeLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <!--<TextView-->
-                    <!--style="@style/tv_report"-->
-                    <!--android:text="Update Status"/>-->
                 <TextView
                     style="@style/tv_report"
                     android:text="Reschedule date"/>
 
-            </RelativeLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <!--<RelativeLayout-->
-                <!--android:layout_weight="1"-->
-                <!--android:id="@+id/rl_spinner_taskStatus"-->
-                <!--style="@style/rl_spinner_main">-->
-                <!--<Spinner-->
-                    <!--android:id="@+id/spn_taskRescheduleStatus"-->
-                    <!--style="@style/spinner_main"-->
-                    <!--android:layout_height="40dp"/>-->
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:src="@drawable/ic_arrow_down"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_centerVertical="true"/>-->
-            <!--</RelativeLayout>-->
-            <RelativeLayout
-                android:layout_weight="1"
-                android:id="@+id/rl_taskRescheduleDate"
-                style="@style/rl_spinner_main">
                <TextView
                    android:id="@+id/tv_taskRescheduleDate"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:textColor="@color/white"
-                   android:gravity="center"
+                  style="@style/tv_disable"
                    android:text="25 May 2019"/>
-            </RelativeLayout>
-            </LinearLayout>
-    <TextView
+
+            <TextView
         android:layout_marginTop="16dp"
         android:textSize="12sp"
         android:textColor="@color/colorBlack"

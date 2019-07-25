@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:padding="16dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,14 +32,12 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/et_cold_orgName"
-                android:hint="Masakn Traders"
                 android:inputType="textPersonName"
                 style="@style/et_main"
                 android:layout_weight="1"/>
 
             <EditText
                 android:id="@+id/et_cold_contactName"
-                android:hint="Numan Ahmed"
                 android:inputType="textPersonName"
                 style="@style/et_main"
                 android:layout_weight="1"/>
@@ -42,14 +45,17 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true">
+
             <TextView
-                android:hint="Contact Number*"
-                style="@style/tv_report" />
+                style="@style/tv_report"
+                android:hint="Contact Number*" />
+
             <TextView
+                style="@style/tv_report"
                 android:layout_alignParentEnd="true"
-                android:hint="Email Id"
-                style="@style/tv_report" />
+                android:hint="Email Id" />
         </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -57,7 +63,6 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/et_cold_contactNumber"
-                android:hint="9709080680"
                 android:inputType="phone"
                 android:maxLength="10"
                 style="@style/et_main"
@@ -65,7 +70,6 @@
 
             <EditText
                 android:id="@+id/et_cold_email"
-                android:hint="kotlin@gmail.com"
                 android:inputType="textEmailAddress"
                 style="@style/et_main"
                 android:layout_weight="1"/>
@@ -89,7 +93,6 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/et_cold_landLine"
-                android:hint="065122334435"
                 android:inputType="phone"
                 android:maxLength="12"
                 style="@style/et_main"
@@ -98,7 +101,6 @@
             <EditText
                 android:layout_weight="1"
                 android:id="@+id/et_cold_city"
-                android:hint="Bangalore"
                 android:inputType="textPersonName"
                 style="@style/et_main"/>
         </LinearLayout>
@@ -107,20 +109,47 @@
             style="@style/tv_report" />
         <EditText
             android:id="@+id/et_cold_address"
-            android:hint="Address"
             android:inputType="textPersonName"
             style="@style/et_main"/>
-        <TextView
-            android:hint="Next Meeting Date"
-            style="@style/tv_report" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:hint="Next Meeting Date"
+        style="@style/tv_report" />
+    <TextView
+        android:layout_alignParentEnd="true"
+        android:hint="Select Route Name"
+        style="@style/tv_report" />
 
-        <TextView
-            android:background="@drawable/bg_simple_ascent"
-            android:id="@+id/tv_coldCall_nextMeetingDate"
-            android:text="20 October 2087"
-            android:textColor="@color/white"
-            style="@style/et_main"
-           />
+</RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_coldCall_nextMeetingDate"
+                android:layout_weight="1.5"
+                android:text="20 October 1989"
+                style="@style/tv_disable" />
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/margin_4"
+                android:layout_width="wrap_content"
+                style="@style/rl_spinner_main">
+                <Spinner
+                    android:id="@+id/spnColdCallRoute"
+                    style="@style/spinner_main"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
         <EditText
             android:layout_marginTop="@dimen/margin_8"
             android:minLines="5"
@@ -137,5 +166,5 @@
             android:id="@+id/btn_cold_submit"
             style="@style/btn_main"/>
     </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

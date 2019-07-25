@@ -57,15 +57,12 @@
             android:layout_height="wrap_content">
         <EditText
             android:id="@+id/et_meeting_orgName"
-            android:hint="Masakn Traders"
             android:inputType="textPersonName"
             style="@style/et_main"
             android:layout_weight="1"/>
 
         <EditText
             android:id="@+id/et_meeting_contactName"
-
-            android:hint="Numan Ahmed"
             android:inputType="textPersonName"
             style="@style/et_main"
             android:layout_weight="1"/>
@@ -88,7 +85,6 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/et_meeting_contactNumber"
-                android:hint="9709080680"
                 android:maxLength="10"
                 android:inputType="phone"
                 style="@style/et_main"
@@ -96,7 +92,6 @@
 
             <EditText
                 android:id="@+id/et_meeting_whatsapp_no"
-                android:hint="7004774488"
                 android:maxLength="10"
                 android:inputType="phone"
                 style="@style/et_main"
@@ -121,66 +116,52 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/et_meeting_email"
-                android:hint="ranchi@gmail.com"
                 android:inputType="textEmailAddress"
                 style="@style/et_main"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/et_meeting_landLine"
-                android:hint="0651-2306825"
                 android:inputType="phone"
                 style="@style/et_main"
                 android:layout_weight="1"/>
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <TextView
-                android:layout_alignParentEnd="true"
                 android:hint="Next Meeting Date"
                 style="@style/tv_report" />
-
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:hint="Select Route"
+                style="@style/tv_report" />
+        </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:background="@drawable/bg_simple_ascent"
                 android:id="@+id/tv_meeting_next_date"
-                android:text="20 October 2087"
-                android:textColor="@color/white"
-                style="@style/et_main"
-                android:layout_weight="1"/>
+                android:text="20 October 1989"
+                android:layout_weight="1.5"
+                style="@style/tv_disable" />
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/margin_4"
+                android:layout_width="wrap_content"
+                style="@style/rl_spinner_main">
+                <Spinner
+                    android:id="@+id/spnMeetingRoute"
+                    style="@style/spinner_main"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
 
-            <!--<RelativeLayout-->
-            <!--android:layout_marginEnd="4dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:id="@+id/rl_meeting_spinner_city"-->
-            <!--style="@style/rl_spinner_main">-->
-        <!--<Spinner-->
-            <!--android:entries="@array/city_list"-->
-            <!--style="@style/spinner_main" />-->
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/ic_arrow_down"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:layout_centerVertical="true"/>-->
-        <!--</RelativeLayout>-->
-        <!--<RelativeLayout-->
-            <!--android:layout_marginStart="4dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:id="@+id/rl_meeting_spinner_status"-->
-            <!--style="@style/rl_spinner_main">-->
-        <!--<Spinner-->
-            <!--android:entries="@array/meeting_status"-->
-            <!--style="@style/spinner_main" />-->
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_arrow_down"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_centerVertical="true"/>-->
-    <!--</RelativeLayout>-->
         </LinearLayout>
-
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -206,7 +187,6 @@
                 android:padding="4dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
-                android:hint="Meeting Comments"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
