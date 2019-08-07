@@ -48,6 +48,15 @@ public class FragRoute extends Fragment {
     private SharedPrefManager tSharedPrefManager;
     private List<ModelShopList> tModels;
 
+    String strUserType;
+    public static FragRoute newInstance(String strUserType) {
+
+        FragRoute fragment = new FragRoute();
+        fragment.strUserType = strUserType;
+        return fragment;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,7 +85,7 @@ public class FragRoute extends Fragment {
         final String strUserId = tSharedPrefManager.getUserId();
         String strPresentDay = DateUtils.getPresentDay();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<List<ModelShopList>> call = api.getShopDetail(strUserId, strPresentDay);
+        Call<List<ModelShopList>> call = api.getShopDetail(strUserId, strUserType, strPresentDay);
         call.enqueue(new Callback<List<ModelShopList>>() {
             @Override
             public void onResponse(Call<List<ModelShopList>> call, Response<List<ModelShopList>> response) {
@@ -84,7 +93,7 @@ public class FragRoute extends Fragment {
                 if (tModels.size()!=0) {
                     tvRouteName.setText(tModels.get(0).getRouteName());
                 }
-                AdapterRoute tAdapter = new AdapterRoute(tActivity, tContext,tFragmentManager, tModels, strUserId);
+                AdapterRoute tAdapter = new AdapterRoute(tActivity, tContext,tFragmentManager, tModels, strUserId, strUserType);
                 rvRoute.setAdapter(tAdapter);
             }
 

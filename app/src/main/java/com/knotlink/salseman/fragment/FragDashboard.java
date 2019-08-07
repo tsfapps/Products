@@ -12,36 +12,74 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.adapter.baseadapter.AdapterSalesMan;
+import com.knotlink.salseman.api.Api;
+import com.knotlink.salseman.api.ApiClients;
+import com.knotlink.salseman.model.ModelSalesMan;
+import com.knotlink.salseman.model.ModelVehicleList;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.SetTitle;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class FragDashboard extends Fragment {
+public class FragDashboard extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private Context tContext;
     private FragmentManager tFragmentManager;
     private SharedPrefManager tSharedPrefManager;
-//    @BindView(R.id.tv_dashboard_user_name)
+    private List<ModelSalesMan> tModels;
+    private List<ModelVehicleList> tModelsVehicle;
+    private AdapterSalesMan tAdapterSalesMan;
+
+    //    @BindView(R.id.tv_dashboard_user_name)
 //    protected TextView tvDashboardUserName;
     @BindView(R.id.tv_dash_attendance)
     protected TextView tvDashAttendance;
 
-    private String userType;
+    @BindView(R.id.cvDashAttendance)
+    protected CardView cvDashAttendance;
+    @BindView(R.id.cvDashDistance)
+    protected CardView cvDashDistance;
+    @BindView(R.id.cvDashRoute)
+    protected CardView cvDashRoute;
+    @BindView(R.id.cvDashLead)
+    protected CardView cvDashLead;
+    @BindView(R.id.cvDashMeeting)
+    protected CardView cvDashMeeting;
+    @BindView(R.id.cvDashCold)
+    protected CardView cvDashCold;
+    @BindView(R.id.cvDashCash)
+    protected CardView cvDashCash;
+    @BindView(R.id.cvDashExpenses)
+    protected CardView cvDashExpenses;
+
+    @BindView(R.id.spnDashSalesMan)
+    protected Spinner spnDashSalesMan;
+
+    private String strUserType;
     public static FragDashboard newInstance(String userType) {
 
         FragDashboard fragment = new FragDashboard();
-        fragment.userType = userType;
+        fragment.strUserType = userType;
         return fragment;
     }
 
@@ -59,7 +97,44 @@ public class FragDashboard extends Fragment {
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Dashboard", getActivity());
         tFragmentManager = getFragmentManager();
+        spnDashSalesMan.setOnItemSelectedListener(this);
+        callApiSalesMan();
+        hideShowContent();
+        Log.d(Constant.TAG,"User Type: "+strUserType);
     }
+
+    private void hideShowContent(){
+        if (strUserType.equalsIgnoreCase("2")){
+            cvDashLead.setVisibility(View.GONE);
+            cvDashCold.setVisibility(View.GONE);
+            cvDashMeeting.setVisibility(View.GONE);
+        }
+        else if (strUserType.equalsIgnoreCase("1")){
+            cvDashLead.setVisibility(View.VISIBLE);
+            cvDashCold.setVisibility(View.VISIBLE);
+            cvDashMeeting.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void callApiSalesMan(){
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<List<ModelSalesMan>> call = api.salesManList();
+        call.enqueue(new Callback<List<ModelSalesMan>>() {
+            @Override
+            public void onResponse(Call<List<ModelSalesMan>> call, Response<List<ModelSalesMan>> response) {
+                tModels = response.body();
+                tAdapterSalesMan = new AdapterSalesMan(tContext, tModels);
+                spnDashSalesMan.setAdapter(tAdapterSalesMan);
+            }
+
+            @Override
+            public void onFailure(Call<List<ModelSalesMan>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
     @OnClick(R.id.ll_dash_attendance)
     public void dashAttendanceClicked(View view){
         tFragmentManager.beginTransaction().replace(R.id.container_main, new FragAttendance()).addToBackStack(null).commit();
@@ -68,25 +143,25 @@ public class FragDashboard extends Fragment {
     public void disClicked(View view){
         if (!tSharedPrefManager.getStartKm().equals(""))
         {
-            tFragmentManager.beginTransaction().replace(R.id.container_main, new FragDistance()).addToBackStack(null).commit();
+            tFragmentManager.beginTransaction().replace(R.id.container_main, FragDistance.newInstance(tModelsVehicle,0,strUserType)).addToBackStack(null).commit();
 
         }
         else {
-            tFragmentManager.beginTransaction().replace(R.id.container_main, new FragVehicleList()).addToBackStack(null).commit();
+            tFragmentManager.beginTransaction().replace(R.id.container_main, FragVehicleList.newInstance(strUserType)).addToBackStack(null).commit();
         }
     }
     @OnClick(R.id.ll_dash_meeting)
     public void meetingClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragMeeting()).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragMeeting.newInstance(strUserType)).addToBackStack(null).commit();
     }
  @OnClick(R.id.ll_dash_route)
     public void orderClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragRoute()).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragRoute.newInstance(strUserType)).addToBackStack(null).commit();
     }
 
     @OnClick(R.id.ll_dash_lead_generation)
     public void leadClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragLead()).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragLead.newInstance(strUserType)).addToBackStack(null).commit();
     }
 // @OnClick(R.id.iv_dash_receipt)
 //    public void receiptClicked(View view){
@@ -94,11 +169,11 @@ public class FragDashboard extends Fragment {
 //    }
  @OnClick(R.id.ll_dash_cold_call)
     public void coldClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragColdCall()).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragColdCall.newInstance(strUserType)).addToBackStack(null).commit();
     }
  @OnClick(R.id.ll_dash_cash_collection)
     public void cashClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragCash()).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragCash.newInstance(strUserType)).addToBackStack(null).commit();
     }
  @OnClick(R.id.ll_dash_expenses)
     public void expensesClicked(View view){
@@ -153,5 +228,13 @@ public class FragDashboard extends Fragment {
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

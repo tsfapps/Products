@@ -30,6 +30,18 @@ public class DateUtils {
         return date.getTime();
 
     }
+    public static long dateToMiliSecondsYyyy(String strDate){
+        String myDate = strDate;
+        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_yyyy__MM__dd, Locale.UK);
+        Date date = null;
+        try {
+            date = sdf.parse(myDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
+
+    }
 
     public static String getTodayDate() {
         Date c = Calendar.getInstance().getTime();
@@ -103,7 +115,7 @@ public class DateUtils {
 
     public static String getDeliveryDate(String dateToday) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY);
+        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY, Locale.UK);
         Calendar c = Calendar.getInstance();
         try {
             c.setTime(sdf.parse(dateToday));
@@ -124,7 +136,7 @@ public class DateUtils {
     public static String timeDiff(String dateStart, String dateStop) {
         String dH = "";
         try {
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY);
+            SimpleDateFormat format = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY, Locale.UK);
 
             Date d1 = format.parse(dateStart);
             Date d2 = format.parse(dateStop);
@@ -147,13 +159,89 @@ public class DateUtils {
         }
         return dH;
     }
+    public static String date3Months() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -3);
+        Date date = cal.getTime();
+        return new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.ENGLISH).format(date.getTime());
+
+    }
+    public static String date6Months() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -6);
+        Date date = cal.getTime();
+        return new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.ENGLISH).format(date.getTime());
+
+    }
+    public static String date9Months() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -9);
+        Date date = cal.getTime();
+        return new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.ENGLISH).format(date.getTime());
+
+    }
+    public static String date12Months() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -12);
+        Date date = cal.getTime();
+        return new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.ENGLISH).format(date.getTime());
+
+    }
 
     public static String compareCurrent(){
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY);
+        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY, Locale.UK);
         String getCurrentDateTime = sdf.format(c.getTime());
         return getCurrentDateTime;
     }
 
+    public static String convertFormat(String strOldDate){
+
+        try {
+            Date date=new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy,Locale.UK).parse(strOldDate);
+            SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_yyyy__MM__dd, Locale.UK);
+            return formatter.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+       return null;
+    }
+    public static String convertFormatOpposite(String strOldDate){
+
+        try {
+            Date date=new SimpleDateFormat(Constant.DATE_FORMAT_yyyy__MM__dd,Locale.UK).parse(strOldDate);
+            SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+            return formatter.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+       return null;
+    }
+    public static String convertYyyyToDd(String strOldDate){
+
+        try {
+            Date date=new SimpleDateFormat(Constant.DATE_FORMAT_yyyy__mm__dd,Locale.UK).parse(strOldDate);
+            SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+            return formatter.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+       return null;
+    }
+    public static String convertDdToYyyy(String strOldDate){
+
+        try {
+            Date date=new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy,Locale.UK).parse(strOldDate);
+            SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_yyyy__MM__dd, Locale.UK);
+            return formatter.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+       return null;
+    }
 
 }

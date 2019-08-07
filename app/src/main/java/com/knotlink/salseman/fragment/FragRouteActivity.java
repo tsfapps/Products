@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
@@ -29,8 +31,10 @@ import com.knotlink.salseman.adapter.baseadapter.AdapterSpecialRequest;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelFeedback;
+import com.knotlink.salseman.model.ModelGetLocaion;
 import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.model.ModelSpecialRequest;
+import com.knotlink.salseman.services.GPSTracker;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.CheckPermission;
 import com.knotlink.salseman.utils.Constant;
@@ -40,6 +44,7 @@ import com.knotlink.salseman.utils.SetTitle;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -56,24 +61,41 @@ public class FragRouteActivity extends Fragment {
     private ModelSpecialRequest tSpecialModels;
     private ModelFeedback tModelsFeedback;
     private SharedPrefManager tSharedPrefManger;
-    private int i;
+
     private String[] title;
     private String[] strFeedback;
     private String spinner_item;
+    private String strShopId;
+    private String strShopLat;
+    private String strShopLong;
    // private String spinner_item_feedback;
     private AdapterSpecialRequest tAdapter;
     private AdapterFeedback tAdapterFeedback;
     private EditText edittext;
-    private EditText  etFeedback;
+    private EditText etFeedback;
     private Bitmap tBitmap;
     private ImageView ivFeedback;
    // private Spinner spnFeedback;
 
+    private GPSTracker tGpsTracker;
+    private String strLat;
+    private String strLong;
+    private String strPinCode;
+    private String strCity;
+    private String strAdders;
 
-    public static FragRouteActivity newInstance(List<ModelShopList> tModels, int i) {
+    @BindView(R.id.btnGetLocation)
+    protected Button btnGetLocation;
+    @BindView(R.id.tvRouteActivityOrder)
+    protected TextView tvRouteActivityOrder;
+    private int i;
+    private String strUserType;
+
+    public static FragRouteActivity newInstance(List<ModelShopList> tModels, int i, String strUserType) {
         FragRouteActivity fragment = new FragRouteActivity();
         fragment.tModels = tModels;
         fragment.i = i;
+        fragment.strUserType = strUserType;
         return fragment;
     }
 
@@ -89,22 +111,79 @@ public class FragRouteActivity extends Fragment {
     private void initFrag() {
         tContext = getContext();
         tSharedPrefManger = new SharedPrefManager(tContext);
+
         title = getResources().getStringArray(R.array.special_request);
         tAdapter=new AdapterSpecialRequest(tContext, title);
         strFeedback = getResources().getStringArray(R.array.str_arr_feedback);
         tAdapterFeedback=new AdapterFeedback(tContext, strFeedback);
         SetTitle.tbTitle("Route Activity", getActivity());
+
+        strShopId = tModels.get(i).getShopId();
+        strShopLat = tModels.get(i).getLatitude();
+        strShopLong = tModels.get(i).getLongitude();
+
+        if (!strShopLat.equalsIgnoreCase("0")&& !strShopLong.equalsIgnoreCase("0")){
+            btnGetLocation.setVisibility(View.GONE);
+        }
+        tGpsTracker = new GPSTracker(tContext);
+        strLat = String.valueOf(tGpsTracker.latitude);
+        strLong = String.valueOf(tGpsTracker.longitude);
+        strCity = tGpsTracker.getCity(tContext);
+        strPinCode = tGpsTracker.getPostalCode(tContext);
+        strAdders = tGpsTracker.getAddressLine(tContext);
+
+        if (strUserType.equalsIgnoreCase("1")){
+            tvRouteActivityOrder.setText("New Order");
+        }
+        else if (strUserType.equalsIgnoreCase("2")){
+            tvRouteActivityOrder.setText("Sales Return");
+
+        }
+
     }
 
     @OnClick(R.id.ll_route_new_order)
     public void routeOrderClicked(View view){
-        getFragmentManager().beginTransaction().replace(R.id.container_main, FragNewOrder.newInstance(tModels, i)).addToBackStack(null).commit();
+        assert getFragmentManager() != null;
+        if (strUserType.equalsIgnoreCase("1")){
+            getFragmentManager().beginTransaction().replace(R.id.container_main, FragNewOrder.newInstance(tModels, i, strUserType)).addToBackStack(null).commit();
+
+        }else if (strUserType.equalsIgnoreCase("2")){
+            getFragmentManager().beginTransaction().replace(R.id.container_main, FragSalesReturn.newInstance(tModels, i)).addToBackStack(null).commit();
+
+        }
     }
     @OnClick(R.id.ll_dash_receipt)
     public void receiptClicked(View view){
+        assert getFragmentManager() != null;
         getFragmentManager().beginTransaction().replace(R.id.container_main, FragReceipt.newInstance(tModels, i)).addToBackStack(null).commit();
     }
+    @OnClick(R.id.btnGetLocation)
+    public void btnGetLocationClicked(View view){
+        callLocationApi();
+    }
 
+    private void callLocationApi(){
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<ModelGetLocaion> call =api.updateLocation(strShopId, strAdders, strCity, strPinCode, strLat, strLong);
+        call.enqueue(new Callback<ModelGetLocaion>() {
+            @Override
+            public void onResponse(Call<ModelGetLocaion> call, Response<ModelGetLocaion> response) {
+                ModelGetLocaion tModel = response.body();
+                assert tModel != null;
+                if (!tModel.getError()){
+                    CustomToast.toastTop(getActivity(), tModel.getMessage() );
+                }
+                CustomToast.toastTop(getActivity(), tModel.getMessage() );
+            }
+
+            @Override
+            public void onFailure(Call<ModelGetLocaion> call, Throwable t) {
+
+                Log.d(Constant.TAG, "Location Update  Failure : "+t);
+            }
+        });
+    }
     //Special request clicked
     @OnClick(R.id.ll_route_special_request)
     public void requestClicked(View view) {
@@ -145,7 +224,6 @@ public class FragRouteActivity extends Fragment {
 
     //Special Request Api Call
     private void callSpecialRequestApi(){
-        String strShopId = tModels.get(i).getShopId();
         String strRemarks = edittext.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<ModelSpecialRequest> requestCall = api.uploadSpecialRequest(spinner_item, strShopId, strRemarks);
@@ -174,8 +252,6 @@ public class FragRouteActivity extends Fragment {
         dialog.setTitle("Special Request");
         dialog.setCancelable(true);
 
-        // set the custom dialog components - text, image and button
-//        spnFeedback =  dialog.findViewById(R.id.spn_feedback);
         ivFeedback = dialog.findViewById(R.id.iv_feedback_image);
         etFeedback =  dialog.findViewById(R.id.et_feedback);
         Button button =  dialog.findViewById(R.id.btn_feedback);
@@ -196,21 +272,14 @@ public class FragRouteActivity extends Fragment {
         });
         dialog.show();
     }
-//    private String imageToString(){
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        tBitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-//        byte[] imByte = byteArrayOutputStream.toByteArray();
-//        return Base64.encodeToString(imByte,Base64.DEFAULT);
-//    }
 
     //Feedback Api Call
     private void callApiFeedback(){
         String strUserId = tSharedPrefManger.getUserId();
-        String strSHopId = tModels.get(i).getShopId();
         String strRemarks = etFeedback.getText().toString().trim();
         String strImage = imageToString(tBitmap, ivFeedback);
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelFeedback> requestCall = api.uploadFeedback(strSHopId, strUserId,strImage, strRemarks);
+        Call<ModelFeedback> requestCall = api.uploadFeedback(strShopId, strUserId, strImage, strRemarks);
         requestCall.enqueue(new Callback<ModelFeedback>() {
             @Override
             public void onResponse(Call<ModelFeedback> call, Response<ModelFeedback> response) {

@@ -28,6 +28,9 @@ public class ModelReportDistance {
     @SerializedName("distance_traveled")
     @Expose
     private String distanceTraveled;
+    @SerializedName("excess_distance")
+    @Expose
+    private String excessDistance;
     @SerializedName("previous_day")
     @Expose
     private String previousDay;
@@ -76,6 +79,15 @@ public class ModelReportDistance {
     @SerializedName("total_km")
     @Expose
     private String totalKm;
+    @SerializedName("vehicle_no")
+    @Expose
+    private String vehicleNo;
+    @SerializedName("additional_user")
+    @Expose
+    private Object additionalUser;
+    @SerializedName("additional_time")
+    @Expose
+    private Object additionalTime;
 
     public String getId() {
         return id;
@@ -139,6 +151,14 @@ public class ModelReportDistance {
 
     public void setDistanceTraveled(String distanceTraveled) {
         this.distanceTraveled = distanceTraveled;
+    }
+
+    public String getExcessDistance() {
+        return excessDistance;
+    }
+
+    public void setExcessDistance(String excessDistance) {
+        this.excessDistance = excessDistance;
     }
 
     public String getPreviousDay() {
@@ -267,6 +287,30 @@ public class ModelReportDistance {
 
     public void setTotalKm(String totalKm) {
         this.totalKm = totalKm;
+    }
+
+    public String getVehicleNo() {
+        return vehicleNo;
+    }
+
+    public void setVehicleNo(String vehicleNo) {
+        this.vehicleNo = vehicleNo;
+    }
+
+    public Object getAdditionalUser() {
+        return additionalUser;
+    }
+
+    public void setAdditionalUser(Object additionalUser) {
+        this.additionalUser = additionalUser;
+    }
+
+    public Object getAdditionalTime() {
+        return additionalTime;
+    }
+
+    public void setAdditionalTime(Object additionalTime) {
+        this.additionalTime = additionalTime;
     }
 
 }

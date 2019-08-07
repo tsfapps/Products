@@ -39,6 +39,10 @@
                 style="@style/tv_report"
                 android:text="Task from"/>
             <TextView
+                android:layout_centerHorizontal="true"
+                style="@style/tv_report"
+                android:text="Vendor Type"/>
+            <TextView
                 android:layout_alignParentEnd="true"
                 style="@style/tv_report"
                 android:text="Task Status"/>
@@ -54,6 +58,11 @@
                 android:id="@+id/tv_task_type"
                 style="@style/tv_detail"
                 android:text="Task Type"/>
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:id="@+id/tvTaskVendorType"
+                style="@style/tv_detail"
+                android:text="Vendor Type"/>
 
             <TextView
                 android:layout_alignParentEnd="true"
@@ -143,13 +152,13 @@
                     android:layout_height="wrap_content">
         <Button
             android:layout_marginEnd="@dimen/margin_8"
-            android:id="@+id/btn_task_reschedule"
+            android:id="@+id/btnTaskReschedule"
             style="@style/btn_main"
             android:text="Reschedule"
             />
         <Button
             android:layout_marginStart="@dimen/margin_8"
-            android:id="@+id/btn_task_completed"
+            android:id="@+id/btnTaskCompleted"
             style="@style/btn_main"
             android:text="Complete Task"
             />

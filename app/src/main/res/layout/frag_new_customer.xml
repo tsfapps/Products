@@ -41,7 +41,6 @@
                 android:inputType="textPersonName"
                 style="@style/et_main" />
         </LinearLayout>
-
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

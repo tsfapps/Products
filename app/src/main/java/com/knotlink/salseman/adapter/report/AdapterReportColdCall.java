@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.model.report.ModelReportColdCall;
+import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
 
@@ -35,14 +36,16 @@ public class AdapterReportColdCall extends RecyclerView.Adapter<AdapterReportCol
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportColdCall tModel = tModels.get(i);
-        distanceViewHolder.tvReportColdCallDate.setText(tModel.getDatetime());
+        String strAssDate = DateUtils.convertYyyyToDd(tModel.getTaskAssignDate());
+        String strDueDate = DateUtils.convertYyyyToDd(tModel.getTaskDueDate());
+        distanceViewHolder.tvReportColdCallDate.setText(strAssDate);
         distanceViewHolder.tvReportColdCallVendorName.setText(tModel.getOrgName());
-        distanceViewHolder.tvReportColdCallContactName.setText(tModel.getContactName());
-        distanceViewHolder.tvReportColdCallContactNumber.setText(tModel.getContactNumber());
+        distanceViewHolder.tvReportColdCallContactName.setText(tModel.getCustomerName());
+        distanceViewHolder.tvReportColdCallContactNumber.setText(tModel.getCustomerContactNo());
         distanceViewHolder.tvReportColdCallEmailId.setText(tModel.getEmail());
-        distanceViewHolder.tvReportColdCallTelephone.setText(tModel.getTelephoneNo());
-        distanceViewHolder.tvReportColdCallWhatsApp.setText(tModel.getWhatsappNo());
-        distanceViewHolder.tvReportColdCallAddress.setText(tModel.getAddress());
+        distanceViewHolder.tvReportColdCallTelephone.setText(tModel.getLandlineNo());
+//        distanceViewHolder.tvReportColdCallWhatsApp.setText(tModel.getWhatsappNo());
+        distanceViewHolder.tvReportColdCallAddress.setText(tModel.getCustomerAddress());
         distanceViewHolder.tvReportColdCallStatus.setText(tModel.getStatus());
         distanceViewHolder.tvReportColdCallRemarks.setText(tModel.getRemarks());
 
@@ -64,8 +67,8 @@ public class AdapterReportColdCall extends RecyclerView.Adapter<AdapterReportCol
         protected TextView tvReportColdCallEmailId;
         @BindView(R.id.tv_report_coldCall_telephone)
         protected TextView tvReportColdCallTelephone;
-        @BindView(R.id.tv_report_coldCall_whatsAppNumber)
-        protected TextView tvReportColdCallWhatsApp;
+//        @BindView(R.id.tv_report_coldCall_whatsAppNumber)
+//        protected TextView tvReportColdCallWhatsApp;
         @BindView(R.id.tv_report_coldCall_address)
         protected TextView tvReportColdCallAddress;
         @BindView(R.id.tv_report_coldCall_status)

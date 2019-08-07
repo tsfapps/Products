@@ -27,7 +27,7 @@
                 android:layout_height="match_parent">
                 <TextView
                     style="@style/tv_report"
-                    android:text="Date"/>
+                    android:text="Assign Date"/>
                 <TextView
                     style="@style/tv_report"
                     android:text="Vendor Name"/>
@@ -43,12 +43,9 @@
                 <TextView
                     style="@style/tv_report"
                     android:text="Telephone"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="WhatsApp Number"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Address"/>
+                <!--<TextView-->
+                    <!--style="@style/tv_report"-->
+                    <!--android:text="WhatsApp Number"/>-->
                 <TextView
                     style="@style/tv_report"
                     android:text="Cold Call Status"/>
@@ -56,6 +53,9 @@
                     style="@style/tv_report"
                     android:text="Remarks"/>
 
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Address"/>
 
 
             </LinearLayout>
@@ -88,14 +88,10 @@
                     android:id="@+id/tv_report_coldCall_telephone"
                     style="@style/tv_report"
                     android:text="Telephone"/>
-                <TextView
-                    android:id="@+id/tv_report_coldCall_whatsAppNumber"
-                    style="@style/tv_report"
-                    android:text="WhatsApp Number"/>
-                <TextView
-                    android:id="@+id/tv_report_coldCall_address"
-                    style="@style/tv_report"
-                    android:text="Address"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_report_coldCall_whatsAppNumber"-->
+                    <!--style="@style/tv_report"-->
+                    <!--android:text="WhatsApp Number"/>-->
                 <TextView
                     android:id="@+id/tv_report_coldCall_status"
                     style="@style/tv_report"
@@ -104,6 +100,11 @@
                     android:id="@+id/tv_report_coldCall_remarks"
                     style="@style/tv_report"
                     android:text="Remarks"/>
+                <TextView
+                    android:id="@+id/tv_report_coldCall_address"
+                    style="@style/tv_report"
+                    android:text="Address"/>
+
 
             </LinearLayout>
         </LinearLayout>

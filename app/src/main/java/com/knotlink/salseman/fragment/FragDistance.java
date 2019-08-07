@@ -83,12 +83,14 @@ public class FragDistance extends Fragment {
     private String strEndingKm;
     private List<ModelVehicleList> tLists;
     private int i;
+    private String strUserType;
 
-    public static FragDistance newInstance(List<ModelVehicleList> tLists, int i) {
+    public static FragDistance newInstance(List<ModelVehicleList> tLists, int i, String strUserType) {
 
         FragDistance fragment = new FragDistance();
         fragment.tLists = tLists;
         fragment.i = i;
+        fragment.strUserType = strUserType;
         return fragment;
     }
     @Nullable
@@ -205,7 +207,7 @@ public class FragDistance extends Fragment {
                         if (!tModels.getError()) {
                             CustomToast.toastTop(getActivity(), tModels.getMessage());
                             getFragmentManager().beginTransaction().remove(FragDistance.this).commit();
-                            getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+                            getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
                             btn_distance_submitStart.setVisibility(View.GONE);
                             btn_distance_submitEnding.setVisibility(View.VISIBLE);
                             tSharedPrefManager.setStartingKm(strStartKm, strVehicleNo, strImgStart);
@@ -247,7 +249,6 @@ public class FragDistance extends Fragment {
             etDistanceEndingKm.setError("Ending kilometer must be greater than starting kilometer...");
         }
         else {
-            CustomLog.e(Constant.TAG, "Image to string : "+strImgEnd);
             final int totalDistance = Integer.parseInt(strEndingKm) - Integer.parseInt(strStartKm);
             GPSTracker gpsTracker = new GPSTracker(tContext);
             if (gpsTracker.getIsGPSTrackingEnabled()) {
@@ -268,7 +269,7 @@ public class FragDistance extends Fragment {
                             CustomToast.toastTop(getActivity(), "Today you travelled "+totalDistance+" KM");
                             tSharedPrefManager.clearDistanceStatus();
                             getFragmentManager().beginTransaction().remove(FragDistance.this).commit();
-                            getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+                            getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
 
                         } else {
                             CustomToast.toastTop(getActivity(), tModels.getMessage());

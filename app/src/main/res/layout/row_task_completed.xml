@@ -25,6 +25,11 @@
                    android:id="@+id/tv_taskCompletedDate"
                   style="@style/tv_disable"
                    android:text="25 May 2019"/>
+            <LinearLayout
+                android:id="@+id/llCustomerConvertOption"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <TextView
                 style="@style/tv_report"
                 android:text="Select your request"/>
@@ -42,6 +47,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
+            </LinearLayout>
     <TextView
         android:layout_marginTop="16dp"
         android:textSize="12sp"

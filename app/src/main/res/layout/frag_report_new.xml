@@ -1,28 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:fillViewport="true"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/grey"
         android:paddingStart="2dp"
         android:paddingEnd="2dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_marginTop="4dp"
+            style="@style/rl_spinner_main">
+            <Spinner
+                android:id="@+id/spnReportSalesMan"
+                style="@style/spinner_main"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+<LinearLayout
+    android:layout_marginTop="4dp"
+    android:orientation="horizontal"
+   android:layout_width="match_parent"
+    android:layout_height="40dp">
+    <TextView
+        android:id="@+id/tvReportThreeMonths"
+        android:text="Last 3M"
+        style="@style/tv_report_months" />
+    <TextView
+        android:id="@+id/tvReportSixMonths"
+        android:text="Last 6M"
+        style="@style/tv_report_months" />
+    <TextView
+        android:id="@+id/tvReportNineMonths"
+        android:text="Last 9M"
+        style="@style/tv_report_months" />
+    <TextView
+        android:id="@+id/tvReportTwelveMonths"
+        android:text="Last 12M"
+        style="@style/tv_report_months" />
+
+</LinearLayout>
         <LinearLayout
             android:padding="2dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_marginTop="4dp"
+
             android:layout_height="40dp">
 
             <TextView
                 android:id="@+id/tv_report_date_from"
                 android:textSize="10sp"
                 android:text="FromDate"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimaryDark"
+                android:drawableTint="@color/colorPrimaryDark"
                 android:drawableEnd="@drawable/ic_calender"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -33,7 +73,8 @@
                 android:id="@+id/tv_report_date_to"
                 android:text="To Date"
                 android:textSize="10sp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimaryDark"
+                android:drawableTint="@color/colorPrimaryDark"
                 android:drawableEnd="@drawable/ic_calender"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -56,12 +97,12 @@
                 android:layout_height="match_parent">
 
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report">
+                    style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_attendance"
                         style="@style/ll_dash_report">
                         <ImageView
-                            style="@style/iv_dashboard"
+                            style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_salse_attendence"/>
                         <TextView
                             android:text="Attendance Report"
@@ -69,12 +110,12 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report">
+                    style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_route"
                         style="@style/ll_dash_report">
                         <ImageView
-                            style="@style/iv_dashboard"
+                            style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_route"
                             />
                         <TextView
@@ -83,12 +124,12 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report">
+                    style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_meeting"
                         style="@style/ll_dash_report">
                         <ImageView
-                            style="@style/iv_dashboard"
+                            style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_meeting"
                             />
                         <TextView
@@ -98,12 +139,15 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report">
+                    style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_cashCollection"
                         style="@style/ll_dash_report">
-                        <ImageView
-                            style="@style/iv_dashboard"
+                        <TextView
+                            android:text="₹"
+                           android:textColor="@color/colorBlack"
+                            style="@style/tv_dash_label"
+                            android:textSize="28sp"
                             android:src="@drawable/ic_main_rupee" />
                         <TextView
                             android:text="Collection Report"
@@ -112,12 +156,12 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report">
+                    style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_vehicleReport"
                         style="@style/ll_dash_report">
                         <ImageView
-                            style="@style/iv_dashboard"
+                            style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_vehicle"
                             />
                         <TextView
@@ -139,12 +183,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report">
+                    style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_distance"
                         style="@style/ll_dash_report">
                         <ImageView
-                            style="@style/iv_dashboard"
+                            style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_distance"/>
                         <TextView
                             android:text="Distance Report"
@@ -154,12 +198,12 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report">
+                    style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_leadGeneration"
                         style="@style/ll_dash_report">
                         <ImageView
-                            style="@style/iv_dashboard"
+                            style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_lead"
                             />
                         <TextView
@@ -169,12 +213,12 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report">
+                    style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_coldCall"
                         style="@style/ll_dash_report">
                         <ImageView
-                            style="@style/iv_dashboard"
+                            style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_cold_call"
                             />
                         <TextView
@@ -185,14 +229,14 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report"
+                    style="@style/card_dash"
                     >
                     <LinearLayout
                         android:id="@+id/ll_report_expenses"
                         style="@style/ll_dash_report"
                         >
                         <ImageView
-                            style="@style/iv_dashboard"
+                            style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_expenses"
                             />
                         <TextView
@@ -201,14 +245,14 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash_report"
+                    style="@style/card_dash"
                     >
                     <LinearLayout
                         android:id="@+id/ll_report_guestLogin"
                         style="@style/ll_dash_report"
                         >
                         <ImageView
-                            style="@style/iv_dashboard"
+                            style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_guest_login"
                             />
                         <TextView
@@ -219,5 +263,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

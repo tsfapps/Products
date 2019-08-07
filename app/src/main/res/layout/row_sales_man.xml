@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingStart="@dimen/margin_32"
+    android:paddingEnd="@dimen/margin_32"
+    android:layout_height="wrap_content">
+    <!--<TextView-->
+        <!--android:id="@+id/tvEmpId"-->
+        <!--style="@style/et_main_login"-->
+        <!--android:text="Large Text"-->
+        <!--/>-->
+
+    <TextView
+        android:layout_margin="@dimen/margin_4"
+        android:id="@+id/tvEmpName"
+        android:paddingStart="@dimen/margin_16"
+        android:paddingEnd="@dimen/margin_16"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Large Text"
+        />
+</LinearLayout>

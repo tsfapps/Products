@@ -180,7 +180,7 @@
             android:background="@drawable/bg_et"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="130dp">
             <EditText
                 android:id="@+id/et_meeting_remarks"
                 android:gravity="start"
@@ -188,7 +188,7 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_et"/>
 

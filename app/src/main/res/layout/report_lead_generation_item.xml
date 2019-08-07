@@ -53,12 +53,9 @@
                 <TextView
                     style="@style/tv_report"
                     android:text="WhatsApp Number"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Address"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="City"/>
+                <!--<TextView-->
+                    <!--style="@style/tv_report"-->
+                    <!--android:text="City"/>-->
                 <TextView
                     style="@style/tv_report"
                     android:text="Status"/>
@@ -68,6 +65,10 @@
                 <TextView
                     style="@style/tv_report"
                     android:text="Remarks"/>
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Address"/>
+
 
 
 
@@ -109,14 +110,10 @@
                     android:id="@+id/tv_report_lead_whatsAppNumber"
                     style="@style/tv_report"
                     android:text="WhatsApp Number"/>
-                <TextView
-                    android:id="@+id/tv_report_lead_address"
-                    style="@style/tv_report"
-                    android:text="Address"/>
-                <TextView
-                    android:id="@+id/tv_report_lead_city"
-                    style="@style/tv_report"
-                    android:text="City"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_report_lead_city"-->
+                    <!--style="@style/tv_report"-->
+                    <!--android:text="City"/>-->
                 <TextView
                     android:id="@+id/tv_report_lead_status"
                     style="@style/tv_report"
@@ -129,6 +126,11 @@
                     android:id="@+id/tv_report_lead_remarks"
                     style="@style/tv_report"
                     android:text="Remarks"/>
+                <TextView
+                    android:id="@+id/tv_report_lead_address"
+                    style="@style/tv_report"
+                    android:text="Address"/>
+
 
             </LinearLayout>
         </LinearLayout>

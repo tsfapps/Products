@@ -28,45 +28,49 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
+
         <TextView
            style="@style/tv_report"
             android:text="Date"/>
         <TextView
             style="@style/tv_report"
-            android:text="Vendor Type"/>
+            android:text="Cash 2000"/>
         <TextView
             style="@style/tv_report"
-            android:text="Vendor Name"/>
+            android:text="Cash 500"/>
         <TextView
             style="@style/tv_report"
-            android:text="Contact Name"/>
+            android:text="Cash 200"/>
         <TextView
             style="@style/tv_report"
-            android:text="Contact Number"/>
+            android:text="Cash 100"/>
         <TextView
             style="@style/tv_report"
-            android:text="Email Id"/>
+            android:text="Cash 50"/>
         <TextView
             style="@style/tv_report"
-            android:text="Telephone"/>
+            android:text="Cash 20"/>
         <TextView
             style="@style/tv_report"
-            android:text="WhatsApp Number"/>
+            android:text="Cash 10"/>
         <TextView
             style="@style/tv_report"
-            android:text="Meeting Status"/>
+            android:text="Cash 5"/>
         <TextView
             style="@style/tv_report"
-            android:text="Meeting Date"/>
+            android:text="Cash 2"/>
         <TextView
             style="@style/tv_report"
-            android:text="Meeting Time"/>
+            android:text="Cash 1"/>
         <TextView
             style="@style/tv_report"
-            android:text="Remarks"/>
+            android:text="Total Number"/>
+        <TextView
+            style="@style/tv_report"
+            android:text="Total Amount"/>
             <TextView
                 style="@style/tv_report"
-                android:text="Address"/>
+                android:text="No of Cheques"/>
 
 
 
@@ -76,58 +80,64 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
+
         <TextView
-            android:id="@+id/tv_report_meeting_date"
+            android:id="@+id/tvReportCashDate"
            style="@style/tv_report"
             android:text="Date"/>
         <TextView
-            android:id="@+id/tv_report_meeting_vendorType"
+            android:id="@+id/tvReportCash2000"
             style="@style/tv_report"
-            android:text="Vendor Type"/>
+            android:text="Cash 2000"/>
         <TextView
-            android:id="@+id/tv_report_meeting_vendorName"
+            android:id="@+id/tvReportCash500"
             style="@style/tv_report"
-            android:text="Vendor Name"/>
+            android:text="Cash 500"/>
         <TextView
-            android:id="@+id/tv_report_meeting_contactName"
+            android:id="@+id/tvReportCash200"
             style="@style/tv_report"
-            android:text="Contact Name"/>
+            android:text="Cash 200"/>
         <TextView
-            android:id="@+id/tv_report_meeting_contactNumber"
+            android:id="@+id/tvReportCash100"
             style="@style/tv_report"
-            android:text="Contact Number"/>
+            android:text="Cash 100"/>
         <TextView
-            android:id="@+id/tv_report_meeting_emailId"
+            android:id="@+id/tvReportCash50"
             style="@style/tv_report"
-            android:text="Email Id"/>
+            android:text="Cash 50"/>
         <TextView
-            android:id="@+id/tv_report_meeting_telephone"
+            android:id="@+id/tvReportCash20"
             style="@style/tv_report"
-            android:text="Telephone"/>
+            android:text="Cash 20"/>
         <TextView
-            android:id="@+id/tv_report_meeting_whatsAppNumber"
+            android:id="@+id/tvReportCash10"
             style="@style/tv_report"
-            android:text="WhatsApp Number"/>
+            android:text="Cash 10"/>
         <TextView
-            android:id="@+id/tv_report_meeting_meetingStatus"
+            android:id="@+id/tvReportCash5"
             style="@style/tv_report"
-            android:text="Meeting Status"/>
+            android:text="Cash 5"/>
         <TextView
-            android:id="@+id/tv_report_meeting_meetingDate"
+            android:id="@+id/tvReportCash2"
             style="@style/tv_report"
-            android:text="Meeting Date"/>
+            android:text="Cash 2"/>
         <TextView
-            android:id="@+id/tv_report_meeting_meetingTime"
+            android:id="@+id/tvReportCash1"
             style="@style/tv_report"
-            android:text="Meeting Time"/>
+            android:text="Cash 1"/>
         <TextView
-            android:id="@+id/tv_report_meeting_remarks"
+            android:id="@+id/tvReportCashTotalNumber"
             style="@style/tv_report"
-            android:text="Remarks"/>
+            android:text="Total Number"/>
+        <TextView
+            android:id="@+id/tvReportCashTotalAmount"
+            style="@style/tv_report"
+            android:text="Total Amount"/>
             <TextView
-                android:id="@+id/tv_report_meeting_address"
+                android:id="@+id/tvReportCashChequeNo"
                 style="@style/tv_report"
-                android:text="Address"/>
+                android:text="No of Cheques"/>
+
 
 
         </LinearLayout>

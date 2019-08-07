@@ -75,11 +75,41 @@ public class SharedPrefManager {
         tEditor.putString(Constant.START_TIME_LABEL, startTimeLabel);
         tEditor.apply();
     }
-    //Attendance
     public String getShiftTime(){
         SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
         return sp.getString(Constant.START_TIME, Constant.EMPTY);
     }
+
+    public void setReportTimeStart(String startTime){
+        SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        tEditor = tSharedPreferences.edit();
+        tEditor.putString(Constant.REPORT_TIME_START, startTime);
+        tEditor.apply();
+    }
+    public void setReportTimeEnd(String startEndTime){
+        SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        tEditor = tSharedPreferences.edit();
+        tEditor.putString(Constant.REPORT_TIME_END, startEndTime);
+        tEditor.apply();
+    }
+    public String getReportTimeFrom(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        return sp.getString(Constant.REPORT_TIME_START, Constant.EMPTY);
+    }
+    public String getReportTimeTo(){
+        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        return sp.getString(Constant.REPORT_TIME_END, Constant.EMPTY);
+    }
+    public void clearReportTime(){
+        SharedPreferences tPref = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        tEditor = tPref.edit();
+        tEditor.remove(Constant.REPORT_TIME_START);
+        tEditor.remove(Constant.REPORT_TIME_END);
+        tEditor.apply();
+        tEditor.clear();
+    }
+
+    //Attendance
     public String getShiftTimeLabel(){
         SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
         return sp.getString(Constant.START_TIME_LABEL, Constant.EMPTY);

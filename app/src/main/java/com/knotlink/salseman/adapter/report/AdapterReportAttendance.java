@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.model.report.ModelReportAttendance;
+import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
 
@@ -36,8 +37,9 @@ public class AdapterReportAttendance extends RecyclerView.Adapter<AdapterReportA
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportAttendance tModel = tModels.get(i);
+        String strDate = DateUtils.convertYyyyToDd(tModel.getLoginDate());
 
-        distanceViewHolder.tvReportAttendanceDate.setText(tModel.getLoginDate());
+        distanceViewHolder.tvReportAttendanceDate.setText(strDate);
         distanceViewHolder.tvReportAttendanceLoginTime.setText(tModel.getLoginTime());
         distanceViewHolder.tvReportAttendanceLogoutTime.setText(tModel.getLogoutTime());
         distanceViewHolder.tvReportAttendanceWorkingHour.setText(tModel.getTotalTimeDuration());

@@ -8,36 +8,21 @@ public class ModelReportExpenses {
     @SerializedName("id")
     @Expose
     private String id;
+    @SerializedName("expense_type")
+    @Expose
+    private String expenseType;
     @SerializedName("user_id")
     @Expose
     private String userId;
     @SerializedName("datetime")
     @Expose
     private String datetime;
-    @SerializedName("food")
-    @Expose
-    private String food;
-    @SerializedName("parking")
-    @Expose
-    private String parking;
-    @SerializedName("petrol")
-    @Expose
-    private String petrol;
-    @SerializedName("road_toll_fee")
-    @Expose
-    private String roadTollFee;
-    @SerializedName("petty_cash")
-    @Expose
-    private String pettyCash;
-    @SerializedName("others")
-    @Expose
-    private String others;
     @SerializedName("image")
     @Expose
     private String image;
-    @SerializedName("total")
+    @SerializedName("amount")
     @Expose
-    private String total;
+    private String amount;
     @SerializedName("remarks")
     @Expose
     private String remarks;
@@ -48,6 +33,14 @@ public class ModelReportExpenses {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getExpenseType() {
+        return expenseType;
+    }
+
+    public void setExpenseType(String expenseType) {
+        this.expenseType = expenseType;
     }
 
     public String getUserId() {
@@ -66,54 +59,6 @@ public class ModelReportExpenses {
         this.datetime = datetime;
     }
 
-    public String getFood() {
-        return food;
-    }
-
-    public void setFood(String food) {
-        this.food = food;
-    }
-
-    public String getParking() {
-        return parking;
-    }
-
-    public void setParking(String parking) {
-        this.parking = parking;
-    }
-
-    public String getPetrol() {
-        return petrol;
-    }
-
-    public void setPetrol(String petrol) {
-        this.petrol = petrol;
-    }
-
-    public String getRoadTollFee() {
-        return roadTollFee;
-    }
-
-    public void setRoadTollFee(String roadTollFee) {
-        this.roadTollFee = roadTollFee;
-    }
-
-    public String getPettyCash() {
-        return pettyCash;
-    }
-
-    public void setPettyCash(String pettyCash) {
-        this.pettyCash = pettyCash;
-    }
-
-    public String getOthers() {
-        return others;
-    }
-
-    public void setOthers(String others) {
-        this.others = others;
-    }
-
     public String getImage() {
         return image;
     }
@@ -122,12 +67,12 @@ public class ModelReportExpenses {
         this.image = image;
     }
 
-    public String getTotal() {
-        return total;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public String getRemarks() {

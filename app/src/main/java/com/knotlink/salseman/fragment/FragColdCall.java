@@ -78,6 +78,14 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
     @BindView(R.id.spnColdCallRoute)
     protected Spinner spnColdCallRoute;
 
+    private String strUserType;
+    public static FragColdCall newInstance(String strUserType) {
+
+        FragColdCall fragment = new FragColdCall();
+        fragment.strUserType = strUserType;
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -166,10 +174,11 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
         String strCity = et_cold_city.getText().toString().trim();
         String strEmail = etColdEmail.getText().toString().trim();
         String strMeetingDate = tvColdCallNextMeetingDate.getText().toString().trim();
+        String strMeetingDateReal = DateUtils.convertDdToYyyy(strMeetingDate);
         String strRemarks = etColdRemarks.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<ModelColdCall> call = api.uploadColdCall(strUserId, strRouteId, strOrgName, strContactName, strContactNumber,strLandLineNo, strAddress,
-                strEmail, strCity, strMeetingDate, strRemarks);
+                strEmail, strCity, strMeetingDateReal, strRemarks);
         call.enqueue(new Callback<ModelColdCall>() {
             @Override
             public void onResponse(Call<ModelColdCall> call, Response<ModelColdCall> response) {
@@ -177,7 +186,7 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
                 if (!tModels.getError()){
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragColdCall.this).commit();
-                    getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
                 }
                 else {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());

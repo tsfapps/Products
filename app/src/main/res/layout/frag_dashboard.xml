@@ -13,18 +13,22 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_marginTop="4dp"
+            style="@style/rl_spinner_main">
+            <Spinner
+                android:id="@+id/spnDashSalesMan"
+                style="@style/spinner_main"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_dashboard_user_name"-->
-        <!--android:text="User Name"-->
-        <!--android:gravity="center"-->
-        <!--android:paddingTop="@dimen/margin_top"-->
-        <!--android:textColor="@color/colorBlack"-->
-        <!--android:textStyle="bold"-->
-        <!--android:textSize="20sp"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-<LinearLayout
+
+        <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -36,6 +40,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cvDashAttendance"
         style="@style/card_dash">
     <LinearLayout
         android:id="@+id/ll_dash_attendance"
@@ -52,6 +57,7 @@
     </LinearLayout>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
+        android:id="@+id/cvDashRoute"
         style="@style/card_dash">
     <LinearLayout
         android:id="@+id/ll_dash_route"
@@ -66,6 +72,7 @@
     </LinearLayout>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
+        android:id="@+id/cvDashMeeting"
         style="@style/card_dash">
     <LinearLayout
         android:id="@+id/ll_dash_meeting"
@@ -81,6 +88,7 @@
     </LinearLayout>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
+        android:id="@+id/cvDashCash"
         style="@style/card_dash">
     <LinearLayout
         android:id="@+id/ll_dash_cash_collection"
@@ -104,6 +112,7 @@
     android:layout_width="0dp"
     android:layout_height="match_parent">
     <android.support.v7.widget.CardView
+        android:id="@+id/cvDashDistance"
         style="@style/card_dash">
         <LinearLayout
             android:id="@+id/ll_dash_distance"
@@ -120,6 +129,7 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
+        android:id="@+id/cvDashLead"
         style="@style/card_dash">
         <LinearLayout
             android:id="@+id/ll_dash_lead_generation"
@@ -135,6 +145,7 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
+        android:id="@+id/cvDashCold"
         style="@style/card_dash">
         <LinearLayout
             android:id="@+id/ll_dash_cold_call"
@@ -151,6 +162,7 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
+        android:id="@+id/cvDashExpenses"
         style="@style/card_dash">
         <LinearLayout
             android:id="@+id/ll_dash_expenses"

@@ -8,48 +8,75 @@ public class ModelReportColdCall {
     @SerializedName("id")
     @Expose
     private String id;
+    @SerializedName("task_id")
+    @Expose
+    private String taskId;
     @SerializedName("user_id")
     @Expose
     private String userId;
-    @SerializedName("datetime")
+    @SerializedName("task_assign_date")
     @Expose
-    private String datetime;
+    private String taskAssignDate;
+    @SerializedName("task_due_date")
+    @Expose
+    private String taskDueDate;
+    @SerializedName("task_completion_date")
+    @Expose
+    private String taskCompletionDate;
+    @SerializedName("task_time")
+    @Expose
+    private String taskTime;
     @SerializedName("org_name")
     @Expose
     private String orgName;
-    @SerializedName("contact_name")
+    @SerializedName("customer_name")
     @Expose
-    private String contactName;
-    @SerializedName("contact_number")
+    private String customerName;
+    @SerializedName("customer_contact_no")
     @Expose
-    private String contactNumber;
-    @SerializedName("address")
-    @Expose
-    private String address;
+    private String customerContactNo;
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("city_id")
+    @SerializedName("customer_address")
     @Expose
-    private String cityId;
-    @SerializedName("status")
-    @Expose
-    private String status;
+    private String customerAddress;
     @SerializedName("remarks")
     @Expose
     private String remarks;
+    @SerializedName("user_remarks")
+    @Expose
+    private String userRemarks;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("route_id")
+    @Expose
+    private String routeId;
+    @SerializedName("whatsapp_no")
+    @Expose
+    private String whatsappNo;
+    @SerializedName("landline_no")
+    @Expose
+    private String landlineNo;
     @SerializedName("latitude")
     @Expose
     private String latitude;
     @SerializedName("longitude")
     @Expose
     private String longitude;
-    @SerializedName("telephone_no")
+    @SerializedName("city")
     @Expose
-    private String telephoneNo;
-    @SerializedName("whatsapp_no")
+    private String city;
+    @SerializedName("pincode")
     @Expose
-    private String whatsappNo;
+    private String pincode;
+    @SerializedName("task_type")
+    @Expose
+    private String taskType;
+    @SerializedName("vendor_type")
+    @Expose
+    private String vendorType;
 
     public String getId() {
         return id;
@@ -57,6 +84,14 @@ public class ModelReportColdCall {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     public String getUserId() {
@@ -67,12 +102,36 @@ public class ModelReportColdCall {
         this.userId = userId;
     }
 
-    public String getDatetime() {
-        return datetime;
+    public String getTaskAssignDate() {
+        return taskAssignDate;
     }
 
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
+    public void setTaskAssignDate(String taskAssignDate) {
+        this.taskAssignDate = taskAssignDate;
+    }
+
+    public String getTaskDueDate() {
+        return taskDueDate;
+    }
+
+    public void setTaskDueDate(String taskDueDate) {
+        this.taskDueDate = taskDueDate;
+    }
+
+    public Object getTaskCompletionDate() {
+        return taskCompletionDate;
+    }
+
+    public void setTaskCompletionDate(String taskCompletionDate) {
+        this.taskCompletionDate = taskCompletionDate;
+    }
+
+    public String getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(String taskTime) {
+        this.taskTime = taskTime;
     }
 
     public String getOrgName() {
@@ -83,28 +142,20 @@ public class ModelReportColdCall {
         this.orgName = orgName;
     }
 
-    public String getContactName() {
-        return contactName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getContactNumber() {
-        return contactNumber;
+    public String getCustomerContactNo() {
+        return customerContactNo;
     }
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCustomerContactNo(String customerContactNo) {
+        this.customerContactNo = customerContactNo;
     }
 
     public String getEmail() {
@@ -115,12 +166,28 @@ public class ModelReportColdCall {
         this.email = email;
     }
 
-    public String getCityId() {
-        return cityId;
+    public String getCustomerAddress() {
+        return customerAddress;
     }
 
-    public void setCityId(String cityId) {
-        this.cityId = cityId;
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getUserRemarks() {
+        return userRemarks;
+    }
+
+    public void setUserRemarks(String userRemarks) {
+        this.userRemarks = userRemarks;
     }
 
     public String getStatus() {
@@ -131,12 +198,28 @@ public class ModelReportColdCall {
         this.status = status;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getRouteId() {
+        return routeId;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
+    }
+
+    public String getWhatsappNo() {
+        return whatsappNo;
+    }
+
+    public void setWhatsappNo(String whatsappNo) {
+        this.whatsappNo = whatsappNo;
+    }
+
+    public String getLandlineNo() {
+        return landlineNo;
+    }
+
+    public void setLandlineNo(String landlineNo) {
+        this.landlineNo = landlineNo;
     }
 
     public String getLatitude() {
@@ -155,19 +238,35 @@ public class ModelReportColdCall {
         this.longitude = longitude;
     }
 
-    public String getTelephoneNo() {
-        return telephoneNo;
+    public String getCity() {
+        return city;
     }
 
-    public void setTelephoneNo(String telephoneNo) {
-        this.telephoneNo = telephoneNo;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getWhatsappNo() {
-        return whatsappNo;
+    public String getPincode() {
+        return pincode;
     }
 
-    public void setWhatsappNo(String whatsappNo) {
-        this.whatsappNo = whatsappNo;
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
+
+    public String getVendorType() {
+        return vendorType;
+    }
+
+    public void setVendorType(String vendorType) {
+        this.vendorType = vendorType;
     }
 }

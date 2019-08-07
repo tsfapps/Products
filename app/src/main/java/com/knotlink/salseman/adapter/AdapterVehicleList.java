@@ -27,11 +27,13 @@ public class AdapterVehicleList extends RecyclerView.Adapter<AdapterVehicleList.
     private List<ModelVehicleList> tLists;
     private Context tContext;
     private FragmentManager tFragmentManager;
+    private String strUserType;
 
-    public AdapterVehicleList(List<ModelVehicleList> tLists, Context tContext, FragmentManager tFragmentManager) {
+    public AdapterVehicleList(List<ModelVehicleList> tLists, Context tContext, FragmentManager tFragmentManager, String strUserType) {
         this.tLists = tLists;
         this.tContext = tContext;
         this.tFragmentManager = tFragmentManager;
+        this.strUserType = strUserType;
 
     }
 
@@ -49,7 +51,7 @@ public class AdapterVehicleList extends RecyclerView.Adapter<AdapterVehicleList.
         vehicleViewHolder.llVehicleList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tFragmentManager.beginTransaction().replace(R.id.container_main, FragDistance.newInstance(tLists, i)).addToBackStack(null).commit();
+                tFragmentManager.beginTransaction().replace(R.id.container_main, FragDistance.newInstance(tLists, i, strUserType)).addToBackStack(null).commit();
 
             }
         });

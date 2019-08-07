@@ -28,25 +28,11 @@
             android:text="Date"/>
         <TextView
             style="@style/tv_report"
-            android:text="Petty Cash"/>
+            android:text="Type Of Expense"/>
+
         <TextView
             style="@style/tv_report"
-            android:text="Food"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Parking"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Road Toll Tax"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Petrol"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Others"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Total"/>
+            android:text="Amount"/>
         <TextView
             style="@style/tv_report"
             android:text="Remarks"/>
@@ -59,39 +45,20 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
         <TextView
-            android:id="@+id/tv_report_expenses_date"
+            android:id="@+id/tvReportDate"
            style="@style/tv_report"
             android:text="Date"/>
         <TextView
-            android:id="@+id/tv_report_expenses_pettyCash"
+            android:id="@+id/tvReportTypeExpenses"
             style="@style/tv_report"
-            android:text="Petty Cash"/>
+            android:text="Type of expense"/>
+
         <TextView
-            android:id="@+id/tv_report_expenses_food"
+            android:id="@+id/tvReportAmount"
             style="@style/tv_report"
-            android:text="Food"/>
+            android:text="Amount"/>
         <TextView
-            android:id="@+id/tv_report_expenses_parking"
-            style="@style/tv_report"
-            android:text="Parking"/>
-        <TextView
-            android:id="@+id/tv_report_expenses_roadToll"
-            style="@style/tv_report"
-            android:text="Road Toll Tax"/>
-        <TextView
-            android:id="@+id/tv_report_expenses_petrol"
-            style="@style/tv_report"
-            android:text="Petrol"/>
-        <TextView
-            android:id="@+id/tv_report_expenses_others"
-            style="@style/tv_report"
-            android:text="Others"/>
-        <TextView
-            android:id="@+id/tv_report_expenses_total"
-            style="@style/tv_report"
-            android:text="Total"/>
-        <TextView
-            android:id="@+id/tv_report_expenses_remarks"
+            android:id="@+id/tvReportRemarks"
             style="@style/tv_report"
             android:text="Remarks"/>
 

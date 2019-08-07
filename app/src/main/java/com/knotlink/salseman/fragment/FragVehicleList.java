@@ -37,6 +37,17 @@ public class FragVehicleList extends Fragment {
     private FragmentManager tFragmentManager;
     @BindView(R.id.rv_vehicleList)
     protected RecyclerView rvVehicleList;
+
+    private String strUserType;
+
+    public static FragVehicleList newInstance(String strUserType) {
+
+
+        FragVehicleList fragment = new FragVehicleList();
+        fragment.strUserType = strUserType;
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,7 +70,7 @@ public class FragVehicleList extends Fragment {
             @Override
             public void onResponse(Call<List<ModelVehicleList>> call, Response<List<ModelVehicleList>> response) {
                 tModels = response.body();
-                tAdapter = new AdapterVehicleList(tModels, tContext, tFragmentManager);
+                tAdapter = new AdapterVehicleList(tModels, tContext, tFragmentManager, strUserType);
                 rvVehicleList.setAdapter(tAdapter);
                 CustomLog.d(Constant.TAG, "Vehicle List Response : "+response.message());
             }

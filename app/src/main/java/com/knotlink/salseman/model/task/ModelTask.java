@@ -66,7 +66,7 @@ public class ModelTask {
     private String taskType;
     @SerializedName("vendor_type")
     @Expose
-    private Object vendorType;
+    private String vendorType;
 
     public String getId() {
         return id;
@@ -228,11 +228,11 @@ public class ModelTask {
         this.taskType = taskType;
     }
 
-    public Object getVendorType() {
+    public String getVendorType() {
         return vendorType;
     }
 
-    public void setVendorType(Object vendorType) {
+    public void setVendorType(String vendorType) {
         this.vendorType = vendorType;
     }
 }

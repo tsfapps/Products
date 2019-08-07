@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.model.report.ModelReportExpenses;
+import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
 
@@ -36,15 +37,12 @@ public class AdapterReportExpenses extends RecyclerView.Adapter<AdapterReportExp
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportExpenses tModel = tModels.get(i);
-       distanceViewHolder.tvReportExpensesDate.setText(tModel.getDatetime());
-       distanceViewHolder.tvReportExpensesFood.setText(tModel.getFood());
-       distanceViewHolder.tvReportExpensesPettyCash.setText(tModel.getPettyCash());
-       distanceViewHolder.tvReportExpensesPetrol.setText(tModel.getPetrol());
-       distanceViewHolder.tvReportExpensesParking.setText(tModel.getParking());
-       distanceViewHolder.tvReportExpensesRoad.setText(tModel.getRoadTollFee());
-       distanceViewHolder.tvReportExpensesOthers.setText(tModel.getOthers());
-       distanceViewHolder.tvReportExpensesTotal.setText(tModel.getTotal());
-       distanceViewHolder.tvReportExpensesRemarks.setText(tModel.getRemarks());
+        String strDate = DateUtils.convertYyyyToDd(tModel.getDatetime());
+
+        distanceViewHolder.tvReportDate.setText(strDate);
+       distanceViewHolder.tvReportTypeExpenses.setText(tModel.getExpenseType());
+       distanceViewHolder.tvReportAmount.setText(tModel.getAmount());
+       distanceViewHolder.tvReportRemarks.setText(tModel.getRemarks());
         }
 
     @Override
@@ -54,24 +52,14 @@ public class AdapterReportExpenses extends RecyclerView.Adapter<AdapterReportExp
 
     public class DistanceViewHolder extends RecyclerView.ViewHolder{
 
-       @BindView(R.id.tv_report_expenses_date)
-       protected TextView tvReportExpensesDate;
-       @BindView(R.id.tv_report_expenses_pettyCash)
-       protected TextView tvReportExpensesPettyCash;
-       @BindView(R.id.tv_report_expenses_food)
-       protected TextView tvReportExpensesFood;
-       @BindView(R.id.tv_report_expenses_parking)
-       protected TextView tvReportExpensesParking;
-       @BindView(R.id.tv_report_expenses_roadToll)
-       protected TextView tvReportExpensesRoad;
-       @BindView(R.id.tv_report_expenses_petrol)
-       protected TextView tvReportExpensesPetrol;
-       @BindView(R.id.tv_report_expenses_others)
-       protected TextView tvReportExpensesOthers;
-       @BindView(R.id.tv_report_expenses_total)
-       protected TextView tvReportExpensesTotal;
-       @BindView(R.id.tv_report_expenses_remarks)
-       protected TextView tvReportExpensesRemarks;
+       @BindView(R.id.tvReportDate)
+       protected TextView tvReportDate;
+       @BindView(R.id.tvReportRemarks)
+       protected TextView tvReportRemarks;
+       @BindView(R.id.tvReportTypeExpenses)
+       protected TextView tvReportTypeExpenses;
+       @BindView(R.id.tvReportAmount)
+       protected TextView tvReportAmount;
 
         public DistanceViewHolder(@NonNull View itemView) {
             super(itemView);

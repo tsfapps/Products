@@ -4,7 +4,10 @@ import com.knotlink.salseman.model.ModelAttendance;
 import com.knotlink.salseman.model.ModelCash;
 import com.knotlink.salseman.model.ModelColdCall;
 import com.knotlink.salseman.model.ModelExpenseList;
+import com.knotlink.salseman.model.ModelGetLocaion;
+import com.knotlink.salseman.model.ModelNewCustomer;
 import com.knotlink.salseman.model.ModelRoute;
+import com.knotlink.salseman.model.ModelSalesMan;
 import com.knotlink.salseman.model.ModelVisit;
 import com.knotlink.salseman.model.distance.ModelDistance;
 import com.knotlink.salseman.model.ModelExpenses;
@@ -15,6 +18,7 @@ import com.knotlink.salseman.model.ModelMeeting;
 import com.knotlink.salseman.model.ModelNewOrder;
 import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.model.ModelSpecialRequest;
+import com.knotlink.salseman.model.report.ModelReportCashCollection;
 import com.knotlink.salseman.model.task.ModelTask;
 import com.knotlink.salseman.model.ModelVehicleList;
 import com.knotlink.salseman.model.distance.ModelDistanceUpdate;
@@ -68,6 +72,7 @@ public interface Api{
     @POST("api/api_shop_details.php")
     Call<List<ModelShopList>> getShopDetail(
             @Field("user_id") String user_id,
+            @Field("user_type") String user_type,
             @Field("present_day") String present_day
     );
 
@@ -177,6 +182,28 @@ public interface Api{
          @Field("latitude") String latitude,
          @Field("longitude") String longitude
     );
+ @FormUrlEncoded
+    @POST("api/api_convert_to_customer.php")
+    Call<ModelNewCustomer> newCustomer(
+         @Field("user_id") String user_id,
+         @Field("route_id") String route_id,
+         @Field("shop_name") String shop_name,
+         @Field("contact_name") String contact_name,
+         @Field("contact_no") String contact_no,
+         @Field("email") String email,
+         @Field("shop_address") String shop_address,
+         @Field("city") String city,
+         @Field("pincode") String pincode,
+         @Field("gst_no") String gst_no,
+         @Field("landline_no") String landline_no,
+         @Field("whatsapp_no") String whatsapp_no,
+         @Field("remarks") String remarks,
+         @Field("image1") String image1,
+         @Field("image2") String image2,
+         @Field("image3") String image3,
+         @Field("latitude") String latitude,
+         @Field("longitude") String longitude
+    );
     @FormUrlEncoded
     @POST("api/api_meeting.php")
     Call<ModelMeeting> uploadMeeting(
@@ -232,6 +259,9 @@ public interface Api{
     );
     @POST("api/api_route.php")
     Call<List<ModelRoute>> allRouteList();
+
+    @POST("api/api_salesman.php")
+    Call<List<ModelSalesMan>> salesManList();
 
     @FormUrlEncoded
     @POST("api/api_assign_task_update.php")
@@ -307,6 +337,14 @@ public interface Api{
             @Field("to_date") String to_date
     );
     @FormUrlEncoded
+    @POST("api/api_activity_report.php")
+    Call<List<ModelReportCashCollection>> viewReportCash(
+            @Field("user_id") String user_id,
+            @Field("table") String table_name,
+            @Field("from_date") String from_date,
+            @Field("to_date") String to_date
+    );
+    @FormUrlEncoded
     @POST("api/api_invoice_fetch.php")
     Call<ModelInvoice>  viewInvoice(
             @Field("shop_id") String shop_id,
@@ -327,6 +365,16 @@ public interface Api{
             @Field("image") String image
 //          @Field("latitude") String latitude,
 //          @Field("longitude") String longitude
+    );
+    @FormUrlEncoded
+    @POST("api/api_getlocation.php")
+    Call<ModelGetLocaion> updateLocation(
+            @Field("shop_id") String shop_id,
+            @Field("shop_address") String shop_address,
+            @Field("city") String city,
+            @Field("pincode") String pincode,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude
     );
 
 }

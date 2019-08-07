@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +104,19 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
     protected TextView tvMeetingNextDate;
     @BindView(R.id.spnMeetingRoute)
     protected Spinner spnMeetingRoute;
+
+
+
+
+    private String strUserType;
+    public static FragMeeting newInstance(String strUserType) {
+
+        FragMeeting fragment = new FragMeeting();
+        fragment.strUserType = strUserType;
+        return fragment;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -282,9 +296,11 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
         String strEmail = etMeetingEmail.getText().toString().trim();
         String strRemarks = etMeetingComments.getText().toString().trim();
         String strNextMeetDate = tvMeetingNextDate.getText().toString().trim();
+        String strNextMeetDateReal = DateUtils.convertDdToYyyy(strNextMeetDate);
+        Log.d(Constant.TAG, "Date Real Meeting :"+ strNextMeetDateReal);
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<ModelMeeting> call = api.uploadMeeting(strUserId, strRouteId, strVendorType, strOrgName, strContactName, strContactNumber, strAdders,
-                strEmail,strCity,strPinCode,strNextMeetDate,strWhatsAppNo,strLandLineNo, strRemarks, strImage, strLat, strLong);
+                strEmail,strCity,strPinCode,strNextMeetDateReal,strWhatsAppNo,strLandLineNo, strRemarks, strImage, strLat, strLong);
         call.enqueue(new Callback<ModelMeeting>() {
             @Override
             public void onResponse(Call<ModelMeeting> call, Response<ModelMeeting> response) {
@@ -292,7 +308,7 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
                 if (!tModels.getError()){
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragMeeting.this).commit();
-                    getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
                 }
                 else {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());

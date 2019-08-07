@@ -115,6 +115,15 @@ public class FragCash extends Fragment implements AdapterView.OnItemSelectedList
     @BindView(R.id.tvSumCheque)
     protected TextView tvSumCheque;
 
+    private String strUserType;
+    public static FragCash newInstance(String strUserType) {
+
+        FragCash fragment = new FragCash();
+        fragment.strUserType = strUserType;
+        return fragment;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -191,7 +200,7 @@ public class FragCash extends Fragment implements AdapterView.OnItemSelectedList
                 if (!tModels.getError()) {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragCash.this).commit();
-                    getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
                 } else {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }

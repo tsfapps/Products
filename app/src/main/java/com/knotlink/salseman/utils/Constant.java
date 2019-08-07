@@ -15,6 +15,9 @@ public class Constant {
     public static final String IS_UPLOAD_IMAGE = "Upload Image";
     public static final String DATE_FORMAT_DD_MMM_YYYY = "dd MMM yyyy";
     public static final String DATE_FORMAT_dd_MMMM_yyyy = "dd MMMM yyyy";
+    public static final String DATE_FORMAT_yyyy_MM_dd = "yyyy/MM/dd";
+    public static final String DATE_FORMAT_yyyy__MM__dd = "yyyy-MM-dd";
+    public static final String DATE_FORMAT_yyyy__mm__dd = "yyyy-mm-dd";
     public static final String TIME_FORMAT_hh_mm = "hh:mm a";
     public static final int xOffSet = 0 ;
     public static final int yOffSet =50 ;
@@ -53,6 +56,8 @@ public class Constant {
     public static  final  String BTN_CHECK_IN="Check In";
     public static  final  String BTN_CHECK_OUT="Check Out";
     public static  final  String START_TIME="Started Time";
+    public static  final  String REPORT_TIME_START="Report Time Start";
+    public static  final  String REPORT_TIME_END="Report Time End";
 
     public static  final  String START_TIME_LABEL="You Started At";
     public static  final  String FINISH_TIME_LABEL="You Finished At";

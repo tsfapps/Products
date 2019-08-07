@@ -66,6 +66,13 @@ public class FragExpenses extends Fragment implements AdapterView.OnItemSelected
     @BindView(R.id.et_remark_expenses)
     protected EditText et_remark_expenses;
 
+//    private String strUserType;
+//    public static FragExpenses newInstance(String strUserType) {
+//
+//        FragExpenses fragment = new FragExpenses();
+//        fragment.strUserType = strUserType;
+//        return fragment;
+//    }
 
 
     @Nullable

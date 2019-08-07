@@ -43,13 +43,15 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
     private FragmentManager tFragmentManager;
     private List<ModelShopList> tModels;
     private String strUSerId;
+    private String strUSerType;
 
-    public AdapterRoute(Activity tActivity, Context tContext, FragmentManager tFragmentManager, List<ModelShopList> tModels, String strUSerId) {
+    public AdapterRoute(Activity tActivity, Context tContext, FragmentManager tFragmentManager, List<ModelShopList> tModels, String strUSerId, String strUSerType) {
         this.tActivity = tActivity;
         this.tContext = tContext;
         this.tFragmentManager = tFragmentManager;
         this.tModels = tModels;
         this.strUSerId = strUSerId;
+        this.strUSerType = strUSerType;
     }
 
     @NonNull
@@ -89,7 +91,7 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
             public void onClick(View v) {
                 routeViewHolder.btnRouteVisit.setBackgroundResource(R.drawable.bg_simple_green);
                 routeViewHolder.btnRouteNotVisit.setBackgroundResource(R.drawable.bg_btn_main);
-                tFragmentManager.beginTransaction().replace(R.id.container_main, FragRouteActivity.newInstance(tModels, i)).addToBackStack(null).commit();
+                tFragmentManager.beginTransaction().replace(R.id.container_main, FragRouteActivity.newInstance(tModels, i, strUSerType)).addToBackStack(null).commit();
             }
         });
         routeViewHolder.btnRouteNotVisit.setOnClickListener(new View.OnClickListener() {

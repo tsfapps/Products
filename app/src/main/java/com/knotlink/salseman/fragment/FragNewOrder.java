@@ -95,12 +95,14 @@ public class FragNewOrder extends Fragment {
 
     private List<ModelShopList> tModels;
     private int i;
+    private String strUserType;
 
-    public static FragNewOrder newInstance(List<ModelShopList> tModels, int i) {
+    public static FragNewOrder newInstance(List<ModelShopList> tModels, int i, String strUserType) {
 
         FragNewOrder fragment = new FragNewOrder();
         fragment.tModels = tModels;
         fragment.i = i;
+        fragment.strUserType = strUserType;
         return fragment;
     }
 
@@ -305,7 +307,7 @@ public void callApi(){
             if (!tModels.getError()) {
                 CustomToast.toastMid(getActivity(), tModels.getMessage());
                 getFragmentManager().beginTransaction().remove(FragNewOrder.this).commit();
-                getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
             }
             else {
                 CustomToast.toastMid(getActivity(), tModels.getMessage());

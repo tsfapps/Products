@@ -33,13 +33,19 @@
         <item name="android:padding">8dp</item>
 
     </style>
+    <style name="iv_dashboard_report">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:padding">8dp</item>
+
+    </style>
 
     <style name="tv_dash_label">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_marginTop">-8dp</item>
-        <item name="android:textColor">@color/colorBlack</item>
-
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorGrey</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="tv_cash_label">
@@ -49,6 +55,17 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
+    </style>
+    <style name="tv_report_months">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">1dp</item>
+        <item name="android:layout_marginEnd">1dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_simple_ascent</item>
     </style>
     <style name="ll_expenses">
         <item name="android:layout_marginTop">@dimen/margin_8</item>
@@ -211,12 +228,12 @@
     </style>
 
     <style name="card_dash" parent="Base.CardView">
-        <item name="cardCornerRadius">8dp</item>
+        <item name="cardCornerRadius">4dp</item>
         <item name="cardElevation">10dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_margin">2dp</item>
+        <item name="android:layout_margin">.5dp</item>
     </style>
     <style name="ll_dash">
         <item name="android:gravity">center</item>
@@ -225,7 +242,7 @@
         <item name="android:orientation">vertical</item>
     </style>
     <style name="card_dash_report" parent="Base.CardView">
-        <item name="android:layout_margin">1dp</item>
+        <item name="android:layout_margin">.5dp</item>
         <item name="cardCornerRadius">4dp</item>
         <item name="cardElevation">10dp</item>
         <item name="android:layout_width">match_parent</item>
@@ -234,8 +251,7 @@
     </style>
 
     <style name="ll_dash_report">
-
-        <item name="android:layout_margin">2dp</item>
+        <item name="android:layout_margin">.5dp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.model.report.ModelReportLeadGeneration;
+import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
 
@@ -36,18 +37,20 @@ public class AdapterReportLeadGeneration extends RecyclerView.Adapter<AdapterRep
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportLeadGeneration tModel = tModels.get(i);
-        distanceViewHolder.tvReportLeadDate.setText(tModel.getDate());
+        String strAssDate = DateUtils.convertYyyyToDd(tModel.getTaskAssignDate());
+        String strDueDate = DateUtils.convertYyyyToDd(tModel.getTaskDueDate());
+        distanceViewHolder.tvReportLeadDate.setText(strAssDate);
         distanceViewHolder.tvReportLeadVendorType.setText(tModel.getVendorType());
         distanceViewHolder.tvReportLeadVendorName.setText(tModel.getOrgName());
-        distanceViewHolder.tvReportLeadContactName.setText(tModel.getContactName());
-        distanceViewHolder.getTvReportLeadContactNumber.setText(tModel.getContactNo());
+        distanceViewHolder.tvReportLeadContactName.setText(tModel.getCustomerName());
+        distanceViewHolder.getTvReportLeadContactNumber.setText(tModel.getCustomerContactNo());
         distanceViewHolder.tvReportLeadEmailId.setText(tModel.getEmail());
         distanceViewHolder.tvReportLeadWhatsApp.setText(tModel.getWhatsappNo());
-        distanceViewHolder.tvReportLeadAddress.setText(tModel.getAddress());
-        distanceViewHolder.tvReportLeadCity.setText(tModel.getCity());
-        distanceViewHolder.tvReportLeadTelephone.setText(tModel.getTelephoneNo());
-        distanceViewHolder.tvReportLeadStatus.setText(tModel.getLeadStatus());
-        distanceViewHolder.tvReportLeadNextMeetingDate.setText(tModel.getNextMeetingDate());
+        distanceViewHolder.tvReportLeadAddress.setText(tModel.getCustomerAddress());
+//        distanceViewHolder.tvReportLeadCity.setText(tModel.getCity());
+        distanceViewHolder.tvReportLeadTelephone.setText(tModel.getLandlineNo());
+        distanceViewHolder.tvReportLeadStatus.setText(tModel.getStatus());
+        distanceViewHolder.tvReportLeadNextMeetingDate.setText(strDueDate);
         distanceViewHolder.tvReportLeadRemarks.setText(tModel.getRemarks());
     }
 
@@ -76,8 +79,8 @@ public class AdapterReportLeadGeneration extends RecyclerView.Adapter<AdapterRep
         protected TextView tvReportLeadTelephone;
         @BindView(R.id.tv_report_lead_address)
         protected TextView tvReportLeadAddress;
-        @BindView(R.id.tv_report_lead_city)
-        protected TextView tvReportLeadCity;
+//        @BindView(R.id.tv_report_lead_city)
+//        protected TextView tvReportLeadCity;
         @BindView(R.id.tv_report_lead_status)
         protected TextView tvReportLeadStatus;
         @BindView(R.id.tv_report_lead_nextMeetingDate)

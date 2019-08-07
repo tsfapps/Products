@@ -7,18 +7,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.AdapterReportAttendance;
-import com.knotlink.salseman.adapter.report.AdapterReportDistance;
+import com.knotlink.salseman.adapter.report.AdapterReportCashCollection;
+import com.knotlink.salseman.adapter.report.AdapterReportMeeting;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.report.ModelReportAttendance;
-import com.knotlink.salseman.model.report.ModelReportDistance;
+import com.knotlink.salseman.model.report.ModelReportCashCollection;
+import com.knotlink.salseman.model.report.ModelReportMeeting;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
@@ -32,22 +31,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportDistance extends Fragment {
+public class ReportCashCollection extends Fragment {
 
     private RecyclerView.LayoutManager tLayoutManager;
-    private AdapterReportDistance tAdapterReportDistance;
+    private AdapterReportCashCollection tAdapterReportMeeting;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
-    private List<ModelReportDistance> tModelReportDistance;
+    private List<ModelReportCashCollection> tModelReportCash;
     @BindView(R.id.rvReportAll)
     protected RecyclerView rvReportAll;
 
     private String dateFrom;
     private String dateTo;
 
-    public static ReportDistance newInstance(String dateFrom, String dateTo) {
+    public static ReportCashCollection newInstance(String dateFrom, String dateTo) {
 
-        ReportDistance fragment = new ReportDistance();
+        ReportCashCollection fragment = new ReportCashCollection();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
         return fragment;
@@ -64,36 +63,30 @@ public class ReportDistance extends Fragment {
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
-        SetTitle.tbTitle(" Distance Report", getActivity());
+        SetTitle.tbTitle(" Meeting Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvReportAll.setLayoutManager(tLayoutManager);
-        callApiDistance();
+        callApiMeeting();
     }
-    private  void callApiDistance(){
+    private  void callApiMeeting(){
         String strUserId = tSharedPrefManager.getUserId();
-        Log.d(Constant.TAG, "Date From : "+dateFrom);
-        Log.d(Constant.TAG, "Date To : "+dateTo);
+
         Api api = ApiClients.getApiClients().create(Api.class);
 
-        Call<List<ModelReportDistance>> call = api.viewReportDistance(strUserId,"Distance", dateFrom, dateTo);
-        call.enqueue(new Callback<List<ModelReportDistance>>() {
+        Call<List<ModelReportCashCollection>> call = api.viewReportCash(strUserId,"Cash", dateFrom, dateTo);
+        call.enqueue(new Callback<List<ModelReportCashCollection>>() {
             @Override
-            public void onResponse(Call<List<ModelReportDistance>> call, Response<List<ModelReportDistance>> response) {
-                tModelReportDistance =response.body();
-                Log.d(Constant.TAG, "Distance Response : "+response.message());
-                Log.d(Constant.TAG, "Distance Response : "+response.errorBody());
-                Log.d(Constant.TAG, "Distance Response : "+response.code());
-
-                tAdapterReportDistance = new AdapterReportDistance(tModelReportDistance, tContext);
-                rvReportAll.setAdapter(tAdapterReportDistance);
+            public void onResponse(Call<List<ModelReportCashCollection>> call, Response<List<ModelReportCashCollection>> response) {
+                tModelReportCash =response.body();
+                tAdapterReportMeeting = new AdapterReportCashCollection(tModelReportCash, tContext);
+                rvReportAll.setAdapter(tAdapterReportMeeting);
             }
             @Override
-            public void onFailure(Call<List<ModelReportDistance>> call, Throwable t) {
-                CustomLog.d(Constant.TAG, " Distance Not Responding : "+t);
+            public void onFailure(Call<List<ModelReportCashCollection>> call, Throwable t) {
+                CustomLog.d(Constant.TAG, " Meeting Not Responding : "+t);
 
             }
 
         });
     }
-
 }

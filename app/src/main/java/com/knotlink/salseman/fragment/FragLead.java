@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +108,16 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
 
 
     String strVendorType;
+
+    private String strUserType;
+    public static FragLead newInstance(String strUserType) {
+
+        FragLead fragment = new FragLead();
+        fragment.strUserType = strUserType;
+        return fragment;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -244,10 +255,12 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
         String strRemarks = etLeadComments.getText().toString().trim();
         String strLandLine = etLeadLandLine.getText().toString().trim();
         String strNextMeetDate = tvLeadNextMeetingDate.getText().toString().trim();
+        String strNextMeetDateReal = DateUtils.convertDdToYyyy(strNextMeetDate);
         String strImage = imageToString(tBitmap, ivUploadLead);
+        Log.d(Constant.TAG, "NextMeetDate : "+strNextMeetDateReal);
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<ModelLead> call = api.uploadLead(strUserId, strRouteId, strVendorType, strOrgName, strContactName, strContactNumber, strAdders,
-                strEmail,strCity,strPinCode,strNextMeetDate,strWhatsApp,strLandLine, strRemarks, strImage,strLat, strLong );
+                strEmail,strCity,strPinCode,strNextMeetDateReal,strWhatsApp,strLandLine, strRemarks, strImage,strLat, strLong );
         call.enqueue(new Callback<ModelLead>() {
             @Override
             public void onResponse(Call<ModelLead> call, Response<ModelLead> response) {
@@ -255,7 +268,7 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
                 if (!tModels.getError()){
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragLead.this).commit();
-                    getFragmentManager().beginTransaction().replace(R.id.container_main, new FragDashboard()).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
                 }
                 else {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());

@@ -67,8 +67,12 @@ public class FragTask extends Fragment {
             @Override
             public void onResponse(Call<List<ModelTask>> call, Response<List<ModelTask>> response) {
                 tModelTask =response.body();
+                if (tModelTask.size()!=0){
                 tAdapterTask = new AdapterTask(tModelTask, tContext, tActivity, tFragmentManager);
-                rvTask.setAdapter(tAdapterTask);
+                rvTask.setAdapter(tAdapterTask);}
+                else {
+
+                }
             }
             @Override
             public void onFailure(Call<List<ModelTask>> call, Throwable t) {

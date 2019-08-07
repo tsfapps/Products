@@ -14,6 +14,6 @@
         android:paddingStart="@dimen/margin_8"
         android:paddingEnd="@dimen/margin_8"
         android:text="@string/expense_list"
-        android:textColor="@color/white"/>
+        android:textColor="@color/colorBlack"/>
 
 </LinearLayout>

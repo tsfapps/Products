@@ -8,60 +8,75 @@ public class ModelReportLeadGeneration {
     @SerializedName("id")
     @Expose
     private String id;
+    @SerializedName("task_id")
+    @Expose
+    private String taskId;
     @SerializedName("user_id")
     @Expose
     private String userId;
-    @SerializedName("vendor_type")
+    @SerializedName("task_assign_date")
     @Expose
-    private String vendorType;
+    private String taskAssignDate;
+    @SerializedName("task_due_date")
+    @Expose
+    private String taskDueDate;
+    @SerializedName("task_completion_date")
+    @Expose
+    private String taskCompletionDate;
+    @SerializedName("task_time")
+    @Expose
+    private String taskTime;
     @SerializedName("org_name")
     @Expose
     private String orgName;
-    @SerializedName("contact_name")
+    @SerializedName("customer_name")
     @Expose
-    private String contactName;
-    @SerializedName("contact_no")
+    private String customerName;
+    @SerializedName("customer_contact_no")
     @Expose
-    private String contactNo;
-    @SerializedName("telephone_no")
-    @Expose
-    private String telephoneNo;
-    @SerializedName("whatsapp_no")
-    @Expose
-    private String whatsappNo;
-    @SerializedName("address")
-    @Expose
-    private String address;
+    private String customerContactNo;
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("city")
+    @SerializedName("customer_address")
     @Expose
-    private String city;
-    @SerializedName("lead_status")
-    @Expose
-    private String leadStatus;
-    @SerializedName("time")
-    @Expose
-    private String time;
+    private String customerAddress;
     @SerializedName("remarks")
     @Expose
     private String remarks;
-    @SerializedName("image")
+    @SerializedName("user_remarks")
     @Expose
-    private String image;
-    @SerializedName("date")
+    private String userRemarks;
+    @SerializedName("status")
     @Expose
-    private String date;
-    @SerializedName("next_meeting_date")
+    private String status;
+    @SerializedName("route_id")
     @Expose
-    private String nextMeetingDate;
+    private String routeId;
+    @SerializedName("whatsapp_no")
+    @Expose
+    private String whatsappNo;
+    @SerializedName("landline_no")
+    @Expose
+    private String landlineNo;
     @SerializedName("latitude")
     @Expose
     private String latitude;
     @SerializedName("longitude")
     @Expose
     private String longitude;
+    @SerializedName("city")
+    @Expose
+    private String city;
+    @SerializedName("pincode")
+    @Expose
+    private String pincode;
+    @SerializedName("task_type")
+    @Expose
+    private String taskType;
+    @SerializedName("vendor_type")
+    @Expose
+    private String vendorType;
 
     public String getId() {
         return id;
@@ -69,6 +84,14 @@ public class ModelReportLeadGeneration {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     public String getUserId() {
@@ -79,12 +102,36 @@ public class ModelReportLeadGeneration {
         this.userId = userId;
     }
 
-    public String getVendorType() {
-        return vendorType;
+    public String getTaskAssignDate() {
+        return taskAssignDate;
     }
 
-    public void setVendorType(String vendorType) {
-        this.vendorType = vendorType;
+    public void setTaskAssignDate(String taskAssignDate) {
+        this.taskAssignDate = taskAssignDate;
+    }
+
+    public String getTaskDueDate() {
+        return taskDueDate;
+    }
+
+    public void setTaskDueDate(String taskDueDate) {
+        this.taskDueDate = taskDueDate;
+    }
+
+    public Object getTaskCompletionDate() {
+        return taskCompletionDate;
+    }
+
+    public void setTaskCompletionDate(String taskCompletionDate) {
+        this.taskCompletionDate = taskCompletionDate;
+    }
+
+    public String getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(String taskTime) {
+        this.taskTime = taskTime;
     }
 
     public String getOrgName() {
@@ -95,44 +142,20 @@ public class ModelReportLeadGeneration {
         this.orgName = orgName;
     }
 
-    public String getContactName() {
-        return contactName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getContactNo() {
-        return contactNo;
+    public String getCustomerContactNo() {
+        return customerContactNo;
     }
 
-    public void setContactNo(String contactNo) {
-        this.contactNo = contactNo;
-    }
-
-    public String getTelephoneNo() {
-        return telephoneNo;
-    }
-
-    public void setTelephoneNo(String telephoneNo) {
-        this.telephoneNo = telephoneNo;
-    }
-
-    public String getWhatsappNo() {
-        return whatsappNo;
-    }
-
-    public void setWhatsappNo(String whatsappNo) {
-        this.whatsappNo = whatsappNo;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCustomerContactNo(String customerContactNo) {
+        this.customerContactNo = customerContactNo;
     }
 
     public String getEmail() {
@@ -143,28 +166,12 @@ public class ModelReportLeadGeneration {
         this.email = email;
     }
 
-    public String getCity() {
-        return city;
+    public String getCustomerAddress() {
+        return customerAddress;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getLeadStatus() {
-        return leadStatus;
-    }
-
-    public void setLeadStatus(String leadStatus) {
-        this.leadStatus = leadStatus;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
     }
 
     public String getRemarks() {
@@ -175,28 +182,44 @@ public class ModelReportLeadGeneration {
         this.remarks = remarks;
     }
 
-    public String getImage() {
-        return image;
+    public String getUserRemarks() {
+        return userRemarks;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setUserRemarks(String userRemarks) {
+        this.userRemarks = userRemarks;
     }
 
-    public String getDate() {
-        return date;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getNextMeetingDate() {
-        return nextMeetingDate;
+    public String getRouteId() {
+        return routeId;
     }
 
-    public void setNextMeetingDate(String nextMeetingDate) {
-        this.nextMeetingDate = nextMeetingDate;
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
+    }
+
+    public String getWhatsappNo() {
+        return whatsappNo;
+    }
+
+    public void setWhatsappNo(String whatsappNo) {
+        this.whatsappNo = whatsappNo;
+    }
+
+    public String getLandlineNo() {
+        return landlineNo;
+    }
+
+    public void setLandlineNo(String landlineNo) {
+        this.landlineNo = landlineNo;
     }
 
     public String getLatitude() {
@@ -215,4 +238,35 @@ public class ModelReportLeadGeneration {
         this.longitude = longitude;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
+
+    public String getVendorType() {
+        return vendorType;
+    }
+
+    public void setVendorType(String vendorType) {
+        this.vendorType = vendorType;
+    }
 }

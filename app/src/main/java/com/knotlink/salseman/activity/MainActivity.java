@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
     @OnClick(R.id.iv_bottom_report)
     public void onReportClicked(){
+        tSharedPrefManager.clearReportTime();
         getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new FragReport()).addToBackStack(null).commit();
     }
     @OnClick(R.id.iv_bottom_task)
@@ -147,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-private void requestLocation(){
+    private void requestLocation(){
     GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
             .addApi(LocationServices.API)
             .addConnectionCallbacks(this)
@@ -214,23 +215,5 @@ private void requestLocation(){
 
     }
 
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-//            switch (event.getAction()) {
-//                case KeyEvent.ACTION_DOWN:
-//                    if (event.getDownTime() - lastPressedTime < PERIOD) {
-//                        finish();
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), "Press again to exit.",
-//                                Toast.LENGTH_SHORT).show();
-//                        lastPressedTime = event.getEventTime();
-//                    }
-//                    return true;
-//            }
-//        }
-//        return false;
-//    }
 
 }

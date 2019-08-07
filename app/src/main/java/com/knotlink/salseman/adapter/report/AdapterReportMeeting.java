@@ -3,6 +3,7 @@ package com.knotlink.salseman.adapter.report;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.model.report.ModelReportMeeting;
+import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
 
@@ -36,17 +39,21 @@ public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeet
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportMeeting tModel = tModels.get(i);
-        distanceViewHolder.tvReportMeetingDate.setText(tModel.getDate());
+        String strAssDate = DateUtils.convertYyyyToDd(tModel.getTaskAssignDate());
+        String strDueDate = DateUtils.convertYyyyToDd(tModel.getTaskDueDate());
+
+        distanceViewHolder.tvReportMeetingDate.setText(strAssDate);
         distanceViewHolder.tvReportMeetingVendorType.setText(tModel.getVendorType());
         distanceViewHolder.tvReportMeetingVendorName.setText(tModel.getOrgName());
-        distanceViewHolder.tvReportMeetingContactName.setText(tModel.getContactName());
-        distanceViewHolder.tvReportMeetingContactNumber.setText(tModel.getContactNo());
+        distanceViewHolder.tvReportMeetingContactName.setText(tModel.getCustomerName());
+        distanceViewHolder.tvReportMeetingContactNumber.setText(tModel.getCustomerContactNo());
         distanceViewHolder.tvReportMeetingEmailId.setText(tModel.getEmail());
-        distanceViewHolder.tvReportMeetingTelephone.setText(tModel.getContactNo());
+        distanceViewHolder.tvReportMeetingTelephone.setText(tModel.getLandlineNo());
         distanceViewHolder.tvReportMeetingWhatsApp.setText(tModel.getWhatsappNo());
-        distanceViewHolder.tvReportMeetingAddress.setText(tModel.getAddress());
+        distanceViewHolder.tvReportMeetingAddress.setText(tModel.getCustomerAddress());
         distanceViewHolder.tvReportMeetingMeetingStatus.setText(tModel.getStatus());
-        distanceViewHolder.getTvReportMeetingMeetingTime.setText(tModel.getMeetingTime());
+        distanceViewHolder.getTvReportMeetingMeetingDate.setText(strDueDate);
+        distanceViewHolder.getTvReportMeetingMeetingTime.setText(tModel.getTaskTime());
         distanceViewHolder.tvReportMeetingRemarks.setText(tModel.getRemarks());
     }
     @Override
@@ -78,6 +85,8 @@ public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeet
         protected TextView tvReportMeetingMeetingStatus;
         @BindView(R.id.tv_report_meeting_meetingTime)
         protected TextView getTvReportMeetingMeetingTime;
+        @BindView(R.id.tv_report_meeting_meetingDate)
+        protected TextView getTvReportMeetingMeetingDate;
         @BindView(R.id.tv_report_meeting_remarks)
         protected TextView tvReportMeetingRemarks;
 

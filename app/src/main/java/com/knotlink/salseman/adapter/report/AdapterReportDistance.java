@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.model.report.ModelReportDistance;
+import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
 
@@ -36,7 +37,8 @@ public class AdapterReportDistance extends RecyclerView.Adapter<AdapterReportDis
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportDistance tModel = tModels.get(i);
-        distanceViewHolder.tvReportDistanceDate.setText(tModel.getDate());
+        String strDate = DateUtils.convertYyyyToDd(tModel.getDate());
+        distanceViewHolder.tvReportDistanceDate.setText(strDate);
         distanceViewHolder.tvReportDistanceStartKm.setText(tModel.getStartingKm());
         distanceViewHolder.tvReportDistanceEndKm.setText(tModel.getEndingKm());
         distanceViewHolder.tvReportDistanceDisTravelled.setText(tModel.getDistanceTraveled());
