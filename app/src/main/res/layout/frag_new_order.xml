@@ -79,10 +79,10 @@
                android:layout_height="match_parent"
                 android:background="@drawable/bg_et"/>
 
-            <FrameLayout
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_weight=".6"
-                android:background="@drawable/ic_sales_photo_add"
+                android:background="@drawable/bg_camera"
                 android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/iv_upload_order"
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
-            </FrameLayout>
+            </LinearLayout>
         </LinearLayout>
         <TextView
             android:id="@+id/orderGetSignature"

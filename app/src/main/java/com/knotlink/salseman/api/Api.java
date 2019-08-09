@@ -5,9 +5,11 @@ import com.knotlink.salseman.model.ModelCash;
 import com.knotlink.salseman.model.ModelColdCall;
 import com.knotlink.salseman.model.ModelExpenseList;
 import com.knotlink.salseman.model.ModelGetLocaion;
-import com.knotlink.salseman.model.ModelNewCustomer;
+import com.knotlink.salseman.model.distance.ModelDistancePrevious;
+import com.knotlink.salseman.model.task.ModelNewCustomer;
 import com.knotlink.salseman.model.ModelRoute;
 import com.knotlink.salseman.model.ModelSalesMan;
+import com.knotlink.salseman.model.task.ModelTaskDecline;
 import com.knotlink.salseman.model.ModelVisit;
 import com.knotlink.salseman.model.distance.ModelDistance;
 import com.knotlink.salseman.model.ModelExpenses;
@@ -47,7 +49,6 @@ public interface Api{
             @Field("user_phone") String phone_no,
             @Field("user_password") String user_password
     );
-
     @FormUrlEncoded
     @POST("api/api_attendance.php")
     Call<ModelAttendance> uploadLogin(
@@ -95,8 +96,6 @@ public interface Api{
     Call<ModelFeedback> uploadFeedback(
             @Field("shop_id") String shop_id,
             @Field("user_id") String user_id,
-           // @Field("audio_url") String audio_url,
-           // @Field("video_url") String video_url,
             @Field("image_url") String image_url,
             @Field("remarks") String remarks
     );
@@ -127,6 +126,12 @@ public interface Api{
             @Field("ending_address") String ending_address,
             @Field("vehicle_no") String vehicle_no
 
+    );
+
+    @FormUrlEncoded
+    @POST("api/api_previous_day_distance.php")
+    Call<ModelDistancePrevious> getDistancePrevious(
+            @Field("vehicle_no") String vehicle_no
     );
     @POST("api/api_vehicle.php")
     Call<List<ModelVehicleList>> vehicleList(
@@ -185,6 +190,8 @@ public interface Api{
  @FormUrlEncoded
     @POST("api/api_convert_to_customer.php")
     Call<ModelNewCustomer> newCustomer(
+
+         @Field("task_id") String task_id,
          @Field("user_id") String user_id,
          @Field("route_id") String route_id,
          @Field("shop_name") String shop_name,
@@ -253,6 +260,12 @@ public interface Api{
             @Field("user_id") String user_id
     );
     @FormUrlEncoded
+    @POST("api/api_decline.php")
+    Call<ModelTaskDecline> declineTask(
+            @Field("task_id") String task_id,
+            @Field("remarks") String remarks
+    );
+    @FormUrlEncoded
     @POST("api/api_user_route.php")
     Call<List<ModelRoute>> userRouteList(
             @Field("user_id") String user_id
@@ -260,8 +273,13 @@ public interface Api{
     @POST("api/api_route.php")
     Call<List<ModelRoute>> allRouteList();
 
-    @POST("api/api_salesman.php")
-    Call<List<ModelSalesMan>> salesManList();
+    @FormUrlEncoded
+    @POST("api/api_asm_salesman.php")
+    Call<List<ModelSalesMan>> salesAsmManList(
+            @Field("asm_id") String asm_id
+    );
+// @POST("api/api_salesman.php")
+//    Call<List<ModelSalesMan>> salesAsmManList();
 
     @FormUrlEncoded
     @POST("api/api_assign_task_update.php")

@@ -2,14 +2,17 @@ package com.knotlink.salseman.fragment.report;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.adapter.report.AdapterReportAttendance;
@@ -31,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportExpenses extends Fragment {
+public class ReportExpenses extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView.LayoutManager tLayoutManager;
     private AdapterReportExpenses tAdapterReportExpenses;
@@ -40,6 +43,10 @@ public class ReportExpenses extends Fragment {
     private List<ModelReportExpenses> tModelReportExpenses;
     @BindView(R.id.rvReportAll)
     protected RecyclerView rvReportAll;
+    @BindView(R.id.swrReportAll)
+    protected SwipeRefreshLayout swrReportAll;
+    @BindView(R.id.pbReportAll)
+    protected ProgressBar pbReportAll;
 
 
 
@@ -66,6 +73,8 @@ public class ReportExpenses extends Fragment {
         SetTitle.tbTitle(" Expenses Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvReportAll.setLayoutManager(tLayoutManager);
+        pbReportAll.setVisibility(View.VISIBLE);
+        swrReportAll.setOnRefreshListener(this);
         callApiExpenses();
     }
     private  void callApiExpenses(){
@@ -78,6 +87,7 @@ public class ReportExpenses extends Fragment {
             @Override
             public void onResponse(Call<List<ModelReportExpenses>> call, Response<List<ModelReportExpenses>> response) {
                 tModelReportExpenses =response.body();
+                pbReportAll.setVisibility(View.GONE);
                 tAdapterReportExpenses = new AdapterReportExpenses(tModelReportExpenses, tContext);
                 rvReportAll.setAdapter(tAdapterReportExpenses);
             }
@@ -88,5 +98,17 @@ public class ReportExpenses extends Fragment {
             }
 
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swrReportAll.setRefreshing(false);
+                callApiExpenses();
+            }
+        }, 2000);
+
     }
 }

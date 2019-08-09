@@ -2,14 +2,17 @@ package com.knotlink.salseman.fragment.report;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.adapter.report.AdapterReportAttendance;
@@ -31,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportColdCall extends Fragment {
+public class ReportColdCall extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView.LayoutManager tLayoutManager;
     private AdapterReportColdCall tAdapterReportColdCall;
@@ -40,6 +43,10 @@ public class ReportColdCall extends Fragment {
     private List<ModelReportColdCall> tModelReportColdCall;
     @BindView(R.id.rvReportAll)
     protected RecyclerView rvReportAll;
+    @BindView(R.id.swrReportAll)
+    protected SwipeRefreshLayout swrReportAll;
+    @BindView(R.id.pbReportAll)
+    protected ProgressBar pbReportAll;
 
     private String dateFrom;
     private String dateTo;
@@ -66,6 +73,8 @@ public class ReportColdCall extends Fragment {
         SetTitle.tbTitle(" Cold Call Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvReportAll.setLayoutManager(tLayoutManager);
+        pbReportAll.setVisibility(View.VISIBLE);
+        swrReportAll.setOnRefreshListener(this);
         callApiColdCall();
     }
     private  void callApiColdCall(){
@@ -78,6 +87,7 @@ public class ReportColdCall extends Fragment {
             @Override
             public void onResponse(Call<List<ModelReportColdCall>> call, Response<List<ModelReportColdCall>> response) {
                 tModelReportColdCall =response.body();
+                pbReportAll.setVisibility(View.GONE);
                 tAdapterReportColdCall = new AdapterReportColdCall(tModelReportColdCall, tContext);
                 rvReportAll.setAdapter(tAdapterReportColdCall);
             }
@@ -88,5 +98,17 @@ public class ReportColdCall extends Fragment {
             }
 
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swrReportAll.setRefreshing(false);
+                callApiColdCall();
+            }
+        }, 2000);
+
     }
 }

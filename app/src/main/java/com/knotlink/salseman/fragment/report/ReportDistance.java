@@ -2,15 +2,18 @@ package com.knotlink.salseman.fragment.report;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.adapter.report.AdapterReportAttendance;
@@ -32,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportDistance extends Fragment {
+public class ReportDistance extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView.LayoutManager tLayoutManager;
     private AdapterReportDistance tAdapterReportDistance;
@@ -41,6 +44,10 @@ public class ReportDistance extends Fragment {
     private List<ModelReportDistance> tModelReportDistance;
     @BindView(R.id.rvReportAll)
     protected RecyclerView rvReportAll;
+    @BindView(R.id.swrReportAll)
+    protected SwipeRefreshLayout swrReportAll;
+    @BindView(R.id.pbReportAll)
+    protected ProgressBar pbReportAll;
 
     private String dateFrom;
     private String dateTo;
@@ -67,12 +74,12 @@ public class ReportDistance extends Fragment {
         SetTitle.tbTitle(" Distance Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvReportAll.setLayoutManager(tLayoutManager);
+        pbReportAll.setVisibility(View.VISIBLE);
+        swrReportAll.setOnRefreshListener(this);
         callApiDistance();
     }
     private  void callApiDistance(){
         String strUserId = tSharedPrefManager.getUserId();
-        Log.d(Constant.TAG, "Date From : "+dateFrom);
-        Log.d(Constant.TAG, "Date To : "+dateTo);
         Api api = ApiClients.getApiClients().create(Api.class);
 
         Call<List<ModelReportDistance>> call = api.viewReportDistance(strUserId,"Distance", dateFrom, dateTo);
@@ -80,10 +87,7 @@ public class ReportDistance extends Fragment {
             @Override
             public void onResponse(Call<List<ModelReportDistance>> call, Response<List<ModelReportDistance>> response) {
                 tModelReportDistance =response.body();
-                Log.d(Constant.TAG, "Distance Response : "+response.message());
-                Log.d(Constant.TAG, "Distance Response : "+response.errorBody());
-                Log.d(Constant.TAG, "Distance Response : "+response.code());
-
+                pbReportAll.setVisibility(View.GONE);
                 tAdapterReportDistance = new AdapterReportDistance(tModelReportDistance, tContext);
                 rvReportAll.setAdapter(tAdapterReportDistance);
             }
@@ -96,4 +100,15 @@ public class ReportDistance extends Fragment {
         });
     }
 
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swrReportAll.setRefreshing(false);
+                callApiDistance();
+            }
+        }, 2000);
+
+    }
 }

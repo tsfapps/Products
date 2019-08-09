@@ -233,7 +233,7 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_weight=".35"
-                android:background="@drawable/ic_sales_photo_add"
+                android:background="@drawable/bg_camera"
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/iv_upload_receipt"

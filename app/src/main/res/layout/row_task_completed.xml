@@ -63,7 +63,7 @@
         android:background="@drawable/bg_et"
         android:minLines="5"
         android:gravity="start"
-        android:inputType="textCapCharacters"
+        android:inputType="textCapSentences"
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="150dp"

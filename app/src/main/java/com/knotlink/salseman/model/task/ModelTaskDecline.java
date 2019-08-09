@@ -1,9 +1,9 @@
-package com.knotlink.salseman.model;
+package com.knotlink.salseman.model.task;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ModelNewCustomer {
+public class ModelTaskDecline {
     @SerializedName("error")
     @Expose
     private Boolean error;

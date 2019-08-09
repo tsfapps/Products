@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -105,15 +106,19 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
     protected RadioGroup rgLead;
     @BindView(R.id.spnLeadRoute)
     protected Spinner spnLeadRoute;
+    @BindView(R.id.pbSpnLeadRoute)
+    protected ProgressBar pbSpnLeadRoute;
 
 
     String strVendorType;
 
     private String strUserType;
-    public static FragLead newInstance(String strUserType) {
+    private String strSalesId;
+    public static FragLead newInstance(String strUserType, String strSalesId) {
 
         FragLead fragment = new FragLead();
         fragment.strUserType = strUserType;
+        fragment.strSalesId = strSalesId;
         return fragment;
     }
 
@@ -128,6 +133,7 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
     }
     private void initFrag(){
         tContext = getContext();
+        pbSpnLeadRoute.setVisibility(View.VISIBLE);
         strVendorType = "Customer";
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Lead Generation", getActivity());
@@ -167,6 +173,7 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
             @Override
             public void onResponse(Call<List<ModelRoute>> call, Response<List<ModelRoute>> response) {
                 tModelsRoute = response.body();
+                pbSpnLeadRoute.setVisibility(View.GONE);
                 tAdapterRoute = new AdapterRouteSelect(tContext, tModelsRoute);
                 spnLeadRoute.setAdapter(tAdapterRoute);
             }

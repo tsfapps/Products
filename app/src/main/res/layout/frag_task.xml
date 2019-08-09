@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/swrFragTask"
     android:gravity="center_vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/pbFragTask"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 <android.support.v7.widget.RecyclerView
     android:id="@+id/rvTask"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
-</LinearLayout>
+    android:layout_height="match_parent"/>
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

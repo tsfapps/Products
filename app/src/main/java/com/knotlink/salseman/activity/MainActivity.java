@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             case "2":
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance("2")).commit();
                 break;
+         case "3":
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance("3")).commit();
+                break;
         }
         requestLocation();
     }
@@ -118,12 +121,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             case "2":
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance("2")).commit();
                 break;
+            case "3":
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance("3")).commit();
+                break;
         }
     }
     @OnClick(R.id.iv_bottom_report)
     public void onReportClicked(){
         tSharedPrefManager.clearReportTime();
-        getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new FragReport()).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragReport.newInstance(strUserType)).addToBackStack(null) .commit();
     }
     @OnClick(R.id.iv_bottom_task)
     public void onTaskClicked(){

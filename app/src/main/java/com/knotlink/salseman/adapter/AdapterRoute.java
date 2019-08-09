@@ -66,7 +66,7 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
         final ModelShopList tModel = tModels.get(i);
 
         final String strPhoneNo = tModel.getContactNo();
-        switch (tModel.getVisitStatus()){
+         switch (tModel.getVisitStatus()){
             case "0":
                 ButtonBg.setNotVisitButtonBg(routeViewHolder.btnRouteVisit, R.drawable.bg_btn_main,
                         routeViewHolder.btnRouteNotVisit, R.drawable.bg_btn_main, true, true);

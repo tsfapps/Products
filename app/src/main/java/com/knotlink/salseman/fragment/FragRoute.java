@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
@@ -34,15 +37,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragRoute extends Fragment {
+public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private Activity tActivity;
     @BindView(R.id.rv_route)
     protected RecyclerView rvRoute;
+    @BindView(R.id.pbRouteList)
+    protected ProgressBar pbRouteList;
     @BindView(R.id.tv_route_routeName)
     protected TextView tvRouteName;
      @BindView(R.id.tv_route_presentDay)
     protected TextView tvRoutePresnetDay;
+     @BindView(R.id.swrFragRoute)
+    protected SwipeRefreshLayout swrFragRoute;
     private Context tContext;
     private FragmentManager tFragmentManager;
     private SharedPrefManager tSharedPrefManager;
@@ -71,6 +78,8 @@ public class FragRoute extends Fragment {
         tFragmentManager = getFragmentManager();
         tSharedPrefManager = new SharedPrefManager(tContext);
         tvRoutePresnetDay.setText(DateUtils.getPresentDay());
+        pbRouteList.setVisibility(View.VISIBLE);
+        swrFragRoute.setOnRefreshListener(this);
         callApi();
         SetTitle.tbTitle("Vendor List", getActivity());
         initRvRoute();
@@ -90,6 +99,7 @@ public class FragRoute extends Fragment {
             @Override
             public void onResponse(Call<List<ModelShopList>> call, Response<List<ModelShopList>> response) {
                 tModels = response.body();
+                pbRouteList.setVisibility(View.GONE);
                 if (tModels.size()!=0) {
                     tvRouteName.setText(tModels.get(0).getRouteName());
                 }
@@ -105,6 +115,14 @@ public class FragRoute extends Fragment {
     }
 
 
-
-
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swrFragRoute.setRefreshing(false);
+                callApi();
+            }
+        }, 2000);
+    }
 }

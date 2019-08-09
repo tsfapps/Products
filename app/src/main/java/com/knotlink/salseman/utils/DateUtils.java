@@ -222,7 +222,7 @@ public class DateUtils {
     public static String convertYyyyToDd(String strOldDate){
 
         try {
-            Date date=new SimpleDateFormat(Constant.DATE_FORMAT_yyyy__mm__dd,Locale.UK).parse(strOldDate);
+            Date date=new SimpleDateFormat(Constant.DATE_FORMAT_yyyy__MM__dd,Locale.UK).parse(strOldDate);
             SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
             return formatter.format(date);
 

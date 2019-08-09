@@ -25,6 +25,7 @@ import com.knotlink.salseman.adapter.baseadapter.AdapterConvertCustomer;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.fragment.FragNewCustomer;
+import com.knotlink.salseman.model.task.ModelTaskDecline;
 import com.knotlink.salseman.model.task.ModelTask;
 import com.knotlink.salseman.model.task.ModelTaskReschedule;
 import com.knotlink.salseman.utils.Constant;
@@ -59,6 +60,7 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
     private String[] statusCustomer;
     private String strCustomerStatus;
     private String strVendorType;
+    private String strTaskId;
 //    private String spnTaskStatusItem;
     private TextView tvTaskSchDate;
     private TextView tvTaskCompletedDate;
@@ -83,8 +85,7 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
     public void onBindViewHolder(@NonNull TaskViewHolder taskViewHolder, int i) {
         final ModelTask tModel = tModelTask.get(i);
         strVendorType = tModel.getVendorType();
-
-
+        strTaskId = tModel.getTaskId();
         modelIndex = taskViewHolder.getAdapterPosition();
         statusCustomer = tContext.getResources().getStringArray(R.array.str_customer_status);
         tAdapter = new AdapterConvertCustomer(tContext, statusCustomer);
@@ -96,6 +97,7 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
         String strDueDateConverted = DateUtils.convertFormatOpposite(tModel.getTaskDueDate());
         taskViewHolder.tvTaskAssignedDae.setText(strAssignedDate);
         taskViewHolder.tvTaskDueDate.setText(strDueDateConverted);
+        taskViewHolder.tv_task_shopName.setText(tModel.getOrgName());
 
 
         String strDueDate = tModel.getTaskDueDate();
@@ -103,7 +105,7 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
         long todayDate = DateUtils.dateToMiliSeconds(strTodayDate);
         long dueDate = DateUtils.dateToMiliSecondsYyyy(strDueDate);
 
-        if (todayDate < dueDate){
+        if (todayDate < dueDate && !tModel.getStatus().equals("Completed")){
             taskViewHolder.ll_taskStatusColor.setBackgroundResource(R.color.tan_yellow);
             taskViewHolder.btn_task_reschedule.setBackgroundResource(R.color.tan_yellow);
             taskViewHolder.btn_task_completed.setBackgroundResource(R.color.tan_yellow);
@@ -117,7 +119,7 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
             taskViewHolder.tvTaskDueDate.setBackground(ContextCompat.getDrawable(tContext, R.drawable.bg_trans_yellow));
 
         }
-        else if (todayDate== dueDate && tModel.getStatus().equals("Completed") ){
+        else if (todayDate == dueDate && tModel.getStatus().equals("Completed") ){
             taskViewHolder.ll_taskStatusColor.setBackgroundResource(R.color.green);
             taskViewHolder.btn_task_reschedule.setVisibility(View.GONE);
             taskViewHolder.btn_task_completed.setEnabled(false);
@@ -125,7 +127,6 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
             taskViewHolder.btn_task_completed.setText("Completed");
             taskViewHolder.tvTaskDueDate.setBackground(ContextCompat.getDrawable(tContext, R.drawable.bg_trans_green));
             taskViewHolder.tv_task_dueDateLabel.setText("Task Completion Date");
-
         }
 
         taskViewHolder.tvTaskContactName.setText(tModel.getCustomerName());
@@ -183,14 +184,14 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
 
 
                 Button button =  dialog.findViewById(R.id.btn_taskRescheduleSubmit);
-
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
                         String strTaskId = tModel.getTaskId();
                         String strRemarks = etTaskSchRem.getText().toString().trim();
-                        String strNextMeetingDate = tvTaskSchDate.getText().toString().trim();
+                        String strNextMeetingDate = DateUtils.convertDdToYyyy(tvTaskSchDate.getText().toString().trim());
+                        Log.d(Constant.TAG, "Schedule Date : "+strNextMeetingDate);
                         Api api = ApiClients.getApiClients().create(Api.class);
                         Call<ModelTaskReschedule> call = api.assignedTaskReschedule(strTaskId, strRemarks, strNextMeetingDate);
                         call.enqueue(new Callback<ModelTaskReschedule>() {
@@ -212,8 +213,6 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
 
                             }
                         });
-
-
                     }
                 });
                 dialog.show();
@@ -222,7 +221,6 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
         taskViewHolder.btn_task_completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar myCalendar = Calendar.getInstance();
                 final Dialog dialog = new Dialog(tContext);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.row_task_completed);
@@ -248,11 +246,12 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
                                     CustomToast.toastBottom(tActivity, "Select the status");
                                     break;
                                 case 1:
-                                    tFragmentManager.beginTransaction().replace(R.id.container_main, new FragNewCustomer()).addToBackStack(null).commit();
+                                    tFragmentManager.beginTransaction().replace(R.id.container_main, FragNewCustomer.newInstance(tModel)).addToBackStack(null).commit();
                                     dialog.dismiss();
                                     break;
                                 case 2:
                                     strCustomerStatus = statusCustomer[2];
+
                                     break;
                                 default:
                             }
@@ -268,12 +267,31 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
                 btnCompleted.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!strCustomerStatus.equalsIgnoreCase("")) {
+                        if (strCustomerStatus.equalsIgnoreCase("Declined")) {
                             dialog.dismiss();
                             String strTaskId = tModel.getTaskId();
                             String strRemarks = etTaskCompleted.getText().toString().trim();
                             Api api = ApiClients.getApiClients().create(Api.class);
-                            CustomToast.toastTop(tActivity, "Task completed successfully...");
+                            Call<ModelTaskDecline> call = api.declineTask(strTaskId, strRemarks);
+                            call.enqueue(new Callback<ModelTaskDecline>() {
+                                @Override
+                                public void onResponse(Call<ModelTaskDecline> call, Response<ModelTaskDecline> response) {
+                                    ModelTaskDecline tModel = response.body();
+                                    if (!tModel.getError()){
+                                        CustomToast.toastTop(tActivity, tModel.getMessage());
+                                    }
+                                    else {
+                                        CustomToast.toastTop(tActivity, tModel.getMessage());
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ModelTaskDecline> call, Throwable t) {
+
+                                }
+                            });
+
                         }
                         else {
                             CustomToast.toastTop(tActivity, "Select the status first.");
@@ -308,6 +326,8 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.TaskViewHolder
         protected TextView tvTaskContactName;
         @BindView(R.id.tv_task_contactNumber)
         protected TextView tvTaskContactNumber;
+        @BindView(R.id.tv_task_shopName)
+        protected TextView tv_task_shopName;
         @BindView(R.id.tv_task_remarks)
         protected TextView tvTaskRemarks;
 

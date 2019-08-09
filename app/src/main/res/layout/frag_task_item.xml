@@ -131,6 +131,15 @@
         </RelativeLayout>
         <TextView
             style="@style/tv_report"
+            android:hint="Shop Name"/>
+        <TextView
+            android:id="@+id/tv_task_shopName"
+            android:layout_width="match_parent"
+            android:padding="2dp"
+           style="@style/tv_detail"
+            android:text="Shop Name"/>
+                <TextView
+            style="@style/tv_report"
             android:hint="Address"/>
         <TextView
             android:id="@+id/tv_task_address"

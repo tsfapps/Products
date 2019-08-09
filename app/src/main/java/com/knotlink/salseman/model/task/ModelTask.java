@@ -21,16 +21,22 @@ public class ModelTask {
     private String taskDueDate;
     @SerializedName("task_completion_date")
     @Expose
-    private Object taskCompletionDate;
+    private String taskCompletionDate;
     @SerializedName("task_time")
     @Expose
     private String taskTime;
+    @SerializedName("org_name")
+    @Expose
+    private String orgName;
     @SerializedName("customer_name")
     @Expose
     private String customerName;
     @SerializedName("customer_contact_no")
     @Expose
     private String customerContactNo;
+    @SerializedName("email")
+    @Expose
+    private String email;
     @SerializedName("customer_address")
     @Expose
     private String customerAddress;
@@ -39,16 +45,19 @@ public class ModelTask {
     private String remarks;
     @SerializedName("user_remarks")
     @Expose
-    private Object userRemarks;
+    private String userRemarks;
     @SerializedName("status")
     @Expose
     private String status;
     @SerializedName("route_id")
     @Expose
-    private Object routeId;
+    private String routeId;
     @SerializedName("whatsapp_no")
     @Expose
     private String whatsappNo;
+    @SerializedName("landline_no")
+    @Expose
+    private String landlineNo;
     @SerializedName("latitude")
     @Expose
     private String latitude;
@@ -67,6 +76,9 @@ public class ModelTask {
     @SerializedName("vendor_type")
     @Expose
     private String vendorType;
+    @SerializedName("task_status")
+    @Expose
+    private String taskStatus;
 
     public String getId() {
         return id;
@@ -108,11 +120,11 @@ public class ModelTask {
         this.taskDueDate = taskDueDate;
     }
 
-    public Object getTaskCompletionDate() {
+    public String getTaskCompletionDate() {
         return taskCompletionDate;
     }
 
-    public void setTaskCompletionDate(Object taskCompletionDate) {
+    public void setTaskCompletionDate(String taskCompletionDate) {
         this.taskCompletionDate = taskCompletionDate;
     }
 
@@ -122,6 +134,14 @@ public class ModelTask {
 
     public void setTaskTime(String taskTime) {
         this.taskTime = taskTime;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 
     public String getCustomerName() {
@@ -140,6 +160,14 @@ public class ModelTask {
         this.customerContactNo = customerContactNo;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getCustomerAddress() {
         return customerAddress;
     }
@@ -156,11 +184,11 @@ public class ModelTask {
         this.remarks = remarks;
     }
 
-    public Object getUserRemarks() {
+    public String getUserRemarks() {
         return userRemarks;
     }
 
-    public void setUserRemarks(Object userRemarks) {
+    public void setUserRemarks(String userRemarks) {
         this.userRemarks = userRemarks;
     }
 
@@ -172,11 +200,11 @@ public class ModelTask {
         this.status = status;
     }
 
-    public Object getRouteId() {
+    public String getRouteId() {
         return routeId;
     }
 
-    public void setRouteId(Object routeId) {
+    public void setRouteId(String routeId) {
         this.routeId = routeId;
     }
 
@@ -186,6 +214,14 @@ public class ModelTask {
 
     public void setWhatsappNo(String whatsappNo) {
         this.whatsappNo = whatsappNo;
+    }
+
+    public String getLandlineNo() {
+        return landlineNo;
+    }
+
+    public void setLandlineNo(String landlineNo) {
+        this.landlineNo = landlineNo;
     }
 
     public String getLatitude() {
@@ -235,4 +271,13 @@ public class ModelTask {
     public void setVendorType(String vendorType) {
         this.vendorType = vendorType;
     }
+
+    public String getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
 }

@@ -2,15 +2,19 @@ package com.knotlink.salseman.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.adapter.AdapterVehicleList;
 import com.knotlink.salseman.api.Api;
@@ -28,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragVehicleList extends Fragment {
+public class FragVehicleList extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private Context tContext;
     private List<ModelVehicleList> tModels;
@@ -37,6 +41,10 @@ public class FragVehicleList extends Fragment {
     private FragmentManager tFragmentManager;
     @BindView(R.id.rv_vehicleList)
     protected RecyclerView rvVehicleList;
+    @BindView(R.id.pbVehicleList)
+    protected ProgressBar pbVehicleList;
+    @BindView(R.id.swrFragVehicleList)
+    protected SwipeRefreshLayout swrFragVehicleList;
 
     private String strUserType;
 
@@ -61,6 +69,8 @@ public class FragVehicleList extends Fragment {
         tFragmentManager = getFragmentManager();
         tLayoutManager = new LinearLayoutManager(tContext);
         rvVehicleList.setLayoutManager(tLayoutManager);
+        swrFragVehicleList.setOnRefreshListener(this);
+        pbVehicleList.setVisibility(View.VISIBLE);
         callApi();
     }
     private void callApi(){
@@ -70,6 +80,7 @@ public class FragVehicleList extends Fragment {
             @Override
             public void onResponse(Call<List<ModelVehicleList>> call, Response<List<ModelVehicleList>> response) {
                 tModels = response.body();
+                pbVehicleList.setVisibility(View.GONE);
                 tAdapter = new AdapterVehicleList(tModels, tContext, tFragmentManager, strUserType);
                 rvVehicleList.setAdapter(tAdapter);
                 CustomLog.d(Constant.TAG, "Vehicle List Response : "+response.message());
@@ -82,5 +93,16 @@ public class FragVehicleList extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swrFragVehicleList.setRefreshing(false);
+                callApi();
+            }
+        }, 2000);
     }
 }

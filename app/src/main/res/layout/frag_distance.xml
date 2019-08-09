@@ -52,7 +52,7 @@
             android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_distance_last_day"
+            android:id="@+id/tvDistancePrevious"
             android:background="@drawable/bg_et"
             android:gravity="center"
             android:text="0 Km"
@@ -120,7 +120,7 @@
             android:layout_height="match_parent">
 
             <TextView
-            android:id="@+id/tv_distance_last_month"
+            android:id="@+id/tvDistanceExcess"
             android:background="@drawable/bg_et"
             android:gravity="center"
             android:text="0 Km"
@@ -134,7 +134,7 @@
         <TextView
             android:textStyle="italic"
             android:textSize="12sp"
-            android:layout_below="@id/tv_distance_last_month"
+            android:layout_below="@id/tvDistanceExcess"
             android:id="@+id/tv_distance_last_month_label"
             android:width="150dp"
             android:gravity="center"

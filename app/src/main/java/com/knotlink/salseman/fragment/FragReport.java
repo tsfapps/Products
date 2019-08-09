@@ -7,12 +7,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -64,12 +65,22 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
        protected TextView tvReportDateFrom;
        @BindView(R.id.tv_report_date_to)
        protected TextView tvReportDateTo;
+       @BindView(R.id.rlSpnReportSalesMan)
+       protected RelativeLayout rlSpnReportSalesMan;
        @BindView(R.id.spnReportSalesMan)
        protected Spinner spnReportSalesMan;
+       @BindView(R.id.pbSpnReportSales)
+       protected ProgressBar pbSpnReportSales;
 
+       private String strUserId;
+       private String strUserType;
 
+    public static FragReport newInstance(String strUserType) {
 
-
+        FragReport fragment = new FragReport();
+        fragment.strUserType = strUserType;
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -82,10 +93,12 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
     }
     private void initFrag(){
         tContext = getContext();
+        pbSpnReportSales.setVisibility(View.VISIBLE);
         tSharedPrefManager = new SharedPrefManager(tContext);
+        strUserId = tSharedPrefManager.getUserId();
         SetTitle.tbTitle("Report", getActivity());
         tFragmentManager = getFragmentManager();
-        callApiSalesMan();
+        hideShowContent();
         spnReportSalesMan.setOnItemSelectedListener(this);
 
         String strReportDateFrom = tSharedPrefManager.getReportTimeFrom();
@@ -109,14 +122,34 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
 
 
 
+
     }
+
+
+    private void hideShowContent(){
+        if (strUserType.equalsIgnoreCase("1")){
+            rlSpnReportSalesMan.setVisibility(View.GONE);
+
+        }
+        else if (strUserType.equalsIgnoreCase("2")){
+            rlSpnReportSalesMan.setVisibility(View.GONE);
+
+        }
+        else if (strUserType.equalsIgnoreCase("3")){
+            rlSpnReportSalesMan.setVisibility(View.VISIBLE);
+            callApiSalesMan();
+        }
+    }
+
+
     private void callApiSalesMan(){
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<List<ModelSalesMan>> call = api.salesManList();
+        Call<List<ModelSalesMan>> call = api.salesAsmManList(strUserId);
         call.enqueue(new Callback<List<ModelSalesMan>>() {
             @Override
             public void onResponse(Call<List<ModelSalesMan>> call, Response<List<ModelSalesMan>> response) {
                 tModels = response.body();
+                pbSpnReportSales.setVisibility(View.GONE);
                 tAdapterSalesMan = new AdapterSalesMan(tContext, tModels);
                 spnReportSalesMan.setAdapter(tAdapterSalesMan);
             }

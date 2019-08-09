@@ -13,11 +13,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +47,7 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
     private Context tContext;
     private FragmentManager tFragmentManager;
     private SharedPrefManager tSharedPrefManager;
-    private List<ModelSalesMan> tModels;
+    private List<ModelSalesMan> tModelsSalesMan;
     private List<ModelVehicleList> tModelsVehicle;
     private AdapterSalesMan tAdapterSalesMan;
 
@@ -72,12 +73,17 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
     @BindView(R.id.cvDashExpenses)
     protected CardView cvDashExpenses;
 
+    @BindView(R.id.rlSpnDashSalesMan)
+    protected RelativeLayout rlSpnDashSalesMan;
     @BindView(R.id.spnDashSalesMan)
     protected Spinner spnDashSalesMan;
+    @BindView(R.id.pbSpnDashSales)
+    protected ProgressBar pbSpnDashSales;
 
+    private String strSalesId;
+    private String strUserId;
     private String strUserType;
     public static FragDashboard newInstance(String userType) {
-
         FragDashboard fragment = new FragDashboard();
         fragment.strUserType = userType;
         return fragment;
@@ -93,37 +99,50 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
     }
     private void initFrag(){
         tContext = getContext();
+        pbSpnDashSales.setVisibility(View.VISIBLE);
         checkLocationPermission();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        strUserId = tSharedPrefManager.getUserId();
         SetTitle.tbTitle("Dashboard", getActivity());
         tFragmentManager = getFragmentManager();
         spnDashSalesMan.setOnItemSelectedListener(this);
-        callApiSalesMan();
         hideShowContent();
-        Log.d(Constant.TAG,"User Type: "+strUserType);
+
     }
 
     private void hideShowContent(){
-        if (strUserType.equalsIgnoreCase("2")){
-            cvDashLead.setVisibility(View.GONE);
-            cvDashCold.setVisibility(View.GONE);
-            cvDashMeeting.setVisibility(View.GONE);
-        }
-        else if (strUserType.equalsIgnoreCase("1")){
+        if (strUserType.equalsIgnoreCase("1")){
             cvDashLead.setVisibility(View.VISIBLE);
             cvDashCold.setVisibility(View.VISIBLE);
             cvDashMeeting.setVisibility(View.VISIBLE);
+            rlSpnDashSalesMan.setVisibility(View.GONE);
+        }
+        else if (strUserType.equalsIgnoreCase("2")){
+            cvDashLead.setVisibility(View.GONE);
+            cvDashCold.setVisibility(View.GONE);
+            cvDashMeeting.setVisibility(View.GONE);
+            rlSpnDashSalesMan.setVisibility(View.GONE);
+        }
+        else if (strUserType.equalsIgnoreCase("3")){
+            cvDashLead.setVisibility(View.VISIBLE);
+            cvDashCold.setVisibility(View.VISIBLE);
+            cvDashMeeting.setVisibility(View.VISIBLE);
+            rlSpnDashSalesMan.setVisibility(View.VISIBLE);
+            callApiSalesMan();
+
         }
     }
 
     private void callApiSalesMan(){
+
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<List<ModelSalesMan>> call = api.salesManList();
+        Call<List<ModelSalesMan>> call = api.salesAsmManList(strUserId);
         call.enqueue(new Callback<List<ModelSalesMan>>() {
             @Override
             public void onResponse(Call<List<ModelSalesMan>> call, Response<List<ModelSalesMan>> response) {
-                tModels = response.body();
-                tAdapterSalesMan = new AdapterSalesMan(tContext, tModels);
+                tModelsSalesMan = response.body();
+                pbSpnDashSales.setVisibility(View.GONE);
+                tAdapterSalesMan = new AdapterSalesMan(tContext, tModelsSalesMan);
                 spnDashSalesMan.setAdapter(tAdapterSalesMan);
             }
 
@@ -152,7 +171,7 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
     }
     @OnClick(R.id.ll_dash_meeting)
     public void meetingClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, FragMeeting.newInstance(strUserType)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragMeeting.newInstance(strUserType, strSalesId)).addToBackStack(null).commit();
     }
  @OnClick(R.id.ll_dash_route)
     public void orderClicked(View view){
@@ -161,12 +180,9 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
 
     @OnClick(R.id.ll_dash_lead_generation)
     public void leadClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, FragLead.newInstance(strUserType)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragLead.newInstance(strUserType, strSalesId)).addToBackStack(null).commit();
     }
-// @OnClick(R.id.iv_dash_receipt)
-//    public void receiptClicked(View view){
-//        tFragmentManager.beginTransaction().replace(R.id.container_main, new FragReceipt()).addToBackStack(null).commit();
-//    }
+
  @OnClick(R.id.ll_dash_cold_call)
     public void coldClicked(View view){
         tFragmentManager.beginTransaction().replace(R.id.container_main, FragColdCall.newInstance(strUserType)).addToBackStack(null).commit();
@@ -230,7 +246,7 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        strSalesId = tModelsSalesMan.get(position).getUserId();
     }
 
     @Override

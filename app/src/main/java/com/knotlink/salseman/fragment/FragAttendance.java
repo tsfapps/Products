@@ -76,21 +76,11 @@ public class FragAttendance extends Fragment {
 
         if (!tSharedPrefManager.getCheckInStatus()) {
             callLoginApi();
-            btnAttCheckInOut.setText("Check Out");
-          //  isLoggedIn = true;
-            tSharedPrefManager.setStatus(true);
-            tvAttTimeLabel.setText(Constant.START_LABEL);
-            tSharedPrefManager.setShiftTime(DateUtils.getCurrentTime(), Constant.START_LABEL);
-            tvShiftingTime.setText(DateUtils.getCurrentTime());
+
         }
         else {
             callLogoutApi();
-            btnAttCheckInOut.setText("Check In");
-           // isLoggedIn = false;
-            tSharedPrefManager.setStatus(false);
-            tvAttTimeLabel.setText(Constant.FINISH_LABEL);
-            tSharedPrefManager.setShiftTime(DateUtils.getCurrentTime(), Constant.FINISH_LABEL);
-            tvShiftingTime.setText(DateUtils.getCurrentTime());
+
 
         }
     }
@@ -111,6 +101,11 @@ public class FragAttendance extends Fragment {
                 tModels = response.body();
                 if (!tModels.getError()){
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
+                    btnAttCheckInOut.setText("Check Out");
+                    tSharedPrefManager.setStatus(true);
+                    tvAttTimeLabel.setText(Constant.START_LABEL);
+                    tSharedPrefManager.setShiftTime(DateUtils.getCurrentTime(), Constant.START_LABEL);
+                    tvShiftingTime.setText(DateUtils.getCurrentTime());
                 }
                 else {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
@@ -138,6 +133,11 @@ public class FragAttendance extends Fragment {
                 tModels = response.body();
                 if (!tModels.getError()){
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
+                    btnAttCheckInOut.setText("Check In");
+                    tSharedPrefManager.setStatus(false);
+                    tvAttTimeLabel.setText(Constant.FINISH_LABEL);
+                    tSharedPrefManager.setShiftTime(DateUtils.getCurrentTime(), Constant.FINISH_LABEL);
+                    tvShiftingTime.setText(DateUtils.getCurrentTime());
                 }
                 else {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());

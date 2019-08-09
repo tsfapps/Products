@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -104,19 +105,22 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
     protected TextView tvMeetingNextDate;
     @BindView(R.id.spnMeetingRoute)
     protected Spinner spnMeetingRoute;
+    @BindView(R.id.pbSpnMeetingRoute)
+    protected ProgressBar pbSpnMeetingRoute;
 
 
 
 
+    private String strUserId;
     private String strUserType;
-    public static FragMeeting newInstance(String strUserType) {
+    private String strSalesId;
+    public static FragMeeting newInstance(String strUserType, String strSalesId) {
 
         FragMeeting fragment = new FragMeeting();
         fragment.strUserType = strUserType;
+        fragment.strSalesId = strSalesId;
         return fragment;
     }
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -128,9 +132,11 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
     public void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
+
         SetTitle.tbTitle("Meeting", getActivity());
         tvMeetingNextDate.setText(DateUtils.getTodayDate());
 
+        pbSpnMeetingRoute.setVisibility(View.VISIBLE);
         strVendorType = "Customer";
 
         rgMeeting.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -168,6 +174,7 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
             @Override
             public void onResponse(Call<List<ModelRoute>> call, Response<List<ModelRoute>> response) {
                 tModelsRoute = response.body();
+                pbSpnMeetingRoute.setVisibility(View.GONE);
                 tAdapterRoute = new AdapterRouteSelect(tContext, tModelsRoute);
                 spnMeetingRoute.setAdapter(tAdapterRoute);
             }
@@ -287,7 +294,12 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
     }
     private void callApi(){
         String strImage = imageToString(tBitmap, ivUploadMeeting);
-        String strUserId = tSharedPrefManager.getUserId();
+        if (strUserType.equalsIgnoreCase("3")) {
+            strUserId = strSalesId;
+            Log.d(Constant.TAG, "Sales Id : "+strUserId);
+        }else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         String strOrgName = etMeetingOrgName.getText().toString().trim();
         String strContactName = etMeetingContactName.getText().toString().trim();
         String strContactNumber = etMeetingContactNumber.getText().toString().trim();

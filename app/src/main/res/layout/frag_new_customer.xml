@@ -98,18 +98,18 @@
             <EditText
                 android:layout_weight="1"
                 android:id="@+id/etNewCustomerGst"
-                android:inputType="number"
+                android:inputType="textCapCharacters"
                 style="@style/et_main" />
         </LinearLayout>
  <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <!--<TextView-->
+                <!--android:hint="City"-->
+                <!--style="@style/tv_report" />-->
             <TextView
-                android:hint="City"
-                style="@style/tv_report" />
-            <TextView
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentEnd="false"
                 android:hint="Route"
                 style="@style/tv_report" />
 
@@ -120,6 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_weight="1.5"
                 android:layout_marginEnd="@dimen/margin_4"
                 android:layout_width="wrap_content"
@@ -139,6 +140,13 @@
                 android:layout_marginStart="@dimen/margin_4"
                 android:layout_width="wrap_content"
                 style="@style/rl_spinner_main">
+                <ProgressBar
+                    android:id="@+id/pbSpnNewCustomerRoute"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+
                 <Spinner
                     android:id="@+id/spnNewCustomerRoute"
                     style="@style/spinner_main"/>
@@ -151,17 +159,24 @@
             </RelativeLayout>
 
         </LinearLayout>
+
         <RelativeLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:layout_marginTop="@dimen/margin_16"
                 android:hint="Address"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="Land Line Number"
+                android:id="@+id/tvCurLocNewCustomer"
+               android:gravity="center_vertical"
+                android:textColor="@color/colorPrimary"
+                android:drawableTint="@color/colorPrimary"
+                android:drawableEnd="@drawable/ic_my_location"
+                android:text="Current location"
                 style="@style/tv_report" />
+
         </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -171,18 +186,13 @@
                 android:layout_weight="1"
                 android:id="@+id/etNewCustomerAddress"
                 style="@style/et_main" />
-            <EditText
-                android:layout_weight="2"
-                android:id="@+id/etNewCustomerLandLine"
-                android:inputType="phone"
-                style="@style/et_main" />
         </LinearLayout>
 <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:hint="Area"
+                android:hint="Land Line Number"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
@@ -196,8 +206,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:layout_weight="1"
-                android:id="@+id/etNewCustomerArea"
+                android:layout_weight="2"
+                android:id="@+id/etNewCustomerLandLine"
+                android:inputType="phone"
                 style="@style/et_main" />
             <EditText
                 android:layout_weight="2"

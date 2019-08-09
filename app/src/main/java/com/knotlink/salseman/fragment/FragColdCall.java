@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -77,6 +78,8 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
     protected Button btnColdSubmit;
     @BindView(R.id.spnColdCallRoute)
     protected Spinner spnColdCallRoute;
+    @BindView(R.id.pbSpnColdCallRoute)
+    protected ProgressBar pbSpnColdCallRoute;
 
     private String strUserType;
     public static FragColdCall newInstance(String strUserType) {
@@ -97,10 +100,9 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
 
     private void initFrag(){
         tContext = getContext();
-
+        pbSpnColdCallRoute.setVisibility(View.VISIBLE);
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Cold Call", getActivity());
-
         tvColdCallNextMeetingDate.setText(DateUtils.getTodayDate());
         callApiRoute();
         spnColdCallRoute.setOnItemSelectedListener(this);
@@ -114,6 +116,7 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
             @Override
             public void onResponse(Call<List<ModelRoute>> call, Response<List<ModelRoute>> response) {
                 tModelsRoute = response.body();
+                pbSpnColdCallRoute.setVisibility(View.GONE);
                 tAdapterRoute = new AdapterRouteSelect(tContext, tModelsRoute);
                 spnColdCallRoute.setAdapter(tAdapterRoute);
             }
