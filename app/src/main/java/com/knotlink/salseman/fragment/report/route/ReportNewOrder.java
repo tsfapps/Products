@@ -15,11 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.AdapterReportColdCall;
 import com.knotlink.salseman.adapter.report.AdapterReportReceipt;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.report.ModelReportColdCall;
 import com.knotlink.salseman.model.report.ModelReportReceipt;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
@@ -34,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ReportNewOrder extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView.LayoutManager tLayoutManager;
     private AdapterReportReceipt tAdapterReportReceipt;
@@ -51,9 +49,9 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
     private String dateFrom;
     private String dateTo;
 
-    public static ReportReceipt newInstance(String dateFrom, String dateTo) {
+    public static ReportNewOrder newInstance(String dateFrom, String dateTo) {
 
-        ReportReceipt fragment = new ReportReceipt();
+        ReportNewOrder fragment = new ReportNewOrder();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
         return fragment;
@@ -70,7 +68,7 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
-        SetTitle.tbTitle(" Receipt Report", getActivity());
+        SetTitle.tbTitle(" New Order Report", getActivity());
         pbReportAll.setVisibility(View.VISIBLE);
         swrReportAll.setOnRefreshListener(this);
         tLayoutManager = new LinearLayoutManager(tContext);

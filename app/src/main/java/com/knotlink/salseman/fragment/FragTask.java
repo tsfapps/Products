@@ -49,6 +49,21 @@ public class FragTask extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     protected ProgressBar pbFragTask;
     @BindView(R.id.swrFragTask)
     protected SwipeRefreshLayout swrFragTask;
+
+
+
+    private String strUserId;
+    private String strUserType;
+    private String strSalesId;
+    public static FragTask newInstance(String strUserType, String strSalesId) {
+
+        FragTask fragment = new FragTask();
+        fragment.strUserType = strUserType;
+        fragment.strSalesId = strSalesId;
+        return fragment;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,7 +85,15 @@ public class FragTask extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         callTaskApi();
     }
     private  void callTaskApi(){
-        String strUserId = tSharedPrefManager.getUserId();
+//        if (strUserType.equalsIgnoreCase("3")) {
+//            strUserId = strSalesId;
+//        }
+//        else {
+//            strUserId = tSharedPrefManager.getUserId();
+//
+//        }
+        strUserId = tSharedPrefManager.getUserId();
+
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<List<ModelTask>> call = api.assignedTask(strUserId);
         call.enqueue(new Callback<List<ModelTask>>() {

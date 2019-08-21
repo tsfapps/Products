@@ -115,11 +115,14 @@ public class FragCash extends Fragment implements AdapterView.OnItemSelectedList
     @BindView(R.id.tvSumCheque)
     protected TextView tvSumCheque;
 
+    private String strUserId;
     private String strUserType;
-    public static FragCash newInstance(String strUserType) {
+    private String strSalesId;
+    public static FragCash newInstance(String strUserType, String strSalesId) {
 
         FragCash fragment = new FragCash();
         fragment.strUserType = strUserType;
+        fragment.strSalesId = strSalesId;
         return fragment;
     }
 
@@ -176,8 +179,13 @@ public class FragCash extends Fragment implements AdapterView.OnItemSelectedList
     }
 
     private void callApi(){
-        String strUserId = tSharedPrefManager.getUserId();
-        String str2000 = String.valueOf(count2000);
+        if (strUserType.equalsIgnoreCase("3")) {
+            strUserId = strSalesId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+
+        }        String str2000 = String.valueOf(count2000);
         String str500 = String.valueOf(count500);
         String str200 = String.valueOf(count200);
         String str100 = String.valueOf(count100);

@@ -175,7 +175,7 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
     }
  @OnClick(R.id.ll_dash_route)
     public void orderClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, FragRoute.newInstance(strUserType)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragRoute.newInstance(strUserType, strSalesId)).addToBackStack(null).commit();
     }
 
     @OnClick(R.id.ll_dash_lead_generation)
@@ -185,11 +185,11 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
 
  @OnClick(R.id.ll_dash_cold_call)
     public void coldClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, FragColdCall.newInstance(strUserType)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragColdCall.newInstance(strUserType, strSalesId)).addToBackStack(null).commit();
     }
  @OnClick(R.id.ll_dash_cash_collection)
     public void cashClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, FragCash.newInstance(strUserType)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragCash.newInstance(strUserType, strSalesId)).addToBackStack(null).commit();
     }
  @OnClick(R.id.ll_dash_expenses)
     public void expensesClicked(View view){

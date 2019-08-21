@@ -81,11 +81,14 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
     @BindView(R.id.pbSpnColdCallRoute)
     protected ProgressBar pbSpnColdCallRoute;
 
+    private String strUserId;
     private String strUserType;
-    public static FragColdCall newInstance(String strUserType) {
+    private String strSalesId;
+    public static FragColdCall newInstance(String strUserType, String strSalesId) {
 
         FragColdCall fragment = new FragColdCall();
         fragment.strUserType = strUserType;
+        fragment.strSalesId = strSalesId;
         return fragment;
     }
 
@@ -168,7 +171,13 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
     }
 
     private void callApi() {
-        String strUserId = tSharedPrefManager.getUserId();
+        if (strUserType.equalsIgnoreCase("3")) {
+            strUserId = strSalesId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+
+        }
         String strOrgName = etColdOrgName.getText().toString().trim();
         String strContactName = etColdContactName.getText().toString().trim();
         String strContactNumber = etColdContactNumber.getText().toString().trim();

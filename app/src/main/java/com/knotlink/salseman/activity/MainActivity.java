@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void ivToolbarLogoClicked(View view){
         startActivity(new Intent(tContext, MainActivity.class));
     }
-
     @OnClick(R.id.iv_bottom_dashboard)
     public void onDashboardClicked(){
         switch (strUserType) {
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
     @OnClick(R.id.iv_bottom_task)
     public void onTaskClicked(){
-        getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new FragTask()).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragTask.newInstance(strUserType,"")).addToBackStack(null).commit();
     }
     @OnClick(R.id.iv_bottom_profile)
     public void onProfileClicked(){
@@ -160,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             .addConnectionCallbacks(this)
             .addOnConnectionFailedListener(this).build();
     googleApiClient.connect();
-
     LocationRequest locationRequest = LocationRequest.create();
     locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     locationRequest.setInterval(5 * 1000);

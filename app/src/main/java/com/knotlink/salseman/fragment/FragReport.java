@@ -29,7 +29,9 @@ import com.knotlink.salseman.fragment.report.ReportDistance;
 import com.knotlink.salseman.fragment.report.ReportExpenses;
 import com.knotlink.salseman.fragment.report.ReportLead;
 import com.knotlink.salseman.fragment.report.ReportMeeting;
+import com.knotlink.salseman.fragment.report.ReportVehicle;
 import com.knotlink.salseman.fragment.report.route.ReportReceipt;
+import com.knotlink.salseman.fragment.report.route.ReportRoute;
 import com.knotlink.salseman.model.ModelSalesMan;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
@@ -274,7 +276,7 @@ public void reportDistance(View view){
 }
 @OnClick(R.id.ll_report_route)
 public void reportRoute(View view){
-    tFragmentManager.beginTransaction().replace(R.id.container_main, ReportReceipt.newInstance(dateFrom, dateTo)).addToBackStack(null).commit();
+    tFragmentManager.beginTransaction().replace(R.id.container_main, ReportRoute.newInstance(dateFrom, dateTo)).addToBackStack(null).commit();
 }
 @OnClick(R.id.ll_report_leadGeneration)
 public void reportLead(View view){
@@ -295,6 +297,10 @@ public void reportCashCollection(View view){
 @OnClick(R.id.ll_report_expenses)
 public void reportExpenses(View view){
     tFragmentManager.beginTransaction().replace(R.id.container_main, ReportExpenses.newInstance(dateFrom, dateTo)).addToBackStack(null).commit();
+    }
+@OnClick(R.id.ll_report_vehicleReport)
+public void reportVehicle(View view){
+    tFragmentManager.beginTransaction().replace(R.id.container_main, ReportVehicle.newInstance(dateFrom, dateTo)).addToBackStack(null).commit();
     }
 
     @Override

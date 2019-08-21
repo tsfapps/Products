@@ -55,11 +55,14 @@ public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshL
     private SharedPrefManager tSharedPrefManager;
     private List<ModelShopList> tModels;
 
-    String strUserType;
-    public static FragRoute newInstance(String strUserType) {
+    private String strUserId;
+    private String strUserType;
+    private String strSalesId;
+    public static FragRoute newInstance(String strUserType, String strSalesId) {
 
         FragRoute fragment = new FragRoute();
         fragment.strUserType = strUserType;
+        fragment.strSalesId = strSalesId;
         return fragment;
     }
 
@@ -91,7 +94,13 @@ public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     private void callApi(){
-        final String strUserId = tSharedPrefManager.getUserId();
+        if (strUserType.equalsIgnoreCase("3")) {
+            strUserId = strSalesId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+
+        }
         String strPresentDay = DateUtils.getPresentDay();
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<List<ModelShopList>> call = api.getShopDetail(strUserId, strUserType, strPresentDay);

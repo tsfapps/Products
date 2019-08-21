@@ -6,6 +6,7 @@ import com.knotlink.salseman.model.ModelColdCall;
 import com.knotlink.salseman.model.ModelExpenseList;
 import com.knotlink.salseman.model.ModelGetLocaion;
 import com.knotlink.salseman.model.distance.ModelDistancePrevious;
+import com.knotlink.salseman.model.report.ModelReportVehicle;
 import com.knotlink.salseman.model.task.ModelNewCustomer;
 import com.knotlink.salseman.model.ModelRoute;
 import com.knotlink.salseman.model.ModelSalesMan;
@@ -357,6 +358,14 @@ public interface Api{
     @FormUrlEncoded
     @POST("api/api_activity_report.php")
     Call<List<ModelReportCashCollection>> viewReportCash(
+            @Field("user_id") String user_id,
+            @Field("table") String table_name,
+            @Field("from_date") String from_date,
+            @Field("to_date") String to_date
+    );
+    @FormUrlEncoded
+    @POST("api/api_activity_report.php")
+    Call<List<ModelReportVehicle>> viewReportVehicle(
             @Field("user_id") String user_id,
             @Field("table") String table_name,
             @Field("from_date") String from_date,

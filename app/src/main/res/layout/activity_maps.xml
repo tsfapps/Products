@@ -25,6 +25,7 @@
         />
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_search_location"
         android:background="@drawable/bg_btn_main"
         android:textColor="@color/colorWhite"

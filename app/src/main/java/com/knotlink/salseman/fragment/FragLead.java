@@ -110,6 +110,7 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
     protected ProgressBar pbSpnLeadRoute;
 
 
+    private String strUserId;
     String strVendorType;
 
     private String strUserType;
@@ -253,7 +254,13 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
     private void callApi(){
-        String strUserId = tSharedPrefManager.getUserId();
+        if (strUserType.equalsIgnoreCase("3")) {
+            strUserId = strSalesId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+
+        }
         String strOrgName = etLeadOrgName.getText().toString().trim();
         String strContactName = etLeadContactName.getText().toString().trim();
         String strContactNumber = etLeadContactNumber.getText().toString().trim();

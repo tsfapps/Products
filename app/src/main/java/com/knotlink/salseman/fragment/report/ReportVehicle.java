@@ -1,4 +1,4 @@
-package com.knotlink.salseman.fragment.report.route;
+package com.knotlink.salseman.fragment.report;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,12 +15,12 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.AdapterReportColdCall;
-import com.knotlink.salseman.adapter.report.AdapterReportReceipt;
+import com.knotlink.salseman.adapter.report.AdapterReportMeeting;
+import com.knotlink.salseman.adapter.report.AdapterReportVehicle;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.report.ModelReportColdCall;
-import com.knotlink.salseman.model.report.ModelReportReceipt;
+import com.knotlink.salseman.model.report.ModelReportMeeting;
+import com.knotlink.salseman.model.report.ModelReportVehicle;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
@@ -34,13 +34,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ReportVehicle extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView.LayoutManager tLayoutManager;
-    private AdapterReportReceipt tAdapterReportReceipt;
+    private AdapterReportVehicle tAdapterReportVehicle;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
-    private List<ModelReportReceipt> tModelReportReceipt;
+    private List<ModelReportVehicle> tModelReportVehicle;
     @BindView(R.id.rvReportAll)
     protected RecyclerView rvReportAll;
     @BindView(R.id.swrReportAll)
@@ -51,9 +51,9 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
     private String dateFrom;
     private String dateTo;
 
-    public static ReportReceipt newInstance(String dateFrom, String dateTo) {
+    public static ReportVehicle newInstance(String dateFrom, String dateTo) {
 
-        ReportReceipt fragment = new ReportReceipt();
+        ReportVehicle fragment = new ReportVehicle();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
         return fragment;
@@ -62,7 +62,7 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.report_attendence, container, false);
+        View view = inflater.inflate(R.layout.report_vehicle, container, false);
         ButterKnife.bind(this, view);
         initFrag();
         return view;
@@ -70,33 +70,29 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
-        SetTitle.tbTitle(" Receipt Report", getActivity());
-        pbReportAll.setVisibility(View.VISIBLE);
-        swrReportAll.setOnRefreshListener(this);
+        SetTitle.tbTitle(" Meeting Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvReportAll.setLayoutManager(tLayoutManager);
-        callApiReceipt();
+        pbReportAll.setVisibility(View.VISIBLE);
+        swrReportAll.setOnRefreshListener(this);
+        callApiMeeting();
     }
-    private  void callApiReceipt(){
+    private  void callApiMeeting(){
         String strUserId = tSharedPrefManager.getUserId();
-
         Api api = ApiClients.getApiClients().create(Api.class);
-
-        Call<List<ModelReportReceipt>> call = api.viewReportReceipt(strUserId,"Receipt", dateFrom, dateTo);
-        call.enqueue(new Callback<List<ModelReportReceipt>>() {
+        Call<List<ModelReportVehicle>> call = api.viewReportVehicle(strUserId,"Vehicle", dateFrom, dateTo);
+        call.enqueue(new Callback<List<ModelReportVehicle>>() {
             @Override
-            public void onResponse(Call<List<ModelReportReceipt>> call, Response<List<ModelReportReceipt>> response) {
-                tModelReportReceipt =response.body();
+            public void onResponse(Call<List<ModelReportVehicle>> call, Response<List<ModelReportVehicle>> response) {
+                tModelReportVehicle =response.body();
                 pbReportAll.setVisibility(View.GONE);
-                tAdapterReportReceipt = new AdapterReportReceipt(tModelReportReceipt, tContext);
-                rvReportAll.setAdapter(tAdapterReportReceipt);
+                tAdapterReportVehicle = new AdapterReportVehicle(tModelReportVehicle, tContext);
+                rvReportAll.setAdapter(tAdapterReportVehicle);
             }
             @Override
-            public void onFailure(Call<List<ModelReportReceipt>> call, Throwable t) {
-                CustomLog.d(Constant.TAG, " Receipt Not Responding : "+t);
-
+            public void onFailure(Call<List<ModelReportVehicle>> call, Throwable t) {
+                CustomLog.d(Constant.TAG, " Meeting Not Responding : "+t);
             }
-
         });
     }
 
@@ -106,7 +102,7 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
             @Override
             public void run() {
                 swrReportAll.setRefreshing(false);
-                callApiReceipt();
+                callApiMeeting();
             }
         }, 2000);
 
