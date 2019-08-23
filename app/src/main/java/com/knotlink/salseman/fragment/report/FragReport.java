@@ -1,4 +1,4 @@
-package com.knotlink.salseman.fragment;
+package com.knotlink.salseman.fragment.report;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -22,15 +22,6 @@ import com.knotlink.salseman.R;
 import com.knotlink.salseman.adapter.baseadapter.AdapterSalesMan;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.fragment.report.ReportAttendance;
-import com.knotlink.salseman.fragment.report.ReportCashCollection;
-import com.knotlink.salseman.fragment.report.ReportColdCall;
-import com.knotlink.salseman.fragment.report.ReportDistance;
-import com.knotlink.salseman.fragment.report.ReportExpenses;
-import com.knotlink.salseman.fragment.report.ReportLead;
-import com.knotlink.salseman.fragment.report.ReportMeeting;
-import com.knotlink.salseman.fragment.report.ReportVehicle;
-import com.knotlink.salseman.fragment.report.route.ReportReceipt;
 import com.knotlink.salseman.fragment.report.route.ReportRoute;
 import com.knotlink.salseman.model.ModelSalesMan;
 import com.knotlink.salseman.storage.SharedPrefManager;

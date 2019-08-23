@@ -60,6 +60,15 @@
             style="@style/tv_report"
             android:text="Working Hour"/>
 
+        </LinearLayout>
+        <LinearLayout
+            style="@style/ll_map_main">
+        <TextView
+            android:id="@+id/tvReportAttendanceMap"
+            style="@style/tv_map_main"
+
+            />
+
 
         </LinearLayout>
     </LinearLayout>

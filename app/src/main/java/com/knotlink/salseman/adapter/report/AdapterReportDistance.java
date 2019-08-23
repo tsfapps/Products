@@ -1,6 +1,7 @@
 package com.knotlink.salseman.adapter.report;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.ReportMapActivity;
 import com.knotlink.salseman.model.report.ModelReportDistance;
+import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
@@ -38,11 +41,32 @@ public class AdapterReportDistance extends RecyclerView.Adapter<AdapterReportDis
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportDistance tModel = tModels.get(i);
         String strDate = DateUtils.convertYyyyToDd(tModel.getDate());
+
+        final String strLoginLat = tModel.getStartLat();
+        final String strLoginLong = tModel.getStartLong();
+        final String strLogoutLat = tModel.getEndLat();
+        final String strLogoutLong = tModel.getEndLong();
+        final String strEndAddress = "Ending Address : "+tModel.getEndingAddress();
+        final String strStartAddress = "Starting Address : "+tModel.getStartingAddress();
+
         distanceViewHolder.tvReportDistanceDate.setText(strDate);
         distanceViewHolder.tvReportDistanceStartKm.setText(tModel.getStartingKm());
         distanceViewHolder.tvReportDistanceEndKm.setText(tModel.getEndingKm());
         distanceViewHolder.tvReportDistanceDisTravelled.setText(tModel.getDistanceTraveled());
         distanceViewHolder.tvReportDistanceTotalDisTravelled.setText(tModel.getTotalKm());
+        distanceViewHolder.tvReportDistanceMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tIntent = new Intent(tContext, ReportMapActivity.class);
+                tIntent.putExtra(Constant.FIRST_LAT, strLoginLat);
+                tIntent.putExtra(Constant.FIRST_LONG, strLoginLong);
+                tIntent.putExtra(Constant.SECOND_LAT, strLogoutLat);
+                tIntent.putExtra(Constant.SECOND_LONG, strLogoutLong);
+                tIntent.putExtra(Constant.START_ADDRESS, strStartAddress);
+                tIntent.putExtra(Constant.END_ADDRESS, strEndAddress);
+                tContext.startActivity(tIntent);
+            }
+        });
     }
 
     @Override
@@ -62,6 +86,8 @@ public class AdapterReportDistance extends RecyclerView.Adapter<AdapterReportDis
         protected TextView tvReportDistanceDisTravelled;
         @BindView(R.id.tv_report_distance_totalDisTravelled)
         protected TextView tvReportDistanceTotalDisTravelled;
+        @BindView(R.id.tvReportDistanceMap)
+        protected TextView tvReportDistanceMap;
 
         public DistanceViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -37,12 +37,26 @@ public class AdapterReportExpenses extends RecyclerView.Adapter<AdapterReportExp
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportExpenses tModel = tModels.get(i);
+
+//        final String strLoginLat = tModel.getLatitude();
+//        final String strLoginLong = tModel.getLongitude();
+//        final String strLogoutLat = tModel.getLatitude();
+//        final String strLogoutLong = tModel.getLongitude();
+//        final String strEndAddress = "Address : "+tModel.getAddress();
+//        final String strStartAddress = "Address : "+tModel.getAddress();
+//
         String strDate = DateUtils.convertYyyyToDd(tModel.getDatetime());
 
         distanceViewHolder.tvReportDate.setText(strDate);
        distanceViewHolder.tvReportTypeExpenses.setText(tModel.getExpenseType());
        distanceViewHolder.tvReportAmount.setText(tModel.getAmount());
        distanceViewHolder.tvReportRemarks.setText(tModel.getRemarks());
+       distanceViewHolder.tvReportExpensesMap.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+           }
+       });
         }
 
     @Override
@@ -60,6 +74,8 @@ public class AdapterReportExpenses extends RecyclerView.Adapter<AdapterReportExp
        protected TextView tvReportTypeExpenses;
        @BindView(R.id.tvReportAmount)
        protected TextView tvReportAmount;
+       @BindView(R.id.tvReportExpensesMap)
+       protected TextView tvReportExpensesMap;
 
         public DistanceViewHolder(@NonNull View itemView) {
             super(itemView);

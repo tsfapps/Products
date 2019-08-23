@@ -1,6 +1,7 @@
 package com.knotlink.salseman.adapter.report;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.ReportMapActivity;
 import com.knotlink.salseman.model.report.ModelReportCashCollection;
 import com.knotlink.salseman.model.report.ModelReportMeeting;
+import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
@@ -40,6 +43,13 @@ public class AdapterReportCashCollection extends RecyclerView.Adapter<AdapterRep
         ModelReportCashCollection tModel = tModels.get(i);
         String strAssDate = tModel.getDatetime();
 
+        final String strLoginLat = tModel.getLatitude();
+        final String strLoginLong = tModel.getLongitude();
+        final String strLogoutLat = tModel.getLatitude();
+        final String strLogoutLong = tModel.getLongitude();
+        final String strEndAddress = "Address : "+tModel.getAddress();
+        final String strStartAddress = "Address : "+tModel.getAddress();
+
         distanceViewHolder.tvReportCashDate.setText(strAssDate);
         distanceViewHolder.tvReportCash2000.setText(tModel.getCash2000());
         distanceViewHolder.tvReportCash500.setText(tModel.getCash500());
@@ -54,6 +64,19 @@ public class AdapterReportCashCollection extends RecyclerView.Adapter<AdapterRep
         distanceViewHolder.tvReportCashTotalNumber.setText(tModel.getTotal());
         distanceViewHolder.tvReportCashTotalAmount.setText(tModel.getTotalAmount());
         distanceViewHolder.tvReportCashChequeNo.setText(tModel.getNoCheque());
+        distanceViewHolder.tvReportCashMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tIntent = new Intent(tContext, ReportMapActivity.class);
+                tIntent.putExtra(Constant.FIRST_LAT, strLoginLat);
+                tIntent.putExtra(Constant.FIRST_LONG, strLoginLong);
+                tIntent.putExtra(Constant.SECOND_LAT, strLogoutLat);
+                tIntent.putExtra(Constant.SECOND_LONG, strLogoutLong);
+                tIntent.putExtra(Constant.START_ADDRESS, strStartAddress);
+                tIntent.putExtra(Constant.END_ADDRESS, strEndAddress);
+                tContext.startActivity(tIntent);
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -90,6 +113,8 @@ public class AdapterReportCashCollection extends RecyclerView.Adapter<AdapterRep
         protected TextView tvReportCashTotalAmount;
         @BindView(R.id.tvReportCashChequeNo)
         protected TextView tvReportCashChequeNo;
+        @BindView(R.id.tvReportCashMap)
+        protected TextView tvReportCashMap;
 
 
 

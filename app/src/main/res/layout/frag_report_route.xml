@@ -20,8 +20,17 @@
             <android.support.v7.widget.CardView
                 style="@style/card_dash">
                 <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tvRouteOrderMap"
+                    style="@style/tv_map_main"
+                    />
+                <LinearLayout
                     android:id="@+id/ll_ReportNewOrder"
                     style="@style/ll_dash">
+
                     <ImageView
                         android:tint="@color/black"
                         style="@style/iv_dashboard"
@@ -32,9 +41,18 @@
                         android:text="New Order"
                         style="@style/tv_dash_label" />
                 </LinearLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 style="@style/card_dash">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tvRouteSpecialMap"
+                    style="@style/tv_map_main"
+                    />
                 <LinearLayout
                     android:id="@+id/ll_ReportSpecialRequest"
                     style="@style/ll_dash">
@@ -47,6 +65,7 @@
                         android:text="Special Request"
                         style="@style/tv_dash_label" />
 
+                </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -64,6 +83,14 @@
             <android.support.v7.widget.CardView
                 style="@style/card_dash">
                 <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tvRouteReceiptMap"
+                    style="@style/tv_map_main"
+                    />
+                <LinearLayout
                     android:id="@+id/ll_ReportReceipt"
                     style="@style/ll_dash">
                     <ImageView
@@ -76,21 +103,30 @@
                         style="@style/tv_dash_label" />
 
                 </LinearLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 style="@style/card_dash">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tvRouteFeedbackMap"
+                    style="@style/tv_map_main"
+                    />
                 <LinearLayout
                     android:id="@+id/ll_ReportComplain"
                     style="@style/ll_dash">
                     <ImageView
                         android:tint="@color/black"
                         style="@style/iv_dashboard"
-                        android:src="@drawable/ic_main_receipt"
-                        />
+                        android:src="@drawable/ic_main_receipt" />
                     <TextView
                         android:text="@string/feedback_complain"
                         style="@style/tv_dash_label" />
 
+                </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

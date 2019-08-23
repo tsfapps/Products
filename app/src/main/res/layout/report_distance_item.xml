@@ -69,5 +69,16 @@
 
 
         </LinearLayout>
+        <LinearLayout
+            style="@style/ll_map_main">
+            <TextView
+                android:id="@+id/tvReportDistanceMap"
+                style="@style/tv_map_main"
+
+                />
+
+
+        </LinearLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

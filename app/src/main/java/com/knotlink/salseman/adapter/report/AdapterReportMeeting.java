@@ -1,6 +1,7 @@
 package com.knotlink.salseman.adapter.report;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.ReportMapActivity;
 import com.knotlink.salseman.model.report.ModelReportMeeting;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.DateUtils;
@@ -42,6 +44,13 @@ public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeet
         String strAssDate = DateUtils.convertYyyyToDd(tModel.getTaskAssignDate());
         String strDueDate = DateUtils.convertYyyyToDd(tModel.getTaskDueDate());
 
+        final String strLoginLat = tModel.getLatitude();
+        final String strLoginLong = tModel.getLongitude();
+        final String strLogoutLat = tModel.getLatitude();
+        final String strLogoutLong = tModel.getLongitude();
+        final String strEndAddress = "Customer Address : "+tModel.getCustomerAddress();
+        final String strStartAddress = "Customer Address : "+tModel.getCustomerAddress();
+
         distanceViewHolder.tvReportMeetingDate.setText(strAssDate);
         distanceViewHolder.tvReportMeetingVendorType.setText(tModel.getVendorType());
         distanceViewHolder.tvReportMeetingVendorName.setText(tModel.getOrgName());
@@ -55,6 +64,19 @@ public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeet
         distanceViewHolder.getTvReportMeetingMeetingDate.setText(strDueDate);
         distanceViewHolder.getTvReportMeetingMeetingTime.setText(tModel.getTaskTime());
         distanceViewHolder.tvReportMeetingRemarks.setText(tModel.getRemarks());
+        distanceViewHolder.tvReportMeetingMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tIntent = new Intent(tContext, ReportMapActivity.class);
+                tIntent.putExtra(Constant.FIRST_LAT, strLoginLat);
+                tIntent.putExtra(Constant.FIRST_LONG, strLoginLong);
+                tIntent.putExtra(Constant.SECOND_LAT, strLogoutLat);
+                tIntent.putExtra(Constant.SECOND_LONG, strLogoutLong);
+                tIntent.putExtra(Constant.START_ADDRESS, strStartAddress);
+                tIntent.putExtra(Constant.END_ADDRESS, strEndAddress);
+                tContext.startActivity(tIntent);
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -89,6 +111,8 @@ public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeet
         protected TextView getTvReportMeetingMeetingDate;
         @BindView(R.id.tv_report_meeting_remarks)
         protected TextView tvReportMeetingRemarks;
+        @BindView(R.id.tvReportMeetingMap)
+        protected TextView tvReportMeetingMap;
 
 
         public DistanceViewHolder(@NonNull View itemView) {

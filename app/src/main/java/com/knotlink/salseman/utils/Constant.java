@@ -70,7 +70,16 @@ public class Constant {
     public static  final  String START_IMAGE="Starting Image";
     public static  final  String START_VEHICLE_NO="Vehicle No";
     public static  final  String ENDING_KM="Ending Km";
-    //        "status": "0",
-    //        "image": "user.png",
+
+    //LatLong
+    public static  final  String FIRST_LAT="first_lat";
+    public static  final  String FIRST_LONG="first_long";
+    public static  final  String SECOND_LAT="second_lat";
+    public static  final  String SECOND_LONG="second_long";
+    public static  final  String START_ADDRESS="start_address";
+    public static  final  String END_ADDRESS="end_address";
+    public static  final  String MODEL_BUNDLE="model_bundle";
+    public static  final  String MODEL_INTENT="model_intent";
+
 
 }

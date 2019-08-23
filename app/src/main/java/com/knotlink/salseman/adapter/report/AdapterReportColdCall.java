@@ -1,6 +1,7 @@
 package com.knotlink.salseman.adapter.report;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.activity.ReportMapActivity;
 import com.knotlink.salseman.model.report.ModelReportColdCall;
+import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
@@ -36,6 +39,14 @@ public class AdapterReportColdCall extends RecyclerView.Adapter<AdapterReportCol
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportColdCall tModel = tModels.get(i);
+
+        final String strLoginLat = tModel.getLatitude();
+        final String strLoginLong = tModel.getLongitude();
+        final String strLogoutLat = tModel.getLatitude();
+        final String strLogoutLong = tModel.getLongitude();
+        final String strEndAddress = "Customer Address : "+tModel.getCustomerAddress();
+        final String strStartAddress = "Customer Address : "+tModel.getCustomerAddress();
+
         String strAssDate = DateUtils.convertYyyyToDd(tModel.getTaskAssignDate());
         String strDueDate = DateUtils.convertYyyyToDd(tModel.getTaskDueDate());
         distanceViewHolder.tvReportColdCallDate.setText(strAssDate);
@@ -48,6 +59,19 @@ public class AdapterReportColdCall extends RecyclerView.Adapter<AdapterReportCol
         distanceViewHolder.tvReportColdCallAddress.setText(tModel.getCustomerAddress());
         distanceViewHolder.tvReportColdCallStatus.setText(tModel.getStatus());
         distanceViewHolder.tvReportColdCallRemarks.setText(tModel.getRemarks());
+        distanceViewHolder.tvReportColdMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tIntent = new Intent(tContext, ReportMapActivity.class);
+                tIntent.putExtra(Constant.FIRST_LAT, strLoginLat);
+                tIntent.putExtra(Constant.FIRST_LONG, strLoginLong);
+                tIntent.putExtra(Constant.SECOND_LAT, strLogoutLat);
+                tIntent.putExtra(Constant.SECOND_LONG, strLogoutLong);
+                tIntent.putExtra(Constant.START_ADDRESS, strStartAddress);
+                tIntent.putExtra(Constant.END_ADDRESS, strEndAddress);
+                tContext.startActivity(tIntent);
+            }
+        });
 
     }
     @Override
@@ -75,6 +99,9 @@ public class AdapterReportColdCall extends RecyclerView.Adapter<AdapterReportCol
         protected TextView tvReportColdCallStatus;
         @BindView(R.id.tv_report_coldCall_remarks)
         protected TextView tvReportColdCallRemarks;
+        @BindView(R.id.tvReportColdMap)
+        protected TextView tvReportColdMap;
+
         public DistanceViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

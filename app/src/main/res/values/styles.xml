@@ -279,6 +279,22 @@
         <item name="android:background">@drawable/bg_simple_ascent</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="tv_map_main">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:drawableEnd">@drawable/ic_map_red</item>
+        <item name="android:padding">4dp</item>
+    </style>
+    <style name="ll_map_main">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">.25</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:drawableEnd">@drawable/ic_map_red</item>
+        <item name="android:padding">4dp</item>
+    </style>
 
     <style name="spn_item_count">
         <item name="android:layout_height">30dp</item>
