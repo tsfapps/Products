@@ -19,16 +19,6 @@
             android:textStyle="bold"
             android:text="Shop Name"/>
 
-        <!--<TextView-->
-            <!--android:hint="Organisation Name"-->
-            <!--android:inputType="textPersonName"-->
-            <!--style="@style/et_main" />-->
-        <!--<TextView-->
-            <!--android:hint="Customer Id"-->
-            <!--style="@style/et_main" />-->
-        <!--<TextView-->
-            <!--android:hint="GST Number"-->
-            <!--style="@style/et_main" />-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -48,17 +38,24 @@
             <TextView
                 android:id="@+id/tv_receipt_totalOutstandingAmount"
                 android:layout_weight="1"
-                android:hint="80000"
+                android:hint=""
                 style="@style/et_main" />
             <TextView
                 android:id="@+id/tv_receipt_pendingOutstandingAmount"
                 android:layout_weight="1"
-                android:hint="50000"
+                android:hint=""
                 style="@style/et_main" />
         </LinearLayout>
 
         <RelativeLayout
+            android:layout_marginTop="@dimen/margin_8"
             style="@style/rl_spinner_main">
+            <ProgressBar
+                android:id="@+id/pbSpnReceiptInvNo"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
             <Spinner
                 android:id="@+id/spn_receipt_invoiceNumber"
                 style="@style/spinner_main" />
@@ -91,11 +88,11 @@
                 android:id="@+id/tv_receipt_invoice_date"
                 android:layout_weight="1"
                 style="@style/et_main"
-                android:hint="26 April 2019" />
+                android:hint="" />
         <TextView
             android:id="@+id/tv_receipt_totalInvoiceAmount"
             android:layout_weight="1"
-            android:hint="70000"
+            android:hint=""
             style="@style/et_main" />
         </LinearLayout>
         <LinearLayout
@@ -120,19 +117,21 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/et_receipt_receivedAmount"
-                android:hint="Enter Received Amount*"
+                android:hint=""
                 android:inputType="numberDecimal"
                 android:layout_weight="1"
                 style="@style/et_main" />
             <TextView
                 android:id="@+id/tv_receipt_pendingInvoiceAmount"
                 android:layout_weight="1"
-                android:hint="20000"
+                android:hint=""
                 style="@style/et_main" />
         </LinearLayout>
         <RelativeLayout
+            android:layout_marginTop="@dimen/margin_8"
             android:id="@+id/rl_report_spinner_activity"
             style="@style/rl_spinner_main">
+
             <Spinner
                 android:id="@+id/spn_receipt_paymentMode"
                 style="@style/spinner_main" />
@@ -174,12 +173,12 @@
             android:id="@+id/tv_receipt_check_date"
             android:layout_weight="1"
             android:drawableEnd="@drawable/ic_calender"
-            android:hint="Cheque Date"
+            android:hint=""
             style="@style/et_main" />
         <EditText
             android:layout_weight="1"
             android:id="@+id/et_receipt_chequeNumber"
-            android:hint="Cheque Number"
+            android:hint=""
             style="@style/et_main" />
     </LinearLayout>
         <LinearLayout
@@ -221,7 +220,7 @@
                 android:textSize="12sp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:hint="Bank Name"
+                android:hint=""
                 />
             <EditText
                 android:id="@+id/et_receipt_chequeAmount"
@@ -229,7 +228,7 @@
                 android:textSize="12sp"
                 android:layout_width="0dp"
                 android:layout_weight=".40"
-                android:hint="400000" />
+                android:hint="" />
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_weight=".35"

@@ -7,12 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="50dp">
     <TextView
-        android:id="@+id/tv_report_spinner_activity"
+        android:id="@+id/tvReportSpn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:text="Demo"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         tools:ignore="RtlSymmetry" />
 </LinearLayout>

@@ -23,6 +23,7 @@ import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.model.report.ModelReportColdCall;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -88,8 +89,13 @@ public class ReportColdCall extends Fragment implements SwipeRefreshLayout.OnRef
             public void onResponse(Call<List<ModelReportColdCall>> call, Response<List<ModelReportColdCall>> response) {
                 tModelReportColdCall =response.body();
                 pbReportAll.setVisibility(View.GONE);
+                if (tModelReportColdCall.size()>0){
                 tAdapterReportColdCall = new AdapterReportColdCall(tModelReportColdCall, tContext);
-                rvReportAll.setAdapter(tAdapterReportColdCall);
+                rvReportAll.setAdapter(tAdapterReportColdCall);}
+                else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+
             }
             @Override
             public void onFailure(Call<List<ModelReportColdCall>> call, Throwable t) {

@@ -10,6 +10,9 @@ public class ModelExpenseList {
     @SerializedName("expense_type")
     @Expose
     private String expenseType;
+    @SerializedName("type")
+    @Expose
+    private String type;
 
     public String getId() {
         return id;
@@ -25,5 +28,13 @@ public class ModelExpenseList {
 
     public void setExpenseType(String expenseType) {
         this.expenseType = expenseType;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

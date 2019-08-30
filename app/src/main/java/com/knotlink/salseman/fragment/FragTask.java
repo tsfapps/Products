@@ -23,6 +23,7 @@ import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.task.ModelTask;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -104,9 +105,10 @@ public class FragTask extends Fragment implements SwipeRefreshLayout.OnRefreshLi
                 if (tModelTask.size()!=0){
                 tAdapterTask = new AdapterTask(tModelTask, tContext, tActivity, tFragmentManager);
                 rvTask.setAdapter(tAdapterTask);}
-                else {
 
-                }
+                else {
+                        CustomDialog.showEmptyDialog(tContext);
+                    }
             }
             @Override
             public void onFailure(Call<List<ModelTask>> call, Throwable t) {

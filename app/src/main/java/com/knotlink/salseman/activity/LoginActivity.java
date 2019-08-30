@@ -1,10 +1,19 @@
 package com.knotlink.salseman.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private ModelUser tModels;
     private SharedPrefManager tSharedPrefManager;
+    private int REQUEST_READ_PHONE_STATE = 101;
 
     @BindView(R.id.et_phone_login)
     protected EditText et_phone;
@@ -55,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             et_password.setError("Enter the password");
         } else {
             Api api = ApiClients.getApiClients().create(Api.class);
-            Call<ModelUser> call = api.getUserDetail(mPhoneNo, mPass);
+            Call<ModelUser> call = api.getUserDetail(getDeviceIMEI(), mPhoneNo, mPass);
             call.enqueue(new Callback<ModelUser>() {
                 @Override
                 public void onResponse(Call<ModelUser> call, Response<ModelUser> response) {
@@ -76,13 +86,11 @@ public class LoginActivity extends AppCompatActivity {
                         String strUserType = tModels.getUser().getUserType();
 
                         tSharedPrefManager.setUserData(strUserId, strName, strAddress, strPhone,
-                                strEmail, strAdhar, strAsmId, strSmId,
-                                strDob, strDoj, strImage, strVehicleNo, strUserType);
+                        strEmail, strAdhar, strAsmId, strSmId,
+                        strDob, strDoj, strImage, strVehicleNo, strUserType);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-
                         finish();
-
                     }
                     else {
                         Toast.makeText(getApplicationContext(), tModels.getMessage(), Toast.LENGTH_LONG).show();
@@ -90,11 +98,40 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(Call<ModelUser> call, Throwable t) {
-                    CustomLog.e(Constant.TAG, "Not responding : " + t);
+                CustomLog.e(Constant.TAG, "Not responding : " + t);
                 }
             });
-
         }
     }
+    public String getDeviceIMEI() {
+        int permissionCheck = ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
+            return "Permission not granted";
+        }
+        else {
+            String deviceUniqueIdentifier = null;
+            TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+            if (null != tm) {
+                deviceUniqueIdentifier = tm.getDeviceId();
+            }
+            if (null == deviceUniqueIdentifier || 0 == deviceUniqueIdentifier.length()) {
+                deviceUniqueIdentifier = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+            }
+            return deviceUniqueIdentifier;
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == REQUEST_READ_PHONE_STATE) {
+            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+
+            }
+        }
+    }
+
+
 
 }

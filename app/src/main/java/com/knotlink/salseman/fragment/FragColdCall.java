@@ -23,6 +23,7 @@ import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelColdCall;
 import com.knotlink.salseman.model.ModelRoute;
+import com.knotlink.salseman.services.GPSTracker;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
@@ -52,7 +53,10 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
     private SharedPrefManager tSharedPrefManager;
     final Calendar myCalendar = Calendar.getInstance();
 
+    private GPSTracker tGpsTracker;
     private String strRouteId;
+    private String strLat;
+    private String strLong;
     private List<ModelRoute> tModelsRoute;
     private AdapterRouteSelect tAdapterRoute;
 
@@ -109,6 +113,9 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
         tvColdCallNextMeetingDate.setText(DateUtils.getTodayDate());
         callApiRoute();
         spnColdCallRoute.setOnItemSelectedListener(this);
+        tGpsTracker = new GPSTracker(tContext);
+        strLat = String.valueOf(tGpsTracker.latitude);
+        strLong = String.valueOf(tGpsTracker.longitude);
 
     }
 
@@ -190,7 +197,7 @@ public class FragColdCall extends Fragment implements AdapterView.OnItemSelected
         String strRemarks = etColdRemarks.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<ModelColdCall> call = api.uploadColdCall(strUserId, strRouteId, strOrgName, strContactName, strContactNumber,strLandLineNo, strAddress,
-                strEmail, strCity, strMeetingDateReal, strRemarks);
+                strEmail, strCity, strMeetingDateReal, strRemarks,strLat,strLong);
         call.enqueue(new Callback<ModelColdCall>() {
             @Override
             public void onResponse(Call<ModelColdCall> call, Response<ModelColdCall> response) {

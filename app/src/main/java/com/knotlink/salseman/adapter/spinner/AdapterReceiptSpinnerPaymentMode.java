@@ -39,8 +39,8 @@ public class AdapterReceiptSpinnerPaymentMode extends BaseAdapter {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.spn_receipt_payment_mode, null);
-        TextView names =  view.findViewById(R.id.tv_report_spinner_activity);
+        view = inflater.inflate(R.layout.spn_expense_type, null);
+        TextView names =  view.findViewById(R.id.tvExpensesSpinner);
         names.setText(strPaymentMode[i]);
         return view;
     }

@@ -26,6 +26,7 @@ import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.model.ModelVisit;
 import com.knotlink.salseman.utils.ButtonBg;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomMethods;
 import com.knotlink.salseman.utils.CustomToast;
@@ -117,37 +118,30 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String strRemark = edittext.getText().toString();
                         String strShopId = tModel.getShopId();
-                        CustomLog.d(Constant.TAG, "Shop Id : "+strShopId +"\nUser ID : "+strUSerId);
 
-                        Api api = ApiClients.getApiClients().create(Api.class);
-                        Call<ModelVisit> call = api.getShopNotVisit(strRemark,strUSerId,strShopId);
-                        call.enqueue(new Callback<ModelVisit>() {
-                            @Override
-                            public void onResponse(Call<ModelVisit> call, Response<ModelVisit> response) {
-                                ModelVisit tModel = response.body();
-                                if (!tModel.getError()) {
-                                    CustomToast.toastTop(tActivity, tModel.getMessage());
-                                    routeViewHolder.btnRouteNotVisit.setBackgroundResource(R.drawable.bg_simple_red);
-                                    routeViewHolder.btnRouteVisit.setBackgroundResource(R.drawable.bg_simple_grey);
-                                }else {
-                                    CustomToast.toastTop(tActivity, tModel.getMessage());
-
+                        if (!strRemark.equalsIgnoreCase("")) {
+                            Api api = ApiClients.getApiClients().create(Api.class);
+                            Call<ModelVisit> call = api.getShopNotVisit(strRemark, strUSerId, strShopId);
+                            call.enqueue(new Callback<ModelVisit>() {
+                                @Override
+                                public void onResponse(Call<ModelVisit> call, Response<ModelVisit> response) {
+                                    ModelVisit tModel = response.body();
+                                    if (!tModel.getError()) {
+                                        CustomToast.toastTop(tActivity, tModel.getMessage());
+                                        routeViewHolder.btnRouteNotVisit.setBackgroundResource(R.drawable.bg_simple_red);
+                                        routeViewHolder.btnRouteVisit.setBackgroundResource(R.drawable.bg_simple_grey);
+                                    } else {
+                                        CustomToast.toastTop(tActivity, tModel.getMessage());
+                                    }
                                 }
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<ModelVisit> call, Throwable t) {
-                                CustomLog.d(Constant.TAG, "Shop not visit failure : "+t);
-
-                            }
-                        });
-
-
-
-                        //What ever you want to do with the value
-                       // Editable YouEditTextValue = edittext.getText();
-                        //OR
+                                @Override
+                                public void onFailure(Call<ModelVisit> call, Throwable t) {
+                                    CustomLog.d(Constant.TAG, "Shop not visit failure : " + t);
+                                }
+                            });
+                        }else {
+                            CustomDialog.showEmptyDialog(tContext);
+                        }
 
                     }
                 });
@@ -174,9 +168,9 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
             public void onClick(View v) {
                 new AlertDialog.Builder(tContext)
                         .setTitle(tModel.getShopName())
-                        .setMessage("Contact Name : "+tModel.getContactName()+"\n\n"+
-                        "Email Id : "+ tModel.getEmail()+"\n\n"+
-                        "Address : "+tModel.getShopAddress())
+                        .setMessage(tModel.getContactName()+"\n\n"+
+                        tModel.getEmail()+"\n\n"+
+                        tModel.getShopAddress())
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,12 +16,15 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.AdapterReportReceipt;
+import com.knotlink.salseman.adapter.report.route.AdapterReportReceipt;
+import com.knotlink.salseman.adapter.report.route.AdapterRouteOrder;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.report.ModelReportReceipt;
+import com.knotlink.salseman.model.report.route.ModelRouteOrder;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -35,6 +39,7 @@ import retrofit2.Response;
 public class ReportNewOrder extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView.LayoutManager tLayoutManager;
+    private FragmentManager tFragmentManager;
     private AdapterReportReceipt tAdapterReportReceipt;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
@@ -67,6 +72,7 @@ public class ReportNewOrder extends Fragment implements SwipeRefreshLayout.OnRef
     }
     private void initFrag(){
         tContext = getContext();
+        tFragmentManager = getFragmentManager();
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle(" New Order Report", getActivity());
         pbReportAll.setVisibility(View.VISIBLE);
@@ -77,20 +83,22 @@ public class ReportNewOrder extends Fragment implements SwipeRefreshLayout.OnRef
     }
     private  void callApiReceipt(){
         String strUserId = tSharedPrefManager.getUserId();
-
         Api api = ApiClients.getApiClients().create(Api.class);
-
-        Call<List<ModelReportReceipt>> call = api.viewReportReceipt(strUserId,"Receipt", dateFrom, dateTo);
-        call.enqueue(new Callback<List<ModelReportReceipt>>() {
+        Call<List<ModelRouteOrder>> call = api.viewReportNewOrder(strUserId,"New Order", dateFrom, dateTo);
+        call.enqueue(new Callback<List<ModelRouteOrder>>() {
             @Override
-            public void onResponse(Call<List<ModelReportReceipt>> call, Response<List<ModelReportReceipt>> response) {
-                tModelReportReceipt =response.body();
+            public void onResponse(Call<List<ModelRouteOrder>> call, Response<List<ModelRouteOrder>> response) {
+               List<ModelRouteOrder>  tModels =response.body();
                 pbReportAll.setVisibility(View.GONE);
-                tAdapterReportReceipt = new AdapterReportReceipt(tModelReportReceipt, tContext);
-                rvReportAll.setAdapter(tAdapterReportReceipt);
+                if (tModels.size()>0) {
+                    AdapterRouteOrder tAdapterReportReceipt = new AdapterRouteOrder(tContext, tModels);
+                    rvReportAll.setAdapter(tAdapterReportReceipt);
+                }else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
             }
             @Override
-            public void onFailure(Call<List<ModelReportReceipt>> call, Throwable t) {
+            public void onFailure(Call<List<ModelRouteOrder>> call, Throwable t) {
                 CustomLog.d(Constant.TAG, " Receipt Not Responding : "+t);
 
             }

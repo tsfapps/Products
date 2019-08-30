@@ -26,6 +26,7 @@ import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.report.ModelReportOrderMap;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -183,9 +184,14 @@ public class ReportRoute extends Fragment {
                     @Override
                     public void onResponse(Call<List<ModelReportOrderMap>> call, Response<List<ModelReportOrderMap>> response) {
                         List<ModelReportOrderMap> tModels = response.body();
+                        if (tModels.size()>0){
                         Intent tIntent = new Intent(tContext, RouteMapsActivity.class);
                         tIntent.putExtra(Constant.MODEL_INTENT, (Serializable) tModels);
-                        tContext.startActivity(tIntent);
+                        tContext.startActivity(tIntent);}
+                        else {
+                            CustomDialog.showEmptyDialog(tContext);
+                        }
+
                     }
 
                     @Override

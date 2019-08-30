@@ -49,6 +49,9 @@ public class User {
     @SerializedName("user_sm_id")
     @Expose
     private String userSmId;
+    @SerializedName("user_imei_no")
+    @Expose
+    private String userImeiNo;
 
     public String getId() {
         return id;
@@ -168,6 +171,14 @@ public class User {
 
     public void setUserSmId(String userSmId) {
         this.userSmId = userSmId;
+    }
+
+    public String getUserImeiNo() {
+        return userImeiNo;
+    }
+
+    public void setUserImeiNo(String userImeiNo) {
+        this.userImeiNo = userImeiNo;
     }
 
 

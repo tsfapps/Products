@@ -24,6 +24,7 @@ import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.model.report.ModelReportDistance;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -88,8 +89,13 @@ public class ReportDistance extends Fragment implements SwipeRefreshLayout.OnRef
             public void onResponse(Call<List<ModelReportDistance>> call, Response<List<ModelReportDistance>> response) {
                 tModelReportDistance =response.body();
                 pbReportAll.setVisibility(View.GONE);
+                if (tModelReportDistance.size()>0){
                 tAdapterReportDistance = new AdapterReportDistance(tModelReportDistance, tContext);
-                rvReportAll.setAdapter(tAdapterReportDistance);
+                rvReportAll.setAdapter(tAdapterReportDistance);}
+                else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+
             }
             @Override
             public void onFailure(Call<List<ModelReportDistance>> call, Throwable t) {

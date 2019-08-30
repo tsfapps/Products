@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -59,9 +60,6 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_CANCELED;
 
 public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedListener{
-
-
-
     private Context tContext;
     @BindView(R.id.iv_upload_receipt)
     protected ImageView ivUploadReceipt;
@@ -85,6 +83,8 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     protected Spinner spnReceiptPaymentMode;
     @BindView(R.id.ll_receipt_chequeDetail)
     protected LinearLayout llReceiptChequeDetail;
+    @BindView(R.id.pbSpnReceiptInvNo)
+    protected ProgressBar pbSpnReceiptInvNo;
     final Calendar myCalendar = Calendar.getInstance();
 
     String[] strPaymentMode ={"--select the payment mode--","Cash","NEFT","Cheque"};
@@ -114,17 +114,16 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
-
                     String strInvoiceNo = tModels.get(i).getInvoiceNo().get(position);
                     String strShopId = tModels.get(i).getShopId();
                     Api api = ApiClients.getApiClients().create(Api.class);
-                if (!strInvoiceNo.equalsIgnoreCase("")) {
+                    if (!strInvoiceNo.equalsIgnoreCase("")) {
                     Call<ModelInvoice> call = api.viewInvoice(strShopId, strInvoiceNo);
                     call.enqueue(new Callback<ModelInvoice>() {
                         @Override
                         public void onResponse(Call<ModelInvoice> call, Response<ModelInvoice> response) {
                             ModelInvoice modelInvoice = response.body();
+                            pbSpnReceiptInvNo.setVisibility(View.GONE);
                             tvReceiptInvoiceDate.setText(modelInvoice.getInvoiceDate());
                             tvReceiptTotalInvoiceAmount.setText(modelInvoice.getInvoiceAmount());
 
@@ -152,6 +151,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     @SuppressLint("SetTextI18n")
     public void initFrag() {
         tContext = getContext();
+        pbSpnReceiptInvNo.setVisibility(View.VISIBLE);
         SetTitle.tbTitle("Receipt", getActivity());
         tvReceiptShopName.setText(tModels.get(i).getShopName());
         tvReceiptTotalOutstandingAmount.setText("Rs. "+tModels.get(i).getTotalOutstandingAmount());
@@ -295,15 +295,6 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
         }
         else llReceiptChequeDetail.setVisibility(View.GONE);
 
-//        switch (view.getId()){
-//            case R.id.spn_receipt_paymentMode :
-//                CustomLog.d(Constant.TAG, "Payment Mode : "+ strPaymentMode[position]);
-//
-//                break;
-//            case R.id.spn_receipt_invoiceNumber:
-//                CustomLog.d(Constant.TAG, "Invoice Number : "+ tModels.get(i).getInvoiceNo().get(position));
-//                break;
-//        }
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

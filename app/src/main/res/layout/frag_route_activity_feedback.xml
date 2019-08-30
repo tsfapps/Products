@@ -108,7 +108,6 @@
         android:background="@drawable/bg_et"
         android:minLines="5"
         android:gravity="start"
-        android:inputType="textCapCharacters"
         android:padding="5dp"
         android:hint="Remarks"
         android:layout_width="match_parent"

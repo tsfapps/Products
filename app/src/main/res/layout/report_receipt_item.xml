@@ -18,23 +18,62 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <!--
+
+        "bank_name": "user5cac6e1230c7f",
+        "invoice_no": "69",
+        "total_outstanding_amount": "56",
+        "amount_recived": "445",
+        "pending_outstanding_amount": "454",
+        "credit_days": "11",
+        "credit_limit": "15",
+        "cheque_no": "1564",
+        "cheque_date": "14 June 2019",
+        "cheque_image": "hsgsfsgf",
+        "signature": "gsfssf",
+        "remarks": "sbgsfsfsd",
+        "latitude": "12.961228333333334",
+        "longitude": "77.56211"-->
         <LinearLayout
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-        <TextView
-           style="@style/tv_report"
-            android:text="Date"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Login Time"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Logout Time"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Working Hour"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Date of Receipt"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Invoice Number"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Total Outstanding Amount"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Amount Received"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Pending Outstanding Amount"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Credit Days"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Credit Limit"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Cheque Date"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Cheque Number"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Bank Name"/>
+            <TextView
+                style="@style/tv_report"
+                android:text="Remarks"/>
+
 
 
         </LinearLayout>
@@ -43,23 +82,50 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/tv_report_attendance_date"
-           style="@style/tv_report"
-            android:text="Date"/>
-        <TextView
-            android:id="@+id/tv_report_attendance_startKm"
-            style="@style/tv_report"
-            android:text="Login Time"/>
-        <TextView
-            android:id="@+id/tv_report_attendance_endKm"
-            style="@style/tv_report"
-            android:text="Logout Time"/>
-        <TextView
-            android:id="@+id/tv_report_attendance_disTravelled"
-            style="@style/tv_report"
-            android:text="Working Hour"/>
-
+            <TextView
+                android:id="@+id/tvRouteReceiptDateOfReceipt"
+                style="@style/tv_report"
+                android:text="Date of Order"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptInvoiceNumber"
+                style="@style/tv_report"
+                android:text="Invoice Number"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptToa"
+                style="@style/tv_report"
+                android:text="Total Outstanding Amount"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptAmountReceived"
+                style="@style/tv_report"
+                android:text="Amount Received"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptPending"
+                style="@style/tv_report"
+                android:text="Pending Outstanding Amount"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptCreditDays"
+                style="@style/tv_report"
+                android:text="Credit Days"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptCreditLimit"
+                style="@style/tv_report"
+                android:text="Credit Limit"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptChequeDate"
+                style="@style/tv_report"
+                android:text="Cheque Date"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptChequeNumber"
+                style="@style/tv_report"
+                android:text="Cheque Number"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptBankName"
+                style="@style/tv_report"
+                android:text="Bank Name"/>
+            <TextView
+                android:id="@+id/tvRouteReceiptRemarks"
+                style="@style/tv_report"
+                android:text="Remarks"/>
 
         </LinearLayout>
     </LinearLayout>

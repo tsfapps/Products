@@ -15,14 +15,13 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.AdapterReportAttendance;
 import com.knotlink.salseman.adapter.report.AdapterReportLeadGeneration;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.model.report.ModelReportLeadGeneration;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -40,7 +39,7 @@ public class ReportLead extends Fragment implements SwipeRefreshLayout.OnRefresh
     private AdapterReportLeadGeneration tAdapterReportLeadGeneration;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
-    private List<ModelReportLeadGeneration> tModelReportLeadGeneration;
+    private List<ModelReportLeadGeneration> tModels;
     @BindView(R.id.rvReportAll)
     protected RecyclerView rvReportAll;
     @BindView(R.id.swrReportAll)
@@ -85,10 +84,15 @@ public class ReportLead extends Fragment implements SwipeRefreshLayout.OnRefresh
         call.enqueue(new Callback<List<ModelReportLeadGeneration>>() {
             @Override
             public void onResponse(Call<List<ModelReportLeadGeneration>> call, Response<List<ModelReportLeadGeneration>> response) {
-                tModelReportLeadGeneration =response.body();
+                tModels =response.body();
                 pbReportAll.setVisibility(View.GONE);
-                tAdapterReportLeadGeneration = new AdapterReportLeadGeneration(tModelReportLeadGeneration, tContext);
-                rvReportAll.setAdapter(tAdapterReportLeadGeneration);
+                if (tModels.size()>0){
+                tAdapterReportLeadGeneration = new AdapterReportLeadGeneration(tModels, tContext);
+                rvReportAll.setAdapter(tAdapterReportLeadGeneration);}
+                else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+
             }
             @Override
             public void onFailure(Call<List<ModelReportLeadGeneration>> call, Throwable t) {

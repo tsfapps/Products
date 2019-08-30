@@ -6,6 +6,7 @@ public class Constant {
     public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 101;
 
     public static final String TAG = "tsfapps";
+    public static final String IMAGE_PATH = "https://teocfish.com/knotlink/uploads/distance_upload/";
     public static String SIGN_STATUS = "signDone";
     public static final String TSF_SHARED_PREFENCE = "apartment_shared_pref";
     public static final int STORAGE_PERMISSION_CODE = 23;

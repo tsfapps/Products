@@ -23,6 +23,7 @@ import com.knotlink.salseman.model.report.ModelReportMeeting;
 import com.knotlink.salseman.model.report.ModelReportVehicle;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -70,7 +71,7 @@ public class ReportVehicle extends Fragment implements SwipeRefreshLayout.OnRefr
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
-        SetTitle.tbTitle(" Meeting Report", getActivity());
+        SetTitle.tbTitle(" Vehicle Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvReportAll.setLayoutManager(tLayoutManager);
         pbReportAll.setVisibility(View.VISIBLE);
@@ -86,8 +87,13 @@ public class ReportVehicle extends Fragment implements SwipeRefreshLayout.OnRefr
             public void onResponse(Call<List<ModelReportVehicle>> call, Response<List<ModelReportVehicle>> response) {
                 tModelReportVehicle =response.body();
                 pbReportAll.setVisibility(View.GONE);
+                if (tModelReportVehicle.size()>0){
                 tAdapterReportVehicle = new AdapterReportVehicle(tModelReportVehicle, tContext);
-                rvReportAll.setAdapter(tAdapterReportVehicle);
+                rvReportAll.setAdapter(tAdapterReportVehicle);}
+                else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+
             }
             @Override
             public void onFailure(Call<List<ModelReportVehicle>> call, Throwable t) {

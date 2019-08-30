@@ -51,5 +51,4 @@ dependencies {
     implementation 'com.kyanogen.signatureview:signature-view:1.2'
 //Customize Alert Dialog
     implementation 'com.github.f0ris.sweetalert:library:1.5.1'
-
 }

@@ -3,6 +3,9 @@ package com.knotlink.salseman.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 import com.knotlink.salseman.utils.Constant;
 
@@ -40,9 +43,18 @@ public class SharedPrefManager {
         SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
         return sp.getString(Constant.START_KM, Constant.EMPTY);
     }
-    public String getStartImage(){
+    public Bitmap getStartImage(){
         SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
-        return sp.getString(Constant.START_IMAGE, Constant.EMPTY);
+
+        String previouslyEncodedImage = sp.getString(Constant.START_IMAGE, Constant.EMPTY);
+
+        if( !previouslyEncodedImage.equalsIgnoreCase("") ) {
+            byte[] b = Base64.decode(previouslyEncodedImage, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+            return  bitmap;
+        }
+
+        return null;
     }
     public boolean getIsImageUpload(){
         SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
@@ -86,6 +98,14 @@ public class SharedPrefManager {
         tEditor.putString(Constant.REPORT_TIME_START, startTime);
         tEditor.apply();
     }
+    public void setStartImage(String strEncodedImg){
+        SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+         tEditor=tSharedPreferences.edit();
+        tEditor.putString(Constant.START_IMAGE,strEncodedImg);
+        tEditor.apply();
+
+
+    }
     public void setReportTimeEnd(String startEndTime){
         SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
         tEditor = tSharedPreferences.edit();
@@ -104,6 +124,20 @@ public class SharedPrefManager {
         SharedPreferences tPref = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
         tEditor = tPref.edit();
         tEditor.remove(Constant.REPORT_TIME_START);
+        tEditor.remove(Constant.REPORT_TIME_END);
+        tEditor.apply();
+        tEditor.clear();
+    }
+    public void clearReportTimeStart(){
+        SharedPreferences tPref = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        tEditor = tPref.edit();
+        tEditor.remove(Constant.REPORT_TIME_START);
+        tEditor.apply();
+        tEditor.clear();
+    }
+    public void clearReportTimeEnd(){
+        SharedPreferences tPref = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+        tEditor = tPref.edit();
         tEditor.remove(Constant.REPORT_TIME_END);
         tEditor.apply();
         tEditor.clear();

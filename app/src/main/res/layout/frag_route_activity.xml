@@ -10,12 +10,16 @@
         android:id="@+id/btnGetLocation"
        style="@style/btn_main"
         android:text="Get Location"/>
+    <Button
+        android:id="@+id/btnNoActivity"
+       style="@style/btn_main"
+        android:text="No Activity"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="100dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -57,7 +61,7 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="100dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -71,12 +75,10 @@
                 style="@style/ll_dash">
                 <ImageView
                     style="@style/iv_dashboard"
-                    android:src="@drawable/dash_route_receipt"
-                    />
+                    android:src="@drawable/dash_route_receipt"/>
                 <TextView
                     android:text="Receipt"
                     style="@style/tv_dash_label" />
-
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView

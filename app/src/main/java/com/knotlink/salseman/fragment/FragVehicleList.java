@@ -21,6 +21,7 @@ import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelVehicleList;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 
 import java.util.List;
@@ -81,9 +82,12 @@ public class FragVehicleList extends Fragment implements SwipeRefreshLayout.OnRe
             public void onResponse(Call<List<ModelVehicleList>> call, Response<List<ModelVehicleList>> response) {
                 tModels = response.body();
                 pbVehicleList.setVisibility(View.GONE);
+                if (tModels.size()>0){
                 tAdapter = new AdapterVehicleList(tModels, tContext, tFragmentManager, strUserType);
-                rvVehicleList.setAdapter(tAdapter);
-                CustomLog.d(Constant.TAG, "Vehicle List Response : "+response.message());
+                rvVehicleList.setAdapter(tAdapter);}
+                else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
             }
 
             @Override

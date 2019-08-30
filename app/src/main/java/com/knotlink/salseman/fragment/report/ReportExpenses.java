@@ -23,6 +23,7 @@ import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.model.report.ModelReportExpenses;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -88,8 +89,13 @@ public class ReportExpenses extends Fragment implements SwipeRefreshLayout.OnRef
             public void onResponse(Call<List<ModelReportExpenses>> call, Response<List<ModelReportExpenses>> response) {
                 tModelReportExpenses =response.body();
                 pbReportAll.setVisibility(View.GONE);
+                if (tModelReportExpenses.size()>0){
                 tAdapterReportExpenses = new AdapterReportExpenses(tModelReportExpenses, tContext);
-                rvReportAll.setAdapter(tAdapterReportExpenses);
+                rvReportAll.setAdapter(tAdapterReportExpenses);}
+                else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+
             }
             @Override
             public void onFailure(Call<List<ModelReportExpenses>> call, Throwable t) {

@@ -20,24 +20,28 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.AdapterFeedback;
 import com.knotlink.salseman.adapter.baseadapter.AdapterSpecialRequest;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelFeedback;
 import com.knotlink.salseman.model.ModelGetLocaion;
+import com.knotlink.salseman.model.ModelNoActivity;
 import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.model.ModelSpecialRequest;
+import com.knotlink.salseman.model.ModelVisit;
 import com.knotlink.salseman.services.GPSTracker;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.CheckPermission;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
+import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomToast;
 import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
@@ -66,11 +70,11 @@ public class FragRouteActivity extends Fragment {
     private String[] strFeedback;
     private String spinner_item;
     private String strShopId;
+    private String strUserId;
     private String strShopLat;
     private String strShopLong;
    // private String spinner_item_feedback;
     private AdapterSpecialRequest tAdapter;
-    private AdapterFeedback tAdapterFeedback;
     private EditText edittext;
     private EditText etFeedback;
     private Bitmap tBitmap;
@@ -112,16 +116,15 @@ public class FragRouteActivity extends Fragment {
         tContext = getContext();
         tSharedPrefManger = new SharedPrefManager(tContext);
 
+        strUserId = tSharedPrefManger.getUserId();
         title = getResources().getStringArray(R.array.special_request);
         tAdapter=new AdapterSpecialRequest(tContext, title);
         strFeedback = getResources().getStringArray(R.array.str_arr_feedback);
-        tAdapterFeedback=new AdapterFeedback(tContext, strFeedback);
         SetTitle.tbTitle("Route Activity", getActivity());
 
         strShopId = tModels.get(i).getShopId();
         strShopLat = tModels.get(i).getLatitude();
         strShopLong = tModels.get(i).getLongitude();
-
         if (!strShopLat.equalsIgnoreCase("0")&& !strShopLong.equalsIgnoreCase("0")){
             btnGetLocation.setVisibility(View.GONE);
         }
@@ -161,6 +164,57 @@ public class FragRouteActivity extends Fragment {
     @OnClick(R.id.btnGetLocation)
     public void btnGetLocationClicked(View view){
         callLocationApi();
+    }
+    @OnClick(R.id.btnNoActivity)
+    public void btnNoActivityClicked(View view){
+        AlertDialog.Builder alert = new AlertDialog.Builder(tContext);
+        final EditText etRemarks = new EditText(tContext);
+        etRemarks.setBackgroundResource(R.drawable.bg_et);
+        //  edittext.setMinLines(4);
+        etRemarks.setSingleLine();
+        FrameLayout container = new FrameLayout(tContext);
+        FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
+        params.rightMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
+        params.topMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
+        params.bottomMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
+        etRemarks.setLayoutParams(params);
+        container.addView(etRemarks);
+        alert.setTitle("Mention the reason");
+        alert.setView(container);
+        alert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String strRemark = etRemarks.getText().toString();
+
+                if (!strRemark.equalsIgnoreCase("")) {
+                    Api api = ApiClients.getApiClients().create(Api.class);
+                    Call<ModelNoActivity> callNoActivity = api.uploadNoActivity(strUserId, strShopId, strRemark, strLat, strLong);
+                    callNoActivity.enqueue(new Callback<ModelNoActivity>() {
+                        @Override
+                        public void onResponse(Call<ModelNoActivity> call, Response<ModelNoActivity> response) {
+                            ModelNoActivity tModel = response.body();
+                            Toast.makeText(tContext, tModel.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<ModelNoActivity> call, Throwable t) {
+
+                        }
+                    });
+                }else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+
+        alert.show();
     }
 
     private void callLocationApi(){
@@ -226,7 +280,7 @@ public class FragRouteActivity extends Fragment {
     private void callSpecialRequestApi(){
         String strRemarks = edittext.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelSpecialRequest> requestCall = api.uploadSpecialRequest(spinner_item, strShopId, strRemarks);
+        Call<ModelSpecialRequest> requestCall = api.uploadSpecialRequest(strUserId, spinner_item, strShopId, strRemarks, strLat, strLong);
         requestCall.enqueue(new Callback<ModelSpecialRequest>() {
             @Override
             public void onResponse(Call<ModelSpecialRequest> call, Response<ModelSpecialRequest> response) {
@@ -275,11 +329,10 @@ public class FragRouteActivity extends Fragment {
 
     //Feedback Api Call
     private void callApiFeedback(){
-        String strUserId = tSharedPrefManger.getUserId();
         String strRemarks = etFeedback.getText().toString().trim();
         String strImage = imageToString(tBitmap, ivFeedback);
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelFeedback> requestCall = api.uploadFeedback(strShopId, strUserId, strImage, strRemarks);
+        Call<ModelFeedback> requestCall = api.uploadFeedback(strShopId, strUserId, strImage, strRemarks, strLat, strLong);
         requestCall.enqueue(new Callback<ModelFeedback>() {
             @Override
             public void onResponse(Call<ModelFeedback> call, Response<ModelFeedback> response) {

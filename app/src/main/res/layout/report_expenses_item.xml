@@ -65,12 +65,11 @@
 
         </LinearLayout>
         <LinearLayout
+            android:visibility="gone"
             style="@style/ll_map_main">
             <TextView
                 android:id="@+id/tvReportExpensesMap"
-                style="@style/tv_map_main"
-
-                />
+                style="@style/tv_map_main" />
 
 
         </LinearLayout>

@@ -23,6 +23,7 @@ import java.util.List;
 public class RouteMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap tMap;
+    private int i;
     private double doubleLat;
     private double doubleLong;
     private String strLat;
@@ -54,12 +55,17 @@ public class RouteMapsActivity extends FragmentActivity implements OnMapReadyCal
         tMap.getUiSettings().setZoomControlsEnabled(true);
         tMap.getUiSettings().setZoomGesturesEnabled(true);
         tMap.getUiSettings().setCompassEnabled(true);
-        tMap.animateCamera(CameraUpdateFactory.zoomTo(12));
-        for(int i = 0 ; i < tModels.size() ; i++) {
+
+        for(i = 0 ; i < tModels.size()-1 ; i++) {
 
             createMarker(Double.parseDouble(tModels.get(i).getLatitude()), Double.parseDouble(tModels.get(i).getLongitude()),
                     tModels.get(i).getShopName(), tModels.get(i).getTime(), googleMap);
         }
+        LatLng lastVisitedShop = new LatLng(Double.parseDouble(tModels.get(i).getLatitude()), Double.parseDouble(tModels.get(i).getLongitude()));
+        tMap.addMarker(new MarkerOptions().position(lastVisitedShop).title(tModels.get(i).getShopName()).snippet(tModels.get(i).getTime()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+        tMap.moveCamera(CameraUpdateFactory.newLatLng(lastVisitedShop));
+        tMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
     }
 
     protected Marker createMarker(double latitude, double longitude, String title, String snippet, GoogleMap googleMap) {

@@ -26,6 +26,7 @@ import com.knotlink.salseman.fragment.report.route.ReportRoute;
 import com.knotlink.salseman.model.ModelSalesMan;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomToast;
 import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetTitle;
@@ -143,6 +144,7 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
             public void onResponse(Call<List<ModelSalesMan>> call, Response<List<ModelSalesMan>> response) {
                 tModels = response.body();
                 pbSpnReportSales.setVisibility(View.GONE);
+
                 tAdapterSalesMan = new AdapterSalesMan(tContext, tModels);
                 spnReportSalesMan.setAdapter(tAdapterSalesMan);
             }
@@ -157,13 +159,13 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
 
     @OnClick(R.id.tvReportThreeMonths)
     public void tvReportThreeMonthsClicked(View view){
-
         String strDate = DateUtils.date3Months();
         tSharedPrefManager.clearReportTime();
         tSharedPrefManager.clearReportTime();
         tSharedPrefManager.setReportTimeStart(strDate);
         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
         dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
+        tvReportDateTo.setText(DateUtils.getTodayDate());
     }
     @OnClick(R.id.tvReportSixMonths)
     public void tvReportSixMonthsClicked(View view){
@@ -172,6 +174,8 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
         tSharedPrefManager.setReportTimeStart(strDate);
         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
         dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
+        tvReportDateTo.setText(DateUtils.getTodayDate());
+
 
     }
     @OnClick(R.id.tvReportNineMonths)
@@ -181,6 +185,8 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
         tSharedPrefManager.setReportTimeStart(strDate);
         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
         dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
+        tvReportDateTo.setText(DateUtils.getTodayDate());
+
     }
     @OnClick(R.id.tvReportTwelveMonths)
     public void tvReportTwelveMonthsClicked(View view){
@@ -189,6 +195,7 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
         tSharedPrefManager.setReportTimeStart(strDate);
         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
         dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
+        tvReportDateTo.setText(DateUtils.getTodayDate());
     }
     @OnClick(R.id.tv_report_date_from)
     public void reportFromDate(View view){
@@ -206,6 +213,7 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
                     String strMyDate = sdf.format(myCalendar.getTime());
                     Date selDate = sdf.parse(strMyDate);
                     if (selDate.compareTo(myDate)<0) {
+                        tSharedPrefManager.clearReportTimeStart();
                         tSharedPrefManager.setReportTimeStart(strMyDate);
                         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
 
@@ -240,6 +248,7 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
                     String strMyDate = sdf.format(myCalendar.getTime());
                     Date selDate = sdf.parse(strMyDate);
                     if (selDate.compareTo(myDate)<0) {
+                        tSharedPrefManager.clearReportTimeEnd();
                         tSharedPrefManager.setReportTimeEnd(strMyDate);
                         tvReportDateTo.setText(tSharedPrefManager.getReportTimeTo());
                     }

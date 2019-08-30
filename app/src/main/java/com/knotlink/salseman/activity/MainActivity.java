@@ -1,13 +1,22 @@
 package com.knotlink.salseman.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +37,8 @@ import com.knotlink.salseman.fragment.FragProfile;
 import com.knotlink.salseman.fragment.report.FragReport;
 import com.knotlink.salseman.fragment.FragTask;
 import com.knotlink.salseman.storage.SharedPrefManager;
+import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomMethods;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final int PERIOD = 2000;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
+
 
     private String strUserType;
     @BindView(R.id.toolbar)
@@ -68,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         setSupportActionBar(tToolbar);
         tvDateMain.setText(getTodayDate());
         initFrag();
-    }
+       }
 
     public void setToolbarTitle(String strTitle){
         tTitle.setText(strTitle);
@@ -202,6 +214,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+
+
+
+
+
+
+
+
+
 
 
 }

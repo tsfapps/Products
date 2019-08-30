@@ -21,6 +21,7 @@ import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.report.ModelReportCashCollection;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -86,8 +87,13 @@ public class ReportCashCollection extends Fragment implements SwipeRefreshLayout
             public void onResponse(Call<List<ModelReportCashCollection>> call, Response<List<ModelReportCashCollection>> response) {
                 tModelReportCash =response.body();
                 pbReportAll.setVisibility(View.GONE);
+                if (tModelReportCash.size()>0){
                 tAdapterReportMeeting = new AdapterReportCashCollection(tModelReportCash, tContext);
-                rvReportAll.setAdapter(tAdapterReportMeeting);
+                rvReportAll.setAdapter(tAdapterReportMeeting);}
+                else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+
             }
             @Override
             public void onFailure(Call<List<ModelReportCashCollection>> call, Throwable t) {

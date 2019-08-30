@@ -12,21 +12,26 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.adapter.AdapterVehicleList;
 import com.knotlink.salseman.adapter.spinner.AdapterExpenseSpinner;
+import com.knotlink.salseman.adapter.spinner.AdapterVehicleSpinner;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelExpenseList;
 import com.knotlink.salseman.model.ModelExpenses;
+import com.knotlink.salseman.model.ModelVehicleList;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.CheckPermission;
 import com.knotlink.salseman.utils.Constant;
@@ -49,14 +54,18 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
 
-public class FragExpenses extends Fragment implements AdapterView.OnItemSelectedListener {
+public class FragExpenses extends Fragment {
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
     private ModelExpenses tModels;
     private List<ModelExpenseList> tModelExpenseList;
     private AdapterExpenseSpinner tAdapterExpenseSpinner;
     private Bitmap tBitmap;
+    private String strExpCat;
     private String strExpenseType;
+    private String strVehicleNo;
+    @BindView(R.id.spnExpenseCategory)
+    protected Spinner spnExpenseCategory;
     @BindView(R.id.spnExpenseType)
     protected Spinner spnExpenseType;
     @BindView(R.id.iv_upload_expenses)
@@ -65,6 +74,10 @@ public class FragExpenses extends Fragment implements AdapterView.OnItemSelected
     protected EditText etExpenseAmount;
     @BindView(R.id.et_remark_expenses)
     protected EditText et_remark_expenses;
+    @BindView(R.id.spnExpenseVehicleNo)
+    protected Spinner spnExpenseVehicleNo;
+    @BindView(R.id.llVehicleNoExp)
+    protected LinearLayout llVehicleNoExp;
 
 //    private String strUserType;
 //    public static FragExpenses newInstance(String strUserType) {
@@ -88,15 +101,40 @@ public class FragExpenses extends Fragment implements AdapterView.OnItemSelected
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Daily Expenses", getActivity());
-        spnExpenseType.setOnItemSelectedListener(this);
-        callExpenseListApi();
+        spnExpenseCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                strExpCat = String.valueOf(parent.getSelectedItemPosition());
+                Log.d(Constant.TAG, "Exp Pos : "+strExpCat);
+                if (strExpCat.equalsIgnoreCase("2")){
+                    llVehicleNoExp.setVisibility(View.VISIBLE);
+                    callVehicleListApi();
+                }else {
+                    llVehicleNoExp.setVisibility(View.GONE);
+                }
+                callExpenseListApi(strExpCat);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        spnExpenseType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                strExpenseType = tModelExpenseList.get(position).getExpenseType();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+//        callExpenseListApi();
 
     }
 
 
-    private void callExpenseListApi(){
+    private void callExpenseListApi(String strExpCat){
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<List<ModelExpenseList>> call = api.expenseList();
+        Call<List<ModelExpenseList>> call = api.expenseList(strExpCat);
         call.enqueue(new Callback<List<ModelExpenseList>>() {
             @Override
             public void onResponse(Call<List<ModelExpenseList>> call, Response<List<ModelExpenseList>> response) {
@@ -108,6 +146,24 @@ public class FragExpenses extends Fragment implements AdapterView.OnItemSelected
 
             @Override
             public void onFailure(Call<List<ModelExpenseList>> call, Throwable t) {
+
+            }
+        });
+    }
+    private void callVehicleListApi(){
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<List<ModelVehicleList>> call = api.vehicleList();
+        call.enqueue(new Callback<List<ModelVehicleList>>() {
+            @Override
+            public void onResponse(Call<List<ModelVehicleList>> call, Response<List<ModelVehicleList>> response) {
+                List<ModelVehicleList>  tModelExpenseList = response.body();
+                AdapterVehicleSpinner tAdapter = new AdapterVehicleSpinner(tContext, tModelExpenseList);
+                spnExpenseVehicleNo.setAdapter(tAdapter);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ModelVehicleList>> call, Throwable t) {
 
             }
         });
@@ -197,6 +253,7 @@ public class FragExpenses extends Fragment implements AdapterView.OnItemSelected
         String strUSerId = tSharedPrefManager.getUserId();
         String strExpenseAmount = etExpenseAmount.getText().toString().trim();
         String strRemarks = et_remark_expenses.getText().toString().trim();
+
         String strImage = ImageConverter.imageToString(tBitmap, ivUploadExpenses);
         if (strImage.equals("")){
             strImage = "";
@@ -207,7 +264,7 @@ public class FragExpenses extends Fragment implements AdapterView.OnItemSelected
 
         }else {
             Api api = ApiClients.getApiClients().create(Api.class);
-            Call<ModelExpenses> call = api.uploadExpenses(strUSerId,strExpenseType,strExpenseAmount,strRemarks,strImage);
+            Call<ModelExpenses> call = api.uploadExpenses(strUSerId,strExpCat,strExpenseType,strExpenseAmount,strRemarks,strVehicleNo,strImage);
 
         call.enqueue(new Callback<ModelExpenses>() {
             @Override
@@ -234,14 +291,5 @@ public class FragExpenses extends Fragment implements AdapterView.OnItemSelected
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        strExpenseType = tModelExpenseList.get(position).getExpenseType();
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }

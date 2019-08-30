@@ -20,6 +20,7 @@ import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.storage.SharedPrefManager;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.SetTitle;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class ReportAttendance extends Fragment implements SwipeRefreshLayout.OnR
     private AdapterReportAttendance tAdapterReportAttendance;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
-    private List<ModelReportAttendance> tModelReportAttendance;
+    private List<ModelReportAttendance> tModels;
     @BindView(R.id.rvReportAll)
     protected RecyclerView rvReportAll;
     @BindView(R.id.swrReportAll)
@@ -82,10 +83,15 @@ public class ReportAttendance extends Fragment implements SwipeRefreshLayout.OnR
         call.enqueue(new Callback<List<ModelReportAttendance>>() {
             @Override
             public void onResponse(Call<List<ModelReportAttendance>> call, Response<List<ModelReportAttendance>> response) {
-                tModelReportAttendance =response.body();
+                tModels =response.body();
                 pbReportAll.setVisibility(View.GONE);
-                tAdapterReportAttendance = new AdapterReportAttendance(tModelReportAttendance, tContext);
-                rvReportAll.setAdapter(tAdapterReportAttendance);
+                if (tModels.size()>0){
+                tAdapterReportAttendance = new AdapterReportAttendance(tModels, tContext);
+                rvReportAll.setAdapter(tAdapterReportAttendance);}
+                else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+
             }
 
             @Override

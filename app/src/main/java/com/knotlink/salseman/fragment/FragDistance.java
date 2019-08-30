@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
@@ -29,6 +30,7 @@ import com.knotlink.salseman.model.distance.ModelDistance;
 import com.knotlink.salseman.model.ModelVehicleList;
 import com.knotlink.salseman.model.distance.ModelDistancePrevious;
 import com.knotlink.salseman.model.distance.ModelDistanceUpdate;
+import com.knotlink.salseman.model.distance.ModelStartKm;
 import com.knotlink.salseman.services.GPSTracker;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.CheckPermission;
@@ -108,9 +110,7 @@ public class FragDistance extends Fragment {
         initFrag();
         return view;
     }
-
     private void initFrag(){
-
         tContext = getContext();
         getLocation();
         tSharedPrefManager = new SharedPrefManager(tContext);
@@ -121,32 +121,33 @@ public class FragDistance extends Fragment {
             btn_distance_submitEnding.setVisibility(View.VISIBLE);
             strStartKm = tSharedPrefManager.getStartKm();
         }
-        if (!tSharedPrefManager.getStartImage().equals("")) {
 
-            ivUploadStart.setImageBitmap(getBitImage(tSharedPrefManager.getStartImage()));
-
-        }
+//            ivUploadStart.setImageBitmap(tSharedPrefManager.getStartImage());
+//        }
         if (!tSharedPrefManager.getVehicleNo().equals("")){
             tv_distance_vehicleNumber.setText(tSharedPrefManager.getVehicleNo());
             callPreviousApi(tSharedPrefManager.getVehicleNo());
-
         }else {
                 strVehicleNo = tLists.get(i).getVehicleNo();
                 tv_distance_vehicleNumber.setText(strVehicleNo);
                 callPreviousApi(strVehicleNo);
         }
     }
-    private void callPreviousApi(String vehicleNumber){
+    private void callPreviousApi(final String vehicleNumber){
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<ModelDistancePrevious> call = api.getDistancePrevious(vehicleNumber);
         call.enqueue(new Callback<ModelDistancePrevious>() {
             @Override
             public void onResponse(Call<ModelDistancePrevious> call, Response<ModelDistancePrevious> response) {
-
                 ModelDistancePrevious tModel = response.body();
                 tvDistancePrevious.setText(tModel.getDistanceTraveled());
                 tvDistanceExcess.setText(tModel.getExcessDistance());
-                etDistanceStartKm.setText(tModel.getStartingKm());
+                if (!tSharedPrefManager.getStartKm().equals("")){
+                    callStartKmApi(vehicleNumber);
+
+                }else {
+                    etDistanceStartKm.setText(tModel.getStartingKm());
+                }
             }
 
             @Override
@@ -156,6 +157,24 @@ public class FragDistance extends Fragment {
             }
         });
     }
+    private void callStartKmApi(String vehicleNumber){
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<ModelStartKm> call = api.getStartKm(vehicleNumber);
+        call.enqueue(new Callback<ModelStartKm>() {
+            @Override
+            public void onResponse(Call<ModelStartKm> call, Response<ModelStartKm> response) {
+                ModelStartKm tModel = response.body();
+                etDistanceStartKm.setText(tModel.getStartingKm());
+                Glide.with(tContext).load(Constant.IMAGE_PATH+tModel.getStartingImage()).into(ivUploadStart);
+            }
+
+            @Override
+            public void onFailure(Call<ModelStartKm> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @OnClick(R.id.iv_upload_start)
@@ -237,6 +256,7 @@ public class FragDistance extends Fragment {
                             btn_distance_submitStart.setVisibility(View.GONE);
                             btn_distance_submitEnding.setVisibility(View.VISIBLE);
                             tSharedPrefManager.setStartingKm(strStartKm, strVehicleNo, strImgStart);
+
                         } else {
                             CustomToast.toastTop(getActivity(), tModels.getMessage());
                         }
@@ -257,7 +277,6 @@ public class FragDistance extends Fragment {
     public void uploadStartData(View view){
         callStartingApi();
     }
-
 
     private void callEndingApi(){
         String strVehicleNumber = tv_distance_vehicleNumber.getText().toString().trim();

@@ -37,6 +37,11 @@ public class AdapterVehicleList extends RecyclerView.Adapter<AdapterVehicleList.
 
     }
 
+    public AdapterVehicleList(List<ModelVehicleList> tLists, Context tContext) {
+        this.tLists = tLists;
+        this.tContext = tContext;
+    }
+
     @NonNull
     @Override
     public VehicleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

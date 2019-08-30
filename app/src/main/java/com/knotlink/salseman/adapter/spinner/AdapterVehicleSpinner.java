@@ -1,4 +1,5 @@
 package com.knotlink.salseman.adapter.spinner;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,27 +8,26 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.model.ModelShopList;
+import com.knotlink.salseman.model.ModelExpenseList;
+import com.knotlink.salseman.model.ModelVehicleList;
 
 import java.util.List;
 
-public class AdapterReceiptSpinnerInvoice extends BaseAdapter {
+public class AdapterVehicleSpinner extends BaseAdapter {
     private Context tContext;
-    private String[] strInvoice;
-    private List<ModelShopList> tModels;
+    private List<ModelVehicleList> tModels;
     private LayoutInflater inflater;
-    private int modelIndex;
 
-    public AdapterReceiptSpinnerInvoice(Context tContext, List<ModelShopList> tModels, int modelIndex) {
+    public AdapterVehicleSpinner(Context tContext, List<ModelVehicleList> tModels) {
         this.tContext = tContext;
         this.tModels = tModels;
-        this.modelIndex = modelIndex;
         inflater = (LayoutInflater.from(tContext));
     }
 
+
     @Override
     public int getCount() {
-        return tModels.get(modelIndex).getInvoiceNo().size();
+        return tModels.size();
     }
 
     @Override
@@ -40,12 +40,12 @@ public class AdapterReceiptSpinnerInvoice extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.spn_receipt_payment_mode, null);
-        TextView names =  view.findViewById(R.id.tvReportSpn);
-        names.setText(tModels.get(modelIndex).getInvoiceNo().get(i));
+    public View getView(final int i, View view, ViewGroup viewGroup) {
+        view = inflater.inflate(R.layout.spn_expense_type, null);
+        TextView names =  view.findViewById(R.id.tvExpensesSpinner);
+        names.setText(tModels.get(i).getVehicleNo());
         return view;
     }
-
 }

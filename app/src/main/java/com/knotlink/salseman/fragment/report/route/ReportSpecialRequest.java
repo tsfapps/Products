@@ -15,12 +15,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.AdapterReportReceipt;
+import com.knotlink.salseman.adapter.report.route.AdapterReportReceipt;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.report.ModelReportReceipt;
+import com.knotlink.salseman.model.report.route.ModelRouteReceipt;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -80,17 +82,22 @@ public class ReportSpecialRequest extends Fragment implements SwipeRefreshLayout
 
         Api api = ApiClients.getApiClients().create(Api.class);
 
-        Call<List<ModelReportReceipt>> call = api.viewReportReceipt(strUserId,"Receipt", dateFrom, dateTo);
-        call.enqueue(new Callback<List<ModelReportReceipt>>() {
+        Call<List<ModelRouteReceipt>> call = api.viewReportReceipt(strUserId,"Special Request", dateFrom, dateTo);
+        call.enqueue(new Callback<List<ModelRouteReceipt>>() {
             @Override
-            public void onResponse(Call<List<ModelReportReceipt>> call, Response<List<ModelReportReceipt>> response) {
-                tModelReportReceipt =response.body();
+            public void onResponse(Call<List<ModelRouteReceipt>> call, Response<List<ModelRouteReceipt>> response) {
+                List<ModelRouteReceipt> tModels =response.body();
                 pbReportAll.setVisibility(View.GONE);
-                tAdapterReportReceipt = new AdapterReportReceipt(tModelReportReceipt, tContext);
-                rvReportAll.setAdapter(tAdapterReportReceipt);
+                if (tModels.size()>0){
+                tAdapterReportReceipt = new AdapterReportReceipt(tModels, tContext);
+                rvReportAll.setAdapter(tAdapterReportReceipt);}
+                else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+
             }
             @Override
-            public void onFailure(Call<List<ModelReportReceipt>> call, Throwable t) {
+            public void onFailure(Call<List<ModelRouteReceipt>> call, Throwable t) {
                 CustomLog.d(Constant.TAG, " Receipt Not Responding : "+t);
 
             }

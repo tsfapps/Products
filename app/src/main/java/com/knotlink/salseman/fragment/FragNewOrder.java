@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -128,6 +129,8 @@ public class FragNewOrder extends Fragment {
         tGpsTracker = new GPSTracker(tContext);
         strLat = String.valueOf(tGpsTracker.latitude);
         strLong = String.valueOf(tGpsTracker.longitude);
+        Log.d(Constant.TAG, "New Order Lat : "+strLat);
+        Log.d(Constant.TAG, "New Order Long : "+strLong);
         SetTitle.tbTitle("New Order", getActivity());
         tvOrderShopName.setText(tModels.get(i).getShopName());
         strShopId = tModels.get(i).getShopId();

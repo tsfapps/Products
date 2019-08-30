@@ -157,6 +157,11 @@
         <item>Convert to Customer</item>
         <item>Declined</item>
     </string-array>
+    <string-array name="exp_type">
+        <item>--select type--</item>
+        <item>User</item>
+        <item>Vehicle</item>
+    </string-array>
 
 
     <string-array name="route_list">
