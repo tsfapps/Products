@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,13 +102,14 @@ public class FragTask extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             @Override
             public void onResponse(Call<List<ModelTask>> call, Response<List<ModelTask>> response) {
                 tModelTask =response.body();
+                Log.d(Constant.TAG, "Task Task Size : "+tModelTask.size());
                 pbFragTask.setVisibility(View.GONE);
                 if (tModelTask.size()!=0){
                 tAdapterTask = new AdapterTask(tModelTask, tContext, tActivity, tFragmentManager);
                 rvTask.setAdapter(tAdapterTask);}
 
                 else {
-                        CustomDialog.showEmptyDialog(tContext);
+                        CustomDialog.showEmptyTask(tContext);
                     }
             }
             @Override

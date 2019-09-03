@@ -1,4 +1,4 @@
-package com.knotlink.salseman.adapter;
+package com.knotlink.salseman.adapter.report.route;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

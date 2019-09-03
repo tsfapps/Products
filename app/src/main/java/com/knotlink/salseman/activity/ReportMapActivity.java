@@ -6,6 +6,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.knotlink.salseman.R;
@@ -40,10 +41,10 @@ public class ReportMapActivity extends FragmentActivity implements OnMapReadyCal
         tMap.getUiSettings().setZoomGesturesEnabled(true);
         tMap.getUiSettings().setCompassEnabled(true);
         LatLng tLogin = new LatLng(strLoginLat, strLoginLong);
-        tMap.addMarker(new MarkerOptions().position(tLogin).title(strLoginAddress));
+        tMap.addMarker(new MarkerOptions().position(tLogin).title(strLoginAddress).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         tMap.moveCamera(CameraUpdateFactory.newLatLng(tLogin));
         tMap.animateCamera(CameraUpdateFactory.zoomTo(12));
         LatLng tLogout = new LatLng(strLogoutLat, strLogoutLong);
-        tMap.addMarker(new MarkerOptions().position(tLogout).title(strLogoutAddress));
+        tMap.addMarker(new MarkerOptions().position(tLogout).title(strLogoutAddress).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
     }
 }

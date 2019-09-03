@@ -97,13 +97,15 @@ public class FragNewOrder extends Fragment {
     private List<ModelShopList> tModels;
     private int i;
     private String strUserType;
+    private String strAreaStatus;
 
-    public static FragNewOrder newInstance(List<ModelShopList> tModels, int i, String strUserType) {
+    public static FragNewOrder newInstance(List<ModelShopList> tModels, int i, String strUserType, String strAreaStatus) {
 
         FragNewOrder fragment = new FragNewOrder();
         fragment.tModels = tModels;
         fragment.i = i;
         fragment.strUserType = strUserType;
+        fragment.strAreaStatus = strAreaStatus;
         return fragment;
     }
 
@@ -300,9 +302,8 @@ public void callApi(){
         String strRemarks = etOrderRemarks.getText().toString().trim();
         String strImage = imageToString(tBitmap, ivUploadOrder);
         String strImageSign = signImageToString();
-
     Api api = ApiClients.getApiClients().create(Api.class);
-    Call<ModelNewOrder> call = api.uploadNewOrder(strUserId, strShopId, strDol, strRemarks, strImageSign, strImage, strLat, strLong);
+    Call<ModelNewOrder> call = api.uploadNewOrder(strUserId, strShopId, strDol, strRemarks, strImageSign, strImage, strLat, strLong, strAreaStatus);
     call.enqueue(new Callback<ModelNewOrder>() {
         @Override
         public void onResponse(Call<ModelNewOrder> call, Response<ModelNewOrder> response) {

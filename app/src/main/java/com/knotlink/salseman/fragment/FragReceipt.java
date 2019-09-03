@@ -90,10 +90,12 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     String[] strPaymentMode ={"--select the payment mode--","Cash","NEFT","Cheque"};
     private List<ModelShopList> tModels;
     private int i;
-    public static FragReceipt newInstance(List<ModelShopList> tModels, int i) {
+    private String strAreaStatus;
+    public static FragReceipt newInstance(List<ModelShopList> tModels, int i, String strAreaStatus) {
         FragReceipt fragment = new FragReceipt();
         fragment.tModels = tModels;
         fragment.i = i;
+        fragment.strAreaStatus = strAreaStatus;
         return fragment;
     }
 
@@ -154,7 +156,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
         pbSpnReceiptInvNo.setVisibility(View.VISIBLE);
         SetTitle.tbTitle("Receipt", getActivity());
         tvReceiptShopName.setText(tModels.get(i).getShopName());
-        tvReceiptTotalOutstandingAmount.setText("Rs. "+tModels.get(i).getTotalOutstandingAmount());
+//        tvReceiptTotalOutstandingAmount.setText("Rs. "+tModels.get(i).getTotalOutstandingAmount());
         llReceiptChequeDetail.setVisibility(View.GONE);
     }
 

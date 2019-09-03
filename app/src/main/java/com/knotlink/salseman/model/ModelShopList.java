@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ModelShopList {
 
+
     @SerializedName("shop_name")
     @Expose
     private String shopName;
@@ -28,15 +29,24 @@ public class ModelShopList {
     @SerializedName("city")
     @Expose
     private String city;
-    @SerializedName("state")
-    @Expose
-    private String state;
     @SerializedName("visit_status")
     @Expose
     private String visitStatus;
-    @SerializedName("not_visit_status")
+    @SerializedName("new_order_status")
     @Expose
-    private String notVisitStatus;
+    private String newOrderStatus;
+    @SerializedName("receipt_status")
+    @Expose
+    private String receiptStatus;
+    @SerializedName("special_request_status")
+    @Expose
+    private String specialRequestStatus;
+    @SerializedName("complain_status")
+    @Expose
+    private String complainStatus;
+    @SerializedName("no_activity_status")
+    @Expose
+    private String noActivityStatus;
     @SerializedName("dispatcher_id")
     @Expose
     private String dispatcherId;
@@ -61,9 +71,6 @@ public class ModelShopList {
     @SerializedName("whatsapp_no")
     @Expose
     private String whatsappNo;
-    @SerializedName("total_outstanding_amount")
-    @Expose
-    private String totalOutstandingAmount;
     @SerializedName("invoice_no")
     @Expose
     private List<String> invoiceNo = null;
@@ -124,14 +131,6 @@ public class ModelShopList {
         this.city = city;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public String getVisitStatus() {
         return visitStatus;
     }
@@ -140,12 +139,44 @@ public class ModelShopList {
         this.visitStatus = visitStatus;
     }
 
-    public String getNotVisitStatus() {
-        return notVisitStatus;
+    public String getNewOrderStatus() {
+        return newOrderStatus;
     }
 
-    public void setNotVisitStatus(String notVisitStatus) {
-        this.notVisitStatus = notVisitStatus;
+    public void setNewOrderStatus(String newOrderStatus) {
+        this.newOrderStatus = newOrderStatus;
+    }
+
+    public String getReceiptStatus() {
+        return receiptStatus;
+    }
+
+    public void setReceiptStatus(String receiptStatus) {
+        this.receiptStatus = receiptStatus;
+    }
+
+    public String getSpecialRequestStatus() {
+        return specialRequestStatus;
+    }
+
+    public void setSpecialRequestStatus(String specialRequestStatus) {
+        this.specialRequestStatus = specialRequestStatus;
+    }
+
+    public String getComplainStatus() {
+        return complainStatus;
+    }
+
+    public void setComplainStatus(String complainStatus) {
+        this.complainStatus = complainStatus;
+    }
+
+    public String getNoActivityStatus() {
+        return noActivityStatus;
+    }
+
+    public void setNoActivityStatus(String noActivityStatus) {
+        this.noActivityStatus = noActivityStatus;
     }
 
     public String getDispatcherId() {
@@ -212,14 +243,6 @@ public class ModelShopList {
         this.whatsappNo = whatsappNo;
     }
 
-    public String getTotalOutstandingAmount() {
-        return totalOutstandingAmount;
-    }
-
-    public void setTotalOutstandingAmount(String totalOutstandingAmount) {
-        this.totalOutstandingAmount = totalOutstandingAmount;
-    }
-
     public List<String> getInvoiceNo() {
         return invoiceNo;
     }
@@ -227,5 +250,4 @@ public class ModelShopList {
     public void setInvoiceNo(List<String> invoiceNo) {
         this.invoiceNo = invoiceNo;
     }
-
 }

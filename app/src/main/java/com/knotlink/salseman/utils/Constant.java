@@ -82,5 +82,9 @@ public class Constant {
     public static  final  String MODEL_BUNDLE="model_bundle";
     public static  final  String MODEL_INTENT="model_intent";
 
+    //Route Activity
+    public static  final  String NEW_ORDER="new_order";
+
+
 
 }

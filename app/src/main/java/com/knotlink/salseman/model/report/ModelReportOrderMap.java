@@ -15,9 +15,12 @@ public class ModelReportOrderMap implements Serializable {
     @SerializedName("longitude")
     @Expose
     private String longitude;
-    @SerializedName("shop_name")
+    @SerializedName("org_name")
     @Expose
-    private String shopName;
+    private String orgName;
+    @SerializedName("area_status")
+    @Expose
+    private String areaStatus;
 
     public String getTime() {
         return time;
@@ -43,11 +46,19 @@ public class ModelReportOrderMap implements Serializable {
         this.longitude = longitude;
     }
 
-    public String getShopName() {
-        return shopName;
+    public String getOrgName() {
+        return orgName;
     }
 
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getAreaStatus() {
+        return areaStatus;
+    }
+
+    public void setAreaStatus(String areaStatus) {
+        this.areaStatus = areaStatus;
     }
 }

@@ -84,12 +84,14 @@ public class FragSalesReturn extends Fragment {
 
     private List<ModelShopList> tModels;
     private int i;
+    private String strAreaStatus;
 
-    public static FragSalesReturn newInstance(List<ModelShopList> tModels, int i) {
+    public static FragSalesReturn newInstance(List<ModelShopList> tModels, int i, String strAreaStatus) {
 
         FragSalesReturn fragment = new FragSalesReturn();
         fragment.tModels = tModels;
         fragment.i = i;
+        fragment.strAreaStatus = strAreaStatus;
         return fragment;
     }
 

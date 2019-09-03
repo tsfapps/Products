@@ -3,8 +3,6 @@ package com.knotlink.salseman.activity;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,13 +22,7 @@ public class RouteMapsActivity extends FragmentActivity implements OnMapReadyCal
 
     private GoogleMap tMap;
     private int i;
-    private double doubleLat;
-    private double doubleLong;
-    private String strLat;
-    private String strLong;
-    private String strAddress;
     private List<ModelReportOrderMap> tModels;
-    private Bitmap markerImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +37,6 @@ public class RouteMapsActivity extends FragmentActivity implements OnMapReadyCal
 
     private void initActivity(){
         tModels = (List<ModelReportOrderMap>)getIntent().getSerializableExtra(Constant.MODEL_INTENT);
-        markerImg = ImageConverter.getBitmapFromVectorDrawable(getApplicationContext(), R.drawable.ic_map_red);
-
 
     }
     @Override
@@ -59,21 +49,36 @@ public class RouteMapsActivity extends FragmentActivity implements OnMapReadyCal
         for(i = 0 ; i < tModels.size()-1 ; i++) {
 
             createMarker(Double.parseDouble(tModels.get(i).getLatitude()), Double.parseDouble(tModels.get(i).getLongitude()),
-                    tModels.get(i).getShopName(), tModels.get(i).getTime(), googleMap);
+                    tModels.get(i).getOrgName(), tModels.get(i).getTime(), googleMap, tModels.get(i).getAreaStatus());
         }
         LatLng lastVisitedShop = new LatLng(Double.parseDouble(tModels.get(i).getLatitude()), Double.parseDouble(tModels.get(i).getLongitude()));
-        tMap.addMarker(new MarkerOptions().position(lastVisitedShop).title(tModels.get(i).getShopName()).snippet(tModels.get(i).getTime()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+       if (tModels.get(i).getAreaStatus().equalsIgnoreCase("0")) {
+            tMap.addMarker(new MarkerOptions().position(lastVisitedShop).title(tModels.get(i).getOrgName()).snippet(tModels.get(i).getTime()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        }else{
+           tMap.addMarker(new MarkerOptions().position(lastVisitedShop).title(tModels.get(i).getOrgName()).snippet(tModels.get(i).getTime()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+
+       }
         tMap.moveCamera(CameraUpdateFactory.newLatLng(lastVisitedShop));
         tMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
     }
 
-    protected Marker createMarker(double latitude, double longitude, String title, String snippet, GoogleMap googleMap) {
+    protected Marker createMarker(double latitude, double longitude, String title, String snippet, GoogleMap googleMap, String strAreaStatus) {
+        if (strAreaStatus.equalsIgnoreCase("0")){
+            return googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(latitude, longitude))
+                    .anchor(0.5f, 0.5f)
+                    .title(title)
+                    .snippet(snippet)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        }else {
+            return googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(latitude, longitude))
+                    .anchor(0.5f, 0.5f)
+                    .title(title)
+                    .snippet(snippet)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        }
 
-        return googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(latitude, longitude))
-                .anchor(0.5f, 0.5f)
-                .title(title)
-                .snippet(snippet));
     }
 }

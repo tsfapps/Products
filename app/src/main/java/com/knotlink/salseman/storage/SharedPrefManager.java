@@ -92,20 +92,23 @@ public class SharedPrefManager {
         return sp.getString(Constant.START_TIME, Constant.EMPTY);
     }
 
+
     public void setReportTimeStart(String startTime){
         SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
         tEditor = tSharedPreferences.edit();
         tEditor.putString(Constant.REPORT_TIME_START, startTime);
         tEditor.apply();
     }
-    public void setStartImage(String strEncodedImg){
-        SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
-         tEditor=tSharedPreferences.edit();
-        tEditor.putString(Constant.START_IMAGE,strEncodedImg);
-        tEditor.apply();
+//    public void setNewOrder(){
+//        SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+//         tEditor=tSharedPreferences.edit();
+//        tEditor.putBoolean(Constant.NEW_ORDER,true);
+//        tEditor.apply(); }
+//    public boolean getNewOrder(){
+//        SharedPreferences sp = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
+//        return sp.getBoolean(Constant.NEW_ORDER, false);
+//    }
 
-
-    }
     public void setReportTimeEnd(String startEndTime){
         SharedPreferences tSharedPreferences = tContext.getSharedPreferences(Constant.TSF_SHARED_PREFENCE, Context.MODE_PRIVATE);
         tEditor = tSharedPreferences.edit();

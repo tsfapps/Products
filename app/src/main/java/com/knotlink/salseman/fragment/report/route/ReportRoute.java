@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -102,24 +103,20 @@ public class ReportRoute extends Fragment {
     }
  @OnClick(R.id.tvRouteOrderMap)
     public void tvRouteOrderMapClicked(View view){
-//        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportComplain.newInstance(dateFrom, dateTo)).addToBackStack(null).commit();
      selectDateDialog("New Order");
     }
-
  @OnClick(R.id.tvRouteReceiptMap)
     public void tvRouteReceiptMapClicked(View view){
-     selectDateDialog("New Order");
-
- }
+     selectDateDialog("Receipt");
+    }
  @OnClick(R.id.tvRouteSpecialMap)
     public void tvRouteSpecialMapClicked(View view){
-     selectDateDialog("New Order");
+     selectDateDialog("Special Request");
     }
  @OnClick(R.id.tvRouteFeedbackMap)
     public void tvRouteFeedbackMapClicked(View view){
-     selectDateDialog("New Order");
+     selectDateDialog("Complaint");
     }
-
 
     private void selectDateDialog(final String strTableName){
         final Calendar myCalendar = Calendar.getInstance();
@@ -191,11 +188,9 @@ public class ReportRoute extends Fragment {
                         else {
                             CustomDialog.showEmptyDialog(tContext);
                         }
-
                     }
-
                     @Override
-                    public void onFailure(Call<List<ModelReportOrderMap>> call, Throwable t) {
+                    public void onFailure(@NonNull Call<List<ModelReportOrderMap>> call, Throwable t) {
 
                     }
                 });

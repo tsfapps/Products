@@ -32,17 +32,28 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.adapter.AdapterTask;
+import com.knotlink.salseman.api.Api;
+import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.fragment.FragDashboard;
 import com.knotlink.salseman.fragment.FragProfile;
 import com.knotlink.salseman.fragment.report.FragReport;
 import com.knotlink.salseman.fragment.FragTask;
+import com.knotlink.salseman.model.task.ModelTask;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.CustomDialog;
+import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomMethods;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.knotlink.salseman.utils.DateUtils.getTodayDate;
 
@@ -54,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private Context tContext;
 
 
+
+//    private String strUserId;
     private String strUserType;
     @BindView(R.id.toolbar)
     protected Toolbar tToolbar;
@@ -67,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected ImageView ivBottomDashboard;
     @BindView(R.id.iv_bottom_report)
     protected ImageView ivBottomReport;
+    @BindView(R.id.tvBottomTaskBadge)
+    protected TextView tvBottomTaskBadge;
     @BindView(R.id.iv_bottom_task)
     protected ImageView ivBottomTask;
     @BindView(R.id.iv_bottom_profile)
@@ -89,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         tContext = getApplicationContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
         strUserType = tSharedPrefManager.getUserType();
+
+        callTaskApi();
         switch (strUserType) {
             case "1":
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance("1")).commit();
@@ -101,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 break;
         }
         requestLocation();
+
     }
 
     @OnClick(R.id.ivToolbarLogo)
@@ -147,6 +165,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    private  void callTaskApi(){
+        String strUserId = tSharedPrefManager.getUserId();
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<List<ModelTask>> call = api.assignedTask(strUserId);
+        call.enqueue(new Callback<List<ModelTask>>() {
+            @Override
+            public void onResponse(Call<List<ModelTask>> call, Response<List<ModelTask>> response) {
+               List<ModelTask> tModelTask =response.body();
+               int taskSize = tModelTask.size();
+               Log.d(Constant.TAG, "Task Size : "+taskSize);
+                if (taskSize>0) {
+                    tvBottomTaskBadge.setVisibility(View.VISIBLE);
+                    tvBottomTaskBadge.setText(String.valueOf(taskSize));
+                }
+                else {
+                    tvBottomTaskBadge.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onFailure(Call<List<ModelTask>> call, Throwable t) {
+                CustomLog.d(Constant.TAG, " Task Not Responding : "+t);
+            }
+        });
     }
 
     private void requestLocation(){

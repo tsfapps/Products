@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.AdapterRoute;
 import com.knotlink.salseman.adapter.AdapterRouteDispatcher;
 import com.knotlink.salseman.utils.SetTitle;
 

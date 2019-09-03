@@ -2,7 +2,6 @@ package com.knotlink.salseman.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -19,7 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.AdapterRoute;
+import com.knotlink.salseman.adapter.report.route.AdapterRoute;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.ModelShopList;
