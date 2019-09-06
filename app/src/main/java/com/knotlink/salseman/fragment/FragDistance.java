@@ -25,7 +25,6 @@ import com.bumptech.glide.Glide;
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.ModelProductList;
 import com.knotlink.salseman.model.distance.ModelDistance;
 import com.knotlink.salseman.model.ModelVehicleList;
 import com.knotlink.salseman.model.distance.ModelDistancePrevious;
@@ -165,7 +164,7 @@ public class FragDistance extends Fragment {
             public void onResponse(Call<ModelStartKm> call, Response<ModelStartKm> response) {
                 ModelStartKm tModel = response.body();
                 etDistanceStartKm.setText(tModel.getStartingKm());
-                Glide.with(tContext).load(Constant.IMAGE_PATH+tModel.getStartingImage()).into(ivUploadStart);
+                Glide.with(tContext).load(Constant.URL_DISTANCE_IMG +tModel.getStartingImage()).into(ivUploadStart);
             }
 
             @Override

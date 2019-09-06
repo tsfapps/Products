@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.activity.ReportMapActivity;
+import com.knotlink.salseman.activity.maps.ReportMapActivity;
 import com.knotlink.salseman.model.report.ModelReportMeeting;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.DateUtils;

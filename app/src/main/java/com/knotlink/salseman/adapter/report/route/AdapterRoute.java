@@ -2,6 +2,8 @@ package com.knotlink.salseman.adapter.report.route;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,16 +14,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.activity.MapsActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.fragment.FragRouteActivity;
+import com.knotlink.salseman.fragment.report.route.ReportNewOrder;
+import com.knotlink.salseman.fragment.report.route.ReportRoute;
 import com.knotlink.salseman.model.ModelShopList;
 import com.knotlink.salseman.model.ModelVisit;
 import com.knotlink.salseman.utils.ButtonBg;
@@ -30,8 +40,15 @@ import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomMethods;
 import com.knotlink.salseman.utils.CustomToast;
+import com.knotlink.salseman.utils.DateUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -65,6 +82,8 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
     @Override
     public void onBindViewHolder(@NonNull final RouteViewHolder routeViewHolder, final int i) {
         final ModelShopList tModel = tModels.get(i);
+        final String strShopId = tModel.getShopId();
+        final String strShopName = tModel.getShopName();
 
         final String strPhoneNo = tModel.getContactNo();
          switch (tModel.getVisitStatus()){
@@ -85,7 +104,6 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
                             routeViewHolder.btnRouteNotVisit, R.drawable.bg_btn_main, true, true);
         }
         routeViewHolder.tvRouteShopName.setText(tModel.getShopName());
-        routeViewHolder.tvRoutePhoneNo.setText(tModel.getContactNo());
         final String strShopLocation = tModel.getShopAddress();
         routeViewHolder.btnRouteVisit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,10 +124,10 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
                 edittext.setSingleLine();
                 FrameLayout container = new FrameLayout(tContext);
                 FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.leftMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
-                params.rightMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
-                params.topMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
-                params.bottomMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
+                params.leftMargin = tContext.getResources().getDimensionPixelSize(R.dimen.dimen_8dp);
+                params.rightMargin = tContext.getResources().getDimensionPixelSize(R.dimen.dimen_8dp);
+                params.topMargin = tContext.getResources().getDimensionPixelSize(R.dimen.dimen_8dp);
+                params.bottomMargin = tContext.getResources().getDimensionPixelSize(R.dimen.dimen_8dp);
                 edittext.setLayoutParams(params);
                 container.addView(edittext);
                 alert.setTitle("Mention the reason");
@@ -177,23 +195,89 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
 
                             }
                         })
+                        .setNegativeButton(strPhoneNo, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (strPhoneNo.length()<10){
+                                    CustomToast.toastTop(tActivity, "Dialing number is incorrect...");
+                                }else {
+                                    CustomMethods.callPhone(strPhoneNo, tActivity, tContext) ;
+                                }
+                            }
+                        })
                         .create()
                         .show();
             }
         });
-
-        routeViewHolder.tvRoutePhoneNo.setOnClickListener(new View.OnClickListener() {
+        routeViewHolder.tvRouteReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final Calendar myCalendar = Calendar.getInstance();
+                final Dialog dialog = new Dialog(tContext);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.row_route_report_date);
+                dialog.setTitle("Select Date Range");
+                dialog.setCancelable(true);
 
-                if (strPhoneNo.length()<10){
-               CustomToast.toastTop(tActivity, "Dialing number is incorrect...");
-                }else {
+                // set the custom dialog components - text, image and button
+                final TextView tvDateFrom = dialog.findViewById(R.id.tvReportOrderDateFrom);
+                final TextView tvDateTo = dialog.findViewById(R.id.tvReportOrderDateTo);
 
-                       CustomMethods.callPhone(strPhoneNo, tActivity, tContext) ;
-                }
+                tvDateFrom.setText(DateUtils.date3Months());
+                tvDateTo.setText(DateUtils.getTodayDate());
+                tvDateFrom.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        {
+                            DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                                      int dayOfMonth) {
+                                    String strCurrentDate = DateUtils.getTodayDate();
+                                    myCalendar.set(Calendar.YEAR, year);
+                                    myCalendar.set(Calendar.MONTH, monthOfYear);
+                                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                    SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
+                                    try {
+                                        Date myDate = sdf.parse(strCurrentDate);
+                                        String strMyDate = sdf.format(myCalendar.getTime());
+                                        Date selDate = sdf.parse(strMyDate);
+                                        if (selDate.compareTo(myDate)<0) {
+                                            tvDateFrom.setText(strMyDate);
+
+                                        }
+                                        else {
+                                            Toast.makeText(tContext, Constant.DATE_DELIVERY,Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            };
+                            new DatePickerDialog(tContext, date, myCalendar
+                                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        }
+                    }
+                });
+                Button btnSubmit =  dialog.findViewById(R.id.btnReportOrderDate);
+                btnSubmit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String strDateFrom = tvDateFrom.getText().toString().trim();
+                        String strDateTo = tvDateTo.getText().toString().trim();
+                        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportRoute.newInstance(strDateFrom, strDateTo, strShopId, strShopName)).addToBackStack(null).commit();
+                        dialog.dismiss();
+                    }
+                });
+
+
+                dialog.show();
             }
         });
+
+
+
 
 
     }
@@ -204,10 +288,10 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
         return tModels.size();
     }
      class RouteViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.tvRoutePhoneNo)
-        TextView tvRoutePhoneNo;
         @BindView(R.id.tv_route_shop_name)
         TextView tvRouteShopName;
+        @BindView(R.id.tvRouteReport)
+        TextView tvRouteReport;
         @BindView(R.id.btn_route_visit)
         Button btnRouteVisit;
         @BindView(R.id.btn_route_notVisit)

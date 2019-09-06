@@ -48,7 +48,7 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="@dimen/dimen_8dp"
             style="@style/rl_spinner_main">
             <ProgressBar
                 android:id="@+id/pbSpnReceiptInvNo"
@@ -96,7 +96,7 @@
             style="@style/et_main" />
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="@dimen/dimen_8dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -128,7 +128,7 @@
                 style="@style/et_main" />
         </LinearLayout>
         <RelativeLayout
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="@dimen/dimen_8dp"
             android:id="@+id/rl_report_spinner_activity"
             style="@style/rl_spinner_main">
 

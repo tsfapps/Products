@@ -10,13 +10,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.route.AdapterReportReceipt;
 import com.knotlink.salseman.adapter.report.route.AdapterRouteOrder;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
@@ -40,32 +41,44 @@ public class ReportNewOrder extends Fragment implements SwipeRefreshLayout.OnRef
 
     private RecyclerView.LayoutManager tLayoutManager;
     private FragmentManager tFragmentManager;
-    private AdapterReportReceipt tAdapterReportReceipt;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
     private List<ModelReportReceipt> tModelReportReceipt;
-    @BindView(R.id.rvReportAll)
-    protected RecyclerView rvReportAll;
-    @BindView(R.id.swrReportAll)
-    protected SwipeRefreshLayout swrReportAll;
-    @BindView(R.id.pbReportAll)
-    protected ProgressBar pbReportAll;
+    @BindView(R.id.tvReportOrderFromDate)
+    protected TextView tvReportOrderFromDate;
+    @BindView(R.id.tvReportOrderToDate)
+    protected TextView tvReportOrderToDate;
+    @BindView(R.id.tvReportOrderShopName)
+    protected TextView tvReportOrderShopName;
+    @BindView(R.id.svReportOrder)
+    protected SearchView svReportOrder;
+    @BindView(R.id.rvReportOrder)
+    protected RecyclerView rvReportOrder;
+    @BindView(R.id.swrReportOrder)
+    protected SwipeRefreshLayout swrReportOrder;
+    @BindView(R.id.pbReportOrder)
+    protected ProgressBar pbReportOrder;
 
+    private String strUserId;
     private String dateFrom;
     private String dateTo;
+    private String shopId;
+    private String strShopName;
 
-    public static ReportNewOrder newInstance(String dateFrom, String dateTo) {
+    public static ReportNewOrder newInstance(String dateFrom, String dateTo, String shopId, String strShopName) {
 
         ReportNewOrder fragment = new ReportNewOrder();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
+        fragment.shopId = shopId;
+        fragment.strShopName = strShopName;
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.report_attendence, container, false);
+        View view = inflater.inflate(R.layout.report_route_all, container, false);
         ButterKnife.bind(this, view);
         initFrag();
         return view;
@@ -74,25 +87,60 @@ public class ReportNewOrder extends Fragment implements SwipeRefreshLayout.OnRef
         tContext = getContext();
         tFragmentManager = getFragmentManager();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        strUserId = tSharedPrefManager.getUserId();
+        tvReportOrderFromDate.setText(dateFrom);
+        tvReportOrderToDate.setText(dateTo);
         SetTitle.tbTitle(" New Order Report", getActivity());
-        pbReportAll.setVisibility(View.VISIBLE);
-        swrReportAll.setOnRefreshListener(this);
+        pbReportOrder.setVisibility(View.VISIBLE);
+        swrReportOrder.setOnRefreshListener(this);
         tLayoutManager = new LinearLayoutManager(tContext);
-        rvReportAll.setLayoutManager(tLayoutManager);
-        callApiReceipt();
+        rvReportOrder.setLayoutManager(tLayoutManager);
+        if (shopId.equalsIgnoreCase("")) {
+            callApiReceipt();
+            svReportOrder.setVisibility(View.VISIBLE);
+            tvReportOrderShopName.setVisibility(View.GONE);
+
+        }else {
+            callApiOrderShop();
+            tvReportOrderShopName.setVisibility(View.VISIBLE);
+            tvReportOrderShopName.setText(strShopName);
+            svReportOrder.setVisibility(View.GONE);
+        }
     }
     private  void callApiReceipt(){
-        String strUserId = tSharedPrefManager.getUserId();
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<List<ModelRouteOrder>> call = api.viewReportNewOrder(strUserId,"New Order", dateFrom, dateTo);
         call.enqueue(new Callback<List<ModelRouteOrder>>() {
             @Override
             public void onResponse(Call<List<ModelRouteOrder>> call, Response<List<ModelRouteOrder>> response) {
                List<ModelRouteOrder>  tModels =response.body();
-                pbReportAll.setVisibility(View.GONE);
+                pbReportOrder.setVisibility(View.GONE);
                 if (tModels.size()>0) {
                     AdapterRouteOrder tAdapterReportReceipt = new AdapterRouteOrder(tContext, tModels);
-                    rvReportAll.setAdapter(tAdapterReportReceipt);
+                    rvReportOrder.setAdapter(tAdapterReportReceipt);
+                }else {
+                    CustomDialog.showEmptyDialog(tContext);
+                }
+            }
+            @Override
+            public void onFailure(Call<List<ModelRouteOrder>> call, Throwable t) {
+                CustomLog.d(Constant.TAG, " Receipt Not Responding : "+t);
+
+            }
+
+        });
+    }
+    private  void callApiOrderShop(){
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<List<ModelRouteOrder>> call = api.viewReportShopOrder(shopId,"New Order", dateFrom, dateTo);
+        call.enqueue(new Callback<List<ModelRouteOrder>>() {
+            @Override
+            public void onResponse(Call<List<ModelRouteOrder>> call, Response<List<ModelRouteOrder>> response) {
+               List<ModelRouteOrder>  tModels =response.body();
+                pbReportOrder.setVisibility(View.GONE);
+                if (tModels.size()>0) {
+                    AdapterRouteOrder tAdapterReportReceipt = new AdapterRouteOrder(tContext, tModels);
+                    rvReportOrder.setAdapter(tAdapterReportReceipt);
                 }else {
                     CustomDialog.showEmptyDialog(tContext);
                 }
@@ -111,9 +159,18 @@ public class ReportNewOrder extends Fragment implements SwipeRefreshLayout.OnRef
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                swrReportAll.setRefreshing(false);
-                callApiReceipt();
-            }
+                swrReportOrder.setRefreshing(false);
+                if (shopId.equalsIgnoreCase("")) {
+                    callApiReceipt();
+                    svReportOrder.setVisibility(View.VISIBLE);
+                    tvReportOrderShopName.setVisibility(View.GONE);
+
+                }else {
+                    callApiOrderShop();
+                    tvReportOrderShopName.setVisibility(View.VISIBLE);
+                    tvReportOrderShopName.setText(strShopName);
+                    svReportOrder.setVisibility(View.GONE);
+                }           }
         }, 2000);
 
     }

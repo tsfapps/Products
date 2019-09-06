@@ -6,7 +6,8 @@ public class Constant {
     public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 101;
 
     public static final String TAG = "tsfapps";
-    public static final String IMAGE_PATH = "https://teocfish.com/knotlink/uploads/distance_upload/";
+    public static final String URL_DISTANCE_IMG = "https://teocfish.com/knotlink/uploads/distance_upload/";
+    public static final String URL_ORDER_IMG = "https://teocfish.com/knotlink/uploads/new_order/";
     public static String SIGN_STATUS = "signDone";
     public static final String TSF_SHARED_PREFENCE = "apartment_shared_pref";
     public static final int STORAGE_PERMISSION_CODE = 23;
@@ -73,12 +74,16 @@ public class Constant {
     public static  final  String ENDING_KM="Ending Km";
 
     //LatLong
+
+    public static  final  String START_DATE="start_date";
     public static  final  String FIRST_LAT="first_lat";
     public static  final  String FIRST_LONG="first_long";
     public static  final  String SECOND_LAT="second_lat";
     public static  final  String SECOND_LONG="second_long";
     public static  final  String START_ADDRESS="start_address";
     public static  final  String END_ADDRESS="end_address";
+    public static  final  String SHOP_NAME="shop_name";
+    public static  final  String AREA_STATUS="area_status";
     public static  final  String MODEL_BUNDLE="model_bundle";
     public static  final  String MODEL_INTENT="model_intent";
 

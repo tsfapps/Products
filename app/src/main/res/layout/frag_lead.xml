@@ -147,7 +147,7 @@
                 style="@style/tv_disable" />
             <RelativeLayout
                 android:layout_weight="1"
-                android:layout_marginStart="@dimen/margin_4"
+                android:layout_marginStart="@dimen/dimen_4dp"
                 android:layout_width="wrap_content"
                 style="@style/rl_spinner_main">
                 <ProgressBar

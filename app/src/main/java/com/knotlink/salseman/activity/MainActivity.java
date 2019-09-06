@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onResponse(Call<List<ModelTask>> call, Response<List<ModelTask>> response) {
                List<ModelTask> tModelTask =response.body();
                int taskSize = tModelTask.size();
-               Log.d(Constant.TAG, "Task Size : "+taskSize);
                 if (taskSize>0) {
                     tvBottomTaskBadge.setVisibility(View.VISIBLE);
                     tvBottomTaskBadge.setText(String.valueOf(taskSize));

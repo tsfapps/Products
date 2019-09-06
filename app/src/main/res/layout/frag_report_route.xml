@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragment.report.route.ReportRoute">
 
+    <TextView
+        android:layout_marginTop="50dp"
+        android:id="@+id/tvRouteShopName"
+        android:text="Shop Name"
+        android:textSize="@dimen/dimen_14sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+      android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginBottom="50dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="100dp"
+
             android:gravity="center"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -68,13 +83,37 @@
                 </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                style="@style/card_dash">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/ll_ReportNoActivity"
+                    style="@style/ll_dash">
+                    <TextView
+                        android:id="@+id/tvRouteNoActivityMap"
+                        style="@style/tv_map_main"
+                        />
+
+                    <ImageView
+                        style="@style/iv_dashboard"
+                        android:tint="@color/black"
+                        android:src="@drawable/ic_no_activity"
+                        />
+                    <TextView
+                        android:text="No Activity"
+                        style="@style/tv_dash_label" />
+
+                </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
 
 
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="100dp"
             android:gravity="center"
             android:orientation="vertical"
             android:layout_weight="1"
@@ -124,6 +163,32 @@
                         android:src="@drawable/ic_main_receipt" />
                     <TextView
                         android:text="@string/feedback_complain"
+                        style="@style/tv_dash_label" />
+
+                </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                style="@style/card_dash">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/tvRouteNoVisit"
+                        android:padding="@dimen/dimen_4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        />
+                    <LinearLayout
+                    android:id="@+id/ll_ReportNoVisit"
+                    style="@style/ll_dash">
+                    <ImageView
+                        android:tint="@color/black"
+                        style="@style/iv_dashboard"
+                        android:src="@drawable/ic_no_visit"/>
+                    <TextView
+                        android:text="No Visit"
                         style="@style/tv_dash_label" />
 
                 </LinearLayout>

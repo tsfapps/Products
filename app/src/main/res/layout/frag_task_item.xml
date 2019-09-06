@@ -27,7 +27,7 @@
                 <!--android:background="@color/blue"/>-->
 
             <LinearLayout
-                android:padding="@dimen/margin_8"
+                android:padding="@dimen/dimen_8dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -156,17 +156,17 @@
             android:text="Remarks"/>
                 <LinearLayout
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_marginTop="@dimen/dimen_8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
         <Button
-            android:layout_marginEnd="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/dimen_8dp"
             android:id="@+id/btnTaskReschedule"
             style="@style/btn_main"
             android:text="Reschedule"
             />
         <Button
-            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginStart="@dimen/dimen_8dp"
             android:id="@+id/btnTaskCompleted"
             style="@style/btn_main"
             android:text="Complete Task"

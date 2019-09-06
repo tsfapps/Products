@@ -685,6 +685,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_report_map">Map</string>
     <string name="title_activity_route_maps">Map</string>
+    <string name="no_visit">No Visit</string>
+    <string name="num_1">1</string>
+    <string name="visit">Visit</string>
+    <string name="title_activity_order_maps">Map</string>
 
 
 </resources>

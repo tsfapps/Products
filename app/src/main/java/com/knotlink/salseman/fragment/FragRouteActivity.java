@@ -231,10 +231,10 @@ public class FragRouteActivity extends Fragment {
         etRemarks.setSingleLine();
         FrameLayout container = new FrameLayout(tContext);
         FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
-        params.rightMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
-        params.topMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
-        params.bottomMargin = tContext.getResources().getDimensionPixelSize(R.dimen.margin_8);
+        params.leftMargin = tContext.getResources().getDimensionPixelSize(R.dimen.dimen_8dp);
+        params.rightMargin = tContext.getResources().getDimensionPixelSize(R.dimen.dimen_8dp);
+        params.topMargin = tContext.getResources().getDimensionPixelSize(R.dimen.dimen_8dp);
+        params.bottomMargin = tContext.getResources().getDimensionPixelSize(R.dimen.dimen_8dp);
         etRemarks.setLayoutParams(params);
         container.addView(etRemarks);
         alert.setTitle("Mention the reason");

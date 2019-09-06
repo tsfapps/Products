@@ -73,7 +73,7 @@
     </EditText>
 
     <Button
-        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginTop="@dimen/dimen_8dp"
         android:id="@+id/btn_taskCompletedSubmit"
         style="@style/btn_main"
         android:background="@drawable/bg_btn_main"

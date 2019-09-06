@@ -2,10 +2,8 @@
 <LinearLayout
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
     <ScrollView
         android:fillViewport="true"
         android:layout_width="match_parent"
@@ -38,6 +36,32 @@
                 android:layout_weight="1"
                 android:text="Prospect"/>
         </RadioGroup>
+        <TextView
+            android:layout_alignParentEnd="true"
+            android:hint="Select Route"
+            style="@style/tv_report" />
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/dimen_4dp"
+            android:layout_width="wrap_content"
+            style="@style/rl_spinner_main">
+            <ProgressBar
+                android:id="@+id/pbSpnMeetingRoute"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <Spinner
+                android:id="@+id/spnMeetingRoute"
+                style="@style/spinner_main"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -46,26 +70,18 @@
                 android:id="@+id/tv_meeting_orgName"
                 android:hint="Organisation Name*"
                 style="@style/tv_report" />
-            <TextView
-                android:layout_alignParentEnd="true"
-                android:hint="Contact Name*"
-                style="@style/tv_report" />
         </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_meeting_orgName"
-            android:inputType="textPersonName"
+        <AutoCompleteTextView
+            android:id="@+id/aCtv_meeting_orgName"
             style="@style/et_main"
+            android:imeOptions="actionSearch"
+            android:inputType="textAutoComplete|textAutoCorrect"
             android:layout_weight="1"/>
 
-        <EditText
-            android:id="@+id/et_meeting_contactName"
-            android:inputType="textPersonName"
-            style="@style/et_main"
-            android:layout_weight="1"/>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -75,8 +91,9 @@
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="WhatsApp Number"
+                android:hint="Contact Name*"
                 style="@style/tv_report" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -89,13 +106,13 @@
                 android:inputType="phone"
                 style="@style/et_main"
                 android:layout_weight="1"/>
-
             <EditText
-                android:id="@+id/et_meeting_whatsapp_no"
-                android:maxLength="10"
-                android:inputType="phone"
+                android:id="@+id/et_meeting_contactName"
+                android:inputType="textPersonName"
                 style="@style/et_main"
                 android:layout_weight="1"/>
+
+
         </LinearLayout>
 
         <RelativeLayout
@@ -106,8 +123,9 @@
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="Land line Number"
+                android:hint="WhatsApp Number"
                 style="@style/tv_report" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -120,21 +138,24 @@
                 style="@style/et_main"
                 android:layout_weight="1"/>
             <EditText
-                android:id="@+id/et_meeting_landLine"
+                android:id="@+id/et_meeting_whatsapp_no"
+                android:maxLength="10"
                 android:inputType="phone"
                 style="@style/et_main"
                 android:layout_weight="1"/>
+
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:hint="Next Meeting Date"
+                android:hint="Meeting Date"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="Select Route"
+                android:hint="Land line Number"
                 style="@style/tv_report" />
+
         </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -145,30 +166,29 @@
                 android:text="20 October 1989"
                 android:layout_weight="1.5"
                 style="@style/tv_disable" />
-            <RelativeLayout
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/margin_4"
-                android:layout_width="wrap_content"
-                style="@style/rl_spinner_main">
-                <ProgressBar
-                    android:id="@+id/pbSpnMeetingRoute"
-                    style="?android:attr/progressBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" />
+            <EditText
+                android:id="@+id/et_meeting_landLine"
+                android:inputType="phone"
+                style="@style/et_main"
+                android:layout_weight="1"/>
 
-                <Spinner
-                    android:id="@+id/spnMeetingRoute"
-                    style="@style/spinner_main"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_down"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/tv_meeting_orgAddress"
+            android:hint="Organisation Address"
+            style="@style/tv_report" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_meetingOrgAddress"
+                android:inputType="textPostalAddress"
+                style="@style/et_main"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

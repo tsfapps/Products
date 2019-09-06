@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <LinearLayout
             android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/main_height"
+            android:layout_marginTop="@dimen/dimen_50dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

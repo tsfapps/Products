@@ -216,9 +216,6 @@ public class FragReport extends Fragment implements AdapterView.OnItemSelectedLi
                         tSharedPrefManager.clearReportTimeStart();
                         tSharedPrefManager.setReportTimeStart(strMyDate);
                         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
-
-//                        tvReportDateFrom.setText(strMyDate);
-
                     }
                     else {
                         CustomToast.toastMid(getActivity(), Constant.DATE_DELIVERY);
@@ -276,7 +273,7 @@ public void reportDistance(View view){
 }
 @OnClick(R.id.ll_report_route)
 public void reportRoute(View view){
-    tFragmentManager.beginTransaction().replace(R.id.container_main, ReportRoute.newInstance(dateFrom, dateTo)).addToBackStack(null).commit();
+    tFragmentManager.beginTransaction().replace(R.id.container_main, ReportRoute.newInstance(dateFrom, dateTo, "", "")).addToBackStack(null).commit();
 }
 @OnClick(R.id.ll_report_leadGeneration)
 public void reportLead(View view){

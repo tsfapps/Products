@@ -1,6 +1,5 @@
-package com.knotlink.salseman.activity;
+package com.knotlink.salseman.activity.maps;
 
-import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,7 +13,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.model.report.ModelReportOrderMap;
 import com.knotlink.salseman.utils.Constant;
-import com.knotlink.salseman.utils.ImageConverter;
 
 import java.util.List;
 

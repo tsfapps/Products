@@ -52,6 +52,57 @@ public class ModelRouteOrder {
     @SerializedName("address")
     @Expose
     private String address;
+    @SerializedName("area_status")
+    @Expose
+    private String areaStatus;
+    @SerializedName("shop_name")
+    @Expose
+    private String shopName;
+    @SerializedName("contact_name")
+    @Expose
+    private String contactName;
+    @SerializedName("contact_no")
+    @Expose
+    private String contactNo;
+    @SerializedName("shop_address")
+    @Expose
+    private String shopAddress;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("route_id")
+    @Expose
+    private String routeId;
+    @SerializedName("gst_no")
+    @Expose
+    private String gstNo;
+    @SerializedName("landline_no")
+    @Expose
+    private String landlineNo;
+    @SerializedName("whatsapp_no")
+    @Expose
+    private String whatsappNo;
+    @SerializedName("image1")
+    @Expose
+    private String image1;
+    @SerializedName("image2")
+    @Expose
+    private String image2;
+    @SerializedName("image3")
+    @Expose
+    private String image3;
+    @SerializedName("date")
+    @Expose
+    private String date;
+    @SerializedName("credit_days")
+    @Expose
+    private String creditDays;
+    @SerializedName("credit_limit")
+    @Expose
+    private String creditLimit;
+    @SerializedName("task_id")
+    @Expose
+    private String taskId;
 
     public String getId() {
         return id;
@@ -181,4 +232,139 @@ public class ModelRouteOrder {
         this.address = address;
     }
 
+    public String getAreaStatus() {
+        return areaStatus;
+    }
+
+    public void setAreaStatus(String areaStatus) {
+        this.areaStatus = areaStatus;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public String getShopAddress() {
+        return shopAddress;
+    }
+
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
+    }
+
+    public String getGstNo() {
+        return gstNo;
+    }
+
+    public void setGstNo(String gstNo) {
+        this.gstNo = gstNo;
+    }
+
+    public String getLandlineNo() {
+        return landlineNo;
+    }
+
+    public void setLandlineNo(String landlineNo) {
+        this.landlineNo = landlineNo;
+    }
+
+    public String getWhatsappNo() {
+        return whatsappNo;
+    }
+
+    public void setWhatsappNo(String whatsappNo) {
+        this.whatsappNo = whatsappNo;
+    }
+
+    public String getImage1() {
+        return image1;
+    }
+
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+    public String getImage3() {
+        return image3;
+    }
+
+    public void setImage3(String image3) {
+        this.image3 = image3;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getCreditDays() {
+        return creditDays;
+    }
+
+    public void setCreditDays(String creditDays) {
+        this.creditDays = creditDays;
+    }
+
+    public String getCreditLimit() {
+        return creditLimit;
+    }
+
+    public void setCreditLimit(String creditLimit) {
+        this.creditLimit = creditLimit;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 }

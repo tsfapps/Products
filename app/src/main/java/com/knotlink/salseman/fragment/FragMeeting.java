@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -27,9 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.adapter.baseadapter.AdapterCustomerList;
 import com.knotlink.salseman.adapter.baseadapter.AdapterRouteSelect;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
+import com.knotlink.salseman.model.ModelCustomerList;
 import com.knotlink.salseman.model.ModelMeeting;
 import com.knotlink.salseman.model.ModelRoute;
 import com.knotlink.salseman.services.GPSTracker;
@@ -44,6 +48,7 @@ import com.knotlink.salseman.utils.SetTitle;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -60,6 +65,8 @@ import static android.app.Activity.RESULT_CANCELED;
 import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedListener {
+    String[] languages = { "C","C++","Java","C#","PHP","JavaScript","jQuery","AJAX","JSON" };
+
     private ModelMeeting tModels;
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
@@ -72,17 +79,16 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
     private String strAdders;
     private String strRouteId;
     private List<ModelRoute> tModelsRoute;
+    private List<ModelCustomerList> tModelsCustomerList;
     private AdapterRouteSelect tAdapterRoute;
 
 
     final Calendar myCalendar = Calendar.getInstance();
-
     String strVendorType;
-
     @BindView(R.id.tv_meeting_orgName)
     protected TextView tvMeetingOrgName;
-    @BindView(R.id.et_meeting_orgName)
-    protected EditText etMeetingOrgName;
+    @BindView(R.id.aCtv_meeting_orgName)
+    protected AutoCompleteTextView aCtvMeetingOrgName;
     @BindView(R.id.et_meeting_contactName)
     protected EditText etMeetingContactName;
     @BindView(R.id.et_meeting_contactNumber)
@@ -95,6 +101,8 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
     protected EditText etMeetingComments;
      @BindView(R.id.et_meeting_landLine)
     protected EditText et_meeting_landLine;
+     @BindView(R.id.et_meetingOrgAddress)
+    protected EditText et_meetingOrgAddress;
     @BindView(R.id.btn_meeting_submit)
     protected Button btnMeetingSubmit;
     @BindView(R.id.iv_upload_meeting)
@@ -132,10 +140,8 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
     public void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
-
         SetTitle.tbTitle("Meeting", getActivity());
         tvMeetingNextDate.setText(DateUtils.getTodayDate());
-
         pbSpnMeetingRoute.setVisibility(View.VISIBLE);
         strVendorType = "Customer";
 
@@ -165,6 +171,27 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
         strAdders = tGpsTracker.getAddressLine(tContext);
         callApiRoute();
         spnMeetingRoute.setOnItemSelectedListener(this);
+
+        aCtvMeetingOrgName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String strAddress = tModelsCustomerList.get(position).getShopAddress();
+                String strContactNo = tModelsCustomerList.get(position).getContactNo();
+                String strContactName = tModelsCustomerList.get(position).getContactName();
+                String strEmailId = tModelsCustomerList.get(position).getEmail();
+                String strWhatsApp = tModelsCustomerList.get(position).getWhatsappNo();
+                String strLandLineNo = tModelsCustomerList.get(position).getLandlineNo();
+                et_meetingOrgAddress.setText(strAddress);
+                etMeetingContactNumber.setText(strContactNo);
+                etMeetingContactName.setText(strContactName);
+                etMeetingEmail.setText(strEmailId);
+                etMeetingWhatsAppNo.setText(strWhatsApp);
+                et_meeting_landLine.setText(strLandLineNo);
+            }
+        });
+
+
     }
 
     private void callApiRoute(){
@@ -178,9 +205,32 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
                 tAdapterRoute = new AdapterRouteSelect(tContext, tModelsRoute);
                 spnMeetingRoute.setAdapter(tAdapterRoute);
             }
-
             @Override
             public void onFailure(Call<List<ModelRoute>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void callApiShopList(String strRouteId){
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<List<ModelCustomerList>> customerListCall = api.getCustomerList(strRouteId, "0");
+        customerListCall.enqueue(new Callback<List<ModelCustomerList>>() {
+            @Override
+            public void onResponse(Call<List<ModelCustomerList>> call, Response<List<ModelCustomerList>> response) {
+                int i;
+                 tModelsCustomerList = response.body();
+                ArrayList<String> searchArrayList= new ArrayList<String>();
+
+                for ( i = 0; i<tModelsCustomerList.size(); i++) {
+                    searchArrayList.add(tModelsCustomerList.get(i).getShopName());
+                }
+                AdapterCustomerList adapter = new AdapterCustomerList(tContext, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, searchArrayList);
+                aCtvMeetingOrgName.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<ModelCustomerList>> call, Throwable t) {
 
             }
         });
@@ -300,7 +350,7 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
         }else {
             strUserId = tSharedPrefManager.getUserId();
         }
-        String strOrgName = etMeetingOrgName.getText().toString().trim();
+        String strOrgName = aCtvMeetingOrgName.getText().toString().trim();
         String strContactName = etMeetingContactName.getText().toString().trim();
         String strContactNumber = etMeetingContactNumber.getText().toString().trim();
         String strWhatsAppNo = etMeetingWhatsAppNo.getText().toString().trim();
@@ -337,6 +387,8 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         strRouteId = tModelsRoute.get(position).getId();
+        callApiShopList(strRouteId);
+
     }
 
     @Override

@@ -55,13 +55,13 @@
             android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_order_request_label"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="@dimen/dimen_8dp"
             style="@style/tv_dash_label"
             android:text="Remarks"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:id="@+id/tv_order_image_label"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="@dimen/dimen_8dp"
             style="@style/tv_dash_label"
             android:text="Upload Image"/>
         </RelativeLayout>

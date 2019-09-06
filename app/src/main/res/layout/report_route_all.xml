@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </RelativeLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swrReportOrder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/llReportOrderTop"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvReportOrderFromDate"
+                android:text="From Date : "
+                android:layout_height="@dimen/dimen_30dp"
+                style="@style/tv_report_top" />
+            <TextView
+                android:id="@+id/tvReportOrderToDate"
+                android:text="To Date : "
+                android:layout_height="@dimen/dimen_30dp"
+                style="@style/tv_report_top" />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/rlReportOrderSv"
+            android:layout_below="@+id/llReportOrderTop"
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.SearchView
+                android:visibility="gone"
+                android:id="@+id/svReportOrder"
+                android:background="@drawable/bg_searc"
+                android:layout_margin="@dimen/dimen_4dp"
+                android:queryHint="Search By Shop Name"
+                android:iconifiedByDefault="false"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
+
+            <TextView
+                android:layout_below="@+id/svReportOrder"
+                android:visibility="gone"
+                android:id="@+id/tvReportOrderShopName"
+                android:text="Shop Name"
+                android:layout_width="match_parent"
+                style="@style/tv_report_top" />
+
+        </RelativeLayout>
+
+
+        <ProgressBar
+            android:layout_centerInParent="true"
+            android:id="@+id/pbReportOrder"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/rlReportOrderSv"
+        android:id="@+id/rvReportOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

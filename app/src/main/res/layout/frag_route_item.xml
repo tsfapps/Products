@@ -2,18 +2,18 @@
 <android.support.v7.widget.CardView android:background="@drawable/bg_tv"
     android:id="@+id/ll_route_item"
     android:gravity="center_vertical"
-    android:elevation="22dp"
-    app:cardCornerRadius="4dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
+    android:elevation="@dimen/dimen_16dp"
+    app:cardCornerRadius="@dimen/dimen_4dp"
+    android:layout_marginStart="@dimen/dimen_8dp"
+    android:layout_marginEnd="@dimen/dimen_8dp"
+    android:layout_marginTop="@dimen/dimen_8dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/dimen_80dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
-        android:padding="4dp"
+        android:padding="@dimen/dimen_4dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,74 +25,89 @@
         <TextView
             android:gravity="center_vertical"
             android:id="@+id/tv_route_shop_name"
-            android:textSize="12sp"
+            android:textSize="@dimen/dimen_12sp"
             android:textStyle="bold"
             android:layout_weight="1"
             android:textColor="@color/colorPrimary"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:text="Shop Name"/>
         <ImageView
             android:id="@+id/iv_route_details"
             android:layout_toStartOf="@+id/iv_route_location"
             android:layout_width="wrap_content"
-            android:layout_marginEnd="@dimen/margin_8"
-            android:paddingStart="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_8"
-            android:paddingBottom="@dimen/margin_8"            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:paddingStart="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_8dp"
+            android:paddingBottom="@dimen/dimen_8dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_details"
             />
 
         <ImageView
             android:id="@+id/iv_route_location"
-            android:paddingStart="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_8"
-            android:paddingBottom="@dimen/margin_8"
+            android:paddingStart="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_8dp"
+            android:paddingBottom="@dimen/dimen_8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_location"
             />
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <Button
             android:id="@+id/btn_route_visit"
             android:background="@drawable/bg_btn_main"
-            android:text="Visit"
+            android:text="@string/visit"
             android:textColor="@color/white"
             android:textAllCaps="false"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:textSize="12sp"
-            android:layout_height="30dp" />
-            <TextView
-                android:text="9709080680"
-                android:textColor="@color/colorPrimary"
+            android:layout_width="@dimen/dimen_100dp"
+            android:textSize="@dimen/dimen_12sp"
+            android:layout_height="@dimen/dimen_30dp" />
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:visibility="visible"
+                    android:background="@drawable/bg_red_badge"
+                    android:id="@+id/tvRouteTaskBadge"
+                    android:text="@string/num_1"
+                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:textSize="@dimen/dimen_12sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_width="@dimen/dimen_24dp"
+                    android:layout_height="@dimen/dimen_24dp"
+                    />
+
+                <TextView
+                android:visibility="visible"
+                android:background="@drawable/ic_report"
+                android:id="@+id/tvRouteReport"
+                android:textSize="@dimen/dimen_12sp"
+                android:textColor="@color/white"
                 android:textStyle="bold"
-                android:drawableStart="@drawable/ic_call"
-                android:id="@+id/tvRoutePhoneNo"
-                android:gravity="center_horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="2dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:gravity="center"
+                android:layout_width="@dimen/dimen_24dp"
+                android:layout_height="@dimen/dimen_24dp"
+                />
+            </LinearLayout>
 
             <Button
+                android:layout_alignParentEnd="true"
                 android:id="@+id/btn_route_notVisit"
                 android:background="@drawable/bg_btn_main"
-                android:text="No Visit"
+                android:text="@string/no_visit"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp" />
-    </LinearLayout>
+                android:textSize="@dimen/dimen_12sp"
+                android:layout_width="@dimen/dimen_100dp"
+                android:layout_height="@dimen/dimen_30dp" />
+    </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

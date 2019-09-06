@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/AppsLeloAndroid/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_check_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/AppsLeloAndroid/plugins/android/lib/android.jar!/images/material_design_icons/device/ic_gps_off_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,8 +29,8 @@
                         <option name="values">
                           <map>
                             <entry key="autoMirrored" value="true" />
-                            <entry key="color" value="16ff0a" />
-                            <entry key="outputName" value="ic_check" />
+                            <entry key="color" value="305ba4" />
+                            <entry key="outputName" value="ic_no_visit" />
                             <entry key="sourceFile" value="C:\Users\user" />
                           </map>
                         </option>

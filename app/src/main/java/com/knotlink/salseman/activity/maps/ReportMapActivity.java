@@ -1,7 +1,9 @@
-package com.knotlink.salseman.activity;
+package com.knotlink.salseman.activity.maps;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,6 +17,7 @@ public class ReportMapActivity extends FragmentActivity implements OnMapReadyCal
     private GoogleMap tMap;
     private String strLoginAddress;
     private String strLogoutAddress;
+    private String srAreaStatus;
     private double strLoginLat;
     private double strLoginLong;
     private double strLogoutLat;
@@ -32,6 +35,7 @@ public class ReportMapActivity extends FragmentActivity implements OnMapReadyCal
         strLogoutLong = Double.parseDouble(getIntent().getStringExtra(Constant.SECOND_LONG));
         strLoginAddress = getIntent().getStringExtra(Constant.START_ADDRESS);
         strLogoutAddress = getIntent().getStringExtra(Constant.END_ADDRESS);
+        srAreaStatus = getIntent().getStringExtra(Constant.AREA_STATUS);
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {

@@ -22,7 +22,7 @@
             </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_marginStart="@dimen/margin_4"
+                    android:layout_marginStart="@dimen/dimen_4dp"
                     style="@style/rl_spinner_main">
                     <Spinner
                         android:id="@+id/spnReturnInvoiceNumber"
@@ -39,7 +39,7 @@
                 style="@style/tv_report" />
 
             <RelativeLayout
-                    android:layout_marginStart="@dimen/margin_4"
+                    android:layout_marginStart="@dimen/dimen_4dp"
                     style="@style/rl_spinner_main">
                     <Spinner
                         android:id="@+id/spnReturnBrand"

@@ -11,8 +11,8 @@
         android:layout_weight="1"
         android:layout_height="50dp"
         android:gravity="center_vertical"
-        android:paddingStart="@dimen/margin_8"
-        android:paddingEnd="@dimen/margin_8"
+        android:paddingStart="@dimen/dimen_8dp"
+        android:paddingEnd="@dimen/dimen_8dp"
         android:text="@string/expense_list"
         android:textColor="@color/colorBlack"/>
 

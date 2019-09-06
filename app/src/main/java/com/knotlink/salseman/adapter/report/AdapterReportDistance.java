@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.activity.ReportMapActivity;
+import com.knotlink.salseman.activity.maps.ReportMapActivity;
 import com.knotlink.salseman.model.report.ModelReportDistance;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.DateUtils;

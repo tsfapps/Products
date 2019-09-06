@@ -15,11 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.route.AdapterReportReceipt;
 import com.knotlink.salseman.adapter.report.route.AdapterRouteReceipt;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.report.ModelReportReceipt;
 import com.knotlink.salseman.model.report.route.ModelRouteReceipt;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
@@ -49,12 +47,14 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
 
     private String dateFrom;
     private String dateTo;
+    private String shopId;
 
-    public static ReportReceipt newInstance(String dateFrom, String dateTo) {
+    public static ReportReceipt newInstance(String dateFrom, String dateTo, String shopId) {
 
         ReportReceipt fragment = new ReportReceipt();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
+        fragment.shopId = shopId;
         return fragment;
     }
 

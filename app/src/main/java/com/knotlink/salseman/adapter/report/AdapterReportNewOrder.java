@@ -29,7 +29,7 @@ public class AdapterReportNewOrder extends RecyclerView.Adapter<AdapterReportNew
     @NonNull
     @Override
     public DistanceViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.report_new_order_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.report_route_order_item, viewGroup, false);
         return new DistanceViewHolder(view);
     }
 

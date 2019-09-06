@@ -7,7 +7,7 @@
     android:fillViewport="true">
         <LinearLayout
             android:layout_marginTop="1dp"
-            android:paddingTop="@dimen/margin_8"
+            android:paddingTop="@dimen/dimen_8dp"
             android:background="@color/colorPrimaryDark"
             android:orientation="horizontal"
             style="@style/ll_main">
@@ -242,12 +242,12 @@
 </LinearLayout>
         <View
             android:background="@color/colorPrimaryDark"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="@dimen/dimen_8dp"
             android:layout_width="match_parent"
             android:layout_height="2dp"/>
         <Button
             android:id="@+id/btn_cash_submit"
-            android:layout_marginBottom="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/dimen_8dp"
             style="@style/btn_main"/>
     </LinearLayout>
 </ScrollView>
