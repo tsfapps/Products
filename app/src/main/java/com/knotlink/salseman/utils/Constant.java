@@ -6,8 +6,12 @@ public class Constant {
     public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 101;
 
     public static final String TAG = "tsfapps";
-    public static final String URL_DISTANCE_IMG = "https://teocfish.com/knotlink/uploads/distance_upload/";
-    public static final String URL_ORDER_IMG = "https://teocfish.com/knotlink/uploads/new_order/";
+//    public static final String URL_IMG_DISTANCE = "https://teocfish.com/knotlinkdemo/uploads/distance_upload/";
+    public static final String URL_IMG_DISTANCE = "https://teocfish.com/knotlink/uploads/distance_upload/";
+//    public static final String URL_IMG_ORDER = "https://teocfish.com/knotlinkdemo/uploads/new_order/";
+    public static final String URL_IMG_ORDER = "https://teocfish.com/knotlink/uploads/new_order/";
+//    public static final String URL_IMG_COMPLAIN = "https://teocfish.com/knotlinkdemo/uploads/complain/";
+    public static final String URL_IMG_COMPLAIN = "https://teocfish.com/knotlink/uploads/complain/";
     public static String SIGN_STATUS = "signDone";
     public static final String TSF_SHARED_PREFENCE = "apartment_shared_pref";
     public static final int STORAGE_PERMISSION_CODE = 23;
@@ -27,6 +31,7 @@ public class Constant {
     public static final String DATE_TOAST = "Enter the valid date...";
     public static final String DATE_DELIVERY = "Choose the correct date...";
 
+    public static final String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
     public static final String EXOTIC_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String EXOTIC_DATE_FORMAT_SEND = "yyyy-MM-dd'T'00:00:00";
     public static final String DATE_FORMAT_dd_MM_yyyy = " dd MM yyyy";
@@ -86,6 +91,8 @@ public class Constant {
     public static  final  String AREA_STATUS="area_status";
     public static  final  String MODEL_BUNDLE="model_bundle";
     public static  final  String MODEL_INTENT="model_intent";
+    public static  final  String NOTES_COUNT="Number of notes of ";
+
 
     //Route Activity
     public static  final  String NEW_ORDER="new_order";

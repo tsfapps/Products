@@ -17,6 +17,44 @@
     <string name="upload_image">Upload Image</string>
     <string name="meeting_progress">Meeting Progress</string>
     <string name="number_of_users">Number\nof users</string>
+    <string name="hello">Hello World, CaptureSignatureActivity!</string>
+    <string name="external_dir">GetSignature</string>
+    <string name="total_amount">Total Expense</string>
+    <string name="current_date">March, 2019</string>
+    <string name="add_event">ADD CALENDAR EVENT</string>
+    <string name="sun">SUN</string>
+    <string name="mon">MON</string>
+
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thu">THU</string>
+    <string name="fri">FRI</string>
+
+    <string name="sat">SAT</string>
+    <string name="last_date">31</string>
+    <string name="feedback_complain">Feedback/\nComplain</string>
+    <!--Custom Calender-->
+    <string name="cancel">Cancel</string>
+    <string name="GPSAlertDialogMessage">It must required to on the gps location in your mobile.</string>
+    <string name="GPSAlertDialogTitle">Make on the GPS Location</string>
+    <string name="special_request">Special Request</string>
+    <string name="feedback_complaint">Feedback / Complaint</string>
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
+    <string name="image">Image</string>
+    <string name="expense_list">Expense List</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_report_map">Map</string>
+    <string name="title_activity_route_maps">Map</string>
+    <string name="no_visit">No Visit</string>
+    <string name="num_1">1</string>
+    <string name="visit">Visit</string>
+    <string name="title_activity_order_maps">Map</string>
+    <string name="sales_return">Sales Return</string>
+    <string name="prospect_task">Prospect Task</string>
+    <string name="customer_task">Customer Task</string>
+    <string name="title_activity_maps_all">Map</string>
+
     <string-array name="meeting_status">
         <item>--Meeting Status--</item>
         <item>Completed</item>
@@ -60,6 +98,8 @@
         <item>INV008</item>
         <item>INV009</item>
     </string-array>
+
+
     <string-array name="city_list">
         <item>--Select City--</item>
         <item>Bangalore</item>
@@ -71,6 +111,8 @@
         <!--<item>Hosur</item>-->
         <!--<item>Sarjapur</item>-->
     </string-array>
+
+
     <string-array name="payment_mode">
         <item>--Select Payment Mode--</item>
         <item>Cash</item>
@@ -78,10 +120,17 @@
         <item>Cheque</item>
     </string-array>
 
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="spinner_login">
         <item>--select type--</item>
         <item>Sales Man</item>
         <item>Dispatcher</item>
+    </string-array>
+    <string-array name="spn_shop_status">
+        <item>--select shop status--</item>
+        <item>0 Shop Closed</item>
+        <item>1 Shop Active</item>
+        <item>2 Shop Inactive</item>
     </string-array>
     <string-array name="spinner_report_sales_manager">
         <item>--select area sales manager--</item>
@@ -108,32 +157,6 @@
         <item>Cash Collection</item>
         <item>Expenses</item>
     </string-array>
-
-    <string name="hello">Hello World, CaptureSignatureActivity!</string>
-    <string name="external_dir">GetSignature</string>
-    <string name="total_amount">Total Expense</string>
-    <!--Custom Calender-->
-    <string name="current_date">March, 2019</string>
-    <string name="add_event">ADD CALENDAR EVENT</string>
-    <string name="sun">SUN</string>
-    <string name="mon">MON</string>
-    <string name="tue">TUE</string>
-    <string name="wed">WED</string>
-    <string name="thu">THU</string>
-    <string name="fri">FRI</string>
-    <string name="sat">SAT</string>
-    <string name="last_date">31</string>
-    <string name="feedback_complain">Feedback/\nComplain</string>
-    <string name="cancel">Cancel</string>
-    <string name="GPSAlertDialogMessage">It must required to on the gps location in your mobile.</string>
-    <string name="GPSAlertDialogTitle">Make on the GPS Location</string>
-    <string name="special_request">Special Request</string>
-    <string name="feedback_complaint">Feedback / Complaint</string>
-    <string name="audio">Audio</string>
-    <string name="video">Video</string>
-    <string name="image">Image</string>
-    <string name="expense_list">Expense List</string>
-
     <string-array name="special_request">
         <item>--select your request--</item>
         <item>Brochure</item>
@@ -162,8 +185,6 @@
         <item>User</item>
         <item>Vehicle</item>
     </string-array>
-
-
     <string-array name="route_list">
         <item>--select route--</item>
         <item>Route A</item>
@@ -175,8 +196,6 @@
         <item>Route H</item>
         <item>Route I</item>
     </string-array>
-
-
     <string-array name="spinner_count">
         <item>0</item>
         <item>1</item>
@@ -680,15 +699,6 @@
         <item>499</item>
         <item>500</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_report_map">Map</string>
-    <string name="title_activity_route_maps">Map</string>
-    <string name="no_visit">No Visit</string>
-    <string name="num_1">1</string>
-    <string name="visit">Visit</string>
-    <string name="title_activity_order_maps">Map</string>
 
 
 </resources>

@@ -56,18 +56,23 @@ public class ReportRoute extends Fragment {
     @BindView(R.id.tvRouteShopName)
     protected TextView tvRouteShopName;
 
+    private  String strUserId;
+    private String strUserType;
+    private String strSelectedUserId;
     private String dateFrom;
     private String dateTo;
     private String shopId;
     private String strShopName;
 
-    public static ReportRoute newInstance(String dateFrom, String dateTo, String shopId, String strShopName) {
+    public static ReportRoute newInstance(String dateFrom, String dateTo, String shopId, String strShopName, String strUserType, String strSelectedUserId) {
 
         ReportRoute fragment = new ReportRoute();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
         fragment.shopId = shopId;
         fragment.strShopName = strShopName;
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
     @Override
@@ -80,34 +85,41 @@ public class ReportRoute extends Fragment {
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        tSharedPrefManager = new SharedPrefManager(tContext);
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")){
+            strUserId = strSelectedUserId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         tvRouteShopName.setText(strShopName);
         tFragmentManager = getFragmentManager();
         SetTitle.tbTitle(" Route Report", getActivity());
      }
     @OnClick(R.id.ll_ReportNewOrder)
     public void reportNewOrderClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportNewOrder.newInstance(dateFrom, dateTo, shopId, strShopName)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportNewOrder.newInstance(dateFrom, dateTo, shopId, strShopName, strUserType, strSelectedUserId)).addToBackStack(null).commit();
     }
 
     @OnClick(R.id.ll_ReportReceipt)
     public void reportReceiptClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportReceipt.newInstance(dateFrom, dateTo, shopId)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportReceipt.newInstance(dateFrom, dateTo, shopId, strUserType, strSelectedUserId)).addToBackStack(null).commit();
     }
     @OnClick(R.id.ll_ReportSpecialRequest)
     public void reportSpecialRequestClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportRequest.newInstance(dateFrom, dateTo, shopId,strShopName)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportRequest.newInstance(dateFrom, dateTo, shopId,strShopName, strUserType, strSelectedUserId)).addToBackStack(null).commit();
     }
     @OnClick(R.id.ll_ReportComplain)
     public void reportComplainClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportComplain.newInstance(dateFrom, dateTo, shopId, strShopName)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportComplain.newInstance(dateFrom, dateTo, shopId, strShopName, strUserType, strSelectedUserId)).addToBackStack(null).commit();
     }
     @OnClick(R.id.ll_ReportNoActivity)
     public void reportNoActivityClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportNoActivity.newInstance(dateFrom, dateTo, shopId, strShopName)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportNoActivity.newInstance(dateFrom, dateTo, shopId, strShopName, strUserType, strSelectedUserId)).addToBackStack(null).commit();
     }
     @OnClick(R.id.ll_ReportNoVisit)
     public void reportNoVisitClicked(View view){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportNoVisit.newInstance(dateFrom, dateTo, shopId, strShopName)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportNoVisit.newInstance(dateFrom, dateTo, shopId, strShopName, strUserType, strSelectedUserId)).addToBackStack(null).commit();
     }
  @OnClick(R.id.tvRouteOrderMap)
     public void tvRouteOrderMapClicked(View view){
@@ -179,8 +191,6 @@ public class ReportRoute extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                String strUserId = tSharedPrefManager.getUserId();
-
                 String strDate = DateUtils.convertDdToYyyy(tvMapDate.getText().toString().trim());
                 Log.d(Constant.TAG, "Date : "+strDate);
                 Api api = ApiClients.getApiClients().create(Api.class);

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.fragment.FragRouteActivity;
 import com.knotlink.salseman.fragment.dispatcher.FragRouteActivityDispatcher;
 
 import butterknife.BindView;

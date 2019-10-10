@@ -55,7 +55,7 @@ public class AdapterRouteOrder extends RecyclerView.Adapter<AdapterRouteOrder.Ro
         final String strAreaStatus = tModel.getAreaStatus();
         final String strDate = tModel.getDate();
 
-        routeOrderViewHolder.ivReportOrderLocation.setOnClickListener(new View.OnClickListener() {
+        routeOrderViewHolder.tvReportOrderLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent tIntent = new Intent(tContext, OrderMapsActivity.class);
@@ -69,10 +69,10 @@ public class AdapterRouteOrder extends RecyclerView.Adapter<AdapterRouteOrder.Ro
             }
         });
 
-        final String imgUrl = Constant.URL_ORDER_IMG+tModel.getOrderedImage();
+        final String imgUrl = Constant.URL_IMG_ORDER +tModel.getOrderedImage();
         Glide.with(tContext)
                 .load(imgUrl)
-                .apply(RequestOptions.placeholderOf(R.drawable.main_logo).error(R.drawable.ic_cross))
+                .apply(RequestOptions.placeholderOf(R.drawable.main_logo).error(R.drawable.bg_camera))
                 .into(routeOrderViewHolder.ivRouteOrderImage);
         routeOrderViewHolder.ivRouteOrderImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +85,7 @@ public class AdapterRouteOrder extends RecyclerView.Adapter<AdapterRouteOrder.Ro
                 ImageView ivZoomImage =  dialog.findViewById(R.id.ivZoomImage);
                 Glide.with(tContext)
                         .load(imgUrl)
-                        .apply(RequestOptions.placeholderOf(R.drawable.main_logo).error(R.drawable.ic_cross))
+                        .apply(RequestOptions.placeholderOf(R.drawable.main_logo).error(R.drawable.bg_camera))
                         .into(ivZoomImage);
 
                 dialog.show();
@@ -106,8 +106,8 @@ public class AdapterRouteOrder extends RecyclerView.Adapter<AdapterRouteOrder.Ro
         protected TextView tvRouteOrderDateOfOrder;
         @BindView(R.id.tvRouteOrderRemarks)
         protected TextView tvRouteOrderRemarks;
-        @BindView(R.id.ivReportOrderLocation)
-        protected ImageView ivReportOrderLocation;
+        @BindView(R.id.tvReportOrderLocation)
+        protected TextView tvReportOrderLocation;
         @BindView(R.id.ivRouteOrderImage)
         protected ImageView ivRouteOrderImage;
 

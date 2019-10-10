@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.storage.SharedPrefManager;
+import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.SetTitle;
 
@@ -44,16 +46,20 @@ public class ReportAttendance extends Fragment implements SwipeRefreshLayout.OnR
     protected SwipeRefreshLayout swrReportAll;
     @BindView(R.id.pbReportAll)
     protected ProgressBar pbReportAll;
-
+    private String strUserId;
     private String dateFrom;
     private String dateTo;
+    private String strUserType;
+    private String strSelectedUserId;
 
 
-    public static ReportAttendance newInstance(String dateFom, String dateTo) {
+    public static ReportAttendance newInstance(String dateFrom, String dateTo, String strUserType, String strSelectedUserId) {
 
         ReportAttendance fragment = new ReportAttendance();
-        fragment.dateFrom = dateFom;
+        fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
     @Nullable
@@ -67,18 +73,23 @@ public class ReportAttendance extends Fragment implements SwipeRefreshLayout.OnR
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
-        SetTitle.tbTitle(" Attendance Report", getActivity());
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")){
+            strUserId = strSelectedUserId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
+        Log.d(Constant.TAG, "Selected User Id : "+strSelectedUserId);
+        SetTitle.tbTitle("Attendance Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvReportAll.setLayoutManager(tLayoutManager);
         pbReportAll.setVisibility(View.VISIBLE);
         swrReportAll.setOnRefreshListener(this);
-
         callApiAttendance();
     }
     private void callApiAttendance(){
-        String strUserId = tSharedPrefManager.getUserId();
+        Log.d(Constant.TAG, "Date from : "+dateFrom+"\nDate to : "+dateTo);
         Api api = ApiClients.getApiClients().create(Api.class);
-
         Call<List<ModelReportAttendance>> call = api.viewReportAttendance(strUserId,"Attendance", dateFrom, dateTo);
         call.enqueue(new Callback<List<ModelReportAttendance>>() {
             @Override
@@ -91,9 +102,7 @@ public class ReportAttendance extends Fragment implements SwipeRefreshLayout.OnR
                 else {
                     CustomDialog.showEmptyDialog(tContext);
                 }
-
             }
-
             @Override
             public void onFailure(Call<List<ModelReportAttendance>> call, Throwable t) {
 

@@ -211,6 +211,18 @@ public class DateUtils {
 
         try {
             Date date=new SimpleDateFormat(Constant.DATE_FORMAT_yyyy__MM__dd,Locale.UK).parse(strOldDate);
+            SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_DD_MMM_YYYY, Locale.UK);
+            return formatter.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+       return null;
+    }
+    public static String yyyy_MM_dd_HH_mm_ss(String strOldDate){
+
+        try {
+            Date date=new SimpleDateFormat(Constant.yyyy_MM_dd_HH_mm_ss,Locale.UK).parse(strOldDate);
             SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
             return formatter.format(date);
 

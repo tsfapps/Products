@@ -2,6 +2,7 @@ package com.knotlink.salseman.model.report;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelReportAttendance {
 
@@ -85,7 +86,7 @@ public class ModelReportAttendance {
     }
 
     public String getLoginDate() {
-        return loginDate;
+        return DateUtils.convertFormatOpposite(loginDate);
     }
 
     public void setLoginDate(String loginDate) {

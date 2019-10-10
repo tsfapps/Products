@@ -73,17 +73,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
             android:background="@drawable/bg_camera"
             android:layout_width="match_parent"
             android:layout_height="150dp">
         <ImageView
-            android:layout_marginTop="16dp"
             android:id="@+id/iv_upload_start"
             android:layout_alignParentStart="true"
             android:layout_width="match_parent"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="4dp"
-            android:padding="2dp"
             android:scaleType="fitXY"
             android:layout_height="match_parent" />
         </LinearLayout>
@@ -143,18 +142,17 @@
             android:layout_height="wrap_content" />
 
             <LinearLayout
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bg_camera"
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="150dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="4dp">
         <ImageView
-            android:padding="2dp"
-            android:layout_marginTop="16dp"
             android:id="@+id/iv_upload_end"
             android:layout_alignParentEnd="true"
             android:layout_width="match_parent"
             android:scaleType="fitXY"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="4dp"
             android:layout_height="match_parent" />
             </LinearLayout>
     <TextView

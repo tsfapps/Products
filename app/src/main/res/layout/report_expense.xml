@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rlSearchView"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <android.support.v7.widget.SearchView
+        android:background="@drawable/bg_searc"
+        android:layout_margin="@dimen/dimen_4dp"
+        android:queryHint="Search Here"
+        android:iconifiedByDefault="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_below="@+id/rlSearchView"
+        android:layout_above="@+id/viewColor"
+        android:id="@+id/swrReportAll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_centerInParent="true"
+            android:id="@+id/pbReportAll"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+        app:layoutManager="android.support.v7.widget.StaggeredGridLayoutManager"
+        app:spanCount="2"
+        android:orientation="vertical"
+        tools:listitem="@layout/report_expenses_item"
+        android:id="@+id/rvReportAll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <View
+        android:id="@+id/viewColor"
+        android:layout_above="@+id/llColor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1dp"
+        android:background="@color/black"/>
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/llColor"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/dimen_4dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/tv_color"
+                android:text="Date"
+                android:drawableTint="@color/red" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Types of expenses"
+                android:drawableTint="@color/blue" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/tv_color"
+                android:text="Total Amount"
+                android:drawableTint="@color/green" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Remarks"
+                android:drawableTint="@color/colorAccent" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

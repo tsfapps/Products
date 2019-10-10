@@ -8,8 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.model.ModelExpenseList;
-import com.knotlink.salseman.model.ModelVehicleList;
+import com.knotlink.salseman.model.dash.route.ModelVehicleList;
 
 import java.util.List;
 

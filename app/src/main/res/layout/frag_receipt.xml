@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:id="@+id/sv_receipt"
+<LinearLayout
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
+    <ScrollView
+        android:fillViewport="true"
+        android:id="@+id/sv_receipt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:padding="16dp"
         android:orientation="vertical"
@@ -13,13 +18,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_receipt_shop_name"
+            android:fontFamily="@font/abril_fatface"
             android:gravity="center"
-            android:textColor="@color/colorBlack"
+            android:text="Shop Name"
+            android:textColor="@color/colorAccent"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="Shop Name"/>
+            android:textStyle="bold"/>
 
         <RelativeLayout
+            android:layout_marginTop="@dimen/dimen_16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
@@ -262,7 +269,7 @@
                 android:layout_height="180dp"
                 sign:penSize="3dp"
                 sign:backgroundColor="@color/white"
-                sign:penColor="@color/black"
+                sign:penColor="@color/colorAccent"
                 sign:enableSignature="true"/>
             <ImageView
                 android:id="@+id/iv_receipt_clear_sign"
@@ -277,5 +284,5 @@
             android:id="@+id/btn_receipt_submit"
             style="@style/btn_main"/>
     </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,19 +52,25 @@ public class ReportExpenses extends Fragment implements SwipeRefreshLayout.OnRef
 
 
 
+    private String strUserId;
     private String dateFrom;
     private String dateTo;
+    private String strUserType;
+    private String strSelectedUserId;
 
-    public static ReportExpenses newInstance(String dateFrom, String dateTo) {
+
+    public static ReportExpenses newInstance(String dateFrom, String dateTo, String strUserType, String strSelectedUserId) {
         ReportExpenses fragment = new ReportExpenses();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.report_attendence, container, false);
+        View view = inflater.inflate(R.layout.report_expense, container, false);
         ButterKnife.bind(this, view);
         initFrag();
         return view;
@@ -71,16 +78,20 @@ public class ReportExpenses extends Fragment implements SwipeRefreshLayout.OnRef
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")){
+            strUserId = strSelectedUserId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         SetTitle.tbTitle(" Expenses Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
-        rvReportAll.setLayoutManager(tLayoutManager);
+        rvReportAll.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         pbReportAll.setVisibility(View.VISIBLE);
         swrReportAll.setOnRefreshListener(this);
         callApiExpenses();
     }
     private  void callApiExpenses(){
-        String strUserId = tSharedPrefManager.getUserId();
-
         Api api = ApiClients.getApiClients().create(Api.class);
 
         Call<List<ModelReportExpenses>> call = api.viewReportExpenses(strUserId,"Expenses", dateFrom, dateTo);

@@ -10,7 +10,7 @@
     <color name="seek_bar_progress">#037e01</color>
     <color name="seek_bar_secondary_progress">#3399CC</color>
 
-    <color name="blue">#000cb4</color>
+
     <color name="grey">#e9e8e8</color>
     <color name="colorGrey">#939393</color>
 
@@ -19,7 +19,15 @@
     <color name="green">#037e01</color>
     <color name="tan_yellow">#e6a504</color>
     <color name="red">#f40101</color>
+    <color name="pink">#FF337D</color>
+    <color name="cyan">#33BBFF</color>
+    <color name="darkPink">#900C3F</color>
+    <color name="blue">#000cb4</color>
     <color name="colorEmpty">#00FCF9F9</color>
     <color name="spn_bg">#e9e8e8</color>
     <color name="spn_bg_stroke">#AAAAAA</color>
+    <color name="colorPink">#E91E63</color>
+    <color name="darkGreen">#025F06</color>
+    <color name="yellow">#FFC107</color>
+    <color name="dark_red">#B10F03</color>
 </resources>

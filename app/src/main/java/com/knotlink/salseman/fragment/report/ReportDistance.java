@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,14 +51,20 @@ public class ReportDistance extends Fragment implements SwipeRefreshLayout.OnRef
     @BindView(R.id.pbReportAll)
     protected ProgressBar pbReportAll;
 
+    private String strUserId;
     private String dateFrom;
     private String dateTo;
+    private String strUserType;
+    private String strSelectedUserId;
 
-    public static ReportDistance newInstance(String dateFrom, String dateTo) {
+
+    public static ReportDistance newInstance(String dateFrom, String dateTo, String strUserType, String strSelectedUserId) {
 
         ReportDistance fragment = new ReportDistance();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
 
@@ -72,15 +79,20 @@ public class ReportDistance extends Fragment implements SwipeRefreshLayout.OnRef
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")){
+            strUserId = strSelectedUserId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         SetTitle.tbTitle(" Distance Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
-        rvReportAll.setLayoutManager(tLayoutManager);
+        rvReportAll.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         pbReportAll.setVisibility(View.VISIBLE);
         swrReportAll.setOnRefreshListener(this);
         callApiDistance();
     }
     private  void callApiDistance(){
-        String strUserId = tSharedPrefManager.getUserId();
         Api api = ApiClients.getApiClients().create(Api.class);
 
         Call<List<ModelReportDistance>> call = api.viewReportDistance(strUserId,"Distance", dateFrom, dateTo);

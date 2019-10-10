@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/noticeTopMenu"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_red"
+                android:text="@string/sales_return"/>
+
+            <TextView
+                android:id="@+id/tvNoticeComplainRequest"
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_green"
+                android:text="@string/special_request"
+                />
+            <TextView
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_yellow"
+                android:text="@string/feedback_complain"
+                />
+
+        </LinearLayout>
+        <ScrollView
+            android:layout_below="@+id/noticeTopMenu"
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvNoticeComplainLabel"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/feedback_complain"
+                    android:textColor="@color/yellow"
+                    style="@style/tv_header" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="-12dp"
+            android:id="@+id/rv_notice_complain"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/frag_notice_complain_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

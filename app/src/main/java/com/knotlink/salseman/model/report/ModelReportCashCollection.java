@@ -2,6 +2,8 @@ package com.knotlink.salseman.model.report;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelReportCashCollection {
 
@@ -89,7 +91,7 @@ public class ModelReportCashCollection {
     }
 
     public String getDatetime() {
-        return datetime;
+        return DateUtils.convertFormatOpposite(datetime);
     }
 
     public void setDatetime(String datetime) {
@@ -97,7 +99,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash2000() {
-        return cash2000;
+        return Constant.NOTES_COUNT +"2000 : "+cash2000;
     }
 
     public void setCash2000(String cash2000) {
@@ -105,7 +107,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash500() {
-        return cash500;
+        return Constant.NOTES_COUNT +"500 : "+ cash500;
     }
 
     public void setCash500(String cash500) {
@@ -113,7 +115,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash200() {
-        return cash200;
+        return Constant.NOTES_COUNT +"200 : " + cash200;
     }
 
     public void setCash200(String cash200) {
@@ -121,7 +123,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash100() {
-        return cash100;
+        return Constant.NOTES_COUNT +"100 : "+ cash100;
     }
 
     public void setCash100(String cash100) {
@@ -129,7 +131,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash50() {
-        return cash50;
+        return Constant.NOTES_COUNT +"50 : "+ cash50;
     }
 
     public void setCash50(String cash50) {
@@ -137,7 +139,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash20() {
-        return cash20;
+        return Constant.NOTES_COUNT +"20 : "+ cash20;
     }
 
     public void setCash20(String cash20) {
@@ -145,7 +147,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash10() {
-        return cash10;
+        return Constant.NOTES_COUNT +"10 : "+ cash10;
     }
 
     public void setCash10(String cash10) {
@@ -153,7 +155,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash5() {
-        return cash5;
+        return Constant.NOTES_COUNT +"5 : "+ cash5;
     }
 
     public void setCash5(String cash5) {
@@ -161,7 +163,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash2() {
-        return cash2;
+        return Constant.NOTES_COUNT +"2 : "+ cash2;
     }
 
     public void setCash2(String cash2) {
@@ -169,7 +171,7 @@ public class ModelReportCashCollection {
     }
 
     public String getCash1() {
-        return cash1;
+        return Constant.NOTES_COUNT +"1 : "+ cash1;
     }
 
     public void setCash1(String cash1) {
@@ -177,7 +179,7 @@ public class ModelReportCashCollection {
     }
 
     public String getTotal() {
-        return total;
+        return "Total number of notes : "+ total;
     }
 
     public void setTotal(String total) {
@@ -217,7 +219,7 @@ public class ModelReportCashCollection {
     }
 
     public String getNoCheque() {
-        return noCheque;
+        return "No. of check collected : "+ noCheque;
     }
 
     public void setNoCheque(String noCheque) {
@@ -225,7 +227,7 @@ public class ModelReportCashCollection {
     }
 
     public String getTotalAmount() {
-        return totalAmount;
+        return "Total cash collected : "+ totalAmount;
     }
 
     public void setTotalAmount(String totalAmount) {

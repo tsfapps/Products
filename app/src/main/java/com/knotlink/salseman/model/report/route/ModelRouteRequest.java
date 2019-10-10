@@ -2,6 +2,7 @@ package com.knotlink.salseman.model.report.route;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelRouteRequest {
     @SerializedName("id")
@@ -120,7 +121,7 @@ public class ModelRouteRequest {
     }
 
     public String getTaskAssignDate() {
-        return taskAssignDate;
+        return DateUtils.convertFormatOpposite(taskAssignDate);
     }
 
     public void setTaskAssignDate(String taskAssignDate) {
@@ -200,7 +201,7 @@ public class ModelRouteRequest {
     }
 
     public String getRemarks() {
-        return remarks;
+        return "Remarks\n"+remarks;
     }
 
     public void setRemarks(String remarks) {

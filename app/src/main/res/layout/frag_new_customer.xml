@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:padding="16dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
-
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -302,5 +302,5 @@
             android:id="@+id/btnNewCustomerSubmit"
             style="@style/btn_main"/>
     </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>

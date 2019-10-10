@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.fragment.FragNewOrder;
-import com.knotlink.salseman.fragment.FragReceipt;
+import com.knotlink.salseman.fragment.dashboard.route.FragNewOrder;
+import com.knotlink.salseman.fragment.dashboard.route.FragReceipt;
 import com.knotlink.salseman.utils.SetTitle;
 
 import butterknife.ButterKnife;

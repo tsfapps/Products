@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
+        android:id="@+id/rlSearchView"
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -14,11 +18,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     </RelativeLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_below="@+id/rlSearchView"
+        android:layout_above="@+id/viewColor"
         android:id="@+id/swrReportAll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ProgressBar
@@ -28,9 +36,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     <android.support.v7.widget.RecyclerView
+        app:layoutManager="android.support.v7.widget.StaggeredGridLayoutManager"
+        app:spanCount="2"
+        android:orientation="vertical"
+        tools:listitem="@layout/report_distance_item"
         android:id="@+id/rvReportAll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+    <View
+        android:id="@+id/viewColor"
+        android:layout_above="@+id/llColor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1dp"
+        android:background="@color/black"/>
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/llColor"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/dimen_4dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/tv_color"
+                android:text="Staring km Reading"
+                android:drawableTint="@color/blue" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Ending km Reading"
+                android:drawableTint="@color/colorAccent" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/tv_color"
+                android:text="Distance Travelled"
+                android:drawableTint="@color/tan_yellow" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Total Distance Travelled"
+                android:drawableTint="@color/green" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

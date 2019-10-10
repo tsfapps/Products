@@ -29,9 +29,9 @@ public class CustomDialog {
         btn1.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
     }
-    public static void showEmptyTask(final Context context) {
+    public static void showEmptyTitle(final Context context, String strTitleMessage) {
         final SweetAlertDialog alertDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
-        alertDialog.setTitleText("No available tasks to show");
+        alertDialog.setTitleText(strTitleMessage);
         alertDialog.setConfirmText("Okay");
         alertDialog.setConfirmClickListener( new SweetAlertDialog.OnSweetClickListener() {
             @Override

@@ -73,6 +73,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:layout_marginTop="10dp"
+                                android:textSize="@dimen/dimen_14sp"
                                 android:text="Shift "
                                 android:textColor="@color/colorWhite"
                                 />
@@ -84,6 +85,14 @@
                                 android:textSize="26sp"
                                 android:textColor="@color/colorWhite"
                                 android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_att_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="30 Sept 2019"
+                                android:textSize="@dimen/dimen_14sp"
+                                android:textColor="@color/colorWhite"
+                                 />
                             <!--<TextView-->
 
                                 <!--android:layout_width="wrap_content"-->

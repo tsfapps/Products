@@ -47,9 +47,8 @@ public class AdapterReportColdCall extends RecyclerView.Adapter<AdapterReportCol
         final String strEndAddress = "Customer Address : "+tModel.getCustomerAddress();
         final String strStartAddress = "Customer Address : "+tModel.getCustomerAddress();
 
-        String strAssDate = DateUtils.convertYyyyToDd(tModel.getTaskAssignDate());
-        String strDueDate = DateUtils.convertYyyyToDd(tModel.getTaskDueDate());
-        distanceViewHolder.tvReportColdCallDate.setText(strAssDate);
+
+        distanceViewHolder.tvReportColdCallDate.setText(tModel.getTaskAssignDate());
         distanceViewHolder.tvReportColdCallVendorName.setText(tModel.getOrgName());
         distanceViewHolder.tvReportColdCallContactName.setText(tModel.getCustomerName());
         distanceViewHolder.tvReportColdCallContactNumber.setText(tModel.getCustomerContactNo());

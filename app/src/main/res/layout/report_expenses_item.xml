@@ -3,9 +3,7 @@
     android:gravity="center_vertical"
     android:elevation="22dp"
     app:cardCornerRadius="4dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
+   android:layout_margin="0.5dp"
     app:cardUseCompatPadding="true"
     app:contentPadding="4dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,27 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
         <TextView
-           style="@style/tv_report"
-            android:text="Date"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Type Of Expense"/>
-
-        <TextView
-            style="@style/tv_report"
-            android:text="Amount"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Remarks"/>
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-        <TextView
+            android:textColor="@color/red"
             android:id="@+id/tvReportDate"
            style="@style/tv_report"
             android:text="Date"/>
@@ -54,10 +32,12 @@
             android:text="Type of expense"/>
 
         <TextView
+            android:textColor="@color/green"
             android:id="@+id/tvReportAmount"
             style="@style/tv_report"
             android:text="Amount"/>
         <TextView
+            android:textColor="@color/colorAccent"
             android:id="@+id/tvReportRemarks"
             style="@style/tv_report"
             android:text="Remarks"/>

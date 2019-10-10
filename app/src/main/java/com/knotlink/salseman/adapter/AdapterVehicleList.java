@@ -7,16 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.fragment.FragDistance;
-import com.knotlink.salseman.fragment.FragVehicleList;
-import com.knotlink.salseman.model.ModelVehicleList;
+import com.knotlink.salseman.fragment.dashboard.FragDistance;
+import com.knotlink.salseman.model.dash.route.ModelVehicleList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

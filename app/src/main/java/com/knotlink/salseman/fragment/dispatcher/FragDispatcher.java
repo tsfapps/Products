@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.fragment.FragCash;
-import com.knotlink.salseman.fragment.FragDistance;
-import com.knotlink.salseman.fragment.FragExpenses;
+import com.knotlink.salseman.fragment.dashboard.FragCash;
+import com.knotlink.salseman.fragment.dashboard.FragDistance;
+import com.knotlink.salseman.fragment.dashboard.FragExpenses;
 import com.knotlink.salseman.utils.SetTitle;
 
 import butterknife.ButterKnife;

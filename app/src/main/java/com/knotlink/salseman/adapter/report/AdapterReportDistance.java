@@ -40,7 +40,6 @@ public class AdapterReportDistance extends RecyclerView.Adapter<AdapterReportDis
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportDistance tModel = tModels.get(i);
-        String strDate = DateUtils.convertYyyyToDd(tModel.getDate());
 
         final String strLoginLat = tModel.getStartLat();
         final String strLoginLong = tModel.getStartLong();
@@ -49,7 +48,7 @@ public class AdapterReportDistance extends RecyclerView.Adapter<AdapterReportDis
         final String strEndAddress = "Ending Address : "+tModel.getEndingAddress();
         final String strStartAddress = "Starting Address : "+tModel.getStartingAddress();
 
-        distanceViewHolder.tvReportDistanceDate.setText(strDate);
+        distanceViewHolder.tvReportDistanceDate.setText(tModel.getDate());
         distanceViewHolder.tvReportDistanceStartKm.setText(tModel.getStartingKm());
         distanceViewHolder.tvReportDistanceEndKm.setText(tModel.getEndingKm());
         distanceViewHolder.tvReportDistanceDisTravelled.setText(tModel.getDistanceTraveled());
@@ -73,7 +72,6 @@ public class AdapterReportDistance extends RecyclerView.Adapter<AdapterReportDis
     public int getItemCount() {
         return tModels.size();
     }
-
     public class DistanceViewHolder extends RecyclerView.ViewHolder{
 
         @BindView(R.id.tv_report_distance_date)

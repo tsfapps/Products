@@ -47,14 +47,20 @@ public class ReportLead extends Fragment implements SwipeRefreshLayout.OnRefresh
     @BindView(R.id.pbReportAll)
     protected ProgressBar pbReportAll;
 
+    private String strUserId;
     private String dateFrom;
     private String dateTo;
+    private String strUserType;
+    private String strSelectedUserId;
 
-    public static ReportLead newInstance(String dateFrom, String dateTo) {
+
+    public static ReportLead newInstance(String dateFrom, String dateTo, String strUserType, String strSelectedUserId) {
 
         ReportLead fragment = new ReportLead();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
     @Nullable
@@ -68,6 +74,12 @@ public class ReportLead extends Fragment implements SwipeRefreshLayout.OnRefresh
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")){
+            strUserId = strSelectedUserId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         SetTitle.tbTitle(" Lead Generation Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvReportAll.setLayoutManager(tLayoutManager);
@@ -76,8 +88,6 @@ public class ReportLead extends Fragment implements SwipeRefreshLayout.OnRefresh
         callApiLead();
     }
     private  void callApiLead(){
-        String strUserId = tSharedPrefManager.getUserId();
-
         Api api = ApiClients.getApiClients().create(Api.class);
 
         Call<List<ModelReportLeadGeneration>> call = api.viewReportLead(strUserId,"Lead", dateFrom, dateTo);

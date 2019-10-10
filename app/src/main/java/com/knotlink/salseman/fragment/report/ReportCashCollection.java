@@ -7,8 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,21 +49,27 @@ public class ReportCashCollection extends Fragment implements SwipeRefreshLayout
     @BindView(R.id.pbReportAll)
     protected ProgressBar pbReportAll;
 
+    private String strUserId;
     private String dateFrom;
     private String dateTo;
+    private String strUserType;
+    private String strSelectedUserId;
 
-    public static ReportCashCollection newInstance(String dateFrom, String dateTo) {
+
+    public static ReportCashCollection newInstance(String dateFrom, String dateTo, String strUserType, String strSelectedUserId) {
 
         ReportCashCollection fragment = new ReportCashCollection();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.report_attendence, container, false);
+        View view = inflater.inflate(R.layout.report_cash, container, false);
         ButterKnife.bind(this, view);
         initFrag();
         return view;
@@ -69,16 +77,20 @@ public class ReportCashCollection extends Fragment implements SwipeRefreshLayout
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")){
+            strUserId = strSelectedUserId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         SetTitle.tbTitle(" Meeting Report", getActivity());
-        tLayoutManager = new LinearLayoutManager(tContext);
-        rvReportAll.setLayoutManager(tLayoutManager);
+
+        rvReportAll.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         pbReportAll.setVisibility(View.VISIBLE);
         swrReportAll.setOnRefreshListener(this);
         callCahApi();
     }
     private  void callCahApi(){
-        String strUserId = tSharedPrefManager.getUserId();
-
         Api api = ApiClients.getApiClients().create(Api.class);
 
         Call<List<ModelReportCashCollection>> call = api.viewReportCash(strUserId,"Cash", dateFrom, dateTo);
@@ -88,7 +100,7 @@ public class ReportCashCollection extends Fragment implements SwipeRefreshLayout
                 tModelReportCash =response.body();
                 pbReportAll.setVisibility(View.GONE);
                 if (tModelReportCash.size()>0){
-                tAdapterReportMeeting = new AdapterReportCashCollection(tModelReportCash, tContext);
+                tAdapterReportMeeting = new AdapterReportCashCollection(tModelReportCash);
                 rvReportAll.setAdapter(tAdapterReportMeeting);}
                 else {
                     CustomDialog.showEmptyDialog(tContext);

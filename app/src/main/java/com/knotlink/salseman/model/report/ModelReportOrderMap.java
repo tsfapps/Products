@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class ModelReportOrderMap implements Serializable {
+
     @SerializedName("time")
     @Expose
     private String time;
@@ -15,12 +16,18 @@ public class ModelReportOrderMap implements Serializable {
     @SerializedName("longitude")
     @Expose
     private String longitude;
-    @SerializedName("org_name")
+    @SerializedName("shop_name")
     @Expose
-    private String orgName;
+    private String shopName;
+    @SerializedName("lat_long_address")
+    @Expose
+    private String latLongAddress;
     @SerializedName("area_status")
     @Expose
     private String areaStatus;
+    @SerializedName("image")
+    @Expose
+    private String image;
 
     public String getTime() {
         return time;
@@ -46,12 +53,20 @@ public class ModelReportOrderMap implements Serializable {
         this.longitude = longitude;
     }
 
-    public String getOrgName() {
-        return orgName;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getLatLongAddress() {
+        return latLongAddress;
+    }
+
+    public void setLatLongAddress(String latLongAddress) {
+        this.latLongAddress = latLongAddress;
     }
 
     public String getAreaStatus() {
@@ -60,5 +75,13 @@ public class ModelReportOrderMap implements Serializable {
 
     public void setAreaStatus(String areaStatus) {
         this.areaStatus = areaStatus;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

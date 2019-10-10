@@ -49,15 +49,21 @@ public class ReportColdCall extends Fragment implements SwipeRefreshLayout.OnRef
     @BindView(R.id.pbReportAll)
     protected ProgressBar pbReportAll;
 
+    private String strUserId;
     private String dateFrom;
     private String dateTo;
+    private String strUserType;
+    private String strSelectedUserId;
 
-    public static ReportColdCall newInstance(String dateFrom, String dateTo) {
+
+    public static ReportColdCall newInstance(String dateFrom, String dateTo, String strUserType, String strSelectedUserId) {
 
 
         ReportColdCall fragment = new ReportColdCall();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
     @Nullable
@@ -71,6 +77,12 @@ public class ReportColdCall extends Fragment implements SwipeRefreshLayout.OnRef
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")){
+            strUserId = strSelectedUserId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         SetTitle.tbTitle(" Cold Call Report", getActivity());
         tLayoutManager = new LinearLayoutManager(tContext);
         rvReportAll.setLayoutManager(tLayoutManager);
@@ -79,8 +91,6 @@ public class ReportColdCall extends Fragment implements SwipeRefreshLayout.OnRef
         callApiColdCall();
     }
     private  void callApiColdCall(){
-        String strUserId = tSharedPrefManager.getUserId();
-
         Api api = ApiClients.getApiClients().create(Api.class);
 
         Call<List<ModelReportColdCall>> call = api.viewReportColdCall(strUserId,"Cold Call", dateFrom, dateTo);

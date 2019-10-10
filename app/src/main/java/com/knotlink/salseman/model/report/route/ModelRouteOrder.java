@@ -2,6 +2,7 @@ package com.knotlink.salseman.model.report.route;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelRouteOrder {
     @SerializedName("id")
@@ -137,7 +138,7 @@ public class ModelRouteOrder {
     }
 
     public String getRemarks() {
-        return remarks;
+        return "Remarks :\n"+ remarks;
     }
 
     public void setRemarks(String remarks) {
@@ -169,7 +170,7 @@ public class ModelRouteOrder {
     }
 
     public String getDatetime() {
-        return datetime;
+        return DateUtils.convertFormatOpposite(datetime);
     }
 
     public void setDatetime(String datetime) {

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.model.ModelRoute;
 import com.knotlink.salseman.model.ModelSalesMan;
 import com.knotlink.salseman.utils.ListContent;
 

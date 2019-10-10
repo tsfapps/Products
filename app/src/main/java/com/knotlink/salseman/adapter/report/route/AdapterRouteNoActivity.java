@@ -50,7 +50,7 @@ public class AdapterRouteNoActivity extends RecyclerView.Adapter<AdapterRouteNoA
         final String strAreaStatus = tModel.getAreaStatus();
         final String strDate = tModel.getDateTime();
 
-        routeNoActivityViewHolder.ivReportComplainLocation.setOnClickListener(new View.OnClickListener() {
+        routeNoActivityViewHolder.tvReportComplainLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent tIntent = new Intent(tContext, OrderMapsActivity.class);
@@ -77,8 +77,8 @@ public class AdapterRouteNoActivity extends RecyclerView.Adapter<AdapterRouteNoA
         protected TextView tvRouteComplainDateOfOrder;
         @BindView(R.id.tvRouteComplainRemarks)
         protected TextView tvRouteComplainRemarks;
-        @BindView(R.id.ivReportComplainLocation)
-        protected ImageView ivReportComplainLocation;
+        @BindView(R.id.tvReportComplainLocation)
+        protected TextView tvReportComplainLocation;
 
         public RouteNoActivityViewHolder(@NonNull View itemView) {
             super(itemView);

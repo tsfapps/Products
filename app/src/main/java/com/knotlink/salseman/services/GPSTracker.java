@@ -21,14 +21,6 @@ import android.util.Log;
 
 import com.knotlink.salseman.R;
 
-/**
- * Create this Class from tutorial :
- * http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial
- *
- * For Geocoder read this : http://stackoverflow.com/questions/472313/android-reverse-geocoding-getfromlocation
- *
- */
-
 public class GPSTracker extends Service implements LocationListener {
 
     // Get Class Name
@@ -88,31 +80,14 @@ public class GPSTracker extends Service implements LocationListener {
             if (isGPSEnabled) {
                 this.isGPSTrackingEnabled = true;
 
-                Log.d(TAG, "Application use GPS Service");
-
-                /*
-                 * This provider determines location using
-                 * satellites. Depending on conditions, this provider may take a while to return
-                 * a location fix.
-                 */
-
                 provider_info = LocationManager.GPS_PROVIDER;
 
             } else if (isNetworkEnabled) { // Try to get location if you Network Service is enabled
                 this.isGPSTrackingEnabled = true;
 
-                Log.d(TAG, "Application use Network State to get GPS coordinates");
-
-                /*
-                 * This provider determines location based on
-                 * availability of cell tower and WiFi access points. Results are retrieved
-                 * by means of a network lookup.
-                 */
                 provider_info = LocationManager.NETWORK_PROVIDER;
 
             }
-
-            // Application can use GPS or Network Provider
             if (!provider_info.isEmpty()) {
                 locationManager.requestLocationUpdates(
                         provider_info,
@@ -129,7 +104,6 @@ public class GPSTracker extends Service implements LocationListener {
         }
         catch (Exception e)
         {
-            //e.printStackTrace();
             Log.e(TAG, "Impossible to connect to LocationManager", e);
         }
     }
@@ -143,11 +117,7 @@ public class GPSTracker extends Service implements LocationListener {
             longitude = location.getLongitude();
         }
     }
-
-    /**
-     * GPSTracker latitude getter and setter
-     * @return latitude
-     */
+    
     public double getLatitude() {
         if (location != null) {
             latitude = location.getLatitude();
@@ -156,10 +126,6 @@ public class GPSTracker extends Service implements LocationListener {
         return latitude;
     }
 
-    /**
-     * GPSTracker longitude getter and setter
-     * @return
-     */
     public double getLongitude() {
         if (location != null) {
             longitude = location.getLongitude();
@@ -168,28 +134,17 @@ public class GPSTracker extends Service implements LocationListener {
         return longitude;
     }
 
-    /**
-     * GPSTracker isGPSTrackingEnabled getter.
-     * Check GPS/wifi is enabled
-     */
     public boolean getIsGPSTrackingEnabled() {
 
         return this.isGPSTrackingEnabled;
     }
 
-    /**
-     * Stop using GPS listener
-     * Calling this method will stop using GPS in your app
-     */
     public void stopUsingGPS() {
         if (locationManager != null) {
             locationManager.removeUpdates(GPSTracker.this);
         }
     }
 
-    /**
-     * Function to show settings alert dialog
-     */
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
@@ -223,23 +178,13 @@ public class GPSTracker extends Service implements LocationListener {
         alertDialog.show();
     }
 
-    /**
-     * Get list of address by latitude and longitude
-     * @return null or List<Address>
-     */
     public List<Address> getGeocoderAddress(Context context) {
         if (location != null) {
 
             Geocoder geocoder = new Geocoder(context, Locale.ENGLISH);
 
             try {
-                /**
-                 * Geocoder.getFromLocation - Returns an array of Addresses
-                 * that are known to describe the area immediately surrounding the given latitude and longitude.
-                 */
-                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, this.geocoderMaxResults);
-
-                return addresses;
+                return geocoder.getFromLocation(latitude, longitude, this.geocoderMaxResults);
             } catch (IOException e) {
                 //e.printStackTrace();
                 Log.e(TAG, "Impossible to connect to Geocoder", e);
@@ -249,69 +194,46 @@ public class GPSTracker extends Service implements LocationListener {
         return null;
     }
 
-    /**
-     * Try to get AddressLine
-     * @return null or addressLine
-     */
     public String getAddressLine(Context context) {
         List<Address> addresses = getGeocoderAddress(context);
 
         if (addresses != null && addresses.size() > 0) {
             Address address = addresses.get(0);
-            String addressLine = address.getAddressLine(0);
-
-            return addressLine;
+            return address.getAddressLine(0);
         } else {
             return null;
         }
     }
 
-    /**
-     * Try to get Locality
-     * @return null or locality
-     */
     public String getCity(Context context) {
         List<Address> addresses = getGeocoderAddress(context);
 
         if (addresses != null && addresses.size() > 0) {
             Address address = addresses.get(0);
-            String locality = address.getLocality();
-
-            return locality;
+            return address.getLocality();
         }
         else {
             return null;
         }
     }
 
-    /**
-     * Try to get Postal Code
-     * @return null or postalCode
-     */
     public String getPostalCode(Context context) {
         List<Address> addresses = getGeocoderAddress(context);
 
         if (addresses != null && addresses.size() > 0) {
             Address address = addresses.get(0);
-            String postalCode = address.getPostalCode();
-
-            return postalCode;
+            return address.getPostalCode();
         } else {
             return null;
         }
     }
 
-    /**
-     * Try to get CountryName
-     * @return null or postalCode
-     */
+
     public String getCountryName(Context context) {
         List<Address> addresses = getGeocoderAddress(context);
         if (addresses != null && addresses.size() > 0) {
             Address address = addresses.get(0);
-            String countryName = address.getCountryName();
-
-            return countryName;
+            return address.getCountryName();
         } else {
             return null;
         }

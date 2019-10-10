@@ -2,7 +2,6 @@ package com.knotlink.salseman.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.model.ModelProductList;
+import com.knotlink.salseman.model.dash.route.ModelProductList;
 
 import java.util.ArrayList;
 import java.util.List;

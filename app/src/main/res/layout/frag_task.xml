@@ -1,23 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/swrFragTask"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout
+    android:background="@color/grey"
+    android:paddingEnd="@dimen/dimen_8dp"
+    android:paddingStart="@dimen/dimen_8dp"
     android:gravity="center_vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:layout_height="match_parent">
     <ProgressBar
         android:layout_centerInParent="true"
         android:id="@+id/pbFragTask"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/rvTask"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
-    </RelativeLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v4.widget.NestedScrollView
+            android:layout_above="@+id/viewColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/rlSpnTaskAreaSalesMan"
+                android:layout_marginTop="4dp"
+                style="@style/rl_spinner_main">
+                <ProgressBar
+                    android:id="@+id/pbSpnTaskAreaSales"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+
+                <Spinner
+                    android:id="@+id/spnTaskAreaSalesMan"
+                    style="@style/spinner_main"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlSpnTaskSalesMan"
+                android:layout_marginTop="4dp"
+                style="@style/rl_spinner_main">
+                <ProgressBar
+                    android:id="@+id/pbSpnTaskSales"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+
+                <Spinner
+                    android:id="@+id/spnTaskSalesMan"
+                    style="@style/spinner_main"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tvTaskCustomerLabel"
+                android:text="@string/customer_task"
+                android:textColor="@color/green"
+                style="@style/tv_main_header" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/frag_task_item"/>
+            <TextView
+                android:id="@+id/tvTaskProspectLabel"
+                android:text="@string/prospect_task"
+                android:textColor="@color/red"
+                style="@style/tv_main_header" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvTaskProspect"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/frag_task_prospect_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    <View
+        android:id="@+id/viewColor"
+        android:layout_above="@+id/llColor"
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1dp"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/llColor"
+        android:layout_alignParentBottom="true"
+        android:paddingStart="@dimen/dimen_16sp"
+        android:paddingEnd="@dimen/dimen_16sp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/tv_color"
+                android:text="Task for the day"
+                android:drawableTint="@color/red"
+                />
+            <TextView
+                style="@style/tv_color"
+                android:text="Upcoming Task"
+                android:drawableTint="@color/tan_yellow" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Old Unattended Task"
+                android:drawableTint="@color/pink"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/tv_color"
+                android:text="Rescheduled Task"
+                android:drawableTint="@color/blue" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Completed Task"
+                android:drawableTint="@color/green" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Rescheduled not completed"
+                android:drawableTint="@color/darkPink" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+</layout>

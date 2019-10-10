@@ -11,8 +11,8 @@
         app:contentPadding="@dimen/dimen_32dp"
         android:layout_margin="1dp"
         app:cardCornerRadius="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="250dp"
+        android:layout_height="180dp">
         <LinearLayout
             android:orientation="vertical"
             android:padding="8dp"

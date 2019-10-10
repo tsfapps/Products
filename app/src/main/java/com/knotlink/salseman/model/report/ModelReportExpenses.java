@@ -2,6 +2,7 @@ package com.knotlink.salseman.model.report;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelReportExpenses {
 
@@ -52,7 +53,7 @@ public class ModelReportExpenses {
     }
 
     public String getDatetime() {
-        return datetime;
+        return DateUtils.convertFormatOpposite(datetime);
     }
 
     public void setDatetime(String datetime) {
@@ -68,7 +69,7 @@ public class ModelReportExpenses {
     }
 
     public String getAmount() {
-        return amount;
+        return "₹"+amount;
     }
 
     public void setAmount(String amount) {

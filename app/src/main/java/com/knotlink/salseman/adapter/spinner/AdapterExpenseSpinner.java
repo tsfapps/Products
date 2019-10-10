@@ -41,7 +41,7 @@ public class AdapterExpenseSpinner extends BaseAdapter {
         return 0;
     }
 
-    @SuppressLint("ViewHolder")
+    @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.spn_expense_type, null);

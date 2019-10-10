@@ -15,13 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,11 +27,11 @@ import com.knotlink.salseman.R;
 import com.knotlink.salseman.activity.MapsActivity;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.fragment.FragRouteActivity;
-import com.knotlink.salseman.fragment.report.route.ReportNewOrder;
+import com.knotlink.salseman.fragment.dashboard.route.FragRouteActivity;
+import com.knotlink.salseman.fragment.FragTask;
 import com.knotlink.salseman.fragment.report.route.ReportRoute;
-import com.knotlink.salseman.model.ModelShopList;
-import com.knotlink.salseman.model.ModelVisit;
+import com.knotlink.salseman.model.dash.route.ModelShopList;
+import com.knotlink.salseman.model.dash.route.ModelVisit;
 import com.knotlink.salseman.utils.ButtonBg;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomDialog;
@@ -62,15 +60,17 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
     private List<ModelShopList> tModels;
     private String strUSerId;
     private String strUSerType;
+    private String strSelectedUserId;
 
-    public AdapterRoute(Activity tActivity, Context tContext, FragmentManager tFragmentManager, List<ModelShopList> tModels, String strUSerId, String strUSerType) {
+    public AdapterRoute(Activity tActivity, Context tContext, FragmentManager tFragmentManager, List<ModelShopList> tModels,
+                        String strUSerId, String strUSerType, String strSelectedUserId) {
         this.tActivity = tActivity;
         this.tContext = tContext;
         this.tFragmentManager = tFragmentManager;
         this.tModels = tModels;
         this.strUSerId = strUSerId;
         this.strUSerType = strUSerType;
-    }
+        this.strSelectedUserId = strSelectedUserId; }
 
     @NonNull
     @Override
@@ -84,7 +84,28 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
         final ModelShopList tModel = tModels.get(i);
         final String strShopId = tModel.getShopId();
         final String strShopName = tModel.getShopName();
-
+        final String strShopStatus = tModel.getStatus();
+        if (strShopStatus.equalsIgnoreCase("Closed")){
+            routeViewHolder.tvRouteShopStatus.setVisibility(View.VISIBLE);
+            routeViewHolder.tvRouteShopStatus.setText("C");
+            routeViewHolder.tvRouteShopStatus.setBackgroundResource(R.drawable.bg_badge_red);
+        }
+        if (strShopStatus.equalsIgnoreCase("Inactive")){
+            routeViewHolder.tvRouteShopStatus.setVisibility(View.VISIBLE);
+            routeViewHolder.tvRouteShopStatus.setText("I");
+            routeViewHolder.tvRouteShopStatus.setBackgroundResource(R.drawable.bg_badge_yellow); }
+        if (tModel.getCounter().equalsIgnoreCase("0")){
+            routeViewHolder.tvRouteTaskBadge.setVisibility(View.GONE);
+        }else {
+            routeViewHolder.tvRouteTaskBadge.setVisibility(View.VISIBLE);
+            routeViewHolder.tvRouteTaskBadge.setText(tModel.getCounter());
+        }
+        routeViewHolder.tvRouteTaskBadge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tFragmentManager.beginTransaction().replace(R.id.container_main, FragTask.newInstance(strUSerType)).addToBackStack(null).commit();
+            }
+        });
         final String strPhoneNo = tModel.getContactNo();
          switch (tModel.getVisitStatus()){
             case "0":
@@ -99,9 +120,6 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
                 ButtonBg.setNotVisitButtonBg(routeViewHolder.btnRouteVisit, R.drawable.bg_simple_grey,
                         routeViewHolder.btnRouteNotVisit, R.drawable.bg_simple_red, false, false);
                 break;
-                default:
-                    ButtonBg.setNotVisitButtonBg(routeViewHolder.btnRouteVisit, R.drawable.bg_btn_main,
-                            routeViewHolder.btnRouteNotVisit, R.drawable.bg_btn_main, true, true);
         }
         routeViewHolder.tvRouteShopName.setText(tModel.getShopName());
         final String strShopLocation = tModel.getShopAddress();
@@ -160,7 +178,6 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
                         }else {
                             CustomDialog.showEmptyDialog(tContext);
                         }
-
                     }
                 });
 
@@ -266,7 +283,8 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
                     public void onClick(View v) {
                         String strDateFrom = tvDateFrom.getText().toString().trim();
                         String strDateTo = tvDateTo.getText().toString().trim();
-                        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportRoute.newInstance(strDateFrom, strDateTo, strShopId, strShopName)).addToBackStack(null).commit();
+                        tFragmentManager.beginTransaction().replace(R.id.container_main, ReportRoute.newInstance(strDateFrom, strDateTo,
+                                strShopId, strShopName, strUSerType, strSelectedUserId)).addToBackStack(null).commit();
                         dialog.dismiss();
                     }
                 });
@@ -292,6 +310,10 @@ public class AdapterRoute extends RecyclerView.Adapter<AdapterRoute.RouteViewHol
         TextView tvRouteShopName;
         @BindView(R.id.tvRouteReport)
         TextView tvRouteReport;
+        @BindView(R.id.tvRouteTaskBadge)
+        TextView tvRouteTaskBadge;
+        @BindView(R.id.tvRouteShopStatus)
+        TextView tvRouteShopStatus;
         @BindView(R.id.btn_route_visit)
         Button btnRouteVisit;
         @BindView(R.id.btn_route_notVisit)

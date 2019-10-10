@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ScrollView
         android:fillViewport="true"
@@ -13,15 +16,37 @@
             android:layout_height="match_parent">
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvReturnShopName"
+                android:fontFamily="@font/abril_fatface"
+                android:gravity="center"
+                android:text="Shop Name"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
             <RelativeLayout
+                android:layout_marginTop="@dimen/dimen_16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:hint="Invoice Number"
+                    android:text="Invoice Number"
                     style="@style/tv_report" />
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    android:text="Article Number"
+                    style="@style/tv_report" />
+
             </RelativeLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <RelativeLayout
+                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/dimen_4dp"
                     style="@style/rl_spinner_main">
                     <Spinner
@@ -34,15 +59,13 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"/>
                 </RelativeLayout>
-            <TextView
-                android:hint="Brand"
-                style="@style/tv_report" />
 
             <RelativeLayout
-                    android:layout_marginStart="@dimen/dimen_4dp"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/dimen_4dp"
                     style="@style/rl_spinner_main">
                     <Spinner
-                        android:id="@+id/spnReturnBrand"
+                        android:id="@+id/spnReturnArticle"
                         style="@style/spinner_main"/>
                     <ImageView
                         android:layout_width="wrap_content"
@@ -52,7 +75,7 @@
                         android:layout_centerVertical="true"/>
                 </RelativeLayout>
 
-
+            </LinearLayout>
 
 
 
@@ -61,11 +84,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:hint="Article Number"
+                    android:text="Invoice Date"
                     style="@style/tv_report" />
                 <TextView
                     android:layout_alignParentEnd="true"
-                    android:hint="Quantity"
+                    android:text="Size"
                     style="@style/tv_report" />
             </RelativeLayout>
 
@@ -73,15 +96,55 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/etReturnArticleNumber"
-                    style="@style/et_main"
+                <TextView
+                    android:text="Date"
+                    android:id="@+id/etReturnDate"
+                    style="@style/tv_main"
                     android:layout_weight="1"/>
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/dimen_4dp"
+                    style="@style/rl_spinner_main">
+                    <Spinner
+                        android:id="@+id/spnReturnSize"
+                        style="@style/spinner_main"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_down"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+                 <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="MRP"
+                    style="@style/tv_report" />
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    android:text="Quantity"
+                    style="@style/tv_report" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="MRP"
+                    android:id="@+id/etReturnMrp"
+                    android:inputType="phone"
+                    style="@style/tv_main"/>
+
                 <EditText
                     android:id="@+id/etReturnQuantity"
-                    android:inputType="phone"
+                    android:inputType="number"
                     style="@style/et_main"
                     android:layout_weight="1"/>
+
             </LinearLayout>
                 <TextView
                     android:text="Reason"

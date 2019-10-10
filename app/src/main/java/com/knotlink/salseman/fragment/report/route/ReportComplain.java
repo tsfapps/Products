@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ import retrofit2.Response;
 
 public class ReportComplain extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private RecyclerView.LayoutManager tLayoutManager;
     private SharedPrefManager tSharedPrefManager;
     private Context tContext;
     @BindView(R.id.tvReportOrderFromDate)
@@ -56,16 +56,21 @@ public class ReportComplain extends Fragment implements SwipeRefreshLayout.OnRef
     @BindView(R.id.pbReportOrder)
     protected ProgressBar pbReportOrder;
 
+    private String strUserId;
+    private String strUserType;
+    private String strSelectedUserId;
     private String dateFrom;
     private String dateTo;
     private String shopId;
     private String strShopName;
-    public static ReportComplain newInstance(String dateFrom, String dateTo, String shopId, String strShopName) {
+    public static ReportComplain newInstance(String dateFrom, String dateTo, String shopId, String strShopName, String strUserType, String strSelectedUserId) {
         ReportComplain fragment = new ReportComplain();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
         fragment.shopId = shopId;
         fragment.strShopName = strShopName;
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
     @Nullable
@@ -79,13 +84,19 @@ public class ReportComplain extends Fragment implements SwipeRefreshLayout.OnRef
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0") ){
+            strUserId = strSelectedUserId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         SetTitle.tbTitle("Complain Report", getActivity());
         pbReportOrder.setVisibility(View.VISIBLE);
         swrReportOrder.setOnRefreshListener(this);
         tvReportOrderFromDate.setText(dateFrom);
         tvReportOrderToDate.setText(dateTo);
-        tLayoutManager = new LinearLayoutManager(tContext);
-        rvReportOrder.setLayoutManager(tLayoutManager);
+
+        rvReportOrder.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         if (shopId.equalsIgnoreCase("")) {
             callApiRequest();
             svReportOrder.setVisibility(View.VISIBLE);
@@ -98,7 +109,6 @@ public class ReportComplain extends Fragment implements SwipeRefreshLayout.OnRef
         }
     }
     private  void callApiRequest(){
-        String strUserId = tSharedPrefManager.getUserId();
         Api api = ApiClients.getApiClients().create(Api.class);
         Call<List<ModelRouteComplain>> call = api.viewReportComplain(strUserId,"Complain", dateFrom, dateTo);
         call.enqueue(new Callback<List<ModelRouteComplain>>() {

@@ -41,7 +41,6 @@
             android:hint="Select Route"
             style="@style/tv_report" />
         <RelativeLayout
-            android:layout_weight="1"
             android:layout_marginStart="@dimen/dimen_4dp"
             android:layout_width="wrap_content"
             style="@style/rl_spinner_main">
@@ -222,13 +221,13 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_margin="2dp"
                 android:background="@drawable/ic_sales_photo_add"
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/iv_upload_meeting"
                     android:scaleType="fitXY"
-                    android:padding="2dp"
-                    android:layout_marginStart="-2dp"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />

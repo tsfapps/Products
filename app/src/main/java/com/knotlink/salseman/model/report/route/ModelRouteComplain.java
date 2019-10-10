@@ -2,6 +2,7 @@ package com.knotlink.salseman.model.report.route;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelRouteComplain {
 
@@ -131,8 +132,9 @@ public class ModelRouteComplain {
         this.userId = userId;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getRemarks()
+    {
+        return "Remarks\n"+ remarks;
     }
 
     public void setRemarks(String remarks) {
@@ -172,7 +174,7 @@ public class ModelRouteComplain {
     }
 
     public String getDatetime() {
-        return datetime;
+        return DateUtils.convertFormatOpposite(datetime);
     }
 
     public void setDatetime(String datetime) {

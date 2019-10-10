@@ -3,9 +3,7 @@
     android:gravity="center_vertical"
     android:elevation="@dimen/dimen_16dp"
     app:cardCornerRadius="@dimen/dimen_4dp"
-    android:layout_marginStart="@dimen/dimen_8dp"
-    android:layout_marginEnd="@dimen/dimen_8dp"
-    android:layout_marginTop="@dimen/dimen_8dp"
+  android:layout_margin=".5dp"
     app:cardUseCompatPadding="true"
     app:contentPadding="@dimen/dimen_4dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,67 +13,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:padding="@dimen/dimen_4dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_marginTop="@dimen/dimen_0dp"
-                android:textStyle="bold"
+                android:textColor="@color/green"
                 android:id="@+id/tvRouteRequestShopName"
-                style="@style/tv_report"
+                style="@style/tv_color_content"
                 android:text="Shop Name" />
-            <TextView
-                style="@style/tv_report"
-                android:text="Date of Order"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
                 <TextView
-                android:textStyle="bold"
+               android:textColor="@color/red"
                 android:id="@+id/tvRouteRequestDateOfOrder"
-                style="@style/tv_report"
+                style="@style/tv_color_content"
                 android:text="Date of Order" />
             <TextView
                 android:textStyle="bold"
-                style="@style/tv_report"
+                style="@style/tv_color_content"
                 android:id="@+id/tvReportShopRequestType"
                 android:layout_alignParentEnd="true"
-                android:text="Request Type" />
-            </RelativeLayout>
+                android:text="Request Type"
+                android:textColor="@color/tan_yellow"/>
             <TextView
-                style="@style/tv_report"
+                style="@style/tv_color_content"
+                android:textColor="@color/colorAccent"
                 android:text="Remarks"
-                />
-            <TextView
-                android:layout_marginTop="@dimen/dimen_0dp"
-                style="@style/tv_report"
-                android:hint="Remarks"
                 android:textStyle="bold"
                 android:id="@+id/tvRouteRequestRemarks"
                 android:gravity="start"/>
         </LinearLayout>
-            <ImageView
-                android:layout_alignParentEnd="true"
-                android:id="@+id/ivReportRequestLocation"
-                android:paddingStart="@dimen/dimen_8dp"
-                android:paddingEnd="@dimen/dimen_8dp"
-                android:paddingBottom="@dimen/dimen_8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_location"
+        <LinearLayout
+
+            style="@style/ll_map_main">
+            <TextView
+                android:id="@+id/tvReportRequestLocation"
+                style="@style/tv_map_main"
                 />
-
-
-
-
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -2,6 +2,7 @@ package com.knotlink.salseman.model.report;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelReportDistance {
     @SerializedName("id")
@@ -106,7 +107,7 @@ public class ModelReportDistance {
     }
 
     public String getDate() {
-        return date;
+        return DateUtils.convertFormatOpposite(date);
     }
 
     public void setDate(String date) {
@@ -114,7 +115,7 @@ public class ModelReportDistance {
     }
 
     public String getStartingKm() {
-        return startingKm;
+        return startingKm+" km";
     }
 
     public void setStartingKm(String startingKm) {
@@ -130,7 +131,7 @@ public class ModelReportDistance {
     }
 
     public String getEndingKm() {
-        return endingKm;
+        return endingKm+" km";
     }
 
     public void setEndingKm(String endingKm) {
@@ -146,7 +147,7 @@ public class ModelReportDistance {
     }
 
     public String getDistanceTraveled() {
-        return distanceTraveled;
+        return distanceTraveled+" km";
     }
 
     public void setDistanceTraveled(String distanceTraveled) {
@@ -282,7 +283,7 @@ public class ModelReportDistance {
     }
 
     public String getTotalKm() {
-        return totalKm;
+        return totalKm+" km";
     }
 
     public void setTotalKm(String totalKm) {

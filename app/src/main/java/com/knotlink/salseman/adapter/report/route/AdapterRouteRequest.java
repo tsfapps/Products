@@ -51,7 +51,7 @@ public class AdapterRouteRequest extends RecyclerView.Adapter<AdapterRouteReques
         final String strAreaStatus = tModel.getAreaStatus();
         final String strDate = tModel.getTaskAssignDate();
 
-        routeRequestViewHolder.ivReportRequestLocation.setOnClickListener(new View.OnClickListener() {
+        routeRequestViewHolder.tvReportRequestLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent tIntent = new Intent(tContext, OrderMapsActivity.class);
@@ -80,8 +80,8 @@ public class AdapterRouteRequest extends RecyclerView.Adapter<AdapterRouteReques
         protected TextView tvReportShopRequestType;
         @BindView(R.id.tvRouteRequestRemarks)
         protected TextView tvRouteRequestRemarks;
-        @BindView(R.id.ivReportRequestLocation)
-        protected ImageView ivReportRequestLocation;
+        @BindView(R.id.tvReportRequestLocation)
+        protected TextView tvReportRequestLocation;
 
         public RouteRequestViewHolder(@NonNull View itemView) {
             super(itemView);

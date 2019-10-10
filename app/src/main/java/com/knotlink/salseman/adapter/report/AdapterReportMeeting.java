@@ -40,8 +40,8 @@ public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeet
     @Override
     public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
         ModelReportMeeting tModel = tModels.get(i);
-        String strAssDate = DateUtils.convertYyyyToDd(tModel.getTaskAssignDate());
-        String strDueDate = DateUtils.convertYyyyToDd(tModel.getTaskDueDate());
+
+
 
         final String strLoginLat = tModel.getLatitude();
         final String strLoginLong = tModel.getLongitude();
@@ -50,7 +50,7 @@ public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeet
         final String strEndAddress = "Customer Address : "+tModel.getCustomerAddress();
         final String strStartAddress = "Customer Address : "+tModel.getCustomerAddress();
 
-        distanceViewHolder.tvReportMeetingDate.setText(strAssDate);
+        distanceViewHolder.tvReportMeetingDate.setText(tModel.getTaskAssignDate());
         distanceViewHolder.tvReportMeetingVendorType.setText(tModel.getVendorType());
         distanceViewHolder.tvReportMeetingVendorName.setText(tModel.getOrgName());
         distanceViewHolder.tvReportMeetingContactName.setText(tModel.getCustomerName());
@@ -60,7 +60,7 @@ public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeet
         distanceViewHolder.tvReportMeetingWhatsApp.setText(tModel.getWhatsappNo());
         distanceViewHolder.tvReportMeetingAddress.setText(tModel.getCustomerAddress());
         distanceViewHolder.tvReportMeetingMeetingStatus.setText(tModel.getStatus());
-        distanceViewHolder.getTvReportMeetingMeetingDate.setText(strDueDate);
+        distanceViewHolder.getTvReportMeetingMeetingDate.setText(tModel.getTaskDueDate());
         distanceViewHolder.getTvReportMeetingMeetingTime.setText(tModel.getTaskTime());
         distanceViewHolder.tvReportMeetingRemarks.setText(tModel.getRemarks());
         distanceViewHolder.tvReportMeetingMap.setOnClickListener(new View.OnClickListener() {

@@ -3,9 +3,9 @@
     android:gravity="center_vertical"
     android:elevation="22dp"
     app:cardCornerRadius="4dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginStart="@dimen/dimen_1dp"
+    android:layout_marginEnd="@dimen/dimen_1dp"
+    android:layout_marginTop="@dimen/dimen_2dp"
     app:cardUseCompatPadding="true"
     app:contentPadding="4dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,6 +23,58 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+<!--        <LinearLayout-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--        <TextView-->
+<!--           style="@style/tv_report"-->
+<!--            android:text="Date"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 2000"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 500"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 200"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 100"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 50"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 20"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 10"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 5"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 2"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Cash 1"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Total Number"/>-->
+<!--        <TextView-->
+<!--            style="@style/tv_report"-->
+<!--            android:text="Total Amount"/>-->
+<!--            <TextView-->
+<!--                style="@style/tv_report"-->
+<!--                android:text="No of Cheques"/>-->
+
+
+
+<!--        </LinearLayout>-->
         <LinearLayout
             android:orientation="vertical"
             android:layout_weight="1"
@@ -30,58 +82,7 @@
             android:layout_height="match_parent">
 
         <TextView
-           style="@style/tv_report"
-            android:text="Date"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 2000"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 500"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 200"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 100"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 50"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 20"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 10"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 5"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 2"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Cash 1"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Total Number"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Total Amount"/>
-            <TextView
-                style="@style/tv_report"
-                android:text="No of Cheques"/>
-
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-        <TextView
+            android:textColor="@color/red"
             android:id="@+id/tvReportCashDate"
            style="@style/tv_report"
             android:text="Date"/>
@@ -97,15 +98,15 @@
             android:id="@+id/tvReportCash200"
             style="@style/tv_report"
             android:text="Cash 200"/>
-        <TextView
-            android:id="@+id/tvReportCash100"
-            style="@style/tv_report"
-            android:text="Cash 100"/>
-        <TextView
-            android:id="@+id/tvReportCash50"
-            style="@style/tv_report"
-            android:text="Cash 50"/>
-        <TextView
+            <TextView
+                android:id="@+id/tvReportCash100"
+                style="@style/tv_report"
+                android:text="Cash 100"/>
+            <TextView
+                android:id="@+id/tvReportCash50"
+                style="@style/tv_report"
+                android:text="Cash 50"/>
+            <TextView
             android:id="@+id/tvReportCash20"
             style="@style/tv_report"
             android:text="Cash 20"/>
@@ -113,33 +114,35 @@
             android:id="@+id/tvReportCash10"
             style="@style/tv_report"
             android:text="Cash 10"/>
-        <TextView
-            android:id="@+id/tvReportCash5"
-            style="@style/tv_report"
-            android:text="Cash 5"/>
-        <TextView
-            android:id="@+id/tvReportCash2"
-            style="@style/tv_report"
-            android:text="Cash 2"/>
-        <TextView
-            android:id="@+id/tvReportCash1"
-            style="@style/tv_report"
-            android:text="Cash 1"/>
-        <TextView
-            android:id="@+id/tvReportCashTotalNumber"
-            style="@style/tv_report"
-            android:text="Total Number"/>
-        <TextView
-            android:id="@+id/tvReportCashTotalAmount"
-            style="@style/tv_report"
-            android:text="Total Amount"/>
             <TextView
+                android:id="@+id/tvReportCash5"
+                style="@style/tv_report"
+                android:text="Cash 5"/>
+            <TextView
+                android:id="@+id/tvReportCash2"
+                style="@style/tv_report"
+                android:text="Cash 2"/>
+            <TextView
+                android:id="@+id/tvReportCash1"
+                style="@style/tv_report"
+                android:text="Cash 1"/>
+            <TextView
+                android:textColor="@color/green"
                 android:id="@+id/tvReportCashChequeNo"
                 style="@style/tv_report"
                 android:text="No of Cheques"/>
 
+            <TextView
+                android:textColor="@color/darkPink"
+                android:id="@+id/tvReportCashTotalNumber"
+                style="@style/tv_report"
+                android:text="Total Number"/>
 
-
+            <TextView
+                android:textColor="@color/red"
+                android:id="@+id/tvReportCashTotalAmount"
+                style="@style/tv_report"
+                android:text="Total Amount"/>
         </LinearLayout>
         <LinearLayout
             style="@style/ll_map_main">
@@ -153,5 +156,6 @@
         </LinearLayout>
 
     </LinearLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

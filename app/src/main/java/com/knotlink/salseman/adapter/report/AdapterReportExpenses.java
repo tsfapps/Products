@@ -45,9 +45,8 @@ public class AdapterReportExpenses extends RecyclerView.Adapter<AdapterReportExp
 //        final String strEndAddress = "Address : "+tModel.getAddress();
 //        final String strStartAddress = "Address : "+tModel.getAddress();
 //
-        String strDate = DateUtils.convertYyyyToDd(tModel.getDatetime());
 
-        distanceViewHolder.tvReportDate.setText(strDate);
+        distanceViewHolder.tvReportDate.setText(tModel.getDatetime());
        distanceViewHolder.tvReportTypeExpenses.setText(tModel.getExpenseType());
        distanceViewHolder.tvReportAmount.setText(tModel.getAmount());
        distanceViewHolder.tvReportRemarks.setText(tModel.getRemarks());

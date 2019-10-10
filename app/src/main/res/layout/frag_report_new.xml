@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ScrollView
         android:fillViewport="true"
         android:layout_width="match_parent"
@@ -14,6 +15,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:id="@+id/rlSpnReportAreaSalesMan"
+            android:layout_marginTop="4dp"
+            style="@style/rl_spinner_main">
+            <ProgressBar
+                android:id="@+id/pbSpnReportAreaSales"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <Spinner
+                android:id="@+id/spnReportAreaSalesMan"
+                style="@style/spinner_main"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rlSpnReportSalesMan"
             android:layout_marginTop="4dp"
@@ -91,6 +113,27 @@
                 android:gravity="center"/>
 
         </LinearLayout>
+        <android.support.v7.widget.CardView
+            android:elevation="@dimen/dimen_16dp"
+            app:cardCornerRadius="@dimen/dimen_4dp"
+           android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100dp"
+
+            >
+            <LinearLayout
+                android:id="@+id/llMapsAll"
+                style="@style/ll_dash_report"
+                >
+                <ImageView
+                    style="@style/iv_dashboard_report"
+                    android:src="@drawable/ic_map_red"
+                    />
+                <TextView
+                    android:text="Map Report for one day"
+                    style="@style/tv_dash_label" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
 
         <LinearLayout
             android:orientation="horizontal"
@@ -163,6 +206,7 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
+                    android:visibility="gone"
                     style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_vehicleReport"
@@ -236,16 +280,13 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/card_dash"
-                    >
+                    style="@style/card_dash">
                     <LinearLayout
                         android:id="@+id/ll_report_expenses"
-                        style="@style/ll_dash_report"
-                        >
+                        style="@style/ll_dash_report">
                         <ImageView
                             style="@style/iv_dashboard_report"
-                            android:src="@drawable/ic_main_expenses"
-                            />
+                            android:src="@drawable/ic_main_expenses" />
                         <TextView
                             android:text="Expenses Report"
                             style="@style/tv_dash_label" />
@@ -253,6 +294,7 @@
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     style="@style/card_dash"
+                    android:visibility="gone"
                     >
                     <LinearLayout
                         android:id="@+id/ll_report_guestLogin"
@@ -269,6 +311,7 @@
                 </android.support.v7.widget.CardView>
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
     </ScrollView>
 </LinearLayout>

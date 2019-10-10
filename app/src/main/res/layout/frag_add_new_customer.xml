@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".fragment.FragAddNewCustomer">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_lead_orgNameLabel"
+                        android:layout_weight="1"
+                        android:text="Vrndor Name*"
+                        style="@style/tv_report" />
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:layout_weight="1"
+                        android:hint="Contact Name*"
+                        style="@style/tv_report" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/etAddNewCustomerVendorName"
+                        android:inputType="textPersonName"
+                        style="@style/et_main"
+                        android:layout_weight="1"/>
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/etAddNewCustomerContactName"
+                        android:inputType="textPersonName"
+                        style="@style/et_main" />
+                </LinearLayout>
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:hint="Contact Number*"
+                        style="@style/tv_report" />
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:hint="Email*"
+                        style="@style/tv_report" />
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_weight="1.5"
+                        android:id="@+id/etAddNewCustomerContactNumber"
+                        android:maxLength="10"
+                        android:inputType="phone"
+                        style="@style/et_main" />
+                    <EditText
+                        android:id="@+id/etAddNewCustomerEmail1"
+                        android:inputType="textEmailAddress"
+                        style="@style/et_main"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:hint="Alternate Email"
+                        style="@style/tv_report" />
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:hint="Fax"
+                        style="@style/tv_report" />
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/etAddNewCustomerEmail2"
+                        android:inputType="textEmailAddress"
+                        style="@style/et_main" />
+                    <EditText
+                        android:layout_weight="1.5"
+                        android:id="@+id/etAddNewCustomerFax"
+                        android:inputType="phone"
+                        style="@style/et_main" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:hint="Whats App Number"
+                        style="@style/tv_report" />
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:hint="GST Number"
+                        style="@style/tv_report" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_weight="1.5"
+                        android:id="@+id/etAddNewCustomerWhatsAppNo"
+                        android:maxLength="10"
+                        android:inputType="phone"
+                        style="@style/et_main" />
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/etAddNewCustomerGst"
+                        android:inputType="textCapCharacters"
+                        style="@style/et_main" />
+                </LinearLayout>
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <!--<TextView-->
+                    <!--android:hint="City"-->
+                    <!--style="@style/tv_report" />-->
+                    <TextView
+                        android:layout_alignParentEnd="false"
+                        android:hint="Route"
+                        style="@style/tv_report" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:layout_weight="1.5"
+                        android:layout_marginEnd="@dimen/dimen_4dp"
+                        android:layout_width="wrap_content"
+                        style="@style/rl_spinner_main">
+                        <Spinner
+                            android:id="@+id/spnNewCustomerCity"
+                            style="@style/spinner_main" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_down"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1.5"
+                        android:layout_marginStart="@dimen/dimen_4dp"
+                        android:layout_width="wrap_content"
+                        style="@style/rl_spinner_main">
+                        <ProgressBar
+                            android:id="@+id/pbSpnAddNewCustomerRoute"
+                            style="?android:attr/progressBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <Spinner
+                            android:id="@+id/spnAddNewCustomerRoute"
+                            style="@style/spinner_main"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_down"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginTop="@dimen/dimen_16dp"
+                        android:hint="Address1"
+                        style="@style/tv_report" />
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/dimen_16dp"
+                        android:hint="Address2"
+                        style="@style/tv_report" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/etAddNewCustomerAddress1"
+                        style="@style/et_main" />
+
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/etAddNewCustomerAddress2"
+                        style="@style/et_main" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginTop="@dimen/dimen_16dp"
+                        android:hint="Address3"
+                        style="@style/tv_report" />
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/tvCurLocAddNewCustomer"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/colorPrimary"
+                        android:drawableTint="@color/colorPrimary"
+                        android:drawableEnd="@drawable/ic_my_location"
+                        android:text="Current location"
+                        style="@style/tv_report" />
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/etAddNewCustomerAddress"
+                        style="@style/et_main" />
+                </LinearLayout>
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:hint="City"
+                        style="@style/tv_report" />
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:hint="PinCode"
+                        style="@style/tv_report" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/etAddNewCustomerCity"
+                        android:inputType="number"
+                        style="@style/et_main" />
+
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/etAddNewCustomerPinCode"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        style="@style/et_main" />
+                </LinearLayout>
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:hint="Customer Type"
+                        style="@style/tv_report" />
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:hint="Land Line Number"
+                        style="@style/tv_report" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/dimen_4dp"
+                        android:layout_width="wrap_content"
+                        style="@style/rl_spinner_main">
+                        <ProgressBar
+                            android:id="@+id/pbSpnAddNewCustomerType"
+                            style="?android:attr/progressBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <Spinner
+                            android:id="@+id/spnAddNewCustomerType"
+                            style="@style/spinner_main"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_down"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/etAddNewCustomerLandLine"
+                        android:inputType="phone"
+                        android:maxLength="12"
+                        style="@style/et_main" />
+
+                </LinearLayout>
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:hint="Credit Days"
+                        style="@style/tv_report" />
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:hint="Credit Limit"
+                        style="@style/tv_report" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_weight="2"
+                        android:id="@+id/etAddNewCustomerCreditDays"
+                        android:inputType="phone"
+                        style="@style/et_main" />
+                    <EditText
+                        android:layout_weight="2"
+                        android:id="@+id/etAddNewCustomerCreditLimit"
+                        android:inputType="number"
+                        style="@style/et_main" />
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:layout_weight="1"
+                    android:text="Upload Images" />
+
+                <LinearLayout
+                    android:background="@drawable/bg_et"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp">
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_sales_photo_add"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/ivAddNewCustomerFirst"
+                            android:scaleType="fitXY"
+                            android:padding="2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            />
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_sales_photo_add"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/ivAddNewCustomerSecond"
+                            android:scaleType="fitXY"
+                            android:padding="2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            />
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_sales_photo_add"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/ivAddNewCustomerThird"
+                            android:scaleType="fitXY"
+                            android:padding="2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnAddNewCustomerSubmit"
+                    style="@style/btn_main"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>
+
+<!--user_id
+vendor_name
+contact_name
+contact_no
+landline_no
+whatsapp_no
+email1
+email2
+address1
+address2
+address3
+fax
+city
+pincode
+route
+gst_no
+credit_days
+credit_limit
+customer_type
+image-->

@@ -2,6 +2,7 @@ package com.knotlink.salseman.model.report;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelReportColdCall {
 
@@ -103,7 +104,7 @@ public class ModelReportColdCall {
     }
 
     public String getTaskAssignDate() {
-        return taskAssignDate;
+        return DateUtils.convertFormatOpposite(taskAssignDate) ;
     }
 
     public void setTaskAssignDate(String taskAssignDate) {
@@ -111,7 +112,7 @@ public class ModelReportColdCall {
     }
 
     public String getTaskDueDate() {
-        return taskDueDate;
+        return DateUtils.convertFormatOpposite(taskDueDate);
     }
 
     public void setTaskDueDate(String taskDueDate) {

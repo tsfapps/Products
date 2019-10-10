@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@color/colorPrimaryDark"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView
+        android:layout_margin="1dp"
+        app:cardCornerRadius="8dp"
+        android:layout_width="320dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="@string/sales_return"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <TextView
+               style="@style/tv_report"
+                android:text="Select Invoice Number"/>
+            <RelativeLayout
+                android:id="@+id/rlSalesReturnInvoice"
+                style="@style/rl_spinner_main">
+                <Spinner
+                    android:id="@+id/spnSalesReturnInvoice"
+                    style="@style/spinner_main"
+                    android:layout_height="40dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+ <TextView
+               style="@style/tv_report"
+                android:text="Select Article Number"/>
+            <RelativeLayout
+                android:id="@+id/rlSalesReturnArticle"
+                style="@style/rl_spinner_main">
+                <Spinner
+                    android:id="@+id/spnSalesReturnArticle"
+                    style="@style/spinner_main"
+                    android:layout_height="40dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:textSize="12sp"
+        android:textColor="@color/colorBlack"
+        android:text="Remarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        android:background="@drawable/bg_et"
+        android:minLines="5"
+        android:gravity="start"
+        android:padding="5dp"
+        android:hint="Remarks"
+        android:id="@+id/etSalesReturnRemarks"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btnSalesReturnSubmit"
+        style="@style/btn_main"
+        android:background="@drawable/bg_btn_main"
+        android:text="Submit" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

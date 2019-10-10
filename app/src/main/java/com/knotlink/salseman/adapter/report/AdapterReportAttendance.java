@@ -49,7 +49,7 @@ public class AdapterReportAttendance extends RecyclerView.Adapter<AdapterReportA
         final String strLoginAddress = "Login Address : "+tModel.getLoginAddress();
         final String strLogoutAddress = "Logout Address"+tModel.getLogoutAddress();
 
-        distanceViewHolder.tvReportAttendanceDate.setText(strDate);
+        distanceViewHolder.tvReportAttendanceDate.setText(tModel.getLoginDate());
         distanceViewHolder.tvReportAttendanceLoginTime.setText(tModel.getLoginTime());
         distanceViewHolder.tvReportAttendanceLogoutTime.setText(tModel.getLogoutTime());
         distanceViewHolder.tvReportAttendanceWorkingHour.setText(tModel.getTotalTimeDuration());

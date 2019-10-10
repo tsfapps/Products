@@ -1,35 +1,52 @@
 package com.knotlink.salseman.fragment;
 
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.AdapterTask;
+import com.knotlink.salseman.adapter.AdapterTaskCustomer;
+import com.knotlink.salseman.adapter.AdapterTaskProspect;
+import com.knotlink.salseman.adapter.baseadapter.AdapterSalesMan;
+import com.knotlink.salseman.adapter.spinner.AdapterAreaSalesMan;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.task.ModelTask;
+import com.knotlink.salseman.databinding.FragTaskBinding;
+import com.knotlink.salseman.model.ModelAsmList;
+import com.knotlink.salseman.model.ModelSalesMan;
+import com.knotlink.salseman.model.task.ModelTaskCustomer;
+import com.knotlink.salseman.model.task.ModelTaskProspect;
+import com.knotlink.salseman.services.GPSTracker;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.SetTitle;
+import com.knotlink.salseman.viewModel.ViewModelTaskCustomer;
+import com.knotlink.salseman.viewModel.ViewModelTaskProspect;
 
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,31 +54,52 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragTask extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private RecyclerView.LayoutManager tLayoutManager;
-    private AdapterTask tAdapterTask;
+public class FragTask extends Fragment implements AdapterView.OnItemSelectedListener {
+
+
+    private AdapterTaskCustomer tAdapterTaskCustomer;
+    private AdapterTaskProspect  tAdapterTaskProspect;
+    private ViewModelTaskCustomer tViewModelCustomer;
+    private ViewModelTaskProspect tViewModelProspect;
     private SharedPrefManager tSharedPrefManager;
-    private FragmentManager tFragmentManager;
     private Context tContext;
-    private Activity tActivity;
-    private List<ModelTask> tModelTask;
-    @BindView(R.id.rvTask)
-    protected RecyclerView rvTask;
-    @BindView(R.id.pbFragTask)
-    protected ProgressBar pbFragTask;
-    @BindView(R.id.swrFragTask)
-    protected SwipeRefreshLayout swrFragTask;
 
+    private List<ModelSalesMan> tModelsSalesMan;
+    private List<ModelAsmList> tModelAsmList;
+    private AdapterSalesMan tAdapterSalesMan;
+    private AdapterAreaSalesMan tAdapterAreaSalesMan;
+    private FragTaskBinding tBinding;
 
+    @BindView(R.id.rlSpnTaskSalesMan)
+    protected RelativeLayout rlSpnTaskSalesMan;
+    @BindView(R.id.spnTaskSalesMan)
+    protected Spinner spnTaskSalesMan;
+    @BindView(R.id.pbSpnTaskSales)
+    protected ProgressBar pbSpnTaskSales;
+    @BindView(R.id.rlSpnTaskAreaSalesMan)
+    protected RelativeLayout rlSpnTaskAreaSalesMan;
+
+    @BindView(R.id.spnTaskAreaSalesMan)
+    protected Spinner spnTaskAreaSalesMan;
+    @BindView(R.id.pbSpnTaskAreaSales)
+    protected ProgressBar pbSpnTaskAreaSales;
+    @BindView(R.id.tvTaskCustomerLabel)
+    protected TextView tvTaskCustomerLabel;
+    @BindView(R.id.tvTaskProspectLabel)
+    protected TextView tvTaskProspectLabel;
+
+    private RecyclerView rvTask;
+    private RecyclerView rvTaskProspect;
+
+    private ProgressBar pbFragTask;
 
     private String strUserId;
     private String strUserType;
-    private String strSalesId;
-    public static FragTask newInstance(String strUserType, String strSalesId) {
+    private String strSelectedUserId;
+    public static FragTask newInstance(String strUserType) {
 
         FragTask fragment = new FragTask();
         fragment.strUserType = strUserType;
-        fragment.strSalesId = strSalesId;
         return fragment;
     }
 
@@ -69,66 +107,175 @@ public class FragTask extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_task, container, false);
+        tBinding = DataBindingUtil.inflate(inflater, R.layout.frag_task, container, false);
+        View view = tBinding.getRoot();
         ButterKnife.bind(this, view);
         initFrag();
         return view;
     }
     private void initFrag(){
         tContext = getContext();
-        tActivity = getActivity();
         tSharedPrefManager = new SharedPrefManager(tContext);
-        tFragmentManager = getFragmentManager();
+        tViewModelCustomer = ViewModelProviders.of(this).get(ViewModelTaskCustomer.class);
+        tViewModelProspect = ViewModelProviders.of(this).get(ViewModelTaskProspect.class);
+
+        FragmentManager tFragmentManager = getFragmentManager();
+
+        //GPS Calling
+        GPSTracker tGpsTracker = new GPSTracker(tContext);
+        String strLat = String.valueOf(tGpsTracker.latitude);
+        String strLong = String.valueOf(tGpsTracker.longitude);
+
+        pbFragTask = tBinding.pbFragTask;
+
+        //Adapter Task Customer Calling
+        tAdapterTaskCustomer = new AdapterTaskCustomer(strLat, strLong);
+        rvTask = tBinding.rvTask;
+        rvTask.setLayoutManager(new LinearLayoutManager(tContext));
+        rvTask.setItemAnimator(new DefaultItemAnimator());
+        rvTask.setNestedScrollingEnabled(false);
+        rvTask.setAdapter(tAdapterTaskCustomer);
+
+        //Adapter Task Prospect Calling
+        tAdapterTaskProspect = new AdapterTaskProspect(tFragmentManager, strLat, strLong, strUserType);
+        rvTaskProspect = tBinding.rvTaskProspect;
+        rvTaskProspect.setLayoutManager(new LinearLayoutManager(tContext));
+        rvTaskProspect.setItemAnimator(new DefaultItemAnimator());
+        rvTaskProspect.setNestedScrollingEnabled(false);
+        rvTaskProspect.setAdapter(tAdapterTaskProspect);
+
+        if (strUserType.equalsIgnoreCase("0")){
+            strUserId = strSelectedUserId;
+
+        }else if(strUserType.equalsIgnoreCase("1")){
+            strUserId = tSharedPrefManager.getUserId();
+            getAllTaskCustomer(strUserId);
+            getAllTaskProspect(strUserId);
+        }else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         SetTitle.tbTitle("Task Assigned", getActivity());
-        tLayoutManager = new LinearLayoutManager(tContext);
-        rvTask.setLayoutManager(tLayoutManager);
-        swrFragTask.setOnRefreshListener(this);
-        pbFragTask.setVisibility(View.VISIBLE);
-        callTaskApi();
+        hideShowContent();
     }
-    private  void callTaskApi(){
-//        if (strUserType.equalsIgnoreCase("3")) {
-//            strUserId = strSalesId;
-//        }
-//        else {
-//            strUserId = tSharedPrefManager.getUserId();
-//
-//        }
-        strUserId = tSharedPrefManager.getUserId();
+    private void hideShowContent(){
+        if (strUserType.equalsIgnoreCase("1")){
+            rlSpnTaskSalesMan.setVisibility(View.GONE);
+            rlSpnTaskAreaSalesMan.setVisibility(View.GONE);
 
+        }
+        else if (strUserType.equalsIgnoreCase("2")){
+            rlSpnTaskSalesMan.setVisibility(View.GONE);
+            rlSpnTaskAreaSalesMan.setVisibility(View.GONE);
+
+
+        }
+        else if (strUserType.equalsIgnoreCase("3")){
+            rlSpnTaskSalesMan.setVisibility(View.VISIBLE);
+            rlSpnTaskAreaSalesMan.setVisibility(View.GONE );
+            spnTaskSalesMan.setOnItemSelectedListener(this);
+            callApiSalesMan(strUserId);
+
+        }
+        else if (strUserType.equalsIgnoreCase("0")){
+            rlSpnTaskSalesMan.setVisibility(View.VISIBLE);
+            rlSpnTaskAreaSalesMan.setVisibility(View.VISIBLE);
+            spnTaskAreaSalesMan.setOnItemSelectedListener(this);
+            spnTaskSalesMan.setOnItemSelectedListener(this);
+            callApiAreaSalesMan();
+        }
+    }
+    private void callApiSalesMan(String StrUserId){
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<List<ModelTask>> call = api.assignedTask(strUserId);
-        call.enqueue(new Callback<List<ModelTask>>() {
+        Call<List<ModelSalesMan>> call = api.salesAsmManList(StrUserId);
+        call.enqueue(new Callback<List<ModelSalesMan>>() {
             @Override
-            public void onResponse(Call<List<ModelTask>> call, Response<List<ModelTask>> response) {
-                tModelTask =response.body();
-                Log.d(Constant.TAG, "Task Task Size : "+tModelTask.size());
-                pbFragTask.setVisibility(View.GONE);
-                if (tModelTask.size()!=0){
-                tAdapterTask = new AdapterTask(tModelTask, tContext, tActivity, tFragmentManager);
-                rvTask.setAdapter(tAdapterTask);}
-
-                else {
-                        CustomDialog.showEmptyTask(tContext);
-                    }
+            public void onResponse(Call<List<ModelSalesMan>> call, Response<List<ModelSalesMan>> response) {
+                tModelsSalesMan = response.body();
+                pbSpnTaskSales.setVisibility(View.GONE);
+                tAdapterSalesMan = new AdapterSalesMan(tContext, tModelsSalesMan);
+                spnTaskSalesMan.setAdapter(tAdapterSalesMan);
             }
             @Override
-            public void onFailure(Call<List<ModelTask>> call, Throwable t) {
-                CustomLog.d(Constant.TAG, " Task Not Responding : "+t);
+            public void onFailure(Call<List<ModelSalesMan>> call, Throwable t) {
+
+            }
+        });
+    }
+    private void callApiAreaSalesMan(){
+        String strUserId = tSharedPrefManager.getUserId();
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<List<ModelAsmList>> call = api.asmList(strUserId);
+        call.enqueue(new Callback<List<ModelAsmList>>() {
+            @Override
+            public void onResponse(Call<List<ModelAsmList>> call, Response<List<ModelAsmList>> response) {
+                tModelAsmList = response.body();
+                pbSpnTaskAreaSales.setVisibility(View.GONE);
+                tAdapterAreaSalesMan = new AdapterAreaSalesMan(tContext, tModelAsmList);
+                spnTaskAreaSalesMan.setAdapter(tAdapterAreaSalesMan);
+            }
+            @Override
+            public void onFailure(Call<List<ModelAsmList>> call, Throwable t) {
+                Log.d(Constant.TAG, "ASM List Failure : "+t);
+
             }
         });
     }
 
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
+
+    private void getAllTaskCustomer(String strUserId){
+        tViewModelCustomer.getAllTaskCustomer(strUserId).observe(this, new Observer<List<ModelTaskCustomer>>() {
             @Override
-            public void run() {
-                swrFragTask.setRefreshing(false);
-                callTaskApi();
+            public void onChanged(@Nullable List<ModelTaskCustomer> tModelTaskCustomer) {
+                pbFragTask.setVisibility(View.GONE);
+                if (tModelTaskCustomer.size()>0) {
+                    tAdapterTaskCustomer.settModels(tModelTaskCustomer);
+                    tvTaskCustomerLabel.setVisibility(View.VISIBLE);
+                    rvTask.setVisibility(View.VISIBLE);
+                }else {
+                    tvTaskCustomerLabel.setVisibility(View.GONE);
+                    rvTask.setVisibility(View.GONE);
+
+                }
             }
-        }, 2000);
+        });
+    }
+
+    private void getAllTaskProspect(String strUserId){
+        tViewModelProspect.getTaskProspect(strUserId).observe(this, new Observer<List<ModelTaskProspect>>() {
+            @Override
+            public void onChanged(@Nullable List<ModelTaskProspect> modelTaskProspects) {
+                pbFragTask.setVisibility(View.GONE);
+                if (modelTaskProspects.size()>0){
+                    tAdapterTaskProspect.settModels(modelTaskProspects);
+                    tvTaskProspectLabel.setVisibility(View.VISIBLE);
+                    rvTaskProspect.setVisibility(View.VISIBLE);
+
+                }else {
+                    tvTaskProspectLabel.setVisibility(View.GONE);
+                    rvTaskProspect.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()){
+            case R.id.spnTaskAreaSalesMan:
+                String strAsmId = tModelAsmList.get(position).getUserId();
+                callApiSalesMan(strAsmId);
+                break;
+            case R.id.spnTaskSalesMan:
+                strSelectedUserId = tModelsSalesMan.get(position).getUserId();
+                getAllTaskCustomer(strSelectedUserId);
+                getAllTaskProspect(strSelectedUserId);
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

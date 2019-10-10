@@ -68,12 +68,13 @@
             android:textSize="@dimen/dimen_12sp"
             android:layout_height="@dimen/dimen_30dp" />
             <LinearLayout
+                android:orientation="horizontal"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
                     android:visibility="visible"
-                    android:background="@drawable/bg_red_badge"
+                    android:background="@drawable/bg_badge_red"
                     android:id="@+id/tvRouteTaskBadge"
                     android:text="@string/num_1"
                     android:layout_marginEnd="@dimen/dimen_24dp"
@@ -90,6 +91,19 @@
                 android:background="@drawable/ic_report"
                 android:id="@+id/tvRouteReport"
                 android:textSize="@dimen/dimen_12sp"
+                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:textColor="@color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_width="@dimen/dimen_24dp"
+                android:layout_height="@dimen/dimen_24dp"
+                />
+                <TextView
+                android:visibility="gone"
+                android:background="@drawable/bg_badge_green"
+                    android:text="A"
+                android:id="@+id/tvRouteShopStatus"
+                android:textSize="@dimen/dimen_12sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -97,7 +111,6 @@
                 android:layout_height="@dimen/dimen_24dp"
                 />
             </LinearLayout>
-
             <Button
                 android:layout_alignParentEnd="true"
                 android:id="@+id/btn_route_notVisit"

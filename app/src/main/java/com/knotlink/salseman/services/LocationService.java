@@ -32,12 +32,6 @@ public class LocationService extends Service implements
     protected static final String TAG = "LocationService";
 
 
-
-    /**
-    /**
-     * Tracks the status of the location updates request. Value changes when the user presses the
-     * Start Updates and Stop Updates buttons.
-     */
     protected Boolean mRequestingLocationUpdates;
 
     /**

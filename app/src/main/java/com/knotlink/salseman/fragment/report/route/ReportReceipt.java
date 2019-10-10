@@ -44,17 +44,21 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
     protected SwipeRefreshLayout swrReportAll;
     @BindView(R.id.pbReportAll)
     protected ProgressBar pbReportAll;
-
+    private String strUserId;
+    private String strUserType;
+    private String strSelectedUserId;
     private String dateFrom;
     private String dateTo;
     private String shopId;
 
-    public static ReportReceipt newInstance(String dateFrom, String dateTo, String shopId) {
+    public static ReportReceipt newInstance(String dateFrom, String dateTo, String shopId, String strUserType, String strSelectedUserId) {
 
         ReportReceipt fragment = new ReportReceipt();
         fragment.dateFrom = dateFrom;
         fragment.dateTo = dateTo;
         fragment.shopId = shopId;
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
 
@@ -69,6 +73,12 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
     private void initFrag(){
         tContext = getContext();
         tSharedPrefManager = new SharedPrefManager(tContext);
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")){
+            strUserId = strSelectedUserId;
+        }
+        else {
+            strUserId = tSharedPrefManager.getUserId();
+        }
         SetTitle.tbTitle(" Receipt Report", getActivity());
         pbReportAll.setVisibility(View.VISIBLE);
         swrReportAll.setOnRefreshListener(this);
@@ -77,8 +87,6 @@ public class ReportReceipt extends Fragment implements SwipeRefreshLayout.OnRefr
         callApiReceipt();
     }
     private  void callApiReceipt(){
-        String strUserId = tSharedPrefManager.getUserId();
-
         Api api = ApiClients.getApiClients().create(Api.class);
 
         Call<List<ModelRouteReceipt>> call = api.viewReportReceipt(strUserId,"Receipt", dateFrom, dateTo);

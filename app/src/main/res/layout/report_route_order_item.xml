@@ -3,9 +3,7 @@
     android:gravity="center_vertical"
     android:elevation="@dimen/dimen_16dp"
     app:cardCornerRadius="@dimen/dimen_4dp"
-    android:layout_marginStart="@dimen/dimen_8dp"
-    android:layout_marginEnd="@dimen/dimen_8dp"
-    android:layout_marginTop="@dimen/dimen_8dp"
+   android:layout_margin=".5dp"
     app:cardUseCompatPadding="true"
     app:contentPadding="@dimen/dimen_4dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,75 +13,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:padding="@dimen/dimen_4dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content">
             <TextView
+                android:textColor="@color/green"
                 android:layout_marginTop="@dimen/dimen_0dp"
-                android:textStyle="bold"
                 android:id="@+id/tvRouteOrderShopName"
-                android:layout_alignParentEnd="true"
-                style="@style/tv_report"
+                style="@style/tv_color_content"
                 android:text="Shop Name" />
-            <TextView
-                style="@style/tv_report"
-                android:text="Date of Order"/>
 
             <TextView
-                android:layout_marginTop="@dimen/dimen_0dp"
-                android:textStyle="bold"
+                android:textColor="@color/red"
                 android:id="@+id/tvRouteOrderDateOfOrder"
-                android:layout_alignParentEnd="true"
-                style="@style/tv_report"
+                style="@style/tv_color_content"
                 android:text="Date of Order" />
+            <android.support.v7.widget.CardView
+                android:id="@+id/cvReportOrderImg"
+                android:elevation="@dimen/dimen_16dp"
+                app:cardCornerRadius="@dimen/dimen_10dp"
+                android:layout_width="@dimen/dimen_60dp"
+                android:layout_height="@dimen/dimen_60dp">
+                <ImageView
+                    android:src="@drawable/main_logo"
+                    android:id="@+id/ivRouteOrderImage"
+                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </android.support.v7.widget.CardView>
+
             <TextView
-                style="@style/tv_report"
+                android:textColor="@color/colorAccent"
+                style="@style/tv_color_content"
                 android:text="Remarks"
-                />
-            <TextView
-                android:layout_marginTop="@dimen/dimen_0dp"
-                style="@style/tv_report"
-                android:hint="Remarks"
                 android:textStyle="bold"
                 android:id="@+id/tvRouteOrderRemarks"
                 android:gravity="start"/>
         </LinearLayout>
-            <ImageView
-                android:layout_toStartOf="@+id/cvReportOrderImg"
-                android:id="@+id/ivReportOrderLocation"
-                android:paddingStart="@dimen/dimen_8dp"
-                android:paddingEnd="@dimen/dimen_8dp"
-                android:paddingBottom="@dimen/dimen_8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_location"/>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/cvReportOrderImg"
-                    android:layout_alignParentEnd="true"
-                    android:elevation="@dimen/dimen_16dp"
-                    app:cardCornerRadius="@dimen/dimen_10dp"
-                    android:layout_width="@dimen/dimen_60dp"
-                    android:layout_height="@dimen/dimen_60dp">
-                    <ImageView
-                        android:src="@drawable/main_logo"
-                        android:id="@+id/ivRouteOrderImage"
-                        android:scaleType="fitXY"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        />
-                </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:layout_weight=".15"
+                style="@style/ll_map_main">
+                <TextView
+                    android:id="@+id/tvReportOrderLocation"
+                    style="@style/tv_map_main"
+                    />
+            </LinearLayout>
 
 
-        </RelativeLayout>
 
 
     </LinearLayout>

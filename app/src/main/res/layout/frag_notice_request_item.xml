@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="notice_request"
+            type="com.knotlink.salseman.model.notice.ModelNoticeRequest" />
+    </data>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        android:elevation="@dimen/dimen_16dp"
+        app:cardCornerRadius="@dimen/dimen_4dp"
+        android:layout_marginStart="@dimen/dimen_4dp"
+        android:layout_marginEnd="@dimen/dimen_4dp"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        app:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_margin="@dimen/dimen_4dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            style="@style/tv_lin_hor"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="@{notice_request.shopName}"
+            tools:text="Shop Name"/>
+        </LinearLayout>
+
+        <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <TextView
+                style="@style/tv_lin_hor"
+                android:text="@{notice_request.routeName}"
+                android:textColor="@color/colorPrimary"
+                tools:text="Route Name"
+                />
+
+            <TextView
+                style="@style/tv_lin_hor"
+                android:text="@{notice_request.salesman}"
+                tools:text="Sales Man"
+                android:textColor="@color/colorPrimary"
+                />
+            <TextView
+                style="@style/tv_lin_hor"
+                android:text="@{notice_request.dispatcher}"
+                tools:text="Dispatcher"
+                android:textColor="@color/colorPrimary"
+                />
+
+
+        </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/tv_lin_hor"
+            android:text="@{notice_request.taskAssignDate}"
+            android:textColor="@color/blue"
+            tools:text="Assign Date"
+
+            />
+        <TextView
+            style="@style/tv_lin_hor"
+            android:text="@{notice_request.taskDueDate}"
+            android:textColor="@color/red"
+            tools:text="Due Date"
+
+            />
+        <TextView
+            style="@style/tv_lin_hor"
+            android:text="@{notice_request.taskCompletionDate}"
+            android:textColor="@color/green"
+            tools:text="Comp Date"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="6"
+            style="@style/tv_lin_hor"
+            android:text="@{notice_request.remarks}"
+            tools:text="Remarks"
+            />
+    </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="2"
+            style="@style/tv_lin_hor"
+            android:textStyle="bold"
+            android:textSize="@dimen/dimen_12sp"
+            android:textColor="@color/red"
+            android:text="@{notice_request.specialRequestType}"
+            tools:text="Special Request Type"
+            />
+            <TextView
+                android:layout_weight="2"
+                style="@style/tv_lin_hor"
+                android:text="@{notice_request.taskPendingDays}"
+                tools:text="Days"
+                android:textColor="@color/green"/>
+            <TextView
+            android:gravity="center"
+            style="@style/tv_lin_hor"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_btn_main"
+            android:text="@{notice_request.status}"
+            tools:text="Status"
+            />
+
+        </LinearLayout>
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
+</layout>
