@@ -15,9 +15,9 @@ public class ModelInvoice {
     @SerializedName("invoice_amount")
     @Expose
     private String invoiceAmount;
-    @SerializedName("invoice_credit_days")
+    @SerializedName("remaining_days")
     @Expose
-    private String invoiceCreditDays;
+    private String remainingDays;
     @SerializedName("invoice_date")
     @Expose
     private String invoiceDate;
@@ -46,12 +46,12 @@ public class ModelInvoice {
         this.invoiceAmount = invoiceAmount;
     }
 
-    public String getInvoiceCreditDays() {
-        return invoiceCreditDays;
+    public String getRemainingDays() {
+        return remainingDays;
     }
 
-    public void setInvoiceCreditDays(String invoiceCreditDays) {
-        this.invoiceCreditDays = invoiceCreditDays;
+    public void setRemainingDays(String remainingDays) {
+        this.remainingDays = remainingDays;
     }
 
     public String getInvoiceDate() {

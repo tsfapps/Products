@@ -4,20 +4,13 @@
     android:gravity="center_horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingStart="@dimen/dimen_32dp"
-    android:paddingEnd="@dimen/dimen_32dp"
+    android:paddingStart="@dimen/dimen_16dp"
+    android:paddingEnd="@dimen/dimen_16dp"
     android:layout_height="wrap_content">
-    <!--<TextView-->
-        <!--android:id="@+id/tvEmpId"-->
-        <!--style="@style/et_main_login"-->
-        <!--android:text="Large Text"-->
-        <!--/>-->
 
     <TextView
         android:layout_margin="@dimen/dimen_4dp"
         android:id="@+id/tvEmpName"
-        android:paddingStart="@dimen/dimen_16dp"
-        android:paddingEnd="@dimen/dimen_16dp"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="40dp"

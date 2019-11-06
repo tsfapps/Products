@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +47,14 @@ public class FragAttendance extends Fragment {
     protected TextView tv_att_date;
     @BindView(R.id.btn_att_check_in_out)
     protected Button btnAttCheckInOut;
+    private String strUserType;
     private String strAttStatus;
     private String strAttTime;
     private String strAttDate;
 
-    public static FragAttendance newInstance(String strAttStatus,String strAttTime,String strAttDate) {
+    public static FragAttendance newInstance(String strUserType, String strAttStatus,String strAttTime,String strAttDate) {
         FragAttendance fragment = new FragAttendance();
+        fragment.strUserType = strUserType;
         fragment.strAttStatus = strAttStatus;
         fragment.strAttTime = strAttTime;
         fragment.strAttDate = strAttDate;
@@ -67,11 +70,19 @@ public class FragAttendance extends Fragment {
         return view;
     }
     private void initFrag(){
+        Log.d(Constant.TAG,"date : "+strAttDate);
         tContext = getContext();
         SetTitle.tbTitle("Attendance Report", getActivity());
         tGpsTracker = new GPSTracker(tContext);
         tSharedPrefManager = new SharedPrefManager(tContext);
         tvAttUserName.setText(tSharedPrefManager.getUserName());
+        if (strUserType.equalsIgnoreCase("0")||strUserType.equalsIgnoreCase("3")){
+            btnAttCheckInOut.setEnabled(false);
+            btnAttCheckInOut.setBackgroundResource(R.drawable.bg_btn_disabled);
+        }else {
+            btnAttCheckInOut.setEnabled(true);
+
+        }
         if (strAttStatus.equalsIgnoreCase("0"))
         {
             btnAttCheckInOut.setText(Constant.BTN_CHECK_IN);
@@ -91,9 +102,11 @@ public class FragAttendance extends Fragment {
     public void checkedInAtt(View view){
 
         if (strAttStatus.equalsIgnoreCase("0")) {
+
             callLoginApi();
         }
         else {
+
             callLogoutApi();
         }
     }
@@ -106,7 +119,7 @@ public class FragAttendance extends Fragment {
         String strPinCode = tGpsTracker.getPostalCode(tContext);
         String strAddress = tGpsTracker.getAddressLine(tContext);
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelAttendance> attendanceCall = api.uploadLogin(strUserId, strCity, strPinCode, strAddress, strLat, strLong);
+        Call<ModelAttendance> attendanceCall = api.uploadLogin(strUserId, strCity, strPinCode, strAddress,strAttDate, strLat, strLong);
         attendanceCall.enqueue(new Callback<ModelAttendance>() {
             @Override
             public void onResponse(Call<ModelAttendance> call, Response<ModelAttendance> response) {
@@ -135,7 +148,8 @@ public class FragAttendance extends Fragment {
         String strLogoutPinCode = tGpsTracker.getPostalCode(tContext);
         String strLogoutAddress = tGpsTracker.getAddressLine(tContext);
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelAttendance> attendanceCall = api.uploadLogout(strUserIdLogout, strLogoutCity, strLogoutPinCode, strLogoutAddress, strLogoutLat, strLogoutLong);
+        Call<ModelAttendance> attendanceCall = api.uploadLogout(strUserIdLogout, strLogoutCity, strLogoutPinCode,
+                strLogoutAddress, strAttDate, strLogoutLat, strLogoutLong);
         attendanceCall.enqueue(new Callback<ModelAttendance>() {
             @Override
             public void onResponse(Call<ModelAttendance> call, Response<ModelAttendance> response) {

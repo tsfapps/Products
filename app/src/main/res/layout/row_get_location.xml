@@ -7,24 +7,36 @@
     android:background="@color/colorPrimaryDark"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <android.support.v7.widget.CardView
-        android:layout_margin="1dp"
+        android:background="@color/white"
+        android:layout_margin="@dimen/dimen_1dp"
         app:cardCornerRadius="8dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <ScrollView
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="vertical"
             android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:layout_marginTop="16dp"
-                android:textSize="12sp"
-                android:textColor="@color/colorBlack"
-                android:text="Shop Status"
+                android:text="@string/get_location"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="40dp" />
 
+            <TextView
+                style="@style/tv_report"
+                android:text="Shop Status"
+                />
             <RelativeLayout
                 android:id="@+id/rl_meeting_spinner_city"
                 style="@style/rl_spinner_main">
@@ -39,28 +51,12 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
-
-
             <TextView
-        android:layout_marginTop="16dp"
-        android:textSize="12sp"
-        android:textColor="@color/colorBlack"
-        android:text="Shop No."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-            <EditText
-                android:id="@+id/etUpdateAddress"
-                android:textColor="@color/colorBlack"
-                android:textSize="14sp"
-                android:background="@drawable/bg_et"
-                android:inputType="textCapSentences"
-                android:padding="@dimen/dimen_4dp"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
+                style="@style/tv_report"
+                android:text="Existing Shop Name"
                 />
             <TextView
-                android:layout_marginTop="@dimen/dimen_8dp"
-                android:id="@+id/tvUpdateAddress"
+                android:id="@+id/tvUpdateShopName"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/dimen_12sp"
                 android:padding="@dimen/dimen_4dp"
@@ -68,7 +64,376 @@
                 android:layout_height="wrap_content"
                 />
 
-<RelativeLayout
+
+            <TextView
+                style="@style/tv_report"
+                android:text="Current Shop Name"
+                />
+            <EditText
+                android:id="@+id/etUpdateShopName"
+                android:textColor="@color/colorBlack"
+                style="@style/et_main"
+                />
+            <TextView
+                style="@style/tv_report"
+                android:text="Existing Address"
+                />
+            <TextView
+                android:id="@+id/tvExistingAddress"
+                style="@style/tv_simple"
+                android:text="Address"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                style="@style/tv_report"
+                android:text="Geo Address"
+                />
+            <TextView
+                android:id="@+id/tvUpdateGeoAddress"
+                style="@style/tv_simple"
+                android:text="Geo Address"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Owner Name"
+                    />
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Owner Mobile No"
+                    />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/etUpdateOwnerName"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+
+                <EditText
+                    android:id="@+id/etUpdateOwnerMobNo"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Owner WhatsApp No"
+                    />
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Key Person Name"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/etUpdateOwnerWhatsApp"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+
+                <EditText
+                    android:id="@+id/etUpdateKeyPersonName"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Key Person Mobile"
+                    />
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Key Person WhatsApp No"
+                    />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/etKeyPersonMobile"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+
+                <EditText
+                    android:id="@+id/etKeyPersonWhatsApp"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Gst No"
+                    />
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Land Line No"
+                    />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/etUpdateGstNo"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+
+                <EditText
+                    android:id="@+id/etUpdateLandLine"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+            </LinearLayout>
+
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Email Id"
+                    />
+
+                <EditText
+                    android:id="@+id/etUpdateEmail"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Address 1"
+                    />
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Address 2"
+                    />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etUpdateAddress"
+                android:textColor="@color/colorBlack"
+                android:hint="Shop No and Building Name"
+                style="@style/et_main"
+
+                />
+
+            <EditText
+                android:id="@+id/etUpdateAddress2"
+                android:textColor="@color/colorBlack"
+                android:hint="Street Name"
+                style="@style/et_main"
+
+                />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Address 3"
+                    />
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Address 4"
+                    />
+
+            </RelativeLayout>
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/etUpdateAddress3"
+                android:textColor="@color/colorBlack"
+                android:hint="Place"
+                style="@style/et_main" />
+
+            <EditText
+                android:id="@+id/etUpdateAddress4"
+                android:textColor="@color/colorBlack"
+                android:hint="Landmark"
+                style="@style/et_main" />
+        </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Address 5"
+                    />
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Address 6"
+                    />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/etUpdateAddress5"
+                    android:textColor="@color/colorBlack"
+                    android:hint="Area"
+                    style="@style/et_main"
+
+                    />
+                <EditText
+                    android:id="@+id/etUpdateAddress6"
+                    android:textColor="@color/colorBlack"
+                    android:hint="Taluk"
+                    style="@style/et_main"
+                    />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Current Shop District"
+                    />
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Current Shop Zip Code"
+                    />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/etUpdateCity"
+        android:textColor="@color/colorBlack"
+        style="@style/et_main"
+        android:text="Bangalore"
+
+        />
+
+    <EditText
+        android:id="@+id/etUpdatePinCode"
+        android:textColor="@color/colorBlack"
+        style="@style/et_main"
+        />
+        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Current Shop State"
+                    />
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Current Shop Country"
+                    />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/etUpdateState"
+        android:textColor="@color/colorBlack"
+        style="@style/et_main"
+
+        android:text="Karnataka"
+        />
+
+    <EditText
+        android:id="@+id/etUpdateCountry"
+        android:text="India"
+        android:textColor="@color/colorBlack"
+        style="@style/et_main"
+        />
+        </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/bg_camera"
+                android:layout_width="match_parent"
+                android:layout_height="220dp">
+                <ImageView
+                    android:id="@+id/ivUpdateImage"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="match_parent"
+                    android:scaleType="fitXY"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+
+            <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <Button
@@ -84,5 +449,6 @@
         android:text="Cancel" />
 </RelativeLayout>
         </LinearLayout>
+        </ScrollView>
     </android.support.v7.widget.CardView>
 </LinearLayout>

@@ -58,6 +58,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
         <LinearLayout
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:layout_marginStart="@dimen/dimen_8dp"
         android:gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -234,10 +236,13 @@
         android:id="@+id/spn_count_cheque"
         android:entries="@array/spinner_count"
         style="@style/spn_item_count"/>
-    <TextView
+    <EditText
         android:id="@+id/tvSumCheque"
+        android:inputType="numberSigned"
+        android:maxLength="3"
+        android:background="@drawable/bg_et"
         style="@style/tv_cash_label"
-        android:text=""/>
+        android:text="0"/>
 
 </LinearLayout>
         <View

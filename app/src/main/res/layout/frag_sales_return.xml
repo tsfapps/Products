@@ -17,15 +17,13 @@
 
 
             <TextView
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvReturnShopName"
-                android:fontFamily="@font/abril_fatface"
-                android:gravity="center"
-                android:text="Shop Name"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/dimen_14sp"
+                style="@style/tv_report"
+                android:text="Shop Name"/>
 
             <RelativeLayout
                 android:layout_marginTop="@dimen/dimen_16dp"
@@ -52,12 +50,11 @@
                     <Spinner
                         android:id="@+id/spnReturnInvoiceNumber"
                         style="@style/spinner_main"/>
+                    <ProgressBar
+                        android:id="@+id/pbSalesRetInvoice"
+                        style="@style/spinner_main_pb"/>
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_down"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                        style="@style/iv_spn_main"/>
                 </RelativeLayout>
 
             <RelativeLayout
@@ -67,12 +64,12 @@
                     <Spinner
                         android:id="@+id/spnReturnArticle"
                         style="@style/spinner_main"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_down"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                <ProgressBar
+                    android:id="@+id/pbSalesRetArticle"
+                    style="@style/spinner_main_pb"/>
+
+                <ImageView
+                        style="@style/iv_spn_main"/>
                 </RelativeLayout>
 
             </LinearLayout>
@@ -98,7 +95,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:text="Date"
-                    android:id="@+id/etReturnDate"
+                    android:id="@+id/tvReturnDate"
                     style="@style/tv_main"
                     android:layout_weight="1"/>
                 <RelativeLayout
@@ -108,12 +105,11 @@
                     <Spinner
                         android:id="@+id/spnReturnSize"
                         style="@style/spinner_main"/>
+                    <ProgressBar
+                        android:id="@+id/pbSalesRetSize"
+                        style="@style/spinner_main_pb"/>
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_down"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                        style="@style/iv_spn_main"/>
                 </RelativeLayout>
 
             </LinearLayout>
@@ -134,9 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:text="MRP"
-                    android:id="@+id/etReturnMrp"
-                    android:inputType="phone"
+                    android:id="@+id/tvReturnMrp"
                     style="@style/tv_main"/>
 
                 <EditText
@@ -168,7 +162,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnReturnSubmit"
+                android:id="@+id/btnSalesReturnSubmit"
                 style="@style/btn_main"/>
         </LinearLayout>
     </ScrollView>

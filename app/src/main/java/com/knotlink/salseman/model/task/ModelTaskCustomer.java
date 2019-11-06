@@ -141,7 +141,7 @@ public class ModelTaskCustomer {
 
     public String getTaskDueDate() {
 
-        return DateUtils.convertFormatOpposite(taskDueDate);
+        return DateUtils.dateFormatDdMmmYyyy(taskDueDate);
     }
 
     public void setTaskDueDate(String taskDueDate) {

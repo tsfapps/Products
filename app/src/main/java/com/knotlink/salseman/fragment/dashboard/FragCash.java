@@ -117,12 +117,12 @@ public class FragCash extends Fragment implements AdapterView.OnItemSelectedList
 
     private String strUserId;
     private String strUserType;
-    private String strSalesId;
-    public static FragCash newInstance(String strUserType, String strSalesId) {
+    private String strSelectedUserId;
+    public static FragCash newInstance(String strUserType, String strSelectedUserId) {
 
         FragCash fragment = new FragCash();
         fragment.strUserType = strUserType;
-        fragment.strSalesId = strSalesId;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
 
@@ -180,7 +180,7 @@ public class FragCash extends Fragment implements AdapterView.OnItemSelectedList
 
     private void callApi(){
         if (strUserType.equalsIgnoreCase("3")) {
-            strUserId = strSalesId;
+            strUserId = strSelectedUserId;
         }
         else {
             strUserId = tSharedPrefManager.getUserId();
@@ -208,7 +208,7 @@ public class FragCash extends Fragment implements AdapterView.OnItemSelectedList
                 if (!tModels.getError()) {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragCash.this).commit();
-                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strSelectedUserId, strUserType)).commit();
                 } else {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
                 }

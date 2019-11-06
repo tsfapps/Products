@@ -104,10 +104,12 @@ public class FragNewCustomer extends Fragment implements AdapterView.OnItemSelec
 
     private ModelTaskProspect tModel;
     private String strUserType;
-    public static FragNewCustomer newInstance(ModelTaskProspect tModel, String strUserType) {
+    private String strSelectedUserId;
+    public static FragNewCustomer newInstance(String strSelectedUserId, ModelTaskProspect tModel, String strUserType) {
         FragNewCustomer fragment = new FragNewCustomer();
         fragment.tModel = tModel;
         fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
 
@@ -235,7 +237,7 @@ public class FragNewCustomer extends Fragment implements AdapterView.OnItemSelec
                 ModelNewCustomer tModel = response.body();
                 CustomToast.toastTop(getActivity(), tModel.getMessage());
                 getFragmentManager().beginTransaction().remove(FragNewCustomer.this).commit();
-                getFragmentManager().beginTransaction().replace(R.id.container_main, FragTask.newInstance(strUserType)).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container_main, FragTask.newInstance(strSelectedUserId, strUserType)).commit();
             }
             @Override
             public void onFailure(Call<ModelNewCustomer> call, Throwable t) {

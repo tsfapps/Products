@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.knotlink.salseman.R;
+import com.knotlink.salseman.SingletonStatus;
+import com.knotlink.salseman.activity.MainActivity;
 import com.knotlink.salseman.adapter.baseadapter.AdapterSalesMan;
 import com.knotlink.salseman.adapter.spinner.AdapterAreaSalesMan;
 import com.knotlink.salseman.api.Api;
@@ -37,9 +41,11 @@ import com.knotlink.salseman.model.dash.ModelActiveStatus;
 import com.knotlink.salseman.model.dash.route.ModelVehicleList;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.GetImei;
 import com.knotlink.salseman.utils.SetTitle;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +54,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragDashboard extends Fragment implements AdapterView.OnItemSelectedListener {
+public class FragDashboard extends Fragment{
 
     private Context tContext;
     private FragmentManager tFragmentManager;
@@ -96,28 +102,18 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
     @BindView(R.id.cvDashExpenses)
     protected CardView cvDashExpenses;
 
-    @BindView(R.id.rlSpnDashSalesMan)
-    protected RelativeLayout rlSpnDashSalesMan;
-    @BindView(R.id.spnDashSalesMan)
-    protected Spinner spnDashSalesMan;
-    @BindView(R.id.pbSpnDashSales)
-    protected ProgressBar pbSpnDashSales;
-  @BindView(R.id.rlSpnDashAreaSalesMan)
-    protected RelativeLayout rlSpnDashAreaSalesMan;
-    @BindView(R.id.spnDashAreaSalesMan)
-    protected Spinner spnDashAreaSalesMan;
-    @BindView(R.id.pbSpnDashAreaSales)
-    protected ProgressBar pbSpnDashAreaSales;
 
     private String strPresentDay;
     private boolean checkAttendance = true;
+    private boolean viewPermission = true;
 
-    private String strSelectedUserId;
     private String strUserId;
+    private String strSelectedUserId;
     private String strUserType;
-    public static FragDashboard newInstance(String userType) {
+    public static FragDashboard newInstance(String strSelectedUserId, String userType) {
         FragDashboard fragment = new FragDashboard();
         fragment.strUserType = userType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
 
@@ -130,28 +126,41 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
         return view;
     }
     private void initFrag(){
+        Log.d(Constant.TAG, "Selected Id Dash : "+strSelectedUserId);
         tContext = getContext();
-        pbSpnDashSales.setVisibility(View.VISIBLE);
         checkLocationPermission();
         tSharedPrefManager = new SharedPrefManager(tContext);
         strUserId = tSharedPrefManager.getUserId();
+
+        if (strUserType.equalsIgnoreCase("0")||strUserType.equalsIgnoreCase("3")){
+            checkStatusApi(strSelectedUserId);
+        }else {
+            checkStatusApi(strUserId);
+        }
         SetTitle.tbTitle("Dashboard", getActivity());
         tFragmentManager = getFragmentManager();
         hideShowContent();
-        checkStatusApi();
+
+
+
     }
-    public void checkStatusApi(){
+    public void checkStatusApi(String srUserId){
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelActiveStatus> call = api.activeStatus(strUserId);
+        Call<ModelActiveStatus> call = api.activeStatus(GetImei.getDeviceIMEI(tContext, getActivity()), srUserId);
         call.enqueue(new Callback<ModelActiveStatus>() {
             @Override
-            public void onResponse(Call<ModelActiveStatus> call, Response<ModelActiveStatus> response) {
+            public void onResponse(@NonNull Call<ModelActiveStatus> call, @NonNull Response<ModelActiveStatus> response) {
                 ModelActiveStatus tModelActive = response.body();
                 assert tModelActive != null;
                 strAttStatus = tModelActive.getAttendanceStatus();
                 strAttTime = tModelActive.getTime();
                 strAttDate = tModelActive.getDate();
-//                checkAttendance = tModelActive.getAttendanceStatus().equalsIgnoreCase("1");
+                if (strUserType.equalsIgnoreCase("0")||strUserType.equalsIgnoreCase("3")){
+                    checkAttendance = true;
+                }else{
+                    checkAttendance = !strAttStatus.equalsIgnoreCase("0");
+                }
+
                 strPresentDay = tModelActive.getDay();
 
             }
@@ -161,81 +170,40 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
         });
     }
     private void hideShowContent(){
-        if (strUserType.equalsIgnoreCase("1")){
-            cvDashLead.setVisibility(View.VISIBLE);
-            cvDashCold.setVisibility(View.VISIBLE);
-            cvDashMeeting.setVisibility(View.VISIBLE);
-            rlSpnDashSalesMan.setVisibility(View.GONE);
-            rlSpnDashAreaSalesMan.setVisibility(View.GONE);
+
+        switch (strUserType){
+            case "1":
+                cvDashLead.setVisibility(View.VISIBLE);
+                cvDashCold.setVisibility(View.VISIBLE);
+                cvDashMeeting.setVisibility(View.VISIBLE);
+                viewPermission = false;
+                break;
+
+                case "2":
+                    cvDashLead.setVisibility(View.GONE);
+                    cvDashCold.setVisibility(View.GONE);
+                    cvDashMeeting.setVisibility(View.GONE);
+                    viewPermission = false;
+
+                    break;
+                case "3":
+                case "0":
+                    cvDashLead.setVisibility(View.VISIBLE);
+                    cvDashCold.setVisibility(View.VISIBLE);
+                    cvDashMeeting.setVisibility(View.VISIBLE);
+                    viewPermission = true;
+                break;
         }
-        else if (strUserType.equalsIgnoreCase("2")){
-            cvDashLead.setVisibility(View.GONE);
-            cvDashCold.setVisibility(View.GONE);
-            cvDashMeeting.setVisibility(View.GONE);
-            rlSpnDashSalesMan.setVisibility(View.GONE);
-            rlSpnDashAreaSalesMan.setVisibility(View.GONE);
-        }
-        else if (strUserType.equalsIgnoreCase("3")){
-            cvDashLead.setVisibility(View.VISIBLE);
-            cvDashCold.setVisibility(View.VISIBLE);
-            cvDashMeeting.setVisibility(View.VISIBLE);
-            rlSpnDashSalesMan.setVisibility(View.VISIBLE);
-            rlSpnDashAreaSalesMan.setVisibility(View.GONE);
-            spnDashSalesMan.setOnItemSelectedListener(this);
-            callApiSalesMan(strUserId);
-        }
-        else if (strUserType.equalsIgnoreCase("0")){
-            cvDashLead.setVisibility(View.VISIBLE);
-            cvDashCold.setVisibility(View.VISIBLE);
-            cvDashMeeting.setVisibility(View.VISIBLE);
-            rlSpnDashSalesMan.setVisibility(View.VISIBLE);
-            rlSpnDashAreaSalesMan.setVisibility(View.VISIBLE);
-            spnDashAreaSalesMan.setOnItemSelectedListener(this);
-            spnDashSalesMan.setOnItemSelectedListener(this);
-            callApiAreaSalesMan();
-        }
-    }
-    private void callApiSalesMan(String strUserId){
-        Api api = ApiClients.getApiClients().create(Api.class);
-        Call<List<ModelSalesMan>> call = api.salesAsmManList(strUserId);
-        call.enqueue(new Callback<List<ModelSalesMan>>() {
-            @Override
-            public void onResponse(Call<List<ModelSalesMan>> call, Response<List<ModelSalesMan>> response) {
-                tModelsSalesMan = response.body();
-                pbSpnDashSales.setVisibility(View.GONE);
-                tAdapterSalesMan = new AdapterSalesMan(tContext, tModelsSalesMan);
-                spnDashSalesMan.setAdapter(tAdapterSalesMan);
-            }
-            @Override
-            public void onFailure(Call<List<ModelSalesMan>> call, Throwable t) {
-            }
-        });
+
+
     }
 
-    private void callApiAreaSalesMan(){
-        String strUserId = tSharedPrefManager.getUserId();
-        Api api = ApiClients.getApiClients().create(Api.class);
-        Call<List<ModelAsmList>> call = api.asmList(strUserId);
-        call.enqueue(new Callback<List<ModelAsmList>>() {
-            @Override
-            public void onResponse(Call<List<ModelAsmList>> call, Response<List<ModelAsmList>> response) {
-                tModelAsmList = response.body();
-                Log.d(Constant.TAG, "ASM List Size : "+tModelAsmList.size());
-                pbSpnDashAreaSales.setVisibility(View.GONE);
-                tAdapterAreaSalesMan = new AdapterAreaSalesMan(tContext, tModelAsmList);
-                spnDashAreaSalesMan.setAdapter(tAdapterAreaSalesMan);
-            }
-            @Override
-            public void onFailure(Call<List<ModelAsmList>> call, Throwable t) {
-                Log.d(Constant.TAG, "ASM List Failure : "+t);
-            }
-        });
-    }
 
     @OnClick(R.id.ll_dash_attendance)
     public void dashAttendanceClicked(){
         if (strAttStatus !=null) {
-            tFragmentManager.beginTransaction().replace(R.id.container_main, FragAttendance.newInstance(strAttStatus, strAttTime, strAttDate)).addToBackStack(null).commit();
+            tFragmentManager.beginTransaction().replace(R.id.container_main, FragAttendance.newInstance(strUserType, strAttStatus,
+                    strAttTime, strAttDate)).addToBackStack(null).commit();
         }else {
             Toast.makeText(tContext, "Check the network status....", Toast.LENGTH_SHORT).show();
         }
@@ -245,10 +213,10 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
         if (checkAttendance) {
             if (!tSharedPrefManager.getStartKm().equals(""))
             {
-                tFragmentManager.beginTransaction().replace(R.id.container_main, FragDistance.newInstance(tModelsVehicle,0,strUserType)).addToBackStack(null).commit();
+                tFragmentManager.beginTransaction().replace(R.id.container_main, FragDistance.newInstance(strAttDate, strSelectedUserId, tModelsVehicle,0,strUserType)).addToBackStack(null).commit();
             }
             else {
-                tFragmentManager.beginTransaction().replace(R.id.container_main, FragVehicleList.newInstance(strUserType)).addToBackStack(null).commit();
+                tFragmentManager.beginTransaction().replace(R.id.container_main, FragVehicleList.newInstance(strAttDate, strSelectedUserId, strUserType)).addToBackStack(null).commit();
             }        }else {
             Toast.makeText(tContext, "Please check in first to continue...", Toast.LENGTH_SHORT).show();
         }
@@ -266,7 +234,8 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
  @OnClick(R.id.ll_dash_route)
     public void orderClicked(View view){
      if (checkAttendance) {
-         tFragmentManager.beginTransaction().replace(R.id.container_main, FragRoute.newInstance(strUserType, strSelectedUserId, strPresentDay)).addToBackStack(null).commit();
+         tFragmentManager.beginTransaction().replace(R.id.container_main, FragRoute.newInstance(strAttDate, strUserType,
+                 strSelectedUserId, strPresentDay)).addToBackStack(null).commit();
 
      }else {
          Toast.makeText(tContext, "Please check in first to continue...", Toast.LENGTH_SHORT).show();
@@ -347,30 +316,12 @@ public class FragDashboard extends Fragment implements AdapterView.OnItemSelecte
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-
-            case Constant.MY_PERMISSIONS_REQUEST_LOCATION: {
-
-                Toast.makeText(tContext, "permission denied", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        switch (parent.getId()){
-            case R.id.spnDashAreaSalesMan:
-                String strAsmId = tModelAsmList.get(position).getUserId();
-                callApiSalesMan(strAsmId);
-                break;
-            case R.id.spnDashSalesMan:
-                strSelectedUserId = tModelsSalesMan.get(position).getUserId();
-                break;
+        if (requestCode == Constant.MY_PERMISSIONS_REQUEST_LOCATION) {
+            Toast.makeText(tContext, "permission denied", Toast.LENGTH_LONG).show();
         }
 
     }
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
 
-    }
+
+
 }

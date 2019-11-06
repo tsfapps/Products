@@ -38,7 +38,7 @@
         </RadioGroup>
         <TextView
             android:layout_alignParentEnd="true"
-            android:hint="Select Route"
+            android:text="Select Route"
             style="@style/tv_report" />
         <RelativeLayout
             android:layout_marginStart="@dimen/dimen_4dp"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv_meeting_orgName"
-                android:hint="Organisation Name*"
+                android:text="Organisation Name*"
                 style="@style/tv_report" />
         </RelativeLayout>
         <LinearLayout
@@ -86,11 +86,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:hint="Contact Number*"
+                android:text="Contact Number*"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="Contact Name*"
+                android:text="Contact Name*"
                 style="@style/tv_report" />
 
         </RelativeLayout>
@@ -118,11 +118,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:hint="Email Id"
+                android:text="Email Id"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="WhatsApp Number"
+                android:text="WhatsApp Number"
                 style="@style/tv_report" />
 
         </RelativeLayout>
@@ -148,11 +148,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:hint="Meeting Date"
+                android:text="Meeting Date"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="Land line Number"
+                android:text="Land line Number"
                 style="@style/tv_report" />
 
         </RelativeLayout>
@@ -175,7 +175,7 @@
         </LinearLayout>
         <TextView
             android:id="@+id/tv_meeting_orgAddress"
-            android:hint="Organisation Address"
+            android:text="Organisation Address"
             style="@style/tv_report" />
         <LinearLayout
             android:orientation="horizontal"

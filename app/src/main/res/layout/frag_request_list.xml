@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout
+    android:background="@color/grey"
+    android:paddingEnd="@dimen/dimen_8dp"
+    android:paddingStart="@dimen/dimen_8dp"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tvCustomerLabel"
+        android:textSize="@dimen/dimen_14sp"
+        android:layout_centerHorizontal="true"
+        android:text="Special Request"
+        android:textColor="@color/green"
+        style="@style/tv_time_report" />
+    <ImageView
+        android:src="@drawable/ic_add"
+        android:padding="@dimen/dimen_2dp"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/ivRequestAdd"
+        android:layout_margin="@dimen/dimen_2dp"
+        android:gravity="center"
+        style="@style/tv_report"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_badge_red"
+        />
+
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/pbFragRequestList"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/ivRequestAdd"
+        android:layout_above="@+id/viewTaskCustomer"
+        android:id="@+id/rvRequestList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/frag_request_list_item"/>
+
+    <View
+        android:id="@+id/viewTaskCustomer"
+        android:layout_above="@+id/llColor"
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1dp"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/llColor"
+        android:layout_alignParentBottom="true"
+        android:paddingStart="@dimen/dimen_16sp"
+        android:paddingEnd="@dimen/dimen_16sp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/tv_color"
+                android:text="Task for the day"
+                android:drawableTint="@color/red"
+                />
+            <TextView
+                style="@style/tv_color"
+                android:text="Upcoming Task"
+                android:drawableTint="@color/tan_yellow" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Old Unattended Task"
+                android:drawableTint="@color/pink"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/tv_color"
+                android:text="Rescheduled Task"
+                android:drawableTint="@color/cyan" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Completed Task"
+                android:drawableTint="@color/green" />
+            <TextView
+                style="@style/tv_color"
+                android:text="Rescheduled not completed"
+                android:drawableTint="@color/darkPink" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+</layout>

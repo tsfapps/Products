@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+<data>
+    <variable
+        name="shopCounter"
+        type="com.knotlink.salseman.model.dash.route.ModelShopCounter" />
+</data>
+
+
+
 <RelativeLayout
     android:background="@color/grey"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -51,8 +61,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-    <android.support.v4.widget.SwipeRefreshLayout
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/llShopCounter"
         android:layout_below="@+id/rlRouteHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/tv_lin_hor"
+            tools:text="Total Count"
+            android:text="@{shopCounter.totalCount}"
+            android:textColor="@color/colorBlack" />
+        <TextView
+            style="@style/tv_lin_hor"
+            tools:text="Visit Count"
+            android:text="@{shopCounter.visitCount}"
+            android:textColor="@color/colorBlack"
+            />
+        <TextView
+            style="@style/tv_lin_hor"
+            tools:text="No Visit Count"
+            android:text="@{shopCounter.noVisitCount}"
+            android:textColor="@color/colorBlack"
+            />
+        <TextView
+            style="@style/tv_lin_hor"
+            tools:text="Remain Count"
+            android:text="@{shopCounter.remainCount}"
+            android:textColor="@color/colorBlack"
+            />
+
+    </LinearLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_below="@+id/llShopCounter"
         android:id="@+id/swrFragRoute"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -67,9 +108,11 @@
         android:layout_centerInParent="true" />
 
 <android.support.v7.widget.RecyclerView
+    tools:listitem="@layout/frag_route_item"
     android:id="@+id/rv_route"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
         </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
+</layout>

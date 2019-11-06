@@ -10,18 +10,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.AdapterReportAttendance;
 import com.knotlink.salseman.adapter.report.AdapterReportDistance;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.model.report.ModelReportDistance;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;

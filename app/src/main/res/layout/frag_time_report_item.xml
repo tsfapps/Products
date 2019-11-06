@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.report.FragTimeReport">
+    <data>
+        <variable
+            name="reportTime"
+            type="com.knotlink.salseman.model.report.ModelTimeReport" />
+    </data>
+<android.support.v7.widget.CardView
+    android:background="@color/white"
+    android:layout_margin="@dimen/dimen_2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_margin="@dimen/dimen_4dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:text="@{reportTime.getShop}"
+        android:textColor="@color/green"
+        android:textSize="@dimen/dimen_14sp"
+        style="@style/tv_time_report"
+        tools:text="Activity"
+        />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40dp">
+        <TextView
+            android:textColor="@color/red"
+            android:text="@{reportTime.getActivity}"
+            style="@style/tv_time_report"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            tools:text="Activity"
+            />
+        <TextView
+            android:textColor="@color/tan_yellow"
+            android:text="@{reportTime.getTime}"
+            style="@style/tv_time_report"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            tools:text="Tme"
+            />
+        <TextView
+            android:textColor="@color/colorAccent"
+            android:text="@{reportTime.getDuration}"
+            style="@style/tv_time_report"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            tools:text="Duration"
+            />
+        <TextView
+            android:id="@+id/tvMapTimeReport"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="match_parent"
+            style="@style/tv_time_report"
+            android:drawableEnd="@drawable/ic_map_red"
+            />
+    </LinearLayout>
+</LinearLayout>
+</android.support.v7.widget.CardView>
+</layout>

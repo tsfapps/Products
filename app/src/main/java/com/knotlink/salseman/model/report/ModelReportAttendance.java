@@ -86,7 +86,7 @@ public class ModelReportAttendance {
     }
 
     public String getLoginDate() {
-        return DateUtils.convertFormatOpposite(loginDate);
+        return DateUtils.dateFormatDdMmmYyyy(loginDate);
     }
 
     public void setLoginDate(String loginDate) {
@@ -142,7 +142,7 @@ public class ModelReportAttendance {
     }
 
     public String getLogoutDate() {
-        return logoutDate;
+        return DateUtils.dateFormatDdMmmYyyy(logoutDate);
     }
 
     public void setLogoutDate(String logoutDate) {

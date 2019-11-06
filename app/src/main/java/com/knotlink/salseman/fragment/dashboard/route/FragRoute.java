@@ -1,7 +1,10 @@
 package com.knotlink.salseman.fragment.dashboard.route;
 
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,16 +20,19 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.common.util.DataUtils;
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.route.AdapterRoute;
+import com.knotlink.salseman.adapter.route.AdapterRoute;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
+import com.knotlink.salseman.databinding.FragRouteBinding;
+import com.knotlink.salseman.model.dash.route.ModelShopCounter;
 import com.knotlink.salseman.model.dash.route.ModelShopList;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
-import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetTitle;
+import com.knotlink.salseman.viewModel.route.ViewModelShopCounter;
 
 import java.util.List;
 
@@ -51,16 +57,20 @@ public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshL
     protected SwipeRefreshLayout swrFragRoute;
     private Context tContext;
     private FragmentManager tFragmentManager;
-    private SharedPrefManager tSharedPrefManager;
     private List<ModelShopList> tModels;
+    private ViewModelShopCounter tViewModel;
+    private FragRouteBinding tBinding;
+
 
     private String strUserId;
     private String strUserType;
     private String strSelectedId;
     private String strPresentDay;
-    public static FragRoute newInstance(String strUserType, String strSelectedId, String strPresentDay) {
+    private String strAttDate;
+    public static FragRoute newInstance(String strAttDate, String strUserType, String strSelectedId, String strPresentDay) {
 
         FragRoute fragment = new FragRoute();
+        fragment.strAttDate = strAttDate;
         fragment.strUserType = strUserType;
         fragment.strSelectedId = strSelectedId;
         fragment.strPresentDay = strPresentDay;
@@ -70,7 +80,8 @@ public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshL
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_route, container, false);
+        tBinding = DataBindingUtil.inflate(inflater, R.layout.frag_route, container, false);
+        View view = tBinding.getRoot();
         ButterKnife.bind(this, view);
         initFrag();
         return view;
@@ -78,8 +89,9 @@ public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshL
     private void initFrag() {
         tContext = getContext();
         tActivity = getActivity();
+        tViewModel = ViewModelProviders.of(this).get(ViewModelShopCounter.class);
         tFragmentManager = getFragmentManager();
-        tSharedPrefManager = new SharedPrefManager(tContext);
+        SharedPrefManager tSharedPrefManager = new SharedPrefManager(tContext);
         if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")) {
             strUserId = strSelectedId ;
         }
@@ -87,12 +99,13 @@ public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshL
             strUserId = tSharedPrefManager.getUserId();
 
         }
-        tvRoutePresnetDay.setText(DateUtils.getPresentDay());
+        tvRoutePresnetDay.setText(strPresentDay);
         pbRouteList.setVisibility(View.VISIBLE);
         swrFragRoute.setOnRefreshListener(this);
         callApi(strUserId);
         SetTitle.tbTitle("Vendor List", getActivity());
         initRvRoute();
+        setShopCounter();
     }
 
     private void initRvRoute(){
@@ -101,9 +114,9 @@ public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     private void callApi(final String strUserId){
-//        String strPresentDay = DateUtils.getPresentDay();
+
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<List<ModelShopList>> call = api.getShopDetail(strUserId, strUserType, strPresentDay);
+        Call<List<ModelShopList>> call = api.getShopDetail(strAttDate, strUserId, strUserType, strPresentDay);
         call.enqueue(new Callback<List<ModelShopList>>() {
             @Override
             public void onResponse(Call<List<ModelShopList>> call, Response<List<ModelShopList>> response) {
@@ -112,7 +125,7 @@ public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshL
                 if (tModels.size()!=0) {
                     tvRouteName.setText(tModels.get(0).getRouteName());
                 }
-                AdapterRoute tAdapter = new AdapterRoute(tActivity, tContext,tFragmentManager, tModels, strUserId, strUserType,strSelectedId);
+                AdapterRoute tAdapter = new AdapterRoute(strAttDate, tActivity,tFragmentManager, tModels, strUserId, strUserType,strSelectedId);
                 rvRoute.setAdapter(tAdapter);
             }
 
@@ -134,4 +147,14 @@ public class FragRoute extends Fragment implements SwipeRefreshLayout.OnRefreshL
             }
         }, 2000);
     }
+
+    private void setShopCounter(){
+        tViewModel.getShopCounter(strUserId, strAttDate).observe(this, new Observer<ModelShopCounter>() {
+            @Override
+            public void onChanged(@Nullable ModelShopCounter modelShopCounter) {
+                tBinding.setShopCounter(modelShopCounter);
+            }
+        });
+    }
+
 }

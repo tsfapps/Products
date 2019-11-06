@@ -1,122 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:background="@drawable/bg_tv"
-    android:gravity="center_vertical"
-    android:elevation="22dp"
-    app:cardCornerRadius="4dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
-    app:cardUseCompatPadding="true"
-    app:contentPadding="4dp"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="coldCall"
+            type="com.knotlink.salseman.model.report.ModelReportColdCall"/>
+    </data>
+    <android.support.v7.widget.CardView
+        android:background="@drawable/bg_tv"
+        android:gravity="center_vertical"
+        android:elevation="22dp"
+        app:cardCornerRadius="4dp"
+        android:layout_margin=".5dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="4dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
         <LinearLayout
-            android:padding="4dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <TextView
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                style="@style/tv_report"
+                android:text="@{coldCall.orgName}"
+                tools:text="Organisation Name" />
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:padding="4dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Assign Date"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Vendor Name"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Contact Name"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Contact Number"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Email Id"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Telephone"/>
-                <!--<TextView-->
-                    <!--style="@style/tv_report"-->
-                    <!--android:text="WhatsApp Number"/>-->
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Cold Call Status"/>
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Remarks"/>
 
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Address"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/darkPink"
+                        style="@style/tv_report"
+                        android:text="@{coldCall.taskAssignDate}"
+                        tools:text="Date" />
+                    <TextView
+                        style="@style/tv_report"
+                        android:text="@{coldCall.taskDueDate}"
+                        tools:text="Meeting Date"/>
+                    <TextView
+                        android:textColor="@color/colorAccent"
+                        style="@style/tv_report"
+                        android:text="@{coldCall.remarks}"
+                        tools:text="Remarks"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <TextView
+                        style="@style/tv_report"
+                        android:text="@{coldCall.customerName}"
+                        tools:text="Customer Name"/>
 
 
+                    <TextView
+                        android:id="@+id/tv_report_meeting_meetingTime"
+                        style="@style/tv_report"
+                        android:text="@{coldCall.taskTime}"
+                        tools:text="Meeting Time"/>
+
+                    <TextView
+                        style="@style/tv_report"
+                        android:text="@{coldCall.customerContactNo}"
+                        tools:text="Customer Contact Number"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_map_main">
+                    <TextView
+                        android:id="@+id/tvReportColdMap"
+                        style="@style/tv_map_main"
+                        />
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tv_report_coldCall_date"
-                    style="@style/tv_report"
-                    android:text="Date"/>
-                <TextView
-                    android:id="@+id/tv_report_coldCall_vendorName"
-                    style="@style/tv_report"
-                    android:text="Vendor Name"/>
-                <TextView
-                    android:id="@+id/tv_report_coldCall_contactName"
-                    style="@style/tv_report"
-                    android:text="Contact Name"/>
-                <TextView
-                    android:id="@+id/tv_report_coldCall_contactNumber"
-                    style="@style/tv_report"
-                    android:text="Contact Number"/>
-                <TextView
-                    android:id="@+id/tv_report_coldCall_emailId"
-                    style="@style/tv_report"
-                    android:text="Email Id"/>
-                <TextView
-                    android:id="@+id/tv_report_coldCall_telephone"
-                    style="@style/tv_report"
-                    android:text="Telephone"/>
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_report_coldCall_whatsAppNumber"-->
-                    <!--style="@style/tv_report"-->
-                    <!--android:text="WhatsApp Number"/>-->
-                <TextView
-                    android:id="@+id/tv_report_coldCall_status"
-                    style="@style/tv_report"
-                    android:text="Cold Call Status"/>
-                <TextView
-                    android:id="@+id/tv_report_coldCall_remarks"
-                    style="@style/tv_report"
-                    android:text="Remarks"/>
-                <TextView
-                    android:id="@+id/tv_report_coldCall_address"
-                    style="@style/tv_report"
-                    android:text="Address"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/ll_map_main">
-                <TextView
-                    android:id="@+id/tvReportColdMap"
-                    style="@style/tv_map_main"
-                    />
-
-
-            </LinearLayout>
+            <TextView
+                android:textColor="@color/green"
+                style="@style/tv_report"
+                android:text="@{coldCall.customerAddress}"
+                tools:text="Address"/>
 
         </LinearLayout>
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</layout>

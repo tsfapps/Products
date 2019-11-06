@@ -45,10 +45,20 @@ public class ReportMapActivity extends FragmentActivity implements OnMapReadyCal
         tMap.getUiSettings().setZoomGesturesEnabled(true);
         tMap.getUiSettings().setCompassEnabled(true);
         LatLng tLogin = new LatLng(strLoginLat, strLoginLong);
-        tMap.addMarker(new MarkerOptions().position(tLogin).title(strLoginAddress).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        tMap.addMarker(new MarkerOptions()
+                .position(tLogin)
+                .anchor(0.5f, 1.0f)
+                .title(strLoginAddress)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
+                .showInfoWindow();
         tMap.moveCamera(CameraUpdateFactory.newLatLng(tLogin));
         tMap.animateCamera(CameraUpdateFactory.zoomTo(12));
         LatLng tLogout = new LatLng(strLogoutLat, strLogoutLong);
-        tMap.addMarker(new MarkerOptions().position(tLogout).title(strLogoutAddress).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        tMap.addMarker(new MarkerOptions()
+                .position(tLogout)
+                .anchor(0.5f, 1.0f)
+                .title(strLogoutAddress)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+                .showInfoWindow();
     }
 }

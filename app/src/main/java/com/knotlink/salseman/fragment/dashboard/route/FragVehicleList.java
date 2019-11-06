@@ -48,12 +48,16 @@ public class FragVehicleList extends Fragment implements SwipeRefreshLayout.OnRe
     protected SwipeRefreshLayout swrFragVehicleList;
 
     private String strUserType;
+    private String strSelectedUserId;
+    private String strAttDate;
 
-    public static FragVehicleList newInstance(String strUserType) {
+    public static FragVehicleList newInstance(String strAttDate, String strSelectedUserId, String strUserType) {
 
 
         FragVehicleList fragment = new FragVehicleList();
         fragment.strUserType = strUserType;
+        fragment.strAttDate = strAttDate;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
 
@@ -83,7 +87,7 @@ public class FragVehicleList extends Fragment implements SwipeRefreshLayout.OnRe
                 tModels = response.body();
                 pbVehicleList.setVisibility(View.GONE);
                 if (tModels.size()>0){
-                tAdapter = new AdapterVehicleList(tModels, tContext, tFragmentManager, strUserType);
+                tAdapter = new AdapterVehicleList(strAttDate, strSelectedUserId, tModels, tContext, tFragmentManager, strUserType);
                 rvVehicleList.setAdapter(tAdapter);}
                 else {
                     CustomDialog.showEmptyDialog(tContext);

@@ -30,6 +30,7 @@ import com.knotlink.salseman.R;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.fragment.dashboard.FragDashboard;
+import com.knotlink.salseman.model.dash.ModelActiveStatus;
 import com.knotlink.salseman.model.dash.route.ModelNewOrder;
 import com.knotlink.salseman.model.dash.route.ModelShopList;
 import com.knotlink.salseman.services.GPSTracker;
@@ -39,6 +40,7 @@ import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
 import com.knotlink.salseman.utils.CustomToast;
 import com.knotlink.salseman.utils.DateUtils;
+import com.knotlink.salseman.utils.GetImei;
 import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
 import com.kyanogen.signatureview.SignatureView;
@@ -65,7 +67,6 @@ import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 public class FragNewOrder extends Fragment {
 
     private Context tContext;
-    private SharedPrefManager tSharedPrefManager;
     private FragmentManager tFragmentManager;
     private Bitmap tBitmap;
     private String strLat;
@@ -73,6 +74,7 @@ public class FragNewOrder extends Fragment {
     private String strAddress;
     private String strUserId;
     private String strShopId;
+    private String strStatusCheckDate;
 
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -102,14 +104,18 @@ public class FragNewOrder extends Fragment {
     private int i;
     private String strUserType;
     private String strAreaStatus;
+    private String strSelectedUserId;
+    private String strAttDate;
 
-    public static FragNewOrder newInstance(List<ModelShopList> tModels, int i, String strUserType, String strAreaStatus) {
+    public static FragNewOrder newInstance(String strAttDate, String strSelectedUserId, List<ModelShopList> tModels, int i, String strUserType, String strAreaStatus) {
 
         FragNewOrder fragment = new FragNewOrder();
         fragment.tModels = tModels;
         fragment.i = i;
+        fragment.strAttDate = strAttDate;
         fragment.strUserType = strUserType;
         fragment.strAreaStatus = strAreaStatus;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
 
@@ -129,22 +135,35 @@ public class FragNewOrder extends Fragment {
     }
     public void initFrag() {
         tContext = getContext();
-        tSharedPrefManager = new SharedPrefManager(tContext);
+        SharedPrefManager tSharedPrefManager = new SharedPrefManager(tContext);
         strUserId  = tSharedPrefManager.getUserId();
         tFragmentManager = getFragmentManager();
         GPSTracker tGpsTracker = new GPSTracker(tContext);
         strLat = String.valueOf(tGpsTracker.latitude);
         strLong = String.valueOf(tGpsTracker.longitude);
         strAddress = tGpsTracker.getAddressLine(tContext);
-        Log.d(Constant.TAG, "New Order Lat : "+strLat);
-        Log.d(Constant.TAG, "New Order Long : "+strLong);
+
         SetTitle.tbTitle("New Order", getActivity());
         tvOrderShopName.setText(tModels.get(i).getShopName());
         strShopId = tModels.get(i).getShopId();
         String strTodayDate = DateUtils.getTodayDate();
         tvOrderDateOfDelivery.setText(DateUtils.getDeliveryDate(strTodayDate));
+        checkStatusApi();
     }
-
+    public void checkStatusApi(){
+        Api api = ApiClients.getApiClients().create(Api.class);
+        Call<ModelActiveStatus> call = api.activeStatus(GetImei.getDeviceIMEI(tContext, getActivity()), strUserId);
+        call.enqueue(new Callback<ModelActiveStatus>() {
+            @Override
+            public void onResponse(@NonNull Call<ModelActiveStatus> call, @NonNull Response<ModelActiveStatus> response) {
+               ModelActiveStatus tModels = response.body();
+                strStatusCheckDate = tModels.getDate();
+            }
+            @Override
+            public void onFailure(Call<ModelActiveStatus> call, Throwable t) {
+            }
+        });
+    }
     @OnClick(R.id.tvOrderSelectProduct)
     public void tvOrderSelectProductClicked(){
         tFragmentManager.beginTransaction().replace(R.id.container_main, new FragSelectOrder()).addToBackStack(null).commit();
@@ -163,7 +182,6 @@ public class FragNewOrder extends Fragment {
                 SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT_dd_MMMM_yyyy, Locale.UK);
                 try {
                     Date myDate = sdf.parse(strCurrentDate);
-                   // long millis = myDate.getTime();
                     String strMyDate = sdf.format(myCalendar.getTime());
                     Date selDate = sdf.parse(strMyDate);
                     if (selDate.compareTo(myDate)>0) {
@@ -184,7 +202,6 @@ public class FragNewOrder extends Fragment {
     }
     @OnClick(R.id.iv_order_clear_sign)
     public void clrSignClicked(View view){
-//        signatureViewOrder.clearCanvas();
         signature_view_order.clearCanvas();
     }
 
@@ -287,7 +304,6 @@ public class FragNewOrder extends Fragment {
                 SetImage.setGalleryImage(tContext, ivUploadOrder, data);
                 BitmapDrawable drawable = (BitmapDrawable)ivUploadOrder.getDrawable();
                 tBitmap = drawable.getBitmap();
-
             }
 
         } else if (requestCode == Constant.CAMERA) {
@@ -299,18 +315,19 @@ public class FragNewOrder extends Fragment {
     private String signImageToString(){
         Bitmap bitmapSign = signature_view_order.getSignatureBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmapSign.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+        bitmapSign.compress(Bitmap.CompressFormat.PNG,10,byteArrayOutputStream);
         byte[] imByte = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imByte,Base64.DEFAULT);
     }
 public void callApi(){
+        Log.d(Constant.TAG, "Status Date : "+strAttDate);
         String strDol = tvOrderDateOfDelivery.getText().toString().trim();
         String strRemarks = etOrderRemarks.getText().toString().trim();
         String strImage = imageToString(tBitmap, ivUploadOrder);
         String strImageSign = signImageToString();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelNewOrder> call = api.uploadNewOrder(strUserId, strShopId, strDol, strRemarks, strImageSign, strImage,
-                strLat, strLong, strAddress, strAreaStatus);
+        Call<ModelNewOrder> call = api.uploadNewOrder(strAttDate, strUserId, strShopId, strDol,
+                strRemarks, strImageSign, strImage, strLat, strLong, strAddress, strAreaStatus);
         call.enqueue(new Callback<ModelNewOrder>() {
         @Override
         public void onResponse(Call<ModelNewOrder> call, Response<ModelNewOrder> response) {
@@ -318,7 +335,7 @@ public void callApi(){
             if (!tModels.getError()) {
                 CustomToast.toastMid(getActivity(), tModels.getMessage());
                 getFragmentManager().beginTransaction().remove(FragNewOrder.this).commit();
-                getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strSelectedUserId, strUserType)).commit();
             }
             else {
                 CustomToast.toastMid(getActivity(), tModels.getMessage());

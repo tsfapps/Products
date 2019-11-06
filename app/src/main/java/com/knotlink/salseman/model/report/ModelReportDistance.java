@@ -107,7 +107,7 @@ public class ModelReportDistance {
     }
 
     public String getDate() {
-        return DateUtils.convertFormatOpposite(date);
+        return DateUtils.dateFormatDdMmmYyyy(date);
     }
 
     public void setDate(String date) {

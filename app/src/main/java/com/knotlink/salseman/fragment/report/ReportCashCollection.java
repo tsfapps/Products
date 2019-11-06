@@ -83,7 +83,7 @@ public class ReportCashCollection extends Fragment implements SwipeRefreshLayout
         else {
             strUserId = tSharedPrefManager.getUserId();
         }
-        SetTitle.tbTitle(" Meeting Report", getActivity());
+        SetTitle.tbTitle(" Cash Collection Report", getActivity());
 
         rvReportAll.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         pbReportAll.setVisibility(View.VISIBLE);

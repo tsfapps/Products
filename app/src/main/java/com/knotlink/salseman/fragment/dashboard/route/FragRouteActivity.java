@@ -87,6 +87,21 @@ public class FragRouteActivity extends Fragment {
     private String strSm;
     private String strDm;
     private String strAsm;
+    private String strShopName;
+    private String strExistingAddress;
+    private String strUpdateAddress;
+    private String strUpdateAddress2;
+    private String strUpdateAddress3;
+    private String strUpdateAddress4;
+    private String strUpdateAddress5;
+    private String strUpdateAddress6;
+    private String strUpdateCity;
+    private String strUpdateState;
+    private String strUpdateCountry;
+    private String strUpdatePinCode;
+    private int imgStatus = 0;
+    private ImageView ivUpdateImage;
+
     // private String spinner_item_feedback;
     private AdapterSpecialRequest tAdapterSpecialRequest;
     private EditText edittext;
@@ -99,7 +114,8 @@ public class FragRouteActivity extends Fragment {
     private String strLong;
     private String strPinCode;
     private String strCity;
-    private String strAdders;
+    private String strState;
+    private String strGeoAdderss;
     private String strAreaStatus;
 
     @BindView(R.id.btnGetLocation)
@@ -124,10 +140,14 @@ public class FragRouteActivity extends Fragment {
     protected TextView tvAddressRouteActivity;
     private int i;
     private String strUserType;
+    private String strSelectedUserId;
+    private String strAttDate;
 
-    public static FragRouteActivity newInstance(List<ModelShopList> tModels, int i, String strUserType) {
+    public static FragRouteActivity newInstance(String strAttDate, String strSelectedUserId, List<ModelShopList> tModels, int i, String strUserType) {
         FragRouteActivity fragment = new FragRouteActivity();
         fragment.tModels = tModels;
+        fragment.strAttDate = strAttDate;
+        fragment.strSelectedUserId = strSelectedUserId;
         fragment.i = i;
         fragment.strUserType = strUserType;
         return fragment;
@@ -148,7 +168,10 @@ public class FragRouteActivity extends Fragment {
         strUserId = tSharedPrefManger.getUserId();
 
         tFragmentManager = getFragmentManager();
-        tvRouteActivityShopName.setText(tModels.get(i).getShopName());
+        strShopName = tModels.get(i).getShopName();
+        strExistingAddress = tModels.get(i).getShopAddress();
+
+        tvRouteActivityShopName.setText(strShopName);
         //Status
         String strStatusNoActivity = tModels.get(i).getNoActivityStatus();
         String strStatusOrder = tModels.get(i).getNewOrderStatus();
@@ -196,13 +219,14 @@ public class FragRouteActivity extends Fragment {
         strLat = String.valueOf(tGpsTracker.latitude);
         strLong = String.valueOf(tGpsTracker.longitude);
         strCity = tGpsTracker.getCity(tContext);
+        strState = "Karnataka";
         strPinCode = tGpsTracker.getPostalCode(tContext);
-        strAdders = tGpsTracker.getAddressLine(tContext);
-        if (strUserType.equalsIgnoreCase("1")){
-            tvRouteActivityOrder.setText("New Order");
+        strGeoAdderss = tGpsTracker.getAddressLine(tContext);
+        if (strUserType.equalsIgnoreCase("2")){
+            tvRouteActivityOrder.setText("Orders");
         }
-        else if (strUserType.equalsIgnoreCase("2")){
-            tvRouteActivityOrder.setText("Sales Return");
+        else{
+            tvRouteActivityOrder.setText("New Order");
         }
         double shopLat = Double.parseDouble(strShopLat);
         double shopLong = Double.parseDouble(strShopLong);
@@ -218,16 +242,28 @@ public class FragRouteActivity extends Fragment {
 
     @OnClick(R.id.ll_route_new_order)
     public void routeOrderClicked(){
-        tFragmentManager.beginTransaction().replace(R.id.container_main, FragNewOrder.newInstance(tModels, i, strUserType, strAreaStatus)).addToBackStack(null).commit();
+        if (!strUserType.equalsIgnoreCase("2")) {
+            tFragmentManager.beginTransaction().replace(R.id.container_main, FragNewOrder.newInstance(strAttDate, strSelectedUserId,
+                    tModels, i, strUserType, strAreaStatus)).addToBackStack(null).commit();
+        }else {
+            tFragmentManager.beginTransaction().replace(R.id.container_main, FragOrderList.newInstance(tModels.get(i).getShopId(),
+                    tModels.get(i).getShopName(), strAttDate, strUserType, strSelectedUserId)).addToBackStack(null).commit();
+        }
     }
      @OnClick(R.id.ll_RouteSalesReturn)
-    public void ll_RouteSalesReturnlicked(){
-         tFragmentManager.beginTransaction().replace(R.id.container_main, FragSalesReturn.newInstance(tModels, i, strUserType, strAreaStatus)).addToBackStack(null).commit();
+    public void ll_RouteSalesReturnClicked(){
+        if (!strUserType.equalsIgnoreCase("2")) {
+            tFragmentManager.beginTransaction().replace(R.id.container_main,
+                    FragSalesReturn.newInstance(tModels, i, strUserType, strSelectedUserId)).addToBackStack(null).commit();
+        }else {
+            tFragmentManager.beginTransaction().replace(R.id.container_main,
+                    FragSalesReturnFetch.newInstance(tModels, i, strUserType, strSelectedUserId)).addToBackStack(null).commit();
+        }
     }
     @OnClick(R.id.ll_dash_receipt)
     public void receiptClicked(){
         assert getFragmentManager() != null;
-        tFragmentManager.beginTransaction().replace(R.id.container_main, FragReceipt.newInstance(tModels, i, strAreaStatus)).addToBackStack(null).commit();
+        tFragmentManager.beginTransaction().replace(R.id.container_main, FragReceipt.newInstance(strUserType, strSelectedUserId, tModels, i, strAreaStatus)).addToBackStack(null).commit();
     }
     @SuppressLint("SetTextI18n")
     @OnClick(R.id.btnGetLocation)
@@ -266,18 +302,62 @@ public class FragRouteActivity extends Fragment {
 
             }
         });
-
+        final TextView tvShopName =  dialog.findViewById(R.id.tvUpdateShopName);
+        tvShopName.setText(strShopName);
+        final TextView tvExistingAddress =  dialog.findViewById(R.id.tvExistingAddress);
+        tvExistingAddress.setText(strExistingAddress);
+        final TextView tvUpdateGeoAddress =  dialog.findViewById(R.id.tvUpdateGeoAddress);
+        tvUpdateGeoAddress.setText(strGeoAdderss);
+        final EditText etUpdateShopName =  dialog.findViewById(R.id.etUpdateShopName);
+        etUpdateShopName.setText(strShopName);
         final EditText etAddress =  dialog.findViewById(R.id.etUpdateAddress);
-        final TextView tvAddress =  dialog.findViewById(R.id.tvUpdateAddress);
-        tvAddress.setText(strAdders);
+        final EditText etAddress2 =  dialog.findViewById(R.id.etUpdateAddress2);
+        final EditText etAddress3 =  dialog.findViewById(R.id.etUpdateAddress3);
+        final EditText etAddress4 =  dialog.findViewById(R.id.etUpdateAddress4);
+        final EditText etAddress5 =  dialog.findViewById(R.id.etUpdateAddress5);
+        final EditText etAddress6 =  dialog.findViewById(R.id.etUpdateAddress6);
+        final EditText etUpdateCity =  dialog.findViewById(R.id.etUpdateCity);
+        etUpdateCity.setText(strCity);
+        final EditText etUpdateState =  dialog.findViewById(R.id.etUpdateState);
+        etUpdateState.setText(strState);
+        final EditText etUpdatePinCode =  dialog.findViewById(R.id.etUpdatePinCode);
+        etUpdatePinCode.setText(strPinCode);
+        final EditText etUpdateCountry =  dialog.findViewById(R.id.etUpdateCountry);
+        etUpdatePinCode.setText(strPinCode);
+        ivUpdateImage =  dialog.findViewById(R.id.ivUpdateImage);
+        ivUpdateImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhotoFromCamera();
+                imgStatus = 1;
+            }
+        });
         Button btSubmitAddress =  dialog.findViewById(R.id.btnUpdateAddressSubmit);
         Button btnCancelAddress =  dialog.findViewById(R.id.btnUpdateAddressCancel);
         btSubmitAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String strAddress = etAddress.getText().toString().trim();
-                if (strAddress.equalsIgnoreCase("")){
+                strUpdateAddress = etAddress.getText().toString().trim();
+                strUpdateAddress2 = etAddress2.getText().toString().trim();
+                strUpdateAddress3 = etAddress3.getText().toString().trim();
+                strUpdateAddress4 = etAddress4.getText().toString().trim();
+                strUpdateAddress5 = etAddress5.getText().toString().trim();
+                strUpdateAddress6 = etAddress6.getText().toString().trim();
+                 strUpdateCity = etUpdateCity.getText().toString().trim();
+                 strUpdateState = etUpdateState.getText().toString().trim();
+                 strUpdateCountry = etUpdateCountry.getText().toString().trim();
+                strUpdatePinCode = etUpdatePinCode.getText().toString().trim();
+                if (strUpdateAddress.equalsIgnoreCase("")){
                     etAddress.setError("Address can't be empty");
+                }else if (strUpdateCity.equalsIgnoreCase("")) {
+                    etUpdateCity.setError("City can't be empty");
+
+                }else if (strUpdateState.equalsIgnoreCase("")) {
+                    etUpdateState.setError("State can't be empty");
+
+                }else if (strUpdatePinCode.equalsIgnoreCase("")) {
+                    etUpdatePinCode.setError("Zip Code can't be empty");
+
                 }else {
                 final SweetAlertDialog alertDialog = new SweetAlertDialog(tContext, SweetAlertDialog.WARNING_TYPE);
                 alertDialog.setTitleText("Are you sure, you would like to submit this address ?");
@@ -285,7 +365,7 @@ public class FragRouteActivity extends Fragment {
                 alertDialog.setConfirmClickListener( new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        callLocationApi(strAddress, dialog, alertDialog);
+                        callLocationApi(strUpdateAddress, dialog, alertDialog);
                     }
                 });
 
@@ -297,9 +377,9 @@ public class FragRouteActivity extends Fragment {
                     }
                 });
                 alertDialog.show();
-                Button btn = (Button) alertDialog.findViewById(R.id.confirm_button);
+                Button btn =  alertDialog.findViewById(R.id.confirm_button);
                 btn.setBackgroundColor(ContextCompat.getColor(tContext, R.color.colorPrimary));
-                Button btn1 = (Button) alertDialog.findViewById(R.id.cancel_button);
+                Button btn1 =  alertDialog.findViewById(R.id.cancel_button);
                 btn1.setBackgroundColor(ContextCompat.getColor(tContext, R.color.colorPrimary));
                  }
 
@@ -315,8 +395,13 @@ public class FragRouteActivity extends Fragment {
     }
 
     private void callLocationApi(final String strAddress, final Dialog dialog, final SweetAlertDialog tDialog){
+        String strImage = imageToString(tBitmap, ivUpdateImage);
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelGetLocaion> call =api.updateLocation(strShopId,strShopStatus,strAddress, strAdders, strCity, strPinCode, strLat, strLong);
+        Call<ModelGetLocaion> call =api.updateLocation(strShopId,strShopName,"","",
+                "", "","","","","","",
+                strAddress, strUpdateAddress2,strUpdateAddress3, strUpdateAddress4,strUpdateAddress5,strUpdateAddress6,
+                strUpdateCity, strUpdateState,strUpdateCountry, strUpdatePinCode, strUserId, strShopStatus,
+                strImage,strAttDate, strLat, strLong);
         call.enqueue(new Callback<ModelGetLocaion>() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -329,7 +414,7 @@ public class FragRouteActivity extends Fragment {
                     btnGetLocation.setVisibility(View.GONE);
                     CustomToast.toastTop(getActivity(), tModel.getMessage() );
                     tvAddressRouteActivity.setVisibility(View.VISIBLE);
-                    tvAddressRouteActivity.setText(strAddress+" "+strAdders);
+                    tvAddressRouteActivity.setText(strAddress+" "+ strGeoAdderss);
 
                 }
                 CustomToast.toastTop(getActivity(), tModel.getMessage() );
@@ -344,9 +429,6 @@ public class FragRouteActivity extends Fragment {
     }
 
 
-    @OnClick(R.id.ll_RouteSalesReturn)
-    public void ll_RouteSalesReturnClicked(){
-    }
     @OnClick(R.id.ll_RouteNoActivity)
     public void ll_RouteNoActivityClicked(){
         AlertDialog.Builder alert = new AlertDialog.Builder(tContext);
@@ -368,7 +450,7 @@ public class FragRouteActivity extends Fragment {
                 String strRemark = etRemarks.getText().toString();
                 if (!strRemark.equalsIgnoreCase("")) {
                     Api api = ApiClients.getApiClients().create(Api.class);
-                    Call<ModelNoActivity> callNoActivity = api.uploadNoActivity(strUserId, strShopId, strRemark, strLat, strLong, strAreaStatus);
+                    Call<ModelNoActivity> callNoActivity = api.uploadNoActivity(strAttDate, strUserId, strShopId, strRemark, strLat, strLong, strGeoAdderss, strAreaStatus);
                     callNoActivity.enqueue(new Callback<ModelNoActivity>() {
                         @Override
                         public void onResponse(@NonNull Call<ModelNoActivity> call, @NonNull Response<ModelNoActivity> response) {
@@ -396,84 +478,94 @@ public class FragRouteActivity extends Fragment {
     //Special request clicked
     @OnClick(R.id.ll_route_special_request)
     public void requestClicked() {
-        final Dialog dialog = new Dialog(tContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.row_special_req);
-        dialog.setTitle("Special Request");
-        dialog.setCancelable(true);
+        if (!strUserType.equalsIgnoreCase("2")) {
+            final Dialog dialog = new Dialog(tContext);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.row_special_req);
+            dialog.setTitle("Special Request");
+            dialog.setCancelable(true);
 
-        // set the custom dialog components - text, image and button
-        Spinner spinner = dialog.findViewById(R.id.spn_specialRequest);
-        Spinner spinnerUser = dialog.findViewById(R.id.spnRequestSpnUser);
+            // set the custom dialog components - text, image and button
+            Spinner spinner = dialog.findViewById(R.id.spn_specialRequest);
+            Spinner spinnerUser = dialog.findViewById(R.id.spnRequestSpnUser);
 
-        final ArrayList<ModelUserSpn> listUserSpn = new ArrayList<>();
+            final ArrayList<ModelUserSpn> listUserSpn = new ArrayList<>();
 
-        for (String s : strSelectUser) {
-            ModelUserSpn tModelUerSpn = new ModelUserSpn();
-            tModelUerSpn.setTitle(s);
-            tModelUerSpn.setSelected(true);
-            listUserSpn.add(tModelUerSpn);
+            for (String s : strSelectUser) {
+                ModelUserSpn tModelUerSpn = new ModelUserSpn();
+                tModelUerSpn.setTitle(s);
+                tModelUerSpn.setSelected(true);
+                listUserSpn.add(tModelUerSpn);
+            }
+            AdapterSpinnerUser tAdapter = new AdapterSpinnerUser(tContext, 0, listUserSpn);
+            spinnerUser.setAdapter(tAdapter);
+
+
+            edittext = dialog.findViewById(R.id.et_specialRequest);
+            Button button = dialog.findViewById(R.id.btn_specialRequest);
+            spinner.setAdapter(this.tAdapterSpecialRequest);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (position == 0) {
+                        spinner_item = "";
+                    } else {
+                        spinner_item = title[position];
+
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (listUserSpn.get(1).isSelected()) {
+                        strManager = "1";
+                    } else {
+                        strManager = "0";
+                    }
+                    if (listUserSpn.get(2).isSelected()) {
+                        strSm = "1";
+                    } else {
+                        strSm = "0";
+                    }
+                    if (listUserSpn.get(3).isSelected()) {
+                        strDm = "1";
+                    } else {
+                        strDm = "0";
+                    }
+                    if (listUserSpn.get(4).isSelected()) {
+                        strAsm = "1";
+                    } else {
+                        strAsm = "0";
+                    }
+                    if (!spinner_item.equalsIgnoreCase("")) {
+                        callSpecialRequestApi(dialog, spinner_item, strManager, strSm, strDm, strAsm);
+                    } else {
+                        Toast.makeText(tContext, "Please select the Request type.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+            dialog.show();
+        }else {
+            tFragmentManager.beginTransaction().replace(R.id.container_main, FragRequestList.newInstance(tModels.get(i)
+                    .getShopId(), strAttDate)).addToBackStack(null).commit();
+
         }
-        AdapterSpinnerUser tAdapter = new AdapterSpinnerUser(tContext, 0, listUserSpn);
-        spinnerUser.setAdapter(tAdapter);
 
-
-        edittext =  dialog.findViewById(R.id.et_specialRequest);
-        Button button =  dialog.findViewById(R.id.btn_specialRequest);
-        spinner.setAdapter(this.tAdapterSpecialRequest);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    spinner_item = "";
-                } else {
-                    spinner_item = title[position];
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (listUserSpn.get(1).isSelected()){
-                    strManager = "1";
-                }else {
-                    strManager = "0";
-                } if (listUserSpn.get(2).isSelected()){
-                    strSm = "1";
-                }else {
-                    strSm = "0";
-                } if (listUserSpn.get(3).isSelected()){
-                    strDm = "1";
-                }else {
-                    strDm = "0";
-                } if (listUserSpn.get(4).isSelected()){
-                    strAsm = "1";
-                }else {
-                    strAsm = "0";
-                }
-                if (!spinner_item.equalsIgnoreCase("")) {
-                    callSpecialRequestApi(dialog, spinner_item, strManager, strSm, strDm, strAsm);
-                }else {
-                    Toast.makeText(tContext, "Please select the Request type.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        dialog.show();
     }
 
     //Special Request Api Call
     private void callSpecialRequestApi(final Dialog dialog, String strSpnItem, String strManager, String strSm, String strDm, String strAsm){
         String strRemarks = edittext.getText().toString().trim();
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelSpecialRequest> requestCall = api.uploadSpecialRequest(strUserId, strSpnItem, strShopId, strRemarks,
-                strManager,strSm,strDm,strAsm, strLat, strLong,strAdders, strAreaStatus);
+        Call<ModelSpecialRequest> requestCall = api.uploadSpecialRequest(strAttDate, strUserId, strSpnItem, strShopId, strRemarks,
+                strManager,strSm,strDm,strAsm, strLat, strLong, strGeoAdderss, strAreaStatus);
         requestCall.enqueue(new Callback<ModelSpecialRequest>() {
             @Override
             public void onResponse(@NonNull Call<ModelSpecialRequest> call, @NonNull Response<ModelSpecialRequest> response) {
@@ -507,7 +599,8 @@ public class FragRouteActivity extends Fragment {
         ivFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPictureDialog();
+                takePhotoFromCamera();
+                imgStatus = 2;
             }
         });
         Spinner spinnerUser = dialog.findViewById(R.id.spn_feedbackUser);
@@ -563,8 +656,8 @@ public class FragRouteActivity extends Fragment {
         String strRemarks = etFeedback.getText().toString().trim();
         String strImage = imageToString(tBitmap, ivFeedback);
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelFeedback> requestCall = api.uploadFeedback(strShopId, strUserId, strImage, strRemarks,
-            strLat, strLong,strAdders, strAreaStatus,"","",strManager, strSm, strDm,strAsm);
+        Call<ModelFeedback> requestCall = api.uploadFeedback(strAttDate, strShopId, strUserId, strImage, strRemarks,
+            strLat, strLong, strGeoAdderss, strAreaStatus,"","",strManager, strSm, strDm,strAsm);
         requestCall.enqueue(new Callback<ModelFeedback>() {
             @Override
             public void onResponse(@NonNull Call<ModelFeedback> call, @NonNull Response<ModelFeedback> response) {
@@ -583,26 +676,6 @@ public class FragRouteActivity extends Fragment {
 
             }
         });
-    }
-    private void showPictureDialog(){
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        pictureDialog.setTitle("Select Action");
-        String[] pictureDialogItems = {"Photo Gallery", "Camera" };
-        pictureDialog.setItems(pictureDialogItems,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                choosePhotoFromGallery();
-                                break;
-                            case 1:
-                                takePhotoFromCamera();
-                                break;
-                        }
-                    }
-                });
-        pictureDialog.show();
     }
     private void choosePhotoFromGallery() {
         if (CheckPermission.isReadStorageAllowed(getContext())) {
@@ -626,16 +699,20 @@ public class FragRouteActivity extends Fragment {
         if (resultCode == RESULT_CANCELED) {
             return;
         }
-        if (requestCode == Constant.GALLERY) {
-            if (data != null) {
-                SetImage.setGalleryImage(tContext, ivFeedback, data);
-                BitmapDrawable drawable = (BitmapDrawable)ivFeedback.getDrawable();
-                tBitmap = drawable.getBitmap();
+       if (requestCode == Constant.CAMERA) {
+            switch (imgStatus){
+                case 1:
+                    SetImage.setCameraImage(ivUpdateImage, data);
+                    tBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                    ivUpdateImage.setImageBitmap(tBitmap);
+                    break;
+                case 2:
+                    SetImage.setCameraImage(ivFeedback, data);
+                    tBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                    ivFeedback.setImageBitmap(tBitmap);
+                    break;
             }
-        } else if (requestCode == Constant.CAMERA) {
-            SetImage.setCameraImage(ivFeedback, data);
-            tBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-            ivFeedback.setImageBitmap(tBitmap);
+
         }
     }
     @Override

@@ -19,11 +19,11 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv_meeting_orgName"
-                android:hint="Organisation Name*"
+                android:text="Organisation Name*"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="Contact Name*"
+                android:text="Contact Name*"
                 style="@style/tv_report" />
         </RelativeLayout>
         <LinearLayout
@@ -50,12 +50,12 @@
 
             <TextView
                 style="@style/tv_report"
-                android:hint="Contact Number*" />
+                android:text="Contact Number*" />
 
             <TextView
                 style="@style/tv_report"
                 android:layout_alignParentEnd="true"
-                android:hint="Email Id" />
+                android:text="Email Id" />
         </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -79,11 +79,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:hint="Land Line Number"
+                android:text="Land Line Number"
                 style="@style/tv_report" />
             <TextView
                 android:layout_alignParentEnd="true"
-                android:hint="City"
+                android:text="City"
                 style="@style/tv_report" />
         </RelativeLayout>
 
@@ -105,7 +105,7 @@
                 style="@style/et_main"/>
         </LinearLayout>
         <TextView
-            android:hint="Address"
+            android:text="Address"
             style="@style/tv_report" />
         <EditText
             android:id="@+id/et_cold_address"
@@ -115,11 +115,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:hint="Next Meeting Date"
+        android:text="Next Meeting Date"
         style="@style/tv_report" />
     <TextView
         android:layout_alignParentEnd="true"
-        android:hint="Select Route Name"
+        android:text="Select Route Name"
         style="@style/tv_report" />
 
 </RelativeLayout>

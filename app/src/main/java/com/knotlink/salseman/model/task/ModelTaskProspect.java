@@ -118,7 +118,7 @@ public class ModelTaskProspect {
     }
 
     public String getTaskAssignDate() {
-        return DateUtils.convertFormatOpposite(taskAssignDate);
+        return DateUtils.dateFormatDdMmmYyyy(taskAssignDate);
     }
 
     public void setTaskAssignDate(String taskAssignDate) {
@@ -134,7 +134,7 @@ public class ModelTaskProspect {
     }
 
     public String getTaskDueDate() {
-        return DateUtils.convertFormatOpposite(taskDueDate);
+        return DateUtils.dateFormatDdMmmYyyy(taskDueDate);
     }
 
     public void setTaskDueDate(String taskDueDate) {

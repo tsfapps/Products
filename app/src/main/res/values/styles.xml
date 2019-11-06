@@ -98,10 +98,20 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/dimen_10sp</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
         <item name="android:drawableStart">@drawable/ic_circle</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="tv_badge_hor">
+        <item name="android:layout_marginEnd">@dimen/dimen_4dp</item>
+        <item name="android:layout_marginStart">@dimen/dimen_4dp</item>
+        <item name="android:layout_weight">0</item>
+        <item name="android:layout_height">@dimen/dimen_24dp</item>
+        <item name="android:layout_width">@dimen/dimen_24dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/dimen_10sp</item>
+        <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="tv_color_content">
@@ -111,8 +121,15 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/dimen_12sp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:fontFamily">serif-monospace</item>
         <item name="android:textStyle">bold</item>
+    </style>
+    <style name="tv_simple">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:gravity">center_vertical</item>
+
     </style>
     <style name="ll_expenses">
         <item name="android:layout_marginTop">@dimen/dimen_8dp</item>
@@ -258,6 +275,16 @@
         <item name="android:textSize">12sp</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="tv_time_report">
+
+        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dimen_4dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+    </style>
     <style name="et_main_login">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -266,7 +293,7 @@
         <item name="android:layout_marginStart">4dp</item>
         <item name="android:background">@drawable/bg_et</item>
         <item name="android:textColor">@color/colorBlack</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="ll_main">
@@ -296,6 +323,24 @@
         <item name="android:spinnerMode">dropdown</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+    <style name="iv_spn_main">
+        <item name="android:src">@drawable/ic_arrow_down</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="spinner_main_pb">
+        <item name="android:layout_height">@dimen/dimen_24dp</item>
+        <item name="android:layout_width">@dimen/dimen_24dp</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+    <style name="pb_main">
+        <item name="android:layout_height">@dimen/dimen_30dp</item>
+        <item name="android:layout_width">@dimen/dimen_30dp</item>
         <item name="android:layout_centerInParent">true</item>
     </style>
     <style name="rl_spinner_main">
@@ -335,9 +380,10 @@
     <style name="tv_report">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">10sp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:textColor">@color/blue</item>
+        <item name="android:layout_marginTop">@dimen/dimen_8dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="tv_detail">
         <item name="android:layout_width">wrap_content</item>

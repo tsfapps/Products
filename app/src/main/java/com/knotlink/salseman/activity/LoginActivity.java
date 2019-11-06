@@ -25,6 +25,7 @@ import com.knotlink.salseman.model.user.ModelUser;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
+import com.knotlink.salseman.utils.GetImei;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private ModelUser tModels;
     private SharedPrefManager tSharedPrefManager;
-    private int REQUEST_READ_PHONE_STATE = 101;
 
     @BindView(R.id.et_phone_login)
     protected EditText et_phone;
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             et_password.setError("Enter the password");
         } else {
             Api api = ApiClients.getApiClients().create(Api.class);
-            Call<ModelUser> call = api.getUserDetail(getDeviceIMEI(), mPhoneNo, mPass);
+            Call<ModelUser> call = api.getUserDetail(GetImei.getDeviceIMEI(LoginActivity.this, this), mPhoneNo, mPass);
             call.enqueue(new Callback<ModelUser>() {
                 @Override
                 public void onResponse(Call<ModelUser> call, Response<ModelUser> response) {
@@ -103,34 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
     }
-    public String getDeviceIMEI() {
-        int permissionCheck = ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
-            return "Permission not granted";
-        }
-        else {
-            String deviceUniqueIdentifier = null;
-            TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-            if (null != tm) {
-                deviceUniqueIdentifier = tm.getDeviceId();
-            }
-            if (null == deviceUniqueIdentifier || 0 == deviceUniqueIdentifier.length()) {
-                deviceUniqueIdentifier = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-            }
-            return deviceUniqueIdentifier;
-        }
 
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (requestCode == REQUEST_READ_PHONE_STATE) {
-            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-
-            }
-        }
-    }
 
 
 

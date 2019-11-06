@@ -68,47 +68,50 @@
             android:textSize="@dimen/dimen_12sp"
             android:layout_height="@dimen/dimen_30dp" />
             <LinearLayout
+                android:gravity="center"
+                android:layout_toEndOf="@+id/btn_route_visit"
+                android:layout_toStartOf="@+id/btn_route_notVisit"
                 android:orientation="horizontal"
                 android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    style="@style/tv_badge_hor"
                     android:visibility="visible"
                     android:background="@drawable/bg_badge_red"
-                    android:id="@+id/tvRouteTaskBadge"
-                    android:text="@string/num_1"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
-                    android:textSize="@dimen/dimen_12sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_width="@dimen/dimen_24dp"
-                    android:layout_height="@dimen/dimen_24dp"
-                    />
-
+                    android:id="@+id/tvRouteBadgeTask"
+                    android:text="@string/num_1" />
                 <TextView
-                android:visibility="visible"
+                    style="@style/tv_badge_hor"
+                    android:visibility="visible"
+                    android:background="@drawable/bg_badge_pink"
+                    android:id="@+id/tvRouteBadgeRequest"
+                    android:text="@string/num_1" />
+                <TextView
+                    style="@style/tv_badge_hor"
+                    android:visibility="visible"
                 android:background="@drawable/ic_report"
-                android:id="@+id/tvRouteReport"
-                android:textSize="@dimen/dimen_12sp"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
-                    android:textColor="@color/white"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_width="@dimen/dimen_24dp"
-                android:layout_height="@dimen/dimen_24dp"
+                android:id="@+id/tvRouteBadgeReport"
                 />
                 <TextView
-                android:visibility="gone"
+                    style="@style/tv_badge_hor"
+                    android:visibility="visible"
+                android:background="@drawable/bg_badge_red"
+                    android:text="A"
+                android:id="@+id/tvRouteBadgeShopStatus"
+                />
+                <TextView
+                    style="@style/tv_badge_hor"
+                    android:visibility="visible"
+                android:background="@drawable/bg_badge_yellow"
+                    android:text="A"
+                android:id="@+id/tvRouteBadgeReturn"/>
+                <TextView
+                    style="@style/tv_badge_hor"
+                    android:visibility="visible"
                 android:background="@drawable/bg_badge_green"
                     android:text="A"
-                android:id="@+id/tvRouteShopStatus"
-                android:textSize="@dimen/dimen_12sp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_width="@dimen/dimen_24dp"
-                android:layout_height="@dimen/dimen_24dp"
+                android:id="@+id/tvRouteBadgeOrder"
                 />
             </LinearLayout>
             <Button

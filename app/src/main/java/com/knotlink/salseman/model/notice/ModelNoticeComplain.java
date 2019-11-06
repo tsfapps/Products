@@ -9,8 +9,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.utils.Constant;
+import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelNoticeComplain{
+
 
     @SerializedName("created_by")
     @Expose
@@ -80,7 +82,7 @@ public class ModelNoticeComplain{
     }
 
     public String getDatetime() {
-        return datetime;
+        return DateUtils.convertFormatDateTime(datetime);
     }
 
     public void setDatetime(String datetime) {

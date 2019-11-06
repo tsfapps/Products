@@ -4,19 +4,35 @@ import com.knotlink.salseman.model.ModelAsmList;
 import com.knotlink.salseman.model.ModelCustomerList;
 import com.knotlink.salseman.model.dash.ModelActiveStatus;
 import com.knotlink.salseman.model.dash.ModelCustomerType;
+import com.knotlink.salseman.model.dash.ModelVisitShop;
+import com.knotlink.salseman.model.dash.route.ModelRequestList;
+import com.knotlink.salseman.model.dash.route.ModelSalesReturnArticle;
+import com.knotlink.salseman.model.dash.route.ModelSalesReturnInsertion;
+import com.knotlink.salseman.model.dash.route.ModelSalesReturnMrp;
+import com.knotlink.salseman.model.dash.route.ModelSalesReturnShopFetch;
+import com.knotlink.salseman.model.dash.route.ModelInsertReceipt;
 import com.knotlink.salseman.model.dash.route.ModelMapAll;
 import com.knotlink.salseman.model.dash.route.ModelNoActivity;
 import com.knotlink.salseman.model.dash.route.ModelSalesReturn;
+import com.knotlink.salseman.model.dash.route.ModelSalesReturnFetch;
+import com.knotlink.salseman.model.dash.route.ModelSalesReturnSize;
+import com.knotlink.salseman.model.dash.route.ModelShopCounter;
 import com.knotlink.salseman.model.dash.route.ModelShopStatus;
 import com.knotlink.salseman.model.dash.route.order.ModelArticleNo;
 import com.knotlink.salseman.model.dash.route.order.ModelBrand;
 import com.knotlink.salseman.model.dash.route.order.ModelCategoryArticle;
 import com.knotlink.salseman.model.dash.route.order.ModelColorArticle;
+import com.knotlink.salseman.model.dash.route.order.ModelOrderDeliver;
+import com.knotlink.salseman.model.dash.route.order.ModelOrderNotDeliver;
+import com.knotlink.salseman.model.dash.route.order.ModelOrderList;
 import com.knotlink.salseman.model.dash.route.order.ModelSizeArticle;
 import com.knotlink.salseman.model.dash.route.order.ModelPriceStock;
 import com.knotlink.salseman.model.distance.ModelStartKm;
+import com.knotlink.salseman.model.notice.ModelNoticeCheque;
 import com.knotlink.salseman.model.notice.ModelNoticeComplain;
 import com.knotlink.salseman.model.notice.ModelNoticeRequest;
+import com.knotlink.salseman.model.notice.ModelNoticeReturn;
+import com.knotlink.salseman.model.notice.ModelNoticeReturnReject;
 import com.knotlink.salseman.model.repo.ModelAddNewCustomer;
 import com.knotlink.salseman.model.report.ModelReportOrderMap;
 import com.knotlink.salseman.model.dash.ModelAttendance;
@@ -26,6 +42,7 @@ import com.knotlink.salseman.model.ModelExpenseList;
 import com.knotlink.salseman.model.dash.route.ModelGetLocaion;
 import com.knotlink.salseman.model.distance.ModelDistancePrevious;
 import com.knotlink.salseman.model.report.ModelReportVehicle;
+import com.knotlink.salseman.model.report.ModelTimeReport;
 import com.knotlink.salseman.model.report.route.ModelRouteComplain;
 import com.knotlink.salseman.model.report.route.ModelRouteNoActivity;
 import com.knotlink.salseman.model.report.route.ModelRouteNoVisit;
@@ -83,6 +100,7 @@ public interface Api{
     @FormUrlEncoded
     @POST("api/api_active_check.php")
     Call<ModelActiveStatus> activeStatus(
+            @Field("imei_no") String user_imei_no,
             @Field("user_id") String user_id
     );
     @FormUrlEncoded
@@ -92,6 +110,7 @@ public interface Api{
             @Field("login_city") String login_city,
             @Field("login_pincode") String login_pincode,
             @Field("login_address") String login_address,
+            @Field("login_date") String login_date,
             @Field("login_latitude") String login_latitude,
             @Field("login_longitude") String login_longitude
     );
@@ -102,12 +121,14 @@ public interface Api{
             @Field("logout_city") String logout_city,
             @Field("logout_pincode") String logout_pincode,
             @Field("logout_address") String logout_address,
+            @Field("login_date") String login_date,
             @Field("logout_latitude") String logout_latitude,
             @Field("logout_longitude") String logout_longitude
     );
     @FormUrlEncoded
     @POST("api/api_shop_details.php")
     Call<List<ModelShopList>> getShopDetail(
+            @Field("active_check_date") String active_check_date,
             @Field("user_id") String user_id,
             @Field("user_type") String user_type,
             @Field("present_day") String present_day
@@ -118,17 +139,37 @@ public interface Api{
             @Field("route_id") String route_id,
             @Field("type") String type
     );
+    @FormUrlEncoded
+    @POST("api/api_special_request_shop.php")
+    Call<List<ModelRequestList>> requestList(
+            @Field("shop_id") String shop_id,
+            @Field("active_check_date") String active_check_date
+    );
+    @FormUrlEncoded
+    @POST("api/api_visit.php")
+    Call<ModelVisitShop> visitShop(
+            @Field("shop_id") String shop_id,
+            @Field("user_id") String user_id,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude,
+            @Field("active_check_date") String active_check_date
+    );
 
     @FormUrlEncoded
     @POST("api/api_shop_not_visit.php")
     Call<ModelVisit> getShopNotVisit(
+            @Field("active_check_date") String active_check_date,
             @Field("remarks") String remarks,
             @Field("user_id") String user_id,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude,
+            @Field("activity_address") String activity_address,
             @Field("shop_id") String shop_id
     );
     @FormUrlEncoded
     @POST("api/api_special_request.php")
     Call<ModelSpecialRequest> uploadSpecialRequest(
+            @Field("active_check_date") String active_check_date,
             @Field("user_id") String user_id,
             @Field("special_request_type") String special_request_type,
             @Field("shop_id") String shop_id,
@@ -144,16 +185,19 @@ public interface Api{
     );@FormUrlEncoded
     @POST("api/api_no_activity.php")
     Call<ModelNoActivity> uploadNoActivity(
+            @Field("active_check_date") String active_check_date,
             @Field("user_id") String user_id,
             @Field("shop_id") String shop_id,
             @Field("remarks") String remarks,
             @Field("latitude") String latitude,
             @Field("longitude") String longitude,
+            @Field("activity_address") String activity_address,
             @Field("area_status") String area_status
     );
     @FormUrlEncoded
     @POST("api/api_complaint.php")
     Call<ModelFeedback> uploadFeedback(
+            @Field("active_check_date") String active_check_date,
             @Field("shop_id") String shop_id,
             @Field("user_id") String user_id,
             @Field("image_url") String image_url,
@@ -190,6 +234,7 @@ public interface Api{
     @FormUrlEncoded
     @POST("api/api_distance_upload.php")
     Call<ModelDistance> uploadDistance(
+            @Field("active_check_date") String active_check_date,
             @Field("user_id") String user_id,
             @Field("starting_km") String starting_km,
             @Field("starting_img") String starting_img,
@@ -203,6 +248,7 @@ public interface Api{
     @FormUrlEncoded
     @POST("api/api_distance_upload_update.php")
     Call<ModelDistanceUpdate> uploadDistanceEnding(
+            @Field("active_check_date") String active_check_date,
             @Field("user_id") String user_id,
             @Field("ending_km") String ending_km,
             @Field("ending_img") String ending_img,
@@ -216,19 +262,30 @@ public interface Api{
     @FormUrlEncoded
     @POST("api/api_previous_day_distance.php")
     Call<ModelDistancePrevious>  getDistancePrevious(
+            @Field("active_check_date") String active_check_date,
             @Field("vehicle_no") String vehicle_no
     );
     @FormUrlEncoded
     @POST("api/api_startingkm.php")
     Call<ModelStartKm>  getStartKm(
+            @Field("active_check_date") String active_check_date,
             @Field("vehicle_no") String vehicle_no
     );
     @POST("api/api_vehicle.php")
     Call<List<ModelVehicleList>> vehicleList(
     );
+
+    @FormUrlEncoded
+    @POST("api/api_shop_all_count.php")
+    Call<ModelShopCounter> shopCountter(
+            @Field("user_id") String user_id,
+            @Field("active_check_date") String active_check_date
+    );
+
     @FormUrlEncoded
     @POST("api/api_new_order.php")
     Call<ModelNewOrder> uploadNewOrder(
+            @Field("active_check_date") String active_check_date,
             @Field("user_id") String user_id,
             @Field("shop_id") String shop_id,
             @Field("date_of_delivery") String date_of_delivery,
@@ -382,6 +439,125 @@ public interface Api{
             @Field("user_id") String user_id
     );
     @FormUrlEncoded
+    @POST("api/api_notification_sales_return.php")
+    Call<List<ModelNoticeReturn>> noticeReturn(
+            @Field("user_id") String user_id,
+            @Field("active_check_date") String active_check_date
+    );
+
+    @FormUrlEncoded
+    @POST("api/api_notification_cheque.php")
+    Call<List<ModelNoticeCheque>> noticeCheque(
+            @Field("user_id") String user_id,
+            @Field("active_check_date") String active_check_date
+    );
+    @FormUrlEncoded
+    @POST("api/api_sales_return_reject.php")
+    Call<ModelNoticeReturnReject> noticeReturnReject(
+            @Field("id") String id,
+            @Field("remarks") String remarks
+    );
+    @FormUrlEncoded
+    @POST("api/api_sales_return_fetch.php")
+    Call<List<ModelSalesReturnFetch>> salesReturnFetch(
+            @Field("user_id") String user_id
+    );
+    @FormUrlEncoded
+    @POST("api/api_sales_return_shop_fetch.php")
+    Call<List<ModelSalesReturnShopFetch>> salesReturnShopFetch(
+            @Field("user_id") String user_id,
+            @Field("shop_id") String shop_id
+    );
+    @FormUrlEncoded
+    @POST("api/api_article_sales_return.php")
+    Call<List<ModelSalesReturnArticle>> salesReturnArticle(
+            @Field("invoice_no") String invoice_no
+    );
+    @FormUrlEncoded
+    @POST("api/api_size_sales_return.php")
+    Call<List<ModelSalesReturnSize>> salesReturnSize(
+            @Field("invoice_no") String invoice_no,
+            @Field("article_no") String article_no
+    );
+    @FormUrlEncoded
+    @POST("api/api_mrp_sales_return.php")
+    Call<ModelSalesReturnMrp> salesReturnMrp(
+            @Field("invoice_no") String invoice_no,
+            @Field("article_no") String article_no,
+            @Field("size") String size
+    );
+    @FormUrlEncoded
+    @POST("api/api_sales_return.php")
+    Call<ModelSalesReturnInsertion> salesReturn(
+            @Field("shop_id") String shop_id,
+            @Field("user_id") String user_id,
+            @Field("invoice_no") String invoice_no,
+            @Field("invoice_date") String invoice_date,
+            @Field("article_no") String article_no,
+            @Field("size") String size,
+            @Field("mrp") String mrp,
+            @Field("quantity") String quantity,
+            @Field("remarks") String remarks,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude,
+            @Field("activity_address") String activity_address
+    );
+    @FormUrlEncoded
+    @POST("api/api_dispatcher_all_order_list.php")
+    Call<List<ModelOrderList>> orderList(
+            @Field("active_check_date") String active_check_date,
+            @Field("user_id") String user_id
+    );
+    @FormUrlEncoded
+    @POST("api/api_dispatcher_shop_order_list.php")
+    Call<List<ModelOrderList>> orderShopList(
+            @Field("active_check_date") String active_check_date,
+            @Field("user_id") String user_id,
+            @Field("shop_id") String shop_id
+    );
+    @FormUrlEncoded
+    @POST("api/api_order_delivered.php")
+    Call<ModelOrderDeliver> orderDeliver(
+            @Field("id") String id,
+            @Field("user_id") String user_id,
+            @Field("delivery_lat") String delivery_lat,
+            @Field("delivery_long") String delivery_long,
+            @Field("delivery_address") String delivery_address
+    );
+    @FormUrlEncoded
+    @POST("api/api_order_not_delivered.php")
+    Call<ModelOrderNotDeliver> orderNotDeliver(
+            @Field("id") String id,
+            @Field("user_id") String user_id,
+            @Field("order_remarks") String order_remarks,
+            @Field("delivery_lat") String delivery_lat,
+            @Field("delivery_long") String delivery_long,
+            @Field("delivery_address") String delivery_address
+    );
+    @FormUrlEncoded
+    @POST("api/api_receipt.php")
+    Call<ModelInsertReceipt> insertReceipt(
+            @Field("user_id") String user_id,
+            @Field("shop_id") String shop_id,
+            @Field("bank_name") String bank_name,
+            @Field("invoice_no") String invoice_no,
+            @Field("invoice_date") String invoice_date,
+            @Field("invoice_amount") String invoice_amount,
+            @Field("total_outstanding_amount") String total_outstanding_amount,
+            @Field("total_balance") String total_balance,
+            @Field("received_amount") String received_amount,
+            @Field("pending_invoice_amount") String pending_invoice_amount,
+            @Field("payment_mode") String payment_mode,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude,
+            @Field("neft_cheque_no") String neft_cheque_no,
+            @Field("neft_cheque_maturity_date") String neft_cheque_maturity_date,
+            @Field("cheque_image") String cheque_image,
+            @Field("signature") String signature,
+            @Field("remarks") String remarks,
+            @Field("area_status") String area_status
+    );
+    @FormUrlEncoded
     @POST("api/api_assign_task_prospect.php")
     Call<List<ModelTaskProspect>> assignedTaskProspect(
             @Field("user_id") String user_id
@@ -403,7 +579,6 @@ public interface Api{
             @Field("task_id") String task_id,
             @Field("remarks") String remarks
     );
-
     @FormUrlEncoded
     @POST("api/api_assign_task_complete.php")
     Call<ModelTaskDecline> completeTask(
@@ -614,11 +789,13 @@ public interface Api{
     Call<List<ModelMapAll>> mapAll(
             @Field("user_id") String user_id,
             @Field("date") String date);
+
     @POST("api/api_status.php")
     Call<List<ModelShopStatus>> shopStatus();
+
     @FormUrlEncoded
     @POST("api/api_invoice_fetch.php")
-    Call<ModelInvoice>  viewInvoice(
+    Call<ModelInvoice> viewInvoice(
             @Field("shop_id") String shop_id,
             @Field("invoice_no") String invoice_no
     );
@@ -645,11 +822,30 @@ public interface Api{
     @POST("api/api_getlocation.php")
     Call<ModelGetLocaion> updateLocation(
             @Field("shop_id") String shop_id,
-            @Field("status") String status,
-            @Field("manual_address") String manual_address,
-            @Field("shop_address") String shop_address,
+            @Field("shop_name") String shop_name,
+            @Field("key_person_name") String key_person_name,
+            @Field("key_person_mobile") String key_person_mobile,
+            @Field("key_person_whatsapp") String key_person_whatsapp,
+            @Field("gst_no") String gst_no,
+            @Field("contact_name") String contact_name,
+            @Field("contact_no") String contact_no,
+            @Field("landline_no") String landline_no,
+            @Field("whatsapp_no") String whatsapp_no,
+            @Field("email") String email,
+            @Field("shop_address1") String shop_address1,
+            @Field("shop_address2") String shop_address2,
+            @Field("shop_address3") String shop_address3,
+            @Field("shop_address4") String shop_address4,
+            @Field("shop_address5") String shop_address5,
+            @Field("shop_address6") String shop_address6,
             @Field("city") String city,
+            @Field("state") String state,
+            @Field("country") String country,
             @Field("pincode") String pincode,
+            @Field("user_id") String user_id,
+            @Field("status") String status,
+            @Field("shop_image") String shop_image,
+            @Field("active_check_date") String active_check_date,
             @Field("latitude") String latitude,
             @Field("longitude") String longitude
     );
@@ -692,6 +888,13 @@ public interface Api{
             @Field("category") String category,
             @Field("color") String color,
             @Field("size") String size
+    );
+
+    @FormUrlEncoded
+    @POST("api/api_time_report.php")
+    Call<List<ModelTimeReport>> timeReport(
+            @Field("user_id") String user_id,
+            @Field("date") String date
     );
 
     //End Product Inventory

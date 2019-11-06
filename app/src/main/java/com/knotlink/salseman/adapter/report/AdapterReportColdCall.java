@@ -2,6 +2,7 @@ package com.knotlink.salseman.adapter.report;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,63 +12,42 @@ import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.activity.maps.ReportMapActivity;
+import com.knotlink.salseman.databinding.ReportColdCallItemBinding;
+import com.knotlink.salseman.databinding.ReportLeadGenerationItemBinding;
 import com.knotlink.salseman.model.report.ModelReportColdCall;
 import com.knotlink.salseman.utils.Constant;
-import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class AdapterReportColdCall extends RecyclerView.Adapter<AdapterReportColdCall.DistanceViewHolder> {
+public class AdapterReportColdCall extends RecyclerView.Adapter<AdapterReportColdCall.ColdReportViewHolder> {
 
     private List<ModelReportColdCall> tModels;
     private Context tContext;
 
-    public AdapterReportColdCall(List<ModelReportColdCall> tModels, Context tContext) {
-        this.tModels = tModels;
-        this.tContext = tContext;
-    }
-
     @NonNull
     @Override
-    public DistanceViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.report_cold_call_item, viewGroup, false);
-        return new DistanceViewHolder(view);
+    public ColdReportViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        ReportColdCallItemBinding tBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()),
+                R.layout.report_cold_call_item, viewGroup, false);
+        tContext=viewGroup.getContext();
+        return new ColdReportViewHolder(tBinding);
     }
     @Override
-    public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
-        ModelReportColdCall tModel = tModels.get(i);
-
-        final String strLoginLat = tModel.getLatitude();
-        final String strLoginLong = tModel.getLongitude();
-        final String strLogoutLat = tModel.getLatitude();
-        final String strLogoutLong = tModel.getLongitude();
-        final String strEndAddress = "Customer Address : "+tModel.getCustomerAddress();
-        final String strStartAddress = "Customer Address : "+tModel.getCustomerAddress();
+    public void onBindViewHolder(@NonNull ColdReportViewHolder coldReportViewHolder, int i) {
+       final ModelReportColdCall tModel = tModels.get(i);
+        coldReportViewHolder.tBinding.setColdCall(tModel);
 
 
-        distanceViewHolder.tvReportColdCallDate.setText(tModel.getTaskAssignDate());
-        distanceViewHolder.tvReportColdCallVendorName.setText(tModel.getOrgName());
-        distanceViewHolder.tvReportColdCallContactName.setText(tModel.getCustomerName());
-        distanceViewHolder.tvReportColdCallContactNumber.setText(tModel.getCustomerContactNo());
-        distanceViewHolder.tvReportColdCallEmailId.setText(tModel.getEmail());
-        distanceViewHolder.tvReportColdCallTelephone.setText(tModel.getLandlineNo());
-//        distanceViewHolder.tvReportColdCallWhatsApp.setText(tModel.getWhatsappNo());
-        distanceViewHolder.tvReportColdCallAddress.setText(tModel.getCustomerAddress());
-        distanceViewHolder.tvReportColdCallStatus.setText(tModel.getStatus());
-        distanceViewHolder.tvReportColdCallRemarks.setText(tModel.getRemarks());
-        distanceViewHolder.tvReportColdMap.setOnClickListener(new View.OnClickListener() {
+        coldReportViewHolder.tvReportColdMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent tIntent = new Intent(tContext, ReportMapActivity.class);
-                tIntent.putExtra(Constant.FIRST_LAT, strLoginLat);
-                tIntent.putExtra(Constant.FIRST_LONG, strLoginLong);
-                tIntent.putExtra(Constant.SECOND_LAT, strLogoutLat);
-                tIntent.putExtra(Constant.SECOND_LONG, strLogoutLong);
-                tIntent.putExtra(Constant.START_ADDRESS, strStartAddress);
-                tIntent.putExtra(Constant.END_ADDRESS, strEndAddress);
+                tIntent.putExtra(Constant.FIRST_LAT, tModel.getLatitude());
+                tIntent.putExtra(Constant.FIRST_LONG, tModel.getLongitude());
+                tIntent.putExtra(Constant.SECOND_LAT, tModel.getLatitude());
+                tIntent.putExtra(Constant.SECOND_LONG, tModel.getLongitude());
+                tIntent.putExtra(Constant.START_ADDRESS, tModel.getCustomerAddress());
+                tIntent.putExtra(Constant.END_ADDRESS, tModel.getCustomerAddress());
                 tContext.startActivity(tIntent);
             }
         });
@@ -75,35 +55,25 @@ public class AdapterReportColdCall extends RecyclerView.Adapter<AdapterReportCol
     }
     @Override
     public int getItemCount() {
-        return tModels.size();
+        if (tModels != null) {
+            return tModels.size();
+        }else {
+            return 0;
+        }
     }
-    public class DistanceViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.tv_report_coldCall_date)
-        protected TextView tvReportColdCallDate;
-        @BindView(R.id.tv_report_coldCall_vendorName)
-        protected TextView tvReportColdCallVendorName;
-        @BindView(R.id.tv_report_coldCall_contactName)
-        protected TextView tvReportColdCallContactName;
-        @BindView(R.id.tv_report_coldCall_contactNumber)
-        protected TextView tvReportColdCallContactNumber;
-        @BindView(R.id.tv_report_coldCall_emailId)
-        protected TextView tvReportColdCallEmailId;
-        @BindView(R.id.tv_report_coldCall_telephone)
-        protected TextView tvReportColdCallTelephone;
-//        @BindView(R.id.tv_report_coldCall_whatsAppNumber)
-//        protected TextView tvReportColdCallWhatsApp;
-        @BindView(R.id.tv_report_coldCall_address)
-        protected TextView tvReportColdCallAddress;
-        @BindView(R.id.tv_report_coldCall_status)
-        protected TextView tvReportColdCallStatus;
-        @BindView(R.id.tv_report_coldCall_remarks)
-        protected TextView tvReportColdCallRemarks;
-        @BindView(R.id.tvReportColdMap)
-        protected TextView tvReportColdMap;
 
-        public DistanceViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+    public void settModels(List<ModelReportColdCall> tModels){
+        this.tModels = tModels;
+        notifyDataSetChanged();
+    }
+    public class ColdReportViewHolder extends RecyclerView.ViewHolder{
+
+        private ReportColdCallItemBinding tBinding;
+        private TextView tvReportColdMap;
+        public ColdReportViewHolder(ReportColdCallItemBinding tBinding) {
+            super(tBinding.getRoot());
+           this.tBinding = tBinding;
+           tvReportColdMap = tBinding.tvReportColdMap;
         }
     }
 }

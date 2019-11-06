@@ -92,13 +92,17 @@ public class FragDistance extends Fragment {
     private List<ModelVehicleList> tLists;
     private int i;
     private String strUserType;
+    private String strSelectedUserId;
+    private String strAttDate;
 
-    public static FragDistance newInstance(List<ModelVehicleList> tLists, int i, String strUserType) {
+    public static FragDistance newInstance(String strAttDate, String strSelectedUserId, List<ModelVehicleList> tLists, int i, String strUserType) {
 
         FragDistance fragment = new FragDistance();
         fragment.tLists = tLists;
         fragment.i = i;
+        fragment.strAttDate = strAttDate;
         fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
     @Nullable
@@ -114,15 +118,12 @@ public class FragDistance extends Fragment {
         getLocation();
         tSharedPrefManager = new SharedPrefManager(tContext);
         SetTitle.tbTitle("Upload Distance", getActivity());
-        etDistanceStartKm.setText(tSharedPrefManager.getStartKm());
         if (!tSharedPrefManager.getStartKm().equals("")){
             btn_distance_submitStart.setVisibility(View.GONE);
             btn_distance_submitEnding.setVisibility(View.VISIBLE);
             strStartKm = tSharedPrefManager.getStartKm();
         }
 
-//            ivUploadStart.setImageBitmap(tSharedPrefManager.getStartImage());
-//        }
         if (!tSharedPrefManager.getVehicleNo().equals("")){
             tv_distance_vehicleNumber.setText(tSharedPrefManager.getVehicleNo());
             callPreviousApi(tSharedPrefManager.getVehicleNo());
@@ -134,14 +135,14 @@ public class FragDistance extends Fragment {
     }
     private void callPreviousApi(final String vehicleNumber){
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelDistancePrevious> call = api.getDistancePrevious(vehicleNumber);
+        Call<ModelDistancePrevious> call = api.getDistancePrevious(strAttDate, vehicleNumber);
         call.enqueue(new Callback<ModelDistancePrevious>() {
             @Override
             public void onResponse(Call<ModelDistancePrevious> call, Response<ModelDistancePrevious> response) {
                 ModelDistancePrevious tModel = response.body();
                 tvDistancePrevious.setText(tModel.getDistanceTraveled());
                 tvDistanceExcess.setText(tModel.getExcessDistance());
-                if (!tSharedPrefManager.getStartKm().equals("")){
+                 if (!tSharedPrefManager.getStartKm().equals("")){
                     callStartKmApi(vehicleNumber);
 
                 }else {
@@ -150,25 +151,23 @@ public class FragDistance extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ModelDistancePrevious> call, Throwable t) {
+            public void onFailure(@NonNull Call<ModelDistancePrevious> call, @NonNull Throwable t) {
                 Log.d(Constant.TAG, "Previous Failure : "+t);
-
             }
         });
     }
     private void callStartKmApi(String vehicleNumber){
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelStartKm> call = api.getStartKm(vehicleNumber);
+        Call<ModelStartKm> call = api.getStartKm(strAttDate, vehicleNumber);
         call.enqueue(new Callback<ModelStartKm>() {
             @Override
-            public void onResponse(Call<ModelStartKm> call, Response<ModelStartKm> response) {
+            public void onResponse(@NonNull Call<ModelStartKm> call, @NonNull Response<ModelStartKm> response) {
                 ModelStartKm tModel = response.body();
                 etDistanceStartKm.setText(tModel.getStartingKm());
                 Glide.with(tContext).load(Constant.URL_IMG_DISTANCE +tModel.getStartingImage()).into(ivUploadStart);
             }
-
             @Override
-            public void onFailure(Call<ModelStartKm> call, Throwable t) {
+            public void onFailure(@NonNull Call<ModelStartKm> call, @NonNull Throwable t) {
 
             }
         });
@@ -243,7 +242,7 @@ public class FragDistance extends Fragment {
                 String addressLine = gpsTracker.getAddressLine(tContext);
                 String strUserId = tSharedPrefManager.getUserId();
                 Api api = ApiClients.getApiClients().create(Api.class);
-                Call<ModelDistance> call = api.uploadDistance(strUserId, strStartKm, strImgStart, stringLatitude, stringLongitude, strPinCode, strCity, addressLine, strVehicleNo);
+                Call<ModelDistance> call = api.uploadDistance(strAttDate, strUserId, strStartKm, strImgStart, stringLatitude, stringLongitude, strPinCode, strCity, addressLine, strVehicleNo);
                 call.enqueue(new Callback<ModelDistance>() {
                     @Override
                     public void onResponse(Call<ModelDistance> call, Response<ModelDistance> response) {
@@ -251,7 +250,7 @@ public class FragDistance extends Fragment {
                         if (!tModels.getError()) {
                             CustomToast.toastTop(getActivity(), tModels.getMessage());
                             getFragmentManager().beginTransaction().remove(FragDistance.this).commit();
-                            getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
+                            getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strSelectedUserId, strUserType)).commit();
                             btn_distance_submitStart.setVisibility(View.GONE);
                             btn_distance_submitEnding.setVisibility(View.VISIBLE);
                             tSharedPrefManager.setStartingKm(strStartKm, strVehicleNo, strImgStart);
@@ -306,7 +305,7 @@ public class FragDistance extends Fragment {
                 String strUserId = tSharedPrefManager.getUserId();
 
                 Api api = ApiClients.getApiClients().create(Api.class);
-                Call<ModelDistanceUpdate> call = api.uploadDistanceEnding(strUserId, strEndingKm, strImgEnd, stringLatitude, stringLongitude, strPinCode, strCity, addressLine, strVehicleNumber);
+                Call<ModelDistanceUpdate> call = api.uploadDistanceEnding(strAttDate, strUserId, strEndingKm, strImgEnd, stringLatitude, stringLongitude, strPinCode, strCity, addressLine, strVehicleNumber);
                 call.enqueue(new Callback<ModelDistanceUpdate>() {
                     @Override
                     public void onResponse(Call<ModelDistanceUpdate> call, Response<ModelDistanceUpdate> response) {
@@ -315,7 +314,7 @@ public class FragDistance extends Fragment {
                             CustomToast.toastTop(getActivity(), "Today you travelled "+totalDistance+" KM");
                             tSharedPrefManager.clearDistanceStatus();
                             getFragmentManager().beginTransaction().remove(FragDistance.this).commit();
-                            getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
+                            getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strSelectedUserId, strUserType)).commit();
 
                         } else {
                             CustomToast.toastTop(getActivity(), tModels.getMessage());

@@ -27,7 +27,6 @@ public class AdapterCategory extends BaseAdapter {
     public int getCount() {
         return tModels.size();
     }
-
     @Override
     public Object getItem(int position) {
         return position;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/noticeTopMenu"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_pink"
+                android:text="Cheque/NEFT"/>
+
+            <TextView
+                android:id="@+id/tvNoticeChequeReturn"
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_red"
+                android:text="@string/sales_return"/>
+
+            <TextView
+                android:id="@+id/tvNoticeChequeRequest"
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_green"
+                android:text="@string/special_request"
+                />
+            <TextView
+                android:id="@+id/tvNoticeChequeComplain"
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_yellow"
+                android:text="@string/feedback_complain"
+                />
+
+        </LinearLayout>
+
+
+                <TextView
+                    android:layout_below="@+id/noticeTopMenu"
+                    android:id="@+id/tvNoticeChequeLabel"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:singleLine="true"
+                    android:text="Cheque/NEFT"
+                    android:textColor="@color/darkPink"
+                    style="@style/tv_time_report" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/tvNoticeChequeLabel"
+            android:id="@+id/rvNoticeCheque"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/frag_notice_cheque_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+</layout>

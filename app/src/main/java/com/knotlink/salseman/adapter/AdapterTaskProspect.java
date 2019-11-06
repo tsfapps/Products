@@ -62,11 +62,13 @@ public class AdapterTaskProspect extends RecyclerView.Adapter<AdapterTaskProspec
     private TextView tvTaskSchDate;
     private TextView tvTaskCompletedDate;
     private FragmentManager tFragmentManager;
+    private String strSelectedUserId;
     private String strLat;
     private String strLong;
     private String strUserType;
 
-    public AdapterTaskProspect(FragmentManager tFragmentManager, String strLat, String strLong, String strUserType) {
+    public AdapterTaskProspect(String strSelectedUserId, FragmentManager tFragmentManager, String strLat, String strLong, String strUserType) {
+        this.strSelectedUserId = strSelectedUserId;
         this.tFragmentManager = tFragmentManager;
         this.strLat = strLat;
         this.strLong = strLong;
@@ -247,7 +249,7 @@ public class AdapterTaskProspect extends RecyclerView.Adapter<AdapterTaskProspec
                                     Toast.makeText(tContext, "Select the status", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 1:
-                                    tFragmentManager.beginTransaction().replace(R.id.container_main, FragNewCustomer.newInstance(tModel, strUserType)).addToBackStack(null).commit();
+                                    tFragmentManager.beginTransaction().replace(R.id.container_main, FragNewCustomer.newInstance(strSelectedUserId, tModel, strUserType)).addToBackStack(null).commit();
                                     dialog.dismiss();
                                     break;
                                 case 2:

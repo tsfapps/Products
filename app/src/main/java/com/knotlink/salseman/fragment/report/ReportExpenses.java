@@ -16,11 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.knotlink.salseman.R;
-import com.knotlink.salseman.adapter.report.AdapterReportAttendance;
 import com.knotlink.salseman.adapter.report.AdapterReportExpenses;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
-import com.knotlink.salseman.model.report.ModelReportAttendance;
 import com.knotlink.salseman.model.report.ModelReportExpenses;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;

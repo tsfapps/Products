@@ -119,13 +119,13 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
     String strVendorType;
 
     private String strUserType;
-    private String strSalesId;
+    private String strSelectedUserId;
 
-    public static FragLead newInstance(String strUserType, String strSalesId) {
+    public static FragLead newInstance(String strUserType, String strSelectedUserId) {
 
         FragLead fragment = new FragLead();
         fragment.strUserType = strUserType;
-        fragment.strSalesId = strSalesId;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
 
@@ -311,8 +311,8 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
     private void callApi(){
-        if (strUserType.equalsIgnoreCase("3")) {
-            strUserId = strSalesId;
+        if (strUserType.equalsIgnoreCase("3")|| strUserType.equalsIgnoreCase("0")) {
+            strUserId = strSelectedUserId;
         }
         else {
             strUserId = tSharedPrefManager.getUserId();
@@ -339,7 +339,7 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
                 if (!tModels.getError()){
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragLead.this).commit();
-                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strSelectedUserId, strUserType)).commit();
                 }
                 else {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());

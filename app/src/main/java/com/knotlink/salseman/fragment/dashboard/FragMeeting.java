@@ -64,8 +64,6 @@ import static android.app.Activity.RESULT_CANCELED;
 import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedListener {
-    String[] languages = { "C","C++","Java","C#","PHP","JavaScript","jQuery","AJAX","JSON" };
-
     private ModelMeeting tModels;
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
@@ -122,12 +120,12 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
 
     private String strUserId;
     private String strUserType;
-    private String strSalesId;
-    public static FragMeeting newInstance(String strUserType, String strSalesId) {
+    private String strSelectedUserId;
+    public static FragMeeting newInstance(String strUserType, String strSelectedUserId) {
 
         FragMeeting fragment = new FragMeeting();
         fragment.strUserType = strUserType;
-        fragment.strSalesId = strSalesId;
+        fragment.strSelectedUserId = strSelectedUserId;
         return fragment;
     }
     @Nullable
@@ -353,8 +351,8 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
     }
     private void callApi(){
         String strImage = imageToString(tBitmap, ivUploadMeeting);
-        if (strUserType.equalsIgnoreCase("3")) {
-            strUserId = strSalesId;
+        if (strUserType.equalsIgnoreCase("3")||strUserType.equalsIgnoreCase("0")) {
+            strUserId = strSelectedUserId;
             Log.d(Constant.TAG, "Sales Id : "+strUserId);
         }else {
             strUserId = tSharedPrefManager.getUserId();
@@ -380,7 +378,7 @@ public class FragMeeting extends Fragment implements AdapterView.OnItemSelectedL
                 if (!tModels.getError()){
                     CustomToast.toastTop(getActivity(), tModels.getMessage());
                     getFragmentManager().beginTransaction().remove(FragMeeting.this).commit();
-                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strUserType)).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.container_main, FragDashboard.newInstance(strSelectedUserId, strUserType)).commit();
                 }
                 else {
                     CustomToast.toastTop(getActivity(), tModels.getMessage());

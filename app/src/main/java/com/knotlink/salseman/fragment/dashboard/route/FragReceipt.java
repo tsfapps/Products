@@ -2,22 +2,31 @@ package com.knotlink.salseman.fragment.dashboard.route;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,8 +40,12 @@ import com.knotlink.salseman.adapter.spinner.AdapterReceiptSpinnerInvoice;
 import com.knotlink.salseman.adapter.spinner.AdapterReceiptSpinnerPaymentMode;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
+import com.knotlink.salseman.databinding.FragReceiptBinding;
+import com.knotlink.salseman.model.dash.route.ModelInsertReceipt;
 import com.knotlink.salseman.model.dash.route.ModelInvoice;
 import com.knotlink.salseman.model.dash.route.ModelShopList;
+import com.knotlink.salseman.services.GPSTracker;
+import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.CheckPermission;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomLog;
@@ -40,8 +53,10 @@ import com.knotlink.salseman.utils.CustomToast;
 import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
+import com.knotlink.salseman.viewModel.route.ViewModelInsertReceipt;
 import com.kyanogen.signatureview.SignatureView;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -58,41 +73,90 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedListener{
     private Context tContext;
+    private FragReceiptBinding tBinding;
+    private ViewModelInsertReceipt tViewModel;
+    private Bitmap tBitmap;
+   private String strUserId;
+    private String strShopId;
+    private String strBankName;
+    private String strInvoiceNo;
+    private String strInvoiceDate;
+    private String strInvoiceAmount;
+    private String strTotalOutStandingAmount;
+    private String strBalanceAmount;
+    private String strReceivedAmount;
+    private String strPendingAmount;
+    private String strPaymentMo;
+    private String strLat;
+    private String strLong;
+    private String strNeftChequeNo;
+    private String strNeftChequeAmount;
+    private String strNeftChequeMatureDtae;
+    private String strChequeImage;
+    private String strSignature;
+    private String strRemarks;
+    private int tosAmt;
+
+
+
     @BindView(R.id.iv_upload_receipt)
     protected ImageView ivUploadReceipt;
     @BindView(R.id.signature_view_receipt)
     protected SignatureView signatureViewReceipt;
     @BindView(R.id.sv_receipt)
     protected ScrollView svReceipt;
-    @BindView(R.id.tv_receipt_check_date)
-    protected TextView tvReceiptCheckDate;
     @BindView(R.id.tv_receipt_shop_name)
     protected TextView tvReceiptShopName;
-    @BindView(R.id.tv_receipt_totalOutstandingAmount)
-    protected TextView tvReceiptTotalOutstandingAmount;
+    @BindView(R.id.tvReceiptOutstandingAmount)
+    protected TextView tvReceiptOutstandingAmount;
+    @BindView(R.id.tvReceiptBalanceAmount)
+    protected TextView tvReceiptBalanceAmount;
     @BindView(R.id.tv_receipt_invoice_date)
     protected TextView tvReceiptInvoiceDate;
-    @BindView(R.id.tv_receipt_totalInvoiceAmount)
-    protected TextView tvReceiptTotalInvoiceAmount;
+    @BindView(R.id.tvReceiptDaysRemain)
+    protected TextView tvReceiptDaysRemain;
+    @BindView(R.id.tvReceiptInvoiceAmount)
+    protected TextView tvReceiptInvoiceAmount;
+    @BindView(R.id.etReceiptReceivedAmount)
+    protected EditText etReceiptReceivedAmount;
+    @BindView(R.id.tvReceiptPendingAmount)
+    protected TextView tvReceiptPendingAmount;
     @BindView(R.id.spn_receipt_invoiceNumber)
     protected Spinner spnReceiptInvoiceNumber;
-    @BindView(R.id.spn_receipt_paymentMode)
-    protected Spinner spnReceiptPaymentMode;
-    @BindView(R.id.ll_receipt_chequeDetail)
-    protected LinearLayout llReceiptChequeDetail;
     @BindView(R.id.pbSpnReceiptInvNo)
     protected ProgressBar pbSpnReceiptInvNo;
+    @BindView(R.id.spn_receipt_paymentMode)
+    protected Spinner spnReceiptPaymentMode;
+    @BindView(R.id.flChequeImage)
+    protected FrameLayout flChequeImage;
+    @BindView(R.id.llReceiptNeftChequeDetail)
+    protected LinearLayout llReceiptNeftChequeDetail;
+    @BindView(R.id.tvReceiptNeftChequeDate)
+    protected TextView tvReceiptNeftChequeDate;
+    @BindView(R.id.etReceiptNeftChequeNumber)
+    protected EditText etReceiptNeftChequeNumber;
+    @BindView(R.id.etReceiptNeftChequeBankName)
+    protected EditText etReceiptNeftChequeBankName;
+    @BindView(R.id.etReceiptNeftChequeAmount)
+    protected EditText etReceiptNeftChequeAmount;
     final Calendar myCalendar = Calendar.getInstance();
 
-    String[] strPaymentMode ={"--select the payment mode--","Cash","NEFT","Cheque"};
+    String[] strPaymentMode ={"Cash","NEFT","Cheque"};
+    private String strUserType;
+    private String strSelectedUserId;
     private List<ModelShopList> tModels;
     private int i;
     private String strAreaStatus;
-    public static FragReceipt newInstance(List<ModelShopList> tModels, int i, String strAreaStatus) {
+    private String strInvoiceAmntNet;
+
+    public static FragReceipt newInstance(String strUserType,String strSelectedUserId, List<ModelShopList> tModels, int i, String strAreaStatus) {
         FragReceipt fragment = new FragReceipt();
+        fragment.strUserType = strUserType;
+        fragment.strSelectedUserId = strSelectedUserId;
         fragment.tModels = tModels;
         fragment.i = i;
         fragment.strAreaStatus = strAreaStatus;
@@ -102,9 +166,9 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_receipt, container, false);
+        tBinding = DataBindingUtil.inflate(inflater, R.layout.frag_receipt, container, false);
+        View view = tBinding.getRoot();
         ButterKnife.bind(this, view);
-
         initFrag();
         AdapterReceiptSpinnerPaymentMode adapterReceiptSpinnerPaymentMode = new AdapterReceiptSpinnerPaymentMode(tContext, strPaymentMode);
         spnReceiptPaymentMode.setAdapter(adapterReceiptSpinnerPaymentMode);
@@ -112,56 +176,77 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
 
         AdapterReceiptSpinnerInvoice adapterReceiptSpinnerInvoice = new AdapterReceiptSpinnerInvoice(tContext, tModels, i);
         spnReceiptInvoiceNumber.setAdapter(adapterReceiptSpinnerInvoice);
-        spnReceiptInvoiceNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                    String strInvoiceNo = tModels.get(i).getInvoiceNo().get(position);
-                    String strShopId = tModels.get(i).getShopId();
-                    Api api = ApiClients.getApiClients().create(Api.class);
-                    if (!strInvoiceNo.equalsIgnoreCase("")) {
-                    Call<ModelInvoice> call = api.viewInvoice(strShopId, strInvoiceNo);
-                    call.enqueue(new Callback<ModelInvoice>() {
-                        @Override
-                        public void onResponse(Call<ModelInvoice> call, Response<ModelInvoice> response) {
-                            ModelInvoice modelInvoice = response.body();
-                            pbSpnReceiptInvNo.setVisibility(View.GONE);
-                            tvReceiptInvoiceDate.setText(modelInvoice.getInvoiceDate());
-                            tvReceiptTotalInvoiceAmount.setText(modelInvoice.getInvoiceAmount());
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<ModelInvoice> call, Throwable t) {
-
-                            CustomLog.d(Constant.TAG, "Invoice Not Responding : " + t);
-                        }
-                    });
-                }else {
-                    CustomToast.toastTop(getActivity(), "Invoice data is not available...");
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        spnReceiptInvoiceNumber.setOnItemSelectedListener(this);
         return view;
     }
     @SuppressLint("SetTextI18n")
     public void initFrag() {
         tContext = getContext();
+        GPSTracker tGPSTracker = new GPSTracker(tContext);
+        strShopId = tModels.get(i).getShopId();
+        strBankName = etReceiptNeftChequeBankName.getText().toString().trim();
+        strNeftChequeNo = etReceiptNeftChequeNumber.getText().toString().trim();
+        strNeftChequeAmount = etReceiptNeftChequeAmount.getText().toString().trim();
+        strTotalOutStandingAmount = tvReceiptOutstandingAmount.getText().toString().trim();
+        strBalanceAmount = tvReceiptBalanceAmount.getText().toString().trim();
+        strInvoiceDate = tvReceiptInvoiceDate.getText().toString().trim();
+        strInvoiceAmount = tvReceiptInvoiceAmount.getText().toString().trim();
+        strReceivedAmount = etReceiptReceivedAmount.getText().toString().trim();
+        strNeftChequeMatureDtae = tvReceiptNeftChequeDate.getText().toString().trim();
+        strNeftChequeNo = etReceiptNeftChequeNumber.getText().toString().trim();
+        strLat = String.valueOf(tGPSTracker.latitude);
+        strLong = String.valueOf(tGPSTracker.longitude);
+        SharedPrefManager tSharedPrefManager = new SharedPrefManager(tContext);
+        if (strUserType.equalsIgnoreCase("0")||strUserType.equalsIgnoreCase("3")){
+            strUserId = strSelectedUserId;
+
+        }else if(strUserType.equalsIgnoreCase("1")){
+            strUserId = tSharedPrefManager.getUserId();
+
+        }else if (strUserType.equalsIgnoreCase("2")) {
+            strUserId = tSharedPrefManager.getUserId();
+
+
+        }
         pbSpnReceiptInvNo.setVisibility(View.VISIBLE);
         SetTitle.tbTitle("Receipt", getActivity());
+        tViewModel = ViewModelProviders.of(this).get(ViewModelInsertReceipt.class);
         tvReceiptShopName.setText(tModels.get(i).getShopName());
-//        tvReceiptTotalOutstandingAmount.setText("Rs. "+tModels.get(i).getTotalOutstandingAmount());
-        llReceiptChequeDetail.setVisibility(View.GONE);
+        tvReceiptOutstandingAmount.setText("Rs. "+tModels.get(i).getInvoiceOutstanding());
+        tvReceiptBalanceAmount.setText("Rs. "+tModels.get(i).getInvoiceBalance());
+        flChequeImage.setVisibility(View.GONE);
+
+        etReceiptReceivedAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tosAmt = Integer.parseInt(strInvoiceAmntNet);
+                strReceivedAmount = etReceiptReceivedAmount.getText().toString().trim();
+                if (!strReceivedAmount.equalsIgnoreCase("")) {
+                    int rcvAmt = Integer.parseInt(strReceivedAmount);
+                    int pendingRcvAmt = tosAmt - rcvAmt;
+                    tvReceiptPendingAmount.setText(String.valueOf(pendingRcvAmt));
+                    strPendingAmount = tvReceiptPendingAmount.getText().toString().trim();
+                }else {
+                    tvReceiptPendingAmount.setText(strInvoiceAmntNet);
+                    strPendingAmount = strReceivedAmount;
+                }
+
+            }
+        });
     }
 
-    @OnClick(R.id.tv_receipt_check_date)
-    public void checkDateClicked(View view){
+    @OnClick(R.id.tvReceiptNeftChequeDate)
+    public void tvReceiptNeftDateClicked(View view){
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -177,7 +262,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
                     String strMyDate = sdf.format(myCalendar.getTime());
                     Date selDate = sdf.parse(strMyDate);
                     if (selDate.compareTo(myDate)>0) {
-                        tvReceiptCheckDate.setText(strMyDate);
+                        tvReceiptNeftChequeDate.setText(strMyDate);
                     }
                     else {
                         CustomToast.toastMid(getActivity(), Constant.DATE_DELIVERY);
@@ -185,9 +270,6 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-
-
             }
         };
         new DatePickerDialog(getContext(), date, myCalendar
@@ -198,13 +280,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     public void clrSignReceipt(View view){
         signatureViewReceipt.clearCanvas();
     }
-    @OnClick(R.id.btn_receipt_submit)
-    public void btnSubmitClicked(View view){
-        if (signatureViewReceipt.isBitmapEmpty()){
-            CustomToast.toastTop(getActivity(), "Can't submit without signature...");
-        }
-        Bitmap bitmapSign = signatureViewReceipt.getSignatureBitmap();
-    }
+
 
     @OnTouch(R.id.signature_view_receipt)
     public boolean onTouchSign(MotionEvent motionEvent){
@@ -221,6 +297,15 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
                 return true;
         }
     }
+    private String signImageToString(){
+        Bitmap bitmapSign = signatureViewReceipt.getSignatureBitmap();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmapSign.compress(Bitmap.CompressFormat.PNG,10,byteArrayOutputStream);
+        byte[] imByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imByte,Base64.DEFAULT);
+    }
+
+
     @OnClick(R.id.iv_upload_receipt)
     public void onUploadReceiptClicked(View view){
         showPictureDialog();
@@ -270,9 +355,13 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
         if (requestCode == Constant.GALLERY) {
             if (data != null) {
                 SetImage.setGalleryImage(tContext, ivUploadReceipt, data);
+                BitmapDrawable drawable = (BitmapDrawable)ivUploadReceipt.getDrawable();
+                tBitmap = drawable.getBitmap();
             }
         } else if (requestCode == Constant.CAMERA) {
             SetImage.setCameraImage(ivUploadReceipt, data);
+            tBitmap = (Bitmap) data.getExtras().get("data");
+            ivUploadReceipt.setImageBitmap(tBitmap);
         }
     }
     @Override
@@ -286,13 +375,105 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        if (strPaymentMode[position].equals("Cheque")){
-                CustomToast.toastTop(getActivity(), "Kindly fill the information... ");
-                llReceiptChequeDetail.setVisibility(View.VISIBLE);
+        switch (parent.getId()){
+            case R.id.spn_receipt_invoiceNumber:
+                 strInvoiceNo = tModels.get(i).getInvoiceNo().get(position);
+
+                Api api = ApiClients.getApiClients().create(Api.class);
+                if (!strInvoiceNo.equalsIgnoreCase("")) {
+                    Call<ModelInvoice> call = api.viewInvoice(strShopId, strInvoiceNo);
+                    call.enqueue(new Callback<ModelInvoice>() {
+                        @Override
+                        public void onResponse(Call<ModelInvoice> call, Response<ModelInvoice> response) {
+                            ModelInvoice modelInvoice = response.body();
+                            pbSpnReceiptInvNo.setVisibility(View.GONE);
+                            if (modelInvoice != null) {
+                                tvReceiptInvoiceDate.setText(modelInvoice.getInvoiceDate());
+                            tvReceiptInvoiceAmount.setText(modelInvoice.getInvoiceAmount());
+                            tvReceiptDaysRemain.setText(modelInvoice.getRemainingDays());
+                                strInvoiceAmntNet = modelInvoice.getInvoiceAmount();
+                                etReceiptReceivedAmount.setText("");
+                                strReceivedAmount = "";
+                                tvReceiptPendingAmount.setText(strInvoiceAmntNet);
+                                strPendingAmount = strReceivedAmount;
+                            }else {
+                                CustomToast.toastTop(getActivity(), "Invoice data is not available...");
+
+                            }
+
+                        }
+                        @Override
+                        public void onFailure(Call<ModelInvoice> call, Throwable t) {
+                            CustomLog.d(Constant.TAG, "Invoice Not Responding : " + t);
+                        }
+                    });
+                }else {
+                    CustomToast.toastTop(getActivity(), "Invoice data is not available...");
+                }
+                break;
+            case R.id.spn_receipt_paymentMode:
+                strPaymentMo = strPaymentMode[position];
+                if (strPaymentMode[position].equals("Cheque")){
+                    etReceiptReceivedAmount.setText("");
+                    strReceivedAmount = "";
+                    tvReceiptPendingAmount.setText(strInvoiceAmntNet);
+                    strPendingAmount = strInvoiceAmntNet;
+                    etReceiptReceivedAmount.setEnabled(false);
+                    etReceiptReceivedAmount.setBackgroundResource(R.drawable.bg_btn_disabled);
+                    CustomToast.toastTop(getActivity(), "Kindly fill the information... ");
+                    flChequeImage.setVisibility(View.VISIBLE);
+                    llReceiptNeftChequeDetail.setVisibility(View.VISIBLE);
+                }else if (strPaymentMode[position].equalsIgnoreCase("NEFT")){
+                    etReceiptReceivedAmount.setText("");
+                    strReceivedAmount = "";
+                    tvReceiptPendingAmount.setText(strInvoiceAmntNet);
+                    strPendingAmount = strInvoiceAmntNet;
+                    etReceiptReceivedAmount.setEnabled(false);
+                    etReceiptReceivedAmount.setBackgroundResource(R.drawable.bg_btn_disabled);
+                    CustomToast.toastTop(getActivity(), "Kindly fill the information... ");
+                    llReceiptNeftChequeDetail.setVisibility(View.VISIBLE);
+                    flChequeImage.setVisibility(View.GONE);
+                } else if (strPaymentMode[position].equalsIgnoreCase("Cash")){
+                    etReceiptReceivedAmount.setEnabled(true);
+                    etReceiptReceivedAmount.setBackgroundResource(R.drawable.bg_et);
+                    flChequeImage.setVisibility(View.GONE);
+                    llReceiptNeftChequeDetail.setVisibility(View.GONE);
+                }
+                break;
         }
-        else llReceiptChequeDetail.setVisibility(View.GONE);
+
+
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
+
+    private void insertReceipt(){
+        String strImage = imageToString(tBitmap, ivUploadReceipt);
+        String strImageSign = signImageToString();
+        tViewModel.insertReceipt(strUserId,tModels.get(i).getShopId(),strBankName,strInvoiceNo,strInvoiceDate,strInvoiceAmount,
+                strTotalOutStandingAmount,strBalanceAmount,strReceivedAmount,strPendingAmount,strPaymentMo,
+                strLat,strLong,strNeftChequeNo,strNeftChequeMatureDtae,strImage,strImageSign,"",strAreaStatus)
+                .observe(this, new Observer<ModelInsertReceipt>() {
+                    @Override
+                    public void onChanged(@Nullable ModelInsertReceipt modelInsertReceipt) {
+                        Toast.makeText(tContext, modelInsertReceipt.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                });
+    }
+
+    @OnClick(R.id.btn_receipt_submit)
+    public void btnSubmitClicked(View view){
+        if (signatureViewReceipt.isBitmapEmpty()){
+            CustomToast.toastTop(getActivity(), "Can't submit without signature...");
+        }else {
+            Toast.makeText(tContext, "Submit...", Toast.LENGTH_SHORT).show();
+            Bitmap bitmapSign = signatureViewReceipt.getSignatureBitmap();
+            insertReceipt();
+        }
+
+    }
+
+
 }

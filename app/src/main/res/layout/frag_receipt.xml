@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
     <ScrollView
@@ -10,18 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
+        android:background="@color/white"
         android:padding="16dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_receipt_shop_name"
-            android:fontFamily="@font/abril_fatface"
-            android:gravity="center"
+            style="@style/tv_report"
+            android:layout_gravity="center"
             android:text="Shop Name"
-            android:textColor="@color/colorAccent"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
@@ -30,25 +31,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-            android:hint="Total Outstanding Amount (₹)"
+            android:text="Total Balance Amount"
             style="@style/tv_report" />
-        <TextView
-            android:layout_alignParentEnd="true"
-            android:hint="Total Balance Amount (₹)"
-            style="@style/tv_report" />
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:text="Total Outstanding Amount"
+                style="@style/tv_report" />
+
         </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <TextView
-                android:id="@+id/tv_receipt_totalOutstandingAmount"
+                android:id="@+id/tvReceiptBalanceAmount"
                 android:layout_weight="1"
                 android:hint=""
                 style="@style/et_main" />
+
             <TextView
-                android:id="@+id/tv_receipt_pendingOutstandingAmount"
+                android:id="@+id/tvReceiptOutstandingAmount"
                 android:layout_weight="1"
                 android:hint=""
                 style="@style/et_main" />
@@ -73,20 +75,24 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-            android:layout_weight="1"
-            android:hint="Invoice Date"
+            android:text="Invoice Date"
             style="@style/tv_report" />
-        <TextView
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:text="Days Remain"
+                style="@style/tv_report" />
+
+            <TextView
+                android:layout_alignParentEnd="true"
             android:gravity="end"
-            android:layout_weight="1"
-            android:hint="Total Invoice Amount (₹)"
-            style="@style/tv_report" />
-        </LinearLayout>
+            android:text="Invoice Amount"
+            style="@style/tv_report"/>
+        </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -94,45 +100,48 @@
             <TextView
                 android:id="@+id/tv_receipt_invoice_date"
                 android:layout_weight="1"
-                style="@style/et_main"
+                style="@style/tv_main"
                 android:hint="" />
-        <TextView
-            android:id="@+id/tv_receipt_totalInvoiceAmount"
+            <TextView
+                android:id="@+id/tvReceiptDaysRemain"
+                android:layout_weight="1"
+                style="@style/tv_main"
+                android:hint="" />
+
+            <TextView
+            android:id="@+id/tvReceiptInvoiceAmount"
             android:layout_weight="1"
             android:hint=""
-            style="@style/et_main" />
+            style="@style/tv_main" />
         </LinearLayout>
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_marginTop="@dimen/dimen_8dp"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:hint="Received Amount* (₹)"
-                android:layout_weight="1"
+                android:text="Received Amount*"
                 style="@style/tv_report" />
 
             <TextView
-                android:gravity="end"
-                android:layout_weight="1"
-                android:hint="Pending Invoice Amount (₹)"
+                android:layout_alignParentEnd="true"
+                android:text="Pending Invoice Amount"
                 style="@style/tv_report" />
-        </LinearLayout>
+        </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:id="@+id/et_receipt_receivedAmount"
-                android:hint=""
+                android:id="@+id/etReceiptReceivedAmount"
                 android:inputType="numberDecimal"
                 android:layout_weight="1"
                 style="@style/et_main" />
             <TextView
-                android:id="@+id/tv_receipt_pendingInvoiceAmount"
+                android:id="@+id/tvReceiptPendingAmount"
                 android:layout_weight="1"
                 android:hint=""
-                style="@style/et_main" />
+                style="@style/tv_main" />
         </LinearLayout>
         <RelativeLayout
             android:layout_marginTop="@dimen/dimen_8dp"
@@ -151,24 +160,22 @@
         </RelativeLayout>
 
 <LinearLayout
-    android:id="@+id/ll_receipt_chequeDetail"
+    android:visibility="visible"
+    android:id="@+id/llReceiptNeftChequeDetail"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_marginTop="16dp"
-            style="@style/tv_dash_label"
-            android:text="Cheque Detail"/>
     <RelativeLayout
+        android:layout_marginTop="@dimen/dimen_16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:hint="Cheque Date"
+            android:text="Date"
             style="@style/tv_report" />
         <TextView
             android:layout_alignParentEnd="true"
-            android:hint="Cheque Number"
+            android:text="Number"
             style="@style/tv_report" />
 
     </RelativeLayout>
@@ -177,52 +184,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/tv_receipt_check_date"
+            android:id="@+id/tvReceiptNeftChequeDate"
             android:layout_weight="1"
             android:drawableEnd="@drawable/ic_calender"
             android:hint=""
             style="@style/et_main" />
         <EditText
             android:layout_weight="1"
-            android:id="@+id/et_receipt_chequeNumber"
+            android:id="@+id/etReceiptNeftChequeNumber"
             android:hint=""
             style="@style/et_main" />
     </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_marginTop="0dp"
-                android:layout_weight="1"
-             style="@style/tv_report"
-                android:hint="Name of Bank"
-                />
-            <TextView
-                android:layout_toStartOf="@+id/tv_receipt_image_label"
-                android:layout_weight=".15"
-                android:layout_marginTop="0dp"
-             style="@style/tv_report"
-                android:hint="Amount (₹)"
-                />
-
-            <TextView
-                android:id="@+id/tv_receipt_image_label"
-                android:layout_weight=".05"
-                android:layout_marginTop="0dp"
-                android:layout_alignParentEnd="true"
                 style="@style/tv_report"
-                android:hint="@string/upload_image"
+                android:text="Name of Bank"
                 />
 
-        </LinearLayout>
+
+        </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:id="@+id/et_receipt_bankName"
+                android:id="@+id/etReceiptNeftChequeBankName"
                 style="@style/et_main"
                 android:textSize="12sp"
                 android:layout_width="0dp"
@@ -230,13 +221,14 @@
                 android:hint=""
                 />
             <EditText
-                android:id="@+id/et_receipt_chequeAmount"
+                android:id="@+id/etReceiptNeftChequeAmount"
                 style="@style/et_main"
                 android:textSize="12sp"
                 android:layout_width="0dp"
-                android:layout_weight=".40"
-                android:hint="" />
+                android:layout_weight=".60"
+                android:hint="Amount" />
             <FrameLayout
+                android:id="@+id/flChequeImage"
                 android:layout_width="0dp"
                 android:layout_weight=".35"
                 android:background="@drawable/bg_camera"
@@ -255,7 +247,7 @@
 </LinearLayout>
         <TextView
             android:layout_marginTop="16dp"
-            style="@style/tv_dash_label"
+            style="@style/tv_report"
             android:text="Signature"/>
         <RelativeLayout
             android:padding="2dp"
@@ -286,3 +278,4 @@
     </LinearLayout>
     </ScrollView>
 </LinearLayout>
+</layout>

@@ -52,7 +52,7 @@ public class AdapterAreaSalesMan extends BaseAdapter {
         } else {
             holder = (ListContent) v.getTag();
         }
-        String strEmp = tModels.get(position).getUserId()+"\t\t\t\t\t"+tModels.get(position).getUserName();
+        String strEmp = tModels.get(position).getUserName();
         holder.text.setText(strEmp);
 
         return v;

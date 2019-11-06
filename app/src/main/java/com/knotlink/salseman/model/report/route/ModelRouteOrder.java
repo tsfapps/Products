@@ -170,7 +170,7 @@ public class ModelRouteOrder {
     }
 
     public String getDatetime() {
-        return DateUtils.convertFormatOpposite(datetime);
+        return DateUtils.dateFormatDdMmmYyyy(datetime);
     }
 
     public void setDatetime(String datetime) {

@@ -18,12 +18,15 @@ public class ModelReportColdCall {
     @SerializedName("task_assign_date")
     @Expose
     private String taskAssignDate;
+    @SerializedName("task_rescheduled_date")
+    @Expose
+    private Object taskRescheduledDate;
     @SerializedName("task_due_date")
     @Expose
     private String taskDueDate;
     @SerializedName("task_completion_date")
     @Expose
-    private String taskCompletionDate;
+    private Object taskCompletionDate;
     @SerializedName("task_time")
     @Expose
     private String taskTime;
@@ -47,7 +50,7 @@ public class ModelReportColdCall {
     private String remarks;
     @SerializedName("user_remarks")
     @Expose
-    private String userRemarks;
+    private Object userRemarks;
     @SerializedName("status")
     @Expose
     private String status;
@@ -78,6 +81,18 @@ public class ModelReportColdCall {
     @SerializedName("vendor_type")
     @Expose
     private String vendorType;
+    @SerializedName("special_request_type")
+    @Expose
+    private Object specialRequestType;
+    @SerializedName("task_status")
+    @Expose
+    private String taskStatus;
+    @SerializedName("area_status")
+    @Expose
+    private Object areaStatus;
+    @SerializedName("org_id")
+    @Expose
+    private String orgId;
 
     public String getId() {
         return id;
@@ -104,15 +119,23 @@ public class ModelReportColdCall {
     }
 
     public String getTaskAssignDate() {
-        return DateUtils.convertFormatOpposite(taskAssignDate) ;
+        return "Assign Date\n"+DateUtils.dateFormatDdMmmYyyy(taskAssignDate);
     }
 
     public void setTaskAssignDate(String taskAssignDate) {
         this.taskAssignDate = taskAssignDate;
     }
 
+    public Object getTaskRescheduledDate() {
+        return taskRescheduledDate;
+    }
+
+    public void setTaskRescheduledDate(Object taskRescheduledDate) {
+        this.taskRescheduledDate = taskRescheduledDate;
+    }
+
     public String getTaskDueDate() {
-        return DateUtils.convertFormatOpposite(taskDueDate);
+        return "Due Date\n"+DateUtils.dateFormatDdMmmYyyy(taskDueDate);
     }
 
     public void setTaskDueDate(String taskDueDate) {
@@ -123,12 +146,12 @@ public class ModelReportColdCall {
         return taskCompletionDate;
     }
 
-    public void setTaskCompletionDate(String taskCompletionDate) {
+    public void setTaskCompletionDate(Object taskCompletionDate) {
         this.taskCompletionDate = taskCompletionDate;
     }
 
     public String getTaskTime() {
-        return taskTime;
+        return "Meeting Time\n"+taskTime;
     }
 
     public void setTaskTime(String taskTime) {
@@ -144,7 +167,7 @@ public class ModelReportColdCall {
     }
 
     public String getCustomerName() {
-        return customerName;
+        return "Contact Person\n"+customerName;
     }
 
     public void setCustomerName(String customerName) {
@@ -152,7 +175,7 @@ public class ModelReportColdCall {
     }
 
     public String getCustomerContactNo() {
-        return customerContactNo;
+        return "Contact Number\n"+customerContactNo;
     }
 
     public void setCustomerContactNo(String customerContactNo) {
@@ -176,18 +199,18 @@ public class ModelReportColdCall {
     }
 
     public String getRemarks() {
-        return remarks;
+        return "Remarks\n"+remarks;
     }
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
-    public String getUserRemarks() {
+    public Object getUserRemarks() {
         return userRemarks;
     }
 
-    public void setUserRemarks(String userRemarks) {
+    public void setUserRemarks(Object userRemarks) {
         this.userRemarks = userRemarks;
     }
 
@@ -269,5 +292,37 @@ public class ModelReportColdCall {
 
     public void setVendorType(String vendorType) {
         this.vendorType = vendorType;
+    }
+
+    public Object getSpecialRequestType() {
+        return specialRequestType;
+    }
+
+    public void setSpecialRequestType(Object specialRequestType) {
+        this.specialRequestType = specialRequestType;
+    }
+
+    public String getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public Object getAreaStatus() {
+        return areaStatus;
+    }
+
+    public void setAreaStatus(Object areaStatus) {
+        this.areaStatus = areaStatus;
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
     }
 }

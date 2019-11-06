@@ -2,6 +2,7 @@ package com.knotlink.salseman.adapter.report;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,112 +12,70 @@ import android.widget.TextView;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.activity.maps.ReportMapActivity;
+import com.knotlink.salseman.databinding.ReportMeetingItemBinding;
 import com.knotlink.salseman.model.report.ModelReportMeeting;
 import com.knotlink.salseman.utils.Constant;
-import com.knotlink.salseman.utils.DateUtils;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeeting.DistanceViewHolder> {
+public class AdapterReportMeeting extends RecyclerView.Adapter<AdapterReportMeeting.MeetingReportViewHolder> {
 
     private List<ModelReportMeeting> tModels;
     private Context tContext;
 
-    public AdapterReportMeeting(List<ModelReportMeeting> tModels, Context tContext) {
-        this.tModels = tModels;
-        this.tContext = tContext;
-    }
-
     @NonNull
     @Override
-    public DistanceViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.report_meeting_item, viewGroup, false);
-        return new DistanceViewHolder(view);
+    public MeetingReportViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
+        ReportMeetingItemBinding tBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()),
+                R.layout.report_meeting_item, viewGroup, false);
+       tContext = viewGroup.getContext();
+        return new MeetingReportViewHolder(tBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DistanceViewHolder distanceViewHolder, int i) {
-        ModelReportMeeting tModel = tModels.get(i);
-
-
-
-        final String strLoginLat = tModel.getLatitude();
-        final String strLoginLong = tModel.getLongitude();
-        final String strLogoutLat = tModel.getLatitude();
-        final String strLogoutLong = tModel.getLongitude();
-        final String strEndAddress = "Customer Address : "+tModel.getCustomerAddress();
-        final String strStartAddress = "Customer Address : "+tModel.getCustomerAddress();
-
-        distanceViewHolder.tvReportMeetingDate.setText(tModel.getTaskAssignDate());
-        distanceViewHolder.tvReportMeetingVendorType.setText(tModel.getVendorType());
-        distanceViewHolder.tvReportMeetingVendorName.setText(tModel.getOrgName());
-        distanceViewHolder.tvReportMeetingContactName.setText(tModel.getCustomerName());
-        distanceViewHolder.tvReportMeetingContactNumber.setText(tModel.getCustomerContactNo());
-        distanceViewHolder.tvReportMeetingEmailId.setText(tModel.getEmail());
-        distanceViewHolder.tvReportMeetingTelephone.setText(tModel.getLandlineNo());
-        distanceViewHolder.tvReportMeetingWhatsApp.setText(tModel.getWhatsappNo());
-        distanceViewHolder.tvReportMeetingAddress.setText(tModel.getCustomerAddress());
-        distanceViewHolder.tvReportMeetingMeetingStatus.setText(tModel.getStatus());
-        distanceViewHolder.getTvReportMeetingMeetingDate.setText(tModel.getTaskDueDate());
-        distanceViewHolder.getTvReportMeetingMeetingTime.setText(tModel.getTaskTime());
-        distanceViewHolder.tvReportMeetingRemarks.setText(tModel.getRemarks());
-        distanceViewHolder.tvReportMeetingMap.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(@NonNull MeetingReportViewHolder meetingReportViewHolder, int i) {
+       final ModelReportMeeting tModel = tModels.get(i);
+        meetingReportViewHolder.tBinding.setMeeting(tModel);
+        meetingReportViewHolder.tvReportMeetingMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent tIntent = new Intent(tContext, ReportMapActivity.class);
-                tIntent.putExtra(Constant.FIRST_LAT, strLoginLat);
-                tIntent.putExtra(Constant.FIRST_LONG, strLoginLong);
-                tIntent.putExtra(Constant.SECOND_LAT, strLogoutLat);
-                tIntent.putExtra(Constant.SECOND_LONG, strLogoutLong);
-                tIntent.putExtra(Constant.START_ADDRESS, strStartAddress);
-                tIntent.putExtra(Constant.END_ADDRESS, strEndAddress);
+                tIntent.putExtra(Constant.FIRST_LAT, tModel.getLatitude());
+                tIntent.putExtra(Constant.FIRST_LONG, tModel.getLongitude());
+                tIntent.putExtra(Constant.SECOND_LAT, tModel.getLatitude());
+                tIntent.putExtra(Constant.SECOND_LONG, tModel.getLongitude());
+                tIntent.putExtra(Constant.START_ADDRESS, tModel.getAddress());
+                tIntent.putExtra(Constant.END_ADDRESS, tModel.getAddress());
                 tContext.startActivity(tIntent);
             }
         });
+
+
     }
+
+
     @Override
     public int getItemCount() {
-        return tModels.size();
+        if (tModels != null) {
+            return tModels.size();
+        } else {
+            return 0;
+        }
     }
+    public void settModels(List<ModelReportMeeting> tModels){
+        this.tModels = tModels;
+        notifyDataSetChanged();
+    }
+    public class MeetingReportViewHolder extends RecyclerView.ViewHolder{
 
-    public class DistanceViewHolder extends RecyclerView.ViewHolder{
+        private ReportMeetingItemBinding tBinding;
+        private TextView tvReportMeetingMap;
 
-        @BindView(R.id.tv_report_meeting_date)
-        protected TextView tvReportMeetingDate;
-        @BindView(R.id.tv_report_meeting_vendorType)
-        protected TextView tvReportMeetingVendorType;
-        @BindView(R.id.tv_report_meeting_vendorName)
-        protected TextView tvReportMeetingVendorName;
-        @BindView(R.id.tv_report_meeting_contactName)
-        protected TextView tvReportMeetingContactName;
-        @BindView(R.id.tv_report_meeting_contactNumber)
-        protected TextView tvReportMeetingContactNumber;
-        @BindView(R.id.tv_report_meeting_emailId)
-        protected TextView tvReportMeetingEmailId;
-        @BindView(R.id.tv_report_meeting_telephone)
-        protected TextView tvReportMeetingTelephone;
-        @BindView(R.id.tv_report_meeting_whatsAppNumber)
-        protected TextView tvReportMeetingWhatsApp;
-        @BindView(R.id.tv_report_meeting_address)
-        protected TextView tvReportMeetingAddress;
-        @BindView(R.id.tv_report_meeting_meetingStatus)
-        protected TextView tvReportMeetingMeetingStatus;
-        @BindView(R.id.tv_report_meeting_meetingTime)
-        protected TextView getTvReportMeetingMeetingTime;
-        @BindView(R.id.tv_report_meeting_meetingDate)
-        protected TextView getTvReportMeetingMeetingDate;
-        @BindView(R.id.tv_report_meeting_remarks)
-        protected TextView tvReportMeetingRemarks;
-        @BindView(R.id.tvReportMeetingMap)
-        protected TextView tvReportMeetingMap;
-
-
-        public DistanceViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public MeetingReportViewHolder(ReportMeetingItemBinding tBinding) {
+            super(tBinding.getRoot());
+           this.tBinding = tBinding;
+           tvReportMeetingMap = tBinding.tvReportMeetingMap;
         }
     }
 }

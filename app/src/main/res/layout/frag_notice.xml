@@ -12,6 +12,16 @@
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <TextView
+                android:id="@+id/tvNoticeComplainCheque"
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_pink"
+                android:text="Cheque/NEFT"/>
+
+            <TextView
+                android:id="@+id/tvNoticeComplainReturn"
                 android:layout_margin="@dimen/dimen_2dp"
                 android:gravity="center"
                 style="@style/tv_lin_hor"
@@ -38,31 +48,26 @@
                 />
 
         </LinearLayout>
-        <ScrollView
-            android:layout_below="@+id/noticeTopMenu"
-            android:fillViewport="true"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+
+
                 <TextView
+                    android:layout_below="@+id/noticeTopMenu"
                     android:id="@+id/tvNoticeComplainLabel"
-                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/dimen_14sp"
                     android:singleLine="true"
                     android:text="@string/feedback_complain"
                     android:textColor="@color/yellow"
-                    style="@style/tv_header" />
+                    style="@style/tv_time_report" />
 
         <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="-12dp"
+            android:layout_below="@+id/tvNoticeComplainLabel"
             android:id="@+id/rv_notice_complain"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:listitem="@layout/frag_notice_complain_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-            </LinearLayout>
-        </ScrollView>
+
+
     </RelativeLayout>
 </layout>

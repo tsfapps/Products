@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="attendance"
+            type="com.knotlink.salseman.model.report.ModelReportAttendance"/>
+    </data>
 <android.support.v7.widget.CardView android:background="@drawable/bg_tv"
     android:gravity="center_vertical"
     android:elevation="22dp"
     app:cardCornerRadius="4dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginStart=".5dp"
+    android:layout_marginEnd=".5dp"
+    android:layout_marginTop="1dp"
     app:cardUseCompatPadding="true"
     app:contentPadding="4dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
     <LinearLayout
+        android:background="@color/white"
         android:padding="4dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -23,53 +32,45 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-        <TextView
-           style="@style/tv_report"
-            android:text="Date"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Login Time"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Logout Time"/>
-        <TextView
-            style="@style/tv_report"
-            android:text="Working Hour"/>
+            <TextView
+               tools:text="Login Date"
+                style="@style/tv_report"
+                android:textColor="@color/blue"
+                android:text="@{attendance.loginDate}"/>
+            <TextView
+               tools:text="Login Time"
+                style="@style/tv_report"
+                android:textColor="@color/colorAccent"
+                android:text="@{attendance.loginTime}"/>
+            <TextView
+               tools:text="Logout Date"
+                style="@style/tv_report"
+                android:textColor="@color/yellow"
+                android:text="@{attendance.logoutDate}"/>
+            <TextView
+               tools:text="Logout Time"
+                style="@style/tv_report"
+                android:textColor="@color/green"
+                android:text="@{attendance.logoutTime}"/>
+            <TextView
+               tools:text="Working Hour"
+                style="@style/tv_report"
+                android:textColor="@color/red"
+                android:text="@{attendance.totalTimeDuration}"/>
 
-
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/tv_report_attendance_date"
-           style="@style/tv_report"
-            android:text="Date"/>
-        <TextView
-            android:id="@+id/tv_report_attendance_loginTime"
-            style="@style/tv_report"
-            android:text="Login Time"/>
-        <TextView
-            android:id="@+id/tv_report_attendance_logoutTime"
-            style="@style/tv_report"
-            android:text="Logout Time"/>
-        <TextView
-            android:id="@+id/tv_report_attendance_workingHour"
-            style="@style/tv_report"
-            android:text="Working Hour"/>
 
         </LinearLayout>
         <LinearLayout
             style="@style/ll_map_main">
-        <TextView
-            android:id="@+id/tvReportAttendanceMap"
-            style="@style/tv_map_main"
+            <TextView
+                android:id="@+id/tvReportAttMap"
+                style="@style/tv_map_main"
 
-            />
+                />
 
 
         </LinearLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>
+</layout>

@@ -39,7 +39,7 @@ class ModelActiveStatus {
     }
 
     fun getDate(): String? {
-        return DateUtils.convertFormatOpposite(date)
+        return date
     }
 
     fun setDate(date: String) {

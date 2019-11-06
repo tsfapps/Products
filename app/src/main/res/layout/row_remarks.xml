@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@color/colorPrimaryDark"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView
+        android:layout_margin="1dp"
+        app:cardCornerRadius="8dp"
+        android:layout_width="320dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+        android:layout_marginTop="16dp"
+        android:textSize="12sp"
+        android:textColor="@color/colorBlack"
+        android:text="Remarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etRemarks"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        android:background="@drawable/bg_et"
+        android:minLines="5"
+        android:gravity="start"
+        android:inputType="textCapSentences"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:ems="10" >
+    </EditText>
+
+    <Button
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:id="@+id/btnRemarksSubmit"
+        style="@style/btn_main"
+        android:background="@drawable/bg_btn_main"
+        android:text="Submit" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

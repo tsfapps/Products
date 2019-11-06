@@ -6,27 +6,18 @@ import com.knotlink.salseman.utils.DateUtils;
 
 public class ModelReportMeeting {
 
-    @SerializedName("id")
+    @SerializedName("datetime")
     @Expose
-    private String id;
-    @SerializedName("task_id")
+    private String datetime;
+    @SerializedName("meeting_date")
     @Expose
-    private String taskId;
-    @SerializedName("user_id")
+    private String meetingDate;
+    @SerializedName("meeting_time")
     @Expose
-    private String userId;
-    @SerializedName("task_assign_date")
+    private String meetingTime;
+    @SerializedName("user_name")
     @Expose
-    private String taskAssignDate;
-    @SerializedName("task_due_date")
-    @Expose
-    private String taskDueDate;
-    @SerializedName("task_completion_date")
-    @Expose
-    private String taskCompletionDate;
-    @SerializedName("task_time")
-    @Expose
-    private String taskTime;
+    private String userName;
     @SerializedName("org_name")
     @Expose
     private String orgName;
@@ -36,103 +27,52 @@ public class ModelReportMeeting {
     @SerializedName("customer_contact_no")
     @Expose
     private String customerContactNo;
-    @SerializedName("email")
-    @Expose
-    private String email;
-    @SerializedName("customer_address")
-    @Expose
-    private String customerAddress;
     @SerializedName("remarks")
     @Expose
     private String remarks;
-    @SerializedName("user_remarks")
+    @SerializedName("address")
     @Expose
-    private String userRemarks;
-    @SerializedName("status")
-    @Expose
-    private String status;
-    @SerializedName("route_id")
-    @Expose
-    private String routeId;
-    @SerializedName("whatsapp_no")
-    @Expose
-    private String whatsappNo;
-    @SerializedName("landline_no")
-    @Expose
-    private String landlineNo;
+    private String address;
     @SerializedName("latitude")
     @Expose
     private String latitude;
     @SerializedName("longitude")
     @Expose
     private String longitude;
-    @SerializedName("city")
+    @SerializedName("area_status")
     @Expose
-    private String city;
-    @SerializedName("pincode")
-    @Expose
-    private String pincode;
-    @SerializedName("task_type")
-    @Expose
-    private String taskType;
-    @SerializedName("vendor_type")
-    @Expose
-    private String vendorType;
+    private String areaStatus;
 
-    public String getId() {
-        return id;
+    public String getDatetime() {
+        return "\n"+DateUtils.dateFormatDdMmmYyyy(datetime);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
-    public String getTaskId() {
-        return taskId;
+    public String getMeetingDate() {
+        return "Meeting Date\n"+DateUtils.dateFormatDdMmmYyyy(meetingDate);
     }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
+    public void setMeetingDate(String meetingDate) {
+        this.meetingDate = meetingDate;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getMeetingTime() {
+        return "Meeting Time\n"+meetingTime;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setMeetingTime(String meetingTime) {
+        this.meetingTime = meetingTime;
     }
 
-    public String getTaskAssignDate() {
-        return DateUtils.convertFormatOpposite(taskAssignDate);
+    public String getUserName() {
+        return "Call By\n"+userName;
     }
 
-    public void setTaskAssignDate(String taskAssignDate) {
-        this.taskAssignDate = taskAssignDate;
-    }
-
-    public String getTaskDueDate() {
-        return DateUtils.convertFormatOpposite(taskDueDate);
-    }
-
-    public void setTaskDueDate(String taskDueDate) {
-        this.taskDueDate = taskDueDate;
-    }
-
-    public String getTaskCompletionDate() {
-        return taskCompletionDate;
-    }
-
-    public void setTaskCompletionDate(String taskCompletionDate) {
-        this.taskCompletionDate = taskCompletionDate;
-    }
-
-    public String getTaskTime() {
-        return taskTime;
-    }
-
-    public void setTaskTime(String taskTime) {
-        this.taskTime = taskTime;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getOrgName() {
@@ -144,7 +84,7 @@ public class ModelReportMeeting {
     }
 
     public String getCustomerName() {
-        return customerName;
+        return "Contact Person\n"+customerName;
     }
 
     public void setCustomerName(String customerName) {
@@ -152,75 +92,27 @@ public class ModelReportMeeting {
     }
 
     public String getCustomerContactNo() {
-        return customerContactNo;
+        return "Contact Number\n"+customerContactNo;
     }
 
     public void setCustomerContactNo(String customerContactNo) {
         this.customerContactNo = customerContactNo;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCustomerAddress() {
-        return customerAddress;
-    }
-
-    public void setCustomerAddress(String customerAddress) {
-        this.customerAddress = customerAddress;
-    }
-
     public String getRemarks() {
-        return remarks;
+        return "Remarks\n"+remarks;
     }
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
-    public String getUserRemarks() {
-        return userRemarks;
+    public String getAddress() {
+        return address;
     }
 
-    public void setUserRemarks(String userRemarks) {
-        this.userRemarks = userRemarks;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
-    public String getWhatsappNo() {
-        return whatsappNo;
-    }
-
-    public void setWhatsappNo(String whatsappNo) {
-        this.whatsappNo = whatsappNo;
-    }
-
-    public String getLandlineNo() {
-        return landlineNo;
-    }
-
-    public void setLandlineNo(String landlineNo) {
-        this.landlineNo = landlineNo;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getLatitude() {
@@ -239,35 +131,11 @@ public class ModelReportMeeting {
         this.longitude = longitude;
     }
 
-    public String getCity() {
-        return city;
+    public String getAreaStatus() {
+        return areaStatus;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getPincode() {
-        return pincode;
-    }
-
-    public void setPincode(String pincode) {
-        this.pincode = pincode;
-    }
-
-    public String getTaskType() {
-        return taskType;
-    }
-
-    public void setTaskType(String taskType) {
-        this.taskType = taskType;
-    }
-
-    public String getVendorType() {
-        return vendorType;
-    }
-
-    public void setVendorType(String vendorType) {
-        this.vendorType = vendorType;
+    public void setAreaStatus(String areaStatus) {
+        this.areaStatus = areaStatus;
     }
 }

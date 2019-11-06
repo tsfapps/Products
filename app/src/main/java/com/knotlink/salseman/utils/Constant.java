@@ -15,11 +15,13 @@ public class Constant {
     public static String SIGN_STATUS = "signDone";
     public static final String TSF_SHARED_PREFENCE = "apartment_shared_pref";
     public static final int STORAGE_PERMISSION_CODE = 23;
+    public static final int REQUEST_READ_PHONE_STATE = 101;
     public static final int GALLERY = 1200;
     public static final int CAMERA = 2;
     public static boolean UPLOAD_START = false;
     public static final String IS_UPLOAD_IMAGE = "Upload Image";
     public static final String DATE_FORMAT_DD_MMM_YYYY = "dd MMM yyyy";
+    public static final String DATE_FORMAT_DD_MMM_YYYY_hh_mm = "dd MMM yyyy hh:mm a";
     public static final String DATE_FORMAT_dd_MMMM_yyyy = "dd MMMM yyyy";
     public static final String DATE_FORMAT_yyyy_MM_dd = "yyyy/MM/dd";
     public static final String DATE_FORMAT_yyyy__MM__dd = "yyyy-MM-dd";

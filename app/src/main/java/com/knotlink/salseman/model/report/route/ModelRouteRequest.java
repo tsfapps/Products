@@ -121,7 +121,7 @@ public class ModelRouteRequest {
     }
 
     public String getTaskAssignDate() {
-        return DateUtils.convertFormatOpposite(taskAssignDate);
+        return DateUtils.dateFormatDdMmmYyyy(taskAssignDate);
     }
 
     public void setTaskAssignDate(String taskAssignDate) {

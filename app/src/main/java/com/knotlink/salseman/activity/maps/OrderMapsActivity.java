@@ -48,9 +48,22 @@ public class OrderMapsActivity extends FragmentActivity implements OnMapReadyCal
         tMap.getUiSettings().setCompassEnabled(true);
         LatLng tLogin = new LatLng(strLat, strLong);
         if (srAreaStatus.equalsIgnoreCase("0")) {
-            tMap.addMarker(new MarkerOptions().position(tLogin).title(strShopName).snippet(strAddress).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            tMap.addMarker(new MarkerOptions()
+                    .position(tLogin)
+                    .anchor(0.5f, 1.0f)
+                    .title(strShopName)
+                    .snippet(strAddress)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+                    .showInfoWindow();
+
         }else {
-            tMap.addMarker(new MarkerOptions().position(tLogin).title(strShopName).snippet(strDate).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+            tMap.addMarker(new MarkerOptions()
+                    .position(tLogin)
+                    .anchor(0.5f, 1.0f)
+                    .title(strShopName)
+                    .snippet(strDate)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                    .showInfoWindow();
         }
         tMap.moveCamera(CameraUpdateFactory.newLatLng(tLogin));
         tMap.animateCamera(CameraUpdateFactory.zoomTo(12));

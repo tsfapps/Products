@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="noticeCheque"
+            type="com.knotlink.salseman.model.notice.ModelNoticeCheque"/>
+    </data>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        android:elevation="@dimen/dimen_16dp"
+        app:cardCornerRadius="@dimen/dimen_4dp"
+        android:layout_marginStart="@dimen/dimen_4dp"
+        android:layout_marginEnd="@dimen/dimen_4dp"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        app:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_margin="@dimen/dimen_4dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/llShopName"
+                android:layout_toStartOf="@+id/cvImageComplain"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_lin_hor"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:text="@{noticeCheque.shopName}"
+                    tools:text="Shop Name"/>
+
+            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llRouteName"
+                    android:layout_below="@+id/llShopName"
+                    android:layout_toStartOf="@+id/cvImageComplain"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        style="@style/tv_lin_hor"
+                        android:textStyle="bold"
+                        android:textColor="@color/red"
+                        android:text="@{noticeCheque.datetime}"
+                        tools:text="Issued Date" />
+
+                    <TextView
+                        style="@style/tv_lin_hor"
+                        android:text="@{noticeCheque.neftChequeMaturityDate}"
+                        tools:text="Maturity Date"
+                        android:textColor="@color/green"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llSalesManName"
+                    android:layout_below="@+id/llRouteName"
+                    android:layout_toStartOf="@+id/cvImageComplain"
+                    android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_lin_hor"
+                    android:text="@{noticeCheque.paymentMode}"
+                    android:textColor="@color/colorPrimary"
+                    tools:text="Payment Mode" />
+                <TextView
+                    style="@style/tv_lin_hor"
+                    android:text="@{noticeCheque.receivedAmount}"
+                    tools:text="Received Amount"
+                    android:textColor="@color/colorPrimary"/>
+            </LinearLayout>
+                <LinearLayout
+                    android:layout_below="@+id/llSalesManName"
+                    android:layout_toStartOf="@+id/cvImageComplain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_weight="4"
+                        style="@style/tv_lin_hor"
+                        android:text="@{noticeCheque.neftChequeNo}"
+                        tools:text="Neft Cheque No"/>
+                    <TextView
+                        android:layout_weight="4"
+                        style="@style/tv_lin_hor"
+                        android:text="@{noticeCheque.bankName}"
+                        tools:text="Neft Cheque No"/>
+
+                </LinearLayout>
+                <android.support.v7.widget.CardView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/cvImageComplain"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:cardCornerRadius="40dp">
+                    <ImageView
+                        android:background="@drawable/main_logo"
+                        bind:imageUrl="@{noticeCheque.chequeImage}"
+                        android:scaleType="fitXY"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/colorPink"
+                    android:layout_weight="4"
+                    style="@style/tv_lin_hor"
+                    android:text="@{noticeCheque.remarks}"
+                    tools:text="Remarks : "
+                    />
+<!--                <TextView-->
+<!--                    android:gravity="center"-->
+<!--                    style="@style/tv_lin_hor"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:background="@drawable/bg_btn_main"-->
+<!--                    android:text="@{noticeCheque.action}"-->
+<!--                    tools:text="Completed"-->
+<!--                    />-->
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
+</layout>

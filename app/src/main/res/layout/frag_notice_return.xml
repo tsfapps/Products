@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/noticeTopMenu"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/tvNoticeReturnCheque"
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_pink"
+                android:text="Cheque/NEFT"/>
+
+            <TextView
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_red"
+                android:text="@string/sales_return"/>
+            <TextView
+                android:id="@+id/tvNoticeReturnRequest"
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_green"
+                android:text="@string/special_request"
+                />
+            <TextView
+                android:id="@+id/tvNoticeReturnComplain"
+                android:layout_margin="@dimen/dimen_2dp"
+                android:gravity="center"
+                style="@style/tv_lin_hor"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_color_yellow"
+                android:text="@string/feedback_complain"
+                />
+
+        </LinearLayout>
+
+        <TextView
+                    android:layout_below="@+id/noticeTopMenu"
+                    android:id="@+id/tvNoticeReturnLabel"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:textColor="@color/red"
+                    android:text="@string/sales_return"
+                    style="@style/tv_time_report" />
+                <android.support.v7.widget.RecyclerView
+                    android:layout_below="@+id/tvNoticeReturnLabel"
+                    android:id="@+id/rvNoticeRequest"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    tools:listitem="@layout/frag_notice_return_item"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+</layout>

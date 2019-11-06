@@ -24,19 +24,12 @@
         style="@style/rl_spinner_main">
         <ProgressBar
             android:id="@+id/pbSpnSelectOrderBrand"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+           style="@style/spinner_main_pb"/>
         <Spinner
             android:id="@+id/spnSelectOrderBrand"
             style="@style/spinner_main" />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_down"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            style="@style/iv_spn_main"/>
     </RelativeLayout>
  <TextView
         android:hint="Article Number"
@@ -61,19 +54,12 @@
         style="@style/rl_spinner_main">
         <ProgressBar
             android:id="@+id/pbSpnSelectOrderCategory"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            style="@style/spinner_main_pb"/>
         <Spinner
             android:id="@+id/spnSelectOrderCategory"
             style="@style/spinner_main" />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_down"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            style="@style/iv_spn_main"/>
     </RelativeLayout>
  <TextView
         android:hint="Select Color"
@@ -83,19 +69,12 @@
         style="@style/rl_spinner_main">
         <ProgressBar
             android:id="@+id/pbSpnSelectOrderColor"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            style="@style/spinner_main_pb" />
         <Spinner
             android:id="@+id/spnSelectOrderColor"
             style="@style/spinner_main" />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_down"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            style="@style/iv_spn_main"/>
     </RelativeLayout>
  <TextView
         android:hint="Select Size"
@@ -105,19 +84,12 @@
         style="@style/rl_spinner_main">
         <ProgressBar
             android:id="@+id/pbSpnSelectOrderSize"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            style="@style/spinner_main_pb"/>
         <Spinner
             android:id="@+id/spnSelectOrderSize"
             style="@style/spinner_main" />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_down"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            style="@style/iv_spn_main"/>
     </RelativeLayout>
  <TextView
         android:hint="Select Quantity"
@@ -125,21 +97,11 @@
     <RelativeLayout
         android:layout_marginTop="@dimen/dimen_8dp"
         style="@style/rl_spinner_main">
-<!--        <ProgressBar-->
-<!--            android:id="@+id/pbSpnSelectOrderQty"-->
-<!--            style="?android:attr/progressBarStyleSmall"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true" />-->
         <Spinner
             android:id="@+id/spnSelectOrderQty"
             style="@style/spinner_main" />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_down"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            style="@style/iv_spn_main"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_marginTop="@dimen/dimen_16dp"
@@ -150,7 +112,6 @@
         <TextView
             android:textColor="@color/red"
             android:textSize="@dimen/dimen_14sp"
-            android:fontFamily="@font/aclonica"
             android:text="Unit Price"
             style="@style/tv_report" />
 
@@ -158,7 +119,6 @@
             android:id="@+id/tvSelectOrderPrice"
             style="@style/tv_report"
             android:layout_alignParentEnd="true"
-            android:fontFamily="@font/aclonica"
             android:textColor="@color/red"
             android:textSize="@dimen/dimen_14sp"
             />
@@ -172,7 +132,6 @@
         <TextView
             android:textColor="@color/red"
             android:textSize="@dimen/dimen_14sp"
-            android:fontFamily="@font/aclonica"
             android:text="Total Price"
             style="@style/tv_report" />
 
@@ -180,13 +139,12 @@
             android:id="@+id/tvSelectOrderTotalPrice"
             style="@style/tv_report"
             android:layout_alignParentEnd="true"
-            android:fontFamily="@font/aclonica"
             android:textColor="@color/red"
             android:textSize="@dimen/dimen_14sp"
             />
     </RelativeLayout>
     <Button
-        android:id="@+id/btn_receipt_submit"
+        android:id="@+id/btnOrderSubmit"
         style="@style/btn_main"/>
     <RelativeLayout
         android:layout_margin="@dimen/dimen_16dp"
@@ -197,7 +155,6 @@
             android:textColor="@color/green"
             android:textSize="@dimen/dimen_16sp"
             android:text="Total Stock Quantity"
-            android:fontFamily="@font/aclonica"
             style="@style/tv_report" />
 
         <TextView
@@ -205,7 +162,6 @@
             android:id="@+id/tvSelectOrderStockQty"
             android:layout_toEndOf="@+id/tvSelectOrderTotalPriceLabel"
             style="@style/tv_report"
-            android:fontFamily="@font/aclonica"
             android:textColor="@color/green"
             android:textSize="@dimen/dimen_16sp"
             />
@@ -218,7 +174,6 @@
             android:id="@+id/tvSelectOrderRemQtyLbl"
             android:textColor="@color/red"
             android:textSize="@dimen/dimen_16sp"
-            android:fontFamily="@font/aclonica"
             android:text="Remaining Stock Quantity"
             style="@style/tv_report" />
 
@@ -227,8 +182,7 @@
             android:layout_marginStart="@dimen/dimen_16dp"
             android:id="@+id/tvSelectOrderStockQtyRem"
             style="@style/tv_report"
-            android:fontFamily="@font/aclonica"
-            android:textColor="@color/red"
+             android:textColor="@color/red"
             android:textSize="@dimen/dimen_18sp"
             />
     </RelativeLayout>

@@ -6,9 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class ModelShopList {
-
-
-
     @SerializedName("shop_name")
     @Expose
     private String shopName;
@@ -84,6 +81,24 @@ public class ModelShopList {
     @SerializedName("invoice_no")
     @Expose
     private List<String> invoiceNo = null;
+    @SerializedName("invoice_balance")
+    @Expose
+    private String invoiceBalance;
+    @SerializedName("invoice_outstanding")
+    @Expose
+    private String invoiceOutstanding;
+    @SerializedName("credit_days")
+    @Expose
+    private String creditDays;
+    @SerializedName("image1")
+    @Expose
+    private String image1;
+    @SerializedName("new_order_counter")
+    @Expose
+    private String newOrderCounter;
+    @SerializedName("sales_return_counter")
+    @Expose
+    private String salesReturnCounter;
 
     public String getShopName() {
         return shopName;
@@ -285,5 +300,52 @@ public class ModelShopList {
         this.invoiceNo = invoiceNo;
     }
 
+    public String getInvoiceBalance() {
+        return invoiceBalance;
+    }
+
+    public void setInvoiceBalance(String invoiceBalance) {
+        this.invoiceBalance = invoiceBalance;
+    }
+
+    public String getInvoiceOutstanding() {
+        return invoiceOutstanding;
+    }
+
+    public void setInvoiceOutstanding(String invoiceOutstanding) {
+        this.invoiceOutstanding = invoiceOutstanding;
+    }
+
+    public String getCreditDays() {
+        return creditDays;
+    }
+
+    public void setCreditDays(String creditDays) {
+        this.creditDays = creditDays;
+    }
+
+    public String getImage1() {
+        return image1;
+    }
+
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+
+    public String getNewOrderCounter() {
+        return newOrderCounter;
+    }
+
+    public void setNewOrderCounter(String newOrderCounter) {
+        this.newOrderCounter = newOrderCounter;
+    }
+
+    public String getSalesReturnCounter() {
+        return salesReturnCounter;
+    }
+
+    public void setSalesReturnCounter(String salesReturnCounter) {
+        this.salesReturnCounter = salesReturnCounter;
+    }
 
 }

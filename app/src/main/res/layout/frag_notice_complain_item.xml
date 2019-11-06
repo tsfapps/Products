@@ -103,6 +103,7 @@
                     android:layout_height="80dp"
                     app:cardCornerRadius="40dp">
                     <ImageView
+                        android:background="@drawable/main_logo"
                         bind:imageUrl="@{notice_complain.imageUrl}"
                         android:scaleType="fitXY"
                         android:layout_width="match_parent"
@@ -115,17 +116,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:textColor="@color/colorAccent"
+                    android:id="@+id/tvManagerLabel"
                     style="@style/tv_lin_hor"
-                    android:text="Manager" />
+                    android:text="@{notice_complain.manager}"
+                    tools:text="Manager"/>
                 <TextView
+                    android:textColor="@color/colorAccent"
+                    android:id="@+id/tvSmLabel"
                     style="@style/tv_lin_hor"
-                    android:text="Sales Manager" />
+                    android:text="@{notice_complain.sm}"
+                    tools:text="Sales Manager" />
                 <TextView
+                    android:textColor="@color/colorAccent"
+                    android:id="@+id/tvAsmLabel"
                     style="@style/tv_lin_hor"
-                    android:text="Area Sales Manager" />
+                    android:text="@{notice_complain.asm}"
+                    tools:text="Area Sales Manager" />
                 <TextView
+                    android:textColor="@color/colorAccent"
+                    android:id="@+id/tvDmLabel"
                     style="@style/tv_lin_hor"
-                    android:text="Dispatch Manager" />
+                    android:text="@{notice_complain.dm}"
+                    tools:text="Dispatch Manager" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
