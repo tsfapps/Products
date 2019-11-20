@@ -45,8 +45,6 @@ public class ReportLead extends Fragment{
     private Context tContext;
     private ViewModelLeadReport tViewModels;
     private ReportLeadBinding tBinding;
-
-
     private ProgressBar pbReportLead;
 
     private String strUserId;

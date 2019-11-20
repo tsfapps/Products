@@ -43,6 +43,7 @@ import com.knotlink.salseman.model.dash.route.ModelGetLocaion;
 import com.knotlink.salseman.model.distance.ModelDistancePrevious;
 import com.knotlink.salseman.model.report.ModelReportVehicle;
 import com.knotlink.salseman.model.report.ModelTimeReport;
+import com.knotlink.salseman.model.report.ModelUserActivityCount;
 import com.knotlink.salseman.model.report.route.ModelRouteComplain;
 import com.knotlink.salseman.model.report.route.ModelRouteNoActivity;
 import com.knotlink.salseman.model.report.route.ModelRouteNoVisit;
@@ -85,6 +86,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface Api{
+//    http://knot-link.com/knotlink/api/api_login.php
     @FormUrlEncoded
     @POST("api/api_login.php")
     Call<ModelUser> getUserDetail(
@@ -212,7 +214,6 @@ public interface Api{
             @Field("sm") String sm,
             @Field("dm") String dm,
             @Field("asm") String asm
-
     );
     @FormUrlEncoded
     @POST("api/api_sales_return.php")
@@ -616,6 +617,13 @@ public interface Api{
             @Field("nxt_meeting_date") String nxt_meeting_date
     );
     @FormUrlEncoded
+    @POST("api/api_user_activity_count.php")
+    Call<ModelUserActivityCount> userActivityCount(
+            @Field("user_id") String user_id,
+            @Field("from_date") String from_date,
+            @Field("to_date") String to_date
+    );
+    @FormUrlEncoded
     @POST("api/api_activity_report.php")
     Call<List<ModelReportAttendance>> viewReportAttendance(
             @Field("user_id") String user_id,
@@ -846,6 +854,8 @@ public interface Api{
             @Field("status") String status,
             @Field("shop_image") String shop_image,
             @Field("active_check_date") String active_check_date,
+            @Field("sms_owner") String sms_owner,
+            @Field("sms_key_person") String sms_key_person,
             @Field("latitude") String latitude,
             @Field("longitude") String longitude
     );

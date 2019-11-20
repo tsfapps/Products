@@ -87,7 +87,7 @@
     -->
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="true"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />

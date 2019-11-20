@@ -2,8 +2,11 @@ package com.knotlink.salseman.fragment.report;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,19 +31,26 @@ import android.widget.Toast;
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.activity.maps.MapsAll;
 import com.knotlink.salseman.adapter.baseadapter.AdapterSalesMan;
+import com.knotlink.salseman.adapter.report.AdapterReportLeadGeneration;
 import com.knotlink.salseman.adapter.spinner.AdapterAreaSalesMan;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
+import com.knotlink.salseman.databinding.FragReportNewBinding;
+import com.knotlink.salseman.databinding.ReportLeadBinding;
 import com.knotlink.salseman.fragment.report.route.ReportRoute;
 import com.knotlink.salseman.model.ModelAsmList;
 import com.knotlink.salseman.model.dash.route.ModelMapAll;
 import com.knotlink.salseman.model.ModelSalesMan;
+import com.knotlink.salseman.model.dash.route.ModelShopCounter;
+import com.knotlink.salseman.model.report.ModelUserActivityCount;
 import com.knotlink.salseman.storage.SharedPrefManager;
 import com.knotlink.salseman.utils.Constant;
 import com.knotlink.salseman.utils.CustomDialog;
 import com.knotlink.salseman.utils.CustomToast;
 import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetTitle;
+import com.knotlink.salseman.viewModel.report.ViewModelActivityCount;
+import com.knotlink.salseman.viewModel.report.ViewModelLeadReport;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -58,10 +68,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragReport extends Fragment{
-    private TextView tvMapDate;
-    private Context tContext;
-    private SharedPrefManager tSharedPrefManager;
-       final Calendar myCalendar = Calendar.getInstance();
+
+    private ViewModelActivityCount tViewModel;
+    private FragReportNewBinding tBinding;
+
+
+       private TextView tvMapDate;
+       private Context tContext;
+       private SharedPrefManager tSharedPrefManager;
+       private final Calendar myCalendar = Calendar.getInstance();
        private FragmentManager tFragmentManager;
        private String dateFrom;
        private String dateTo;
@@ -96,7 +111,8 @@ public class FragReport extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_report_new, container, false);
+        tBinding = DataBindingUtil.inflate(inflater, R.layout.frag_report_new, container, false);
+        View view = tBinding.getRoot();
         ButterKnife.bind(this, view);
 
         initFrag();
@@ -106,6 +122,7 @@ public class FragReport extends Fragment{
         tContext = getContext();
         Log.d(Constant.TAG, "Selected Id Report : "+strSelectedUserId);
         tSharedPrefManager = new SharedPrefManager(tContext);
+        tViewModel = ViewModelProviders.of(this).get(ViewModelActivityCount.class);
         if (strUserType.equalsIgnoreCase("0")||strUserType.equalsIgnoreCase("3")){
             cvReportOneDayActivity.setVisibility(View.VISIBLE);
             cvReportOneDayMap.setVisibility(View.VISIBLE);
@@ -146,6 +163,7 @@ public class FragReport extends Fragment{
         }
         dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
         dateTo = DateUtils.convertFormat(tvReportDateTo.getText().toString().trim());
+        setActivityCounter(dateFrom, dateTo);
     }
 
     private void selectDateDialog(){
@@ -295,6 +313,7 @@ public class FragReport extends Fragment{
         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
         dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
         tvReportDateTo.setText(DateUtils.getTodayDate());
+        setActivityCounter(dateFrom, DateUtils.getTodayDate());
     }
     @OnClick(R.id.tvReportSixMonths)
     public void tvReportSixMonthsClicked(View view){
@@ -304,6 +323,7 @@ public class FragReport extends Fragment{
         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
         dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
         tvReportDateTo.setText(DateUtils.getTodayDate());
+        setActivityCounter(dateFrom, DateUtils.getTodayDate());
 
 
     }
@@ -315,6 +335,7 @@ public class FragReport extends Fragment{
         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
         dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
         tvReportDateTo.setText(DateUtils.getTodayDate());
+        setActivityCounter(dateFrom, DateUtils.getTodayDate());
 
     }
     @OnClick(R.id.tvReportTwelveMonths)
@@ -325,6 +346,8 @@ public class FragReport extends Fragment{
         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
         dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
         tvReportDateTo.setText(DateUtils.getTodayDate());
+        setActivityCounter(dateFrom, DateUtils.getTodayDate());
+
     }
     @OnClick(R.id.tv_report_date_from)
     public void reportFromDate(View view){
@@ -345,6 +368,11 @@ public class FragReport extends Fragment{
                         tSharedPrefManager.clearReportTimeStart();
                         tSharedPrefManager.setReportTimeStart(strMyDate);
                         tvReportDateFrom.setText(tSharedPrefManager.getReportTimeFrom());
+                        dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
+                        dateTo = DateUtils.convertFormat(tvReportDateTo.getText().toString().trim());
+
+                        setActivityCounter(dateFrom, dateTo);
+
                     }
                     else {
                         CustomToast.toastMid(getActivity(), Constant.DATE_DELIVERY);
@@ -377,6 +405,10 @@ public class FragReport extends Fragment{
                         tSharedPrefManager.clearReportTimeEnd();
                         tSharedPrefManager.setReportTimeEnd(strMyDate);
                         tvReportDateTo.setText(tSharedPrefManager.getReportTimeTo());
+                        dateFrom = DateUtils.convertFormat(tvReportDateFrom.getText().toString().trim());
+                        dateTo = DateUtils.convertFormat(tvReportDateTo.getText().toString().trim());
+                        setActivityCounter(dateTo, strMyDate);
+
                     }
                     else {
                         CustomToast.toastMid(getActivity(), Constant.DATE_DELIVERY);
@@ -432,4 +464,16 @@ public void reportExpenses(View view){
 public void reportVehicle(View view){
     tFragmentManager.beginTransaction().replace(R.id.container_main, ReportVehicle.newInstance(dateFrom, dateTo)).addToBackStack(null).commit();
     }
+
+    private void setActivityCounter(String strDateFrom, String strDateTo){
+        tViewModel.getActivityCount(strUserId, strDateFrom, strDateTo).observe(this, new Observer<ModelUserActivityCount>() {
+            @Override
+            public void onChanged(@Nullable ModelUserActivityCount tModelUserActivityCount) {
+                tBinding.setActivityCounter(tModelUserActivityCount);
+            }
+        });
+    }
+
+
+
 }

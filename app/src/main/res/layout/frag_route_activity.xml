@@ -10,11 +10,11 @@
     <Button
         android:id="@+id/btnGetLocation"
         style="@style/btn_main"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:fontFamily="serif-monospace"
         android:paddingStart="@dimen/dimen_16dp"
         android:paddingEnd="@dimen/dimen_16dp"
-        android:text="Get Location" />
+        android:text="Update Shop Details" />
     <ScrollView
         android:fillViewport="true"
         android:layout_width="match_parent"

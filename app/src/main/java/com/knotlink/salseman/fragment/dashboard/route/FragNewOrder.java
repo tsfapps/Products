@@ -1,13 +1,25 @@
 package com.knotlink.salseman.fragment.dashboard.route;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,11 +37,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.knotlink.salseman.R;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
 import com.knotlink.salseman.fragment.dashboard.FragDashboard;
+import com.knotlink.salseman.fragment.dashboard.FragMeeting;
 import com.knotlink.salseman.model.dash.ModelActiveStatus;
 import com.knotlink.salseman.model.dash.route.ModelNewOrder;
 import com.knotlink.salseman.model.dash.route.ModelShopList;
@@ -46,12 +60,15 @@ import com.knotlink.salseman.utils.SetTitle;
 import com.kyanogen.signatureview.SignatureView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,9 +79,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragNewOrder extends Fragment {
+    final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 23;
+    Uri imageUri = null;
+    public static String CapturedImageDetails;
+    public static String Path;
+    public static String fileName;
+
 
     private Context tContext;
     private FragmentManager tFragmentManager;
@@ -75,6 +99,7 @@ public class FragNewOrder extends Fragment {
     private String strUserId;
     private String strShopId;
     private String strStatusCheckDate;
+    private Uri tImageUri;
 
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -254,64 +279,213 @@ public class FragNewOrder extends Fragment {
     }
     @OnClick(R.id.iv_upload_order)
     public void onUploadOrderClick() {
-        showPictureDialog();
-    }
+        if (tContext.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
 
-    private void showPictureDialog() {
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-        pictureDialog.setTitle("Select Action");
-        String[] pictureDialogItems = {"Photo Gallery", "Camera"};
-        pictureDialog.setItems(pictureDialogItems,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                choosePhotoFromGallery();
-                                break;
-                            case 1:
-                                takePhotoFromCamera();
-                                break;
-                        }
-                    }
-                });
-        pictureDialog.show();
-    }
-    private void choosePhotoFromGallery() {
-        if (CheckPermission.isReadStorageAllowed(getContext())) {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, Constant.GALLERY);
+            if (!shouldShowRequestPermissionRationale(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                fileName = "Camera_Example.jpg";
+
+                // Create parameters for Intent with filename
+
+                ContentValues values = new ContentValues();
+
+                values.put(MediaStore.Images.Media.TITLE, fileName);
+
+                values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+
+                imageUri = tContext.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+                if (CheckPermission.isCameraAllowed(tContext)) {
+                    Intent intent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE );
+
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 10);
+
+                    startActivityForResult( intent, Constant.CAMERA);
+
+                    return;
+                }
+                CheckPermission.requestCameraPermission(getActivity());
+
+            }
             return;
         }
-        CheckPermission.requestStoragePermission(getActivity());
-    }
-    private void takePhotoFromCamera() {
-        if (CheckPermission.isCameraAllowed(getContext())) {
-            Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, Constant.CAMERA);
-            return;
-        }
-        CheckPermission.requestCameraPermission(getActivity());
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
     }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CANCELED) {
-            return;
-        }
-        if (requestCode == Constant.GALLERY) {
-            if (data != null) {
-                SetImage.setGalleryImage(tContext, ivUploadOrder, data);
-                BitmapDrawable drawable = (BitmapDrawable)ivUploadOrder.getDrawable();
-                tBitmap = drawable.getBitmap();
-            }
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == Constant.CAMERA) {
 
-        } else if (requestCode == Constant.CAMERA) {
-            SetImage.setCameraImage(ivUploadOrder, data);
-            tBitmap = (Bitmap) data.getExtras().get("data");
-            ivUploadOrder.setImageBitmap(tBitmap);
+            if ( resultCode == RESULT_OK) {
+
+                String imageId = convertImageUriToFile( imageUri,getActivity());
+
+
+                //  Create and excecute AsyncTask to load capture image
+
+                new FragNewOrder.LoadImagesFromSDCard().execute(""+imageId);
+
+            } else if ( resultCode == RESULT_CANCELED) {
+
+                Toast.makeText(tContext, " Picture was not taken ", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Toast.makeText(tContext, " Picture was not taken ", Toast.LENGTH_SHORT).show();
+            }
         }
     }
+    public static String convertImageUriToFile ( Uri imageUri, Activity activity )  {
+
+        Cursor cursor = null;
+        int imageID = 0;
+
+        try {
+
+            /*********** Which columns values want to get *******/
+            String [] proj={
+                    MediaStore.Images.Media.DATA,
+                    MediaStore.Images.Media._ID,
+                    MediaStore.Images.Thumbnails._ID,
+                    MediaStore.Images.ImageColumns.ORIENTATION
+            };
+
+            cursor = activity.managedQuery(
+
+                    imageUri,         //  Get data for specific image URI
+                    proj,             //  Which columns to return
+                    null,             //  WHERE clause; which rows to return (all rows)
+                    null,             //  WHERE clause selection arguments (none)
+                    null              //  Order-by clause (ascending by name)
+
+            );
+
+            //  Get Query Data
+
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+            int columnIndexThumb = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails._ID);
+            int file_ColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            //int orientation_ColumnIndex = cursor.
+            //    getColumnIndexOrThrow(MediaStore.Images.ImageColumns.ORIENTATION);
+
+            int size = cursor.getCount();
+
+            /*******  If size is 0, there are no images on the SD Card. *****/
+
+            if (size == 0) {
+
+
+            }
+            else
+            {
+
+                int thumbID = 0;
+                if (cursor.moveToFirst()) {
+
+                    /**************** Captured image details ************/
+
+                    /*****  Used to show image on view in LoadImagesFromSDCard class ******/
+                    imageID     = cursor.getInt(columnIndex);
+
+                    thumbID     = cursor.getInt(columnIndexThumb);
+
+                    Path = cursor.getString(file_ColumnIndex);
+
+                    //String orientation =  cursor.getString(orientation_ColumnIndex);
+
+                    CapturedImageDetails  = " CapturedImageDetails : \n\n"
+                            +" ImageID :"+imageID+"\n"
+                            +" ThumbID :"+thumbID+"\n"
+                            +" Path :"+Path+"\n";
+
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        // Return Captured Image ImageID ( By this ImageID Image will load from sdcard )
+
+        return ""+imageID;
+    }
+    public class LoadImagesFromSDCard  extends AsyncTask<String, Void, Void> {
+
+        private ProgressDialog Dialog = new ProgressDialog(tContext);
+
+
+
+        protected void onPreExecute() {
+            /****** NOTE: You can call UI Element here. *****/
+
+            // Progress Dialog
+            Dialog.setMessage(" Loading image from Sdcard..");
+            Dialog.show();
+        }
+
+
+        // Call after onPreExecute method
+        protected Void doInBackground(String... urls) {
+
+            Bitmap bitmap = null;
+            Bitmap newBitmap = null;
+            Uri uri = null;
+
+
+            try {
+                uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + urls[0]);
+                bitmap = BitmapFactory.decodeStream(tContext.getContentResolver().openInputStream(uri));
+
+                if (bitmap != null) {
+
+                    newBitmap = Bitmap.createScaledBitmap(bitmap, 400, 400, true);
+
+                    bitmap.recycle();
+
+                    if (newBitmap != null) {
+
+                        tBitmap = newBitmap;
+                    }
+                }
+            } catch (IOException e) {
+                // Error fetching image, try to recover
+
+                /********* Cancel execution of this task. **********/
+                cancel(true);
+            }
+
+            return null;
+        }
+
+
+        protected void onPostExecute(Void unused) {
+
+            // NOTE: You can call UI Element here.
+
+            // Close progress dialog
+            Dialog.dismiss();
+
+            if(tBitmap != null)
+            {
+                // Set Image to ImageView
+
+                ivUploadOrder.setImageBitmap(tBitmap);
+            }
+
+        }
+
+    }
+
+
+
+
     private String signImageToString(){
         Bitmap bitmapSign = signature_view_order.getSignatureBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

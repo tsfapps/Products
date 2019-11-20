@@ -6,12 +6,12 @@ public class Constant {
     public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 101;
 
     public static final String TAG = "tsfapps";
-//    public static final String URL_IMG_DISTANCE = "https://teocfish.com/knotlinkdemo/uploads/distance_upload/";
-    public static final String URL_IMG_DISTANCE = "https://teocfish.com/knotlink/uploads/distance_upload/";
-//    public static final String URL_IMG_ORDER = "https://teocfish.com/knotlinkdemo/uploads/new_order/";
-    public static final String URL_IMG_ORDER = "https://teocfish.com/knotlink/uploads/new_order/";
-//    public static final String URL_IMG_COMPLAIN = "https://teocfish.com/knotlinkdemo/uploads/complain/";
-    public static final String URL_IMG_COMPLAIN = "https://teocfish.com/knotlink/uploads/complain/";
+    public static final String URL_IMG_DISTANCE = "http://knot-link.com/knotlink/uploads/distance_upload/";
+//    public static final String URL_IMG_DISTANCE = "https://teocfish.com/knotlink/uploads/distance_upload/";
+    public static final String URL_IMG_ORDER = "http://knot-link.com/knotlink/uploads/new_order/";
+//    public static final String URL_IMG_ORDER = "https://teocfish.com/knotlink/uploads/new_order/";
+    public static final String URL_IMG_COMPLAIN = "http://knot-link.com/knotlink/uploads/complain/";
+//    public static final String URL_IMG_COMPLAIN = "https://teocfish.com/knotlink/uploads/complain/";
     public static String SIGN_STATUS = "signDone";
     public static final String TSF_SHARED_PREFENCE = "apartment_shared_pref";
     public static final int STORAGE_PERMISSION_CODE = 23;

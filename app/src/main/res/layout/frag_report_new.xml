@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="activityCounter"
+            type="com.knotlink.salseman.model.report.ModelUserActivityCount" />
+    </data>
+
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
     <ScrollView
         android:fillViewport="true"
         android:layout_width="match_parent"
@@ -105,6 +113,14 @@
 
                 <android.support.v7.widget.CardView
                     style="@style/card_dash">
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+                        android:text="@{activityCounter.attendanceCount}"
+                        style="@style/tv_activity_counter"
+                        />
                     <LinearLayout
                         android:id="@+id/ll_report_attendance"
                         style="@style/ll_dash_report">
@@ -115,9 +131,18 @@
                             android:text="Attendance Report"
                             style="@style/tv_dash_label" />
                     </LinearLayout>
+                    </RelativeLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     style="@style/card_dash">
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+                        android:text="@{activityCounter.routeCount}"
+                        style="@style/tv_activity_counter"
+                        />
                     <LinearLayout
                         android:id="@+id/ll_report_route"
                         style="@style/ll_dash_report">
@@ -129,13 +154,26 @@
                             android:text="Route Travelled Report"
                             style="@style/tv_dash_label" />
                     </LinearLayout>
+                    </RelativeLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     android:id="@+id/cvReportMeeting"
                     style="@style/card_dash">
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:text="@{activityCounter.meetingCount}"
+                            style="@style/tv_activity_counter"
+                            />
+
+
+
                     <LinearLayout
                         android:id="@+id/ll_report_meeting"
                         style="@style/ll_dash_report">
+
                         <ImageView
                             style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_meeting"
@@ -143,25 +181,46 @@
                         <TextView
                             android:text="Meeting Report"
                             style="@style/tv_dash_label" />
-
                     </LinearLayout>
+                    </RelativeLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     style="@style/card_dash">
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+
+                        style="@style/tv_activity_counter"
+                        />
+                        <TextView
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            style="@style/tv_report"
+                            android:layout_marginBottom="@dimen/dimen_4dp"
+                            android:background="@drawable/bg_badge_yellow"
+                            android:paddingStart="@dimen/dimen_4dp"
+                            android:paddingEnd="@dimen/dimen_4dp"
+                            android:text="@{activityCounter.cashCollectionSum}"
+                            android:textColor="@color/white"
+                            tools:text="Total Collection" />
+
                     <LinearLayout
                         android:id="@+id/ll_report_cashCollection"
                         style="@style/ll_dash_report">
+
                         <TextView
                             android:text="₹"
-                           android:textColor="@color/colorBlack"
+                           android:textColor="@color/colorPrimaryDark"
                             style="@style/tv_dash_label"
                             android:textSize="28sp"
                             android:src="@drawable/ic_main_rupee" />
                         <TextView
                             android:text="Collection Report"
                             style="@style/tv_dash_label" />
-
                     </LinearLayout>
+                    </RelativeLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     android:visibility="gone"
@@ -210,6 +269,14 @@
 
                 <android.support.v7.widget.CardView
                     style="@style/card_dash">
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+                        android:text="@{activityCounter.distanceUploadCount}"
+                        style="@style/tv_activity_counter"
+                        />
                     <LinearLayout
                         android:id="@+id/ll_report_distance"
                         style="@style/ll_dash_report">
@@ -222,13 +289,23 @@
 
 
                     </LinearLayout>
+                    </RelativeLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     android:id="@+id/cvReportLead"
                     style="@style/card_dash">
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+                        android:text="@{activityCounter.leadGenerationCount}"
+                        style="@style/tv_activity_counter"
+                        />
                     <LinearLayout
                         android:id="@+id/ll_report_leadGeneration"
                         style="@style/ll_dash_report">
+
                         <ImageView
                             style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_lead"
@@ -236,15 +313,24 @@
                         <TextView
                             android:text="Lead GenerationReport"
                             style="@style/tv_dash_label" />
-
                     </LinearLayout>
+                    </RelativeLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     android:id="@+id/cvReportCold"
                     style="@style/card_dash">
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+                        android:text="@{activityCounter.coldCallCount}"
+                        style="@style/tv_activity_counter"
+                        />
                     <LinearLayout
                         android:id="@+id/ll_report_coldCall"
                         style="@style/ll_dash_report">
+
                         <ImageView
                             style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_cold_call"
@@ -253,14 +339,37 @@
                             android:text="Cold Call Report"
                             style="@style/tv_dash_label" />
 
-
                     </LinearLayout>
+                    </RelativeLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     style="@style/card_dash">
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+                        android:text="@{activityCounter.expenseCount}"
+                        style="@style/tv_activity_counter"
+                        />
+
+                        <TextView
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            style="@style/tv_report"
+                            android:layout_marginBottom="@dimen/dimen_4dp"
+                            android:background="@drawable/bg_badge_yellow"
+                            android:paddingStart="@dimen/dimen_4dp"
+                            android:paddingEnd="@dimen/dimen_4dp"
+                            android:text="@{activityCounter.expenseSum}"
+                            android:textColor="@color/white"
+                            tools:text="Expenses : " />
+
+
                     <LinearLayout
                         android:id="@+id/ll_report_expenses"
                         style="@style/ll_dash_report">
+
                         <ImageView
                             style="@style/iv_dashboard_report"
                             android:src="@drawable/ic_main_expenses" />
@@ -268,6 +377,7 @@
                             android:text="Expenses Report"
                             style="@style/tv_dash_label" />
                     </LinearLayout>
+                    </RelativeLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     style="@style/card_dash"
@@ -292,3 +402,4 @@
     </LinearLayout>
     </ScrollView>
 </LinearLayout>
+</layout>

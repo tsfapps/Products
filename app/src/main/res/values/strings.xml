@@ -54,7 +54,7 @@
     <string name="prospect_task">Prospect Task</string>
     <string name="customer_task">Customer Task</string>
     <string name="title_activity_maps_all">Map</string>
-    <string name="get_location">Get Location</string>
+    <string name="update_shop_details">Update Shop Details</string>
 
     <string-array name="meeting_status">
         <item>--Meeting Status--</item>

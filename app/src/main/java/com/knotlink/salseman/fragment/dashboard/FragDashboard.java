@@ -70,23 +70,6 @@ public class FragDashboard extends Fragment{
 
     @BindView(R.id.tv_dash_attendance)
     protected TextView tvDashAttendance;
-
-//    @BindView(R.id.ll_dash_distance)
-//    protected LinearLayout ll_dash_distance;
-//    @BindView(R.id.ll_dash_route)
-//    protected LinearLayout ll_dash_route;
-//    @BindView(R.id.ll_dash_lead_generation)
-//    protected LinearLayout ll_dash_lead_generation;
-//    @BindView(R.id.ll_dash_meeting)
-//    protected LinearLayout ll_dash_meeting;
-//    @BindView(R.id.ll_dash_cold_call)
-//    protected LinearLayout ll_dash_cold_call;
-//    @BindView(R.id.ll_dash_cash_collection)
-//    protected LinearLayout ll_dash_cash_collection;
-//    @BindView(R.id.ll_dash_expenses)
-//    protected LinearLayout ll_dash_expenses;
-//    @BindView(R.id.cvDashAttendance)
-//    protected CardView cvDashAttendance;
     @BindView(R.id.cvDashDistance)
     protected CardView cvDashDistance;
     @BindView(R.id.cvDashRoute)
@@ -126,7 +109,6 @@ public class FragDashboard extends Fragment{
         return view;
     }
     private void initFrag(){
-        Log.d(Constant.TAG, "Selected Id Dash : "+strSelectedUserId);
         tContext = getContext();
         checkLocationPermission();
         tSharedPrefManager = new SharedPrefManager(tContext);

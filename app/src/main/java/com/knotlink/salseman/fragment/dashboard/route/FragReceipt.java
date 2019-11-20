@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -100,6 +101,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     private String strSignature;
     private String strRemarks;
     private int tosAmt;
+    private int pendingRcvAmt;
 
 
 
@@ -216,33 +218,42 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
         tvReceiptBalanceAmount.setText("Rs. "+tModels.get(i).getInvoiceBalance());
         flChequeImage.setVisibility(View.GONE);
 
-        etReceiptReceivedAmount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            etReceiptReceivedAmount.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                tosAmt = Integer.parseInt(strInvoiceAmntNet);
-                strReceivedAmount = etReceiptReceivedAmount.getText().toString().trim();
-                if (!strReceivedAmount.equalsIgnoreCase("")) {
-                    int rcvAmt = Integer.parseInt(strReceivedAmount);
-                    int pendingRcvAmt = tosAmt - rcvAmt;
-                    tvReceiptPendingAmount.setText(String.valueOf(pendingRcvAmt));
-                    strPendingAmount = tvReceiptPendingAmount.getText().toString().trim();
-                }else {
-                    tvReceiptPendingAmount.setText(strInvoiceAmntNet);
-                    strPendingAmount = strReceivedAmount;
                 }
 
-            }
-        });
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                    tosAmt = Integer.parseInt(strInvoiceAmntNet);
+
+                    strReceivedAmount = etReceiptReceivedAmount.getText().toString().trim();
+                    if (!strReceivedAmount.equalsIgnoreCase("")) {
+                        int rcvAmt = Integer.parseInt(strReceivedAmount);
+                        if (tosAmt >= rcvAmt) {
+                            pendingRcvAmt = tosAmt - rcvAmt;
+                            tvReceiptPendingAmount.setText(String.valueOf(pendingRcvAmt));
+                            strPendingAmount = tvReceiptPendingAmount.getText().toString().trim();
+                        } else {
+                            Toast.makeText(tContext, "Invalid amount !!!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        tvReceiptPendingAmount.setText(strInvoiceAmntNet);
+                        strPendingAmount = strReceivedAmount;
+                    }
+
+
+                }
+            });
+
+
     }
 
     @OnClick(R.id.tvReceiptNeftChequeDate)
@@ -265,7 +276,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
                         tvReceiptNeftChequeDate.setText(strMyDate);
                     }
                     else {
-                        CustomToast.toastMid(getActivity(), Constant.DATE_DELIVERY);
+                        Toast.makeText(tContext, Constant.DATE_DELIVERY, Toast.LENGTH_SHORT).show();
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -345,6 +356,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
             return;
         }
         CheckPermission.requestCameraPermission(getActivity());
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -372,15 +384,19 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
             }
         }
     }
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        strInvoiceNo = tModels.get(i).getInvoiceNo().get(position);
+        if (!strInvoiceNo.equalsIgnoreCase("")) {
+            spnReceiptPaymentMode.setEnabled(true);
+            etReceiptReceivedAmount.setFocusable(true);
 
-        switch (parent.getId()){
+            switch (parent.getId()){
             case R.id.spn_receipt_invoiceNumber:
-                 strInvoiceNo = tModels.get(i).getInvoiceNo().get(position);
 
                 Api api = ApiClients.getApiClients().create(Api.class);
-                if (!strInvoiceNo.equalsIgnoreCase("")) {
+
                     Call<ModelInvoice> call = api.viewInvoice(strShopId, strInvoiceNo);
                     call.enqueue(new Callback<ModelInvoice>() {
                         @Override
@@ -397,19 +413,18 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
                                 tvReceiptPendingAmount.setText(strInvoiceAmntNet);
                                 strPendingAmount = strReceivedAmount;
                             }else {
-                                CustomToast.toastTop(getActivity(), "Invoice data is not available...");
+                                Toast.makeText(tContext, "Model Invoice data is null", Toast.LENGTH_SHORT).show();
 
                             }
 
                         }
                         @Override
                         public void onFailure(Call<ModelInvoice> call, Throwable t) {
-                            CustomLog.d(Constant.TAG, "Invoice Not Responding : " + t);
+                            Toast.makeText(tContext, "Invoice Not Responding : " + t, Toast.LENGTH_SHORT).show();
+
                         }
                     });
-                }else {
-                    CustomToast.toastTop(getActivity(), "Invoice data is not available...");
-                }
+
                 break;
             case R.id.spn_receipt_paymentMode:
                 strPaymentMo = strPaymentMode[position];
@@ -420,7 +435,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
                     strPendingAmount = strInvoiceAmntNet;
                     etReceiptReceivedAmount.setEnabled(false);
                     etReceiptReceivedAmount.setBackgroundResource(R.drawable.bg_btn_disabled);
-                    CustomToast.toastTop(getActivity(), "Kindly fill the information... ");
+                    Toast.makeText(tContext, "Kindly fill the information... ", Toast.LENGTH_SHORT).show();
                     flChequeImage.setVisibility(View.VISIBLE);
                     llReceiptNeftChequeDetail.setVisibility(View.VISIBLE);
                 }else if (strPaymentMode[position].equalsIgnoreCase("NEFT")){
@@ -430,7 +445,7 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
                     strPendingAmount = strInvoiceAmntNet;
                     etReceiptReceivedAmount.setEnabled(false);
                     etReceiptReceivedAmount.setBackgroundResource(R.drawable.bg_btn_disabled);
-                    CustomToast.toastTop(getActivity(), "Kindly fill the information... ");
+                    Toast.makeText(tContext, "Kindly fill the information... ", Toast.LENGTH_SHORT).show();
                     llReceiptNeftChequeDetail.setVisibility(View.VISIBLE);
                     flChequeImage.setVisibility(View.GONE);
                 } else if (strPaymentMode[position].equalsIgnoreCase("Cash")){
@@ -441,6 +456,11 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
                 }
                 break;
         }
+    }else {
+        etReceiptReceivedAmount.setFocusable(false);
+        Toast.makeText(tContext, "Invoice data is not available...", Toast.LENGTH_SHORT).show();
+        spnReceiptPaymentMode.setEnabled(false);
+    }
 
 
     }
@@ -466,7 +486,8 @@ public class FragReceipt extends Fragment implements AdapterView.OnItemSelectedL
     @OnClick(R.id.btn_receipt_submit)
     public void btnSubmitClicked(View view){
         if (signatureViewReceipt.isBitmapEmpty()){
-            CustomToast.toastTop(getActivity(), "Can't submit without signature...");
+            Toast.makeText(tContext, "Can't submit without signature...", Toast.LENGTH_SHORT).show();
+
         }else {
             Toast.makeText(tContext, "Submit...", Toast.LENGTH_SHORT).show();
             Bitmap bitmapSign = signatureViewReceipt.getSignatureBitmap();

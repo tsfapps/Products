@@ -1,13 +1,9 @@
 package com.knotlink.salseman.utils;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.widget.Button;
-
 import com.knotlink.salseman.R;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class CustomDialog {
@@ -18,7 +14,7 @@ public class CustomDialog {
         alertDialog.setConfirmClickListener( new SweetAlertDialog.OnSweetClickListener() {
             @Override
             public void onClick(SweetAlertDialog sweetAlertDialog) {
-               alertDialog.dismissWithAnimation();
+                alertDialog.dismissWithAnimation();
             }
         });
 
@@ -36,7 +32,7 @@ public class CustomDialog {
         alertDialog.setConfirmClickListener( new SweetAlertDialog.OnSweetClickListener() {
             @Override
             public void onClick(SweetAlertDialog sweetAlertDialog) {
-               alertDialog.dismissWithAnimation();
+                alertDialog.dismissWithAnimation();
             }
         });
 

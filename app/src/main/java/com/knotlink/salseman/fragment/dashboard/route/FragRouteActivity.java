@@ -1,14 +1,23 @@
 package com.knotlink.salseman.fragment.dashboard.route;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +35,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +46,7 @@ import com.knotlink.salseman.adapter.spinner.AdapterSpinnerShopStatus;
 import com.knotlink.salseman.adapter.spinner.AdapterSpinnerUser;
 import com.knotlink.salseman.api.Api;
 import com.knotlink.salseman.api.ApiClients;
+import com.knotlink.salseman.fragment.dashboard.FragMeeting;
 import com.knotlink.salseman.model.dash.ModelFeedback;
 import com.knotlink.salseman.model.dash.route.ModelGetLocaion;
 import com.knotlink.salseman.model.dash.route.ModelNoActivity;
@@ -53,6 +64,7 @@ import com.knotlink.salseman.utils.DistanceLatLong;
 import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -66,6 +78,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragRouteActivity extends Fragment {
@@ -78,6 +91,13 @@ public class FragRouteActivity extends Fragment {
     private ModelSpecialRequest tSpecialModels;
     private ModelFeedback tModelsFeedback;
 
+
+    final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 23;
+    private Uri imageUri = null;
+    public static String CapturedImageDetails;
+    public static String Path;
+    public static String fileName;
+
     private String[] title;
     private String spinner_item;
     private String strShopId;
@@ -88,6 +108,15 @@ public class FragRouteActivity extends Fragment {
     private String strDm;
     private String strAsm;
     private String strShopName;
+    private String strPersonName;
+    private String strPersonMobile;
+    private String strPersonWhatsApp;
+    private String strGst;
+    private String strContactName;
+    private String strContactNo;
+    private String strLandLineNo;
+    private String strWhatsApp;
+    private String strEmail;
     private String strExistingAddress;
     private String strUpdateAddress;
     private String strUpdateAddress2;
@@ -99,6 +128,8 @@ public class FragRouteActivity extends Fragment {
     private String strUpdateState;
     private String strUpdateCountry;
     private String strUpdatePinCode;
+    private String strSmsOwner;
+    private String strSmsKeyPerson;
     private int imgStatus = 0;
     private ImageView ivUpdateImage;
 
@@ -212,9 +243,9 @@ public class FragRouteActivity extends Fragment {
         String strShopLong = tModels.get(i).getLongitude();
         tvAddressRouteActivity.setVisibility(View.VISIBLE);
         tvAddressRouteActivity.setText(tModels.get(i).getLatLongAddress());
-        if (!strShopLat.equalsIgnoreCase("0.0")&& !strShopLong.equalsIgnoreCase("0.0")){
-            btnGetLocation.setVisibility(View.GONE);
-        }
+//        if (!strShopLat.equalsIgnoreCase("0.0")&& !strShopLong.equalsIgnoreCase("0.0")){
+//            btnGetLocation.setVisibility(View.GONE);
+//        }
         GPSTracker tGpsTracker = new GPSTracker(tContext);
         strLat = String.valueOf(tGpsTracker.latitude);
         strLong = String.valueOf(tGpsTracker.longitude);
@@ -310,6 +341,15 @@ public class FragRouteActivity extends Fragment {
         tvUpdateGeoAddress.setText(strGeoAdderss);
         final EditText etUpdateShopName =  dialog.findViewById(R.id.etUpdateShopName);
         etUpdateShopName.setText(strShopName);
+        final EditText etUpdateOwnerName =  dialog.findViewById(R.id.etUpdateOwnerName);
+        final EditText etUpdateOwnerMobNo =  dialog.findViewById(R.id.etUpdateOwnerMobNo);
+        final EditText etUpdateOwnerWhatsApp =  dialog.findViewById(R.id.etUpdateOwnerWhatsApp);
+        final EditText etUpdateKeyPersonName =  dialog.findViewById(R.id.etUpdateKeyPersonName);
+        final EditText etKeyPersonMobile =  dialog.findViewById(R.id.etKeyPersonMobile);
+        final EditText etKeyPersonWhatsApp =  dialog.findViewById(R.id.etKeyPersonWhatsApp);
+        final EditText etUpdateGstNo =  dialog.findViewById(R.id.etUpdateGstNo);
+        final EditText etUpdateLandLine =  dialog.findViewById(R.id.etUpdateLandLine);
+        final EditText etUpdateEmail =  dialog.findViewById(R.id.etUpdateEmail);
         final EditText etAddress =  dialog.findViewById(R.id.etUpdateAddress);
         final EditText etAddress2 =  dialog.findViewById(R.id.etUpdateAddress2);
         final EditText etAddress3 =  dialog.findViewById(R.id.etUpdateAddress3);
@@ -317,6 +357,10 @@ public class FragRouteActivity extends Fragment {
         final EditText etAddress5 =  dialog.findViewById(R.id.etUpdateAddress5);
         final EditText etAddress6 =  dialog.findViewById(R.id.etUpdateAddress6);
         final EditText etUpdateCity =  dialog.findViewById(R.id.etUpdateCity);
+        final RadioButton rbPersonYes =  dialog.findViewById(R.id.rbPersonYes);
+        final RadioButton rbPersonNo =  dialog.findViewById(R.id.rbPersonNo);
+        final RadioButton rbOwnerYes =  dialog.findViewById(R.id.rbOwnerYes);
+        final RadioButton rbOwnerNo =  dialog.findViewById(R.id.rbOwnerNo);
         etUpdateCity.setText(strCity);
         final EditText etUpdateState =  dialog.findViewById(R.id.etUpdateState);
         etUpdateState.setText(strState);
@@ -337,6 +381,28 @@ public class FragRouteActivity extends Fragment {
         btSubmitAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (rbPersonYes.isChecked()){
+                    strSmsKeyPerson = "1";
+                }else if (rbPersonNo.isChecked()){
+                    strSmsKeyPerson = "0";
+                }
+
+                if (rbOwnerYes.isChecked()){
+                    strSmsOwner = "1";
+                }else if (rbOwnerNo.isChecked()){
+                    strSmsOwner = "0";
+                }
+                strContactName = etUpdateOwnerName.getText().toString().trim();
+                strContactNo = etUpdateOwnerMobNo.getText().toString().trim();
+                strWhatsApp = etUpdateOwnerWhatsApp.getText().toString().trim();
+                strPersonName = etUpdateKeyPersonName.getText().toString().trim();
+                strPersonMobile = etKeyPersonMobile.getText().toString().trim();
+                strPersonWhatsApp = etKeyPersonWhatsApp.getText().toString().trim();
+                strGst = etUpdateGstNo.getText().toString().trim();
+                strLandLineNo = etUpdateLandLine.getText().toString().trim();
+                strEmail = etUpdateEmail.getText().toString().trim();
+
                 strUpdateAddress = etAddress.getText().toString().trim();
                 strUpdateAddress2 = etAddress2.getText().toString().trim();
                 strUpdateAddress3 = etAddress3.getText().toString().trim();
@@ -395,13 +461,15 @@ public class FragRouteActivity extends Fragment {
     }
 
     private void callLocationApi(final String strAddress, final Dialog dialog, final SweetAlertDialog tDialog){
+        Log.d(Constant.TAG, "Sms Person : "+strSmsKeyPerson);
+        Log.d(Constant.TAG, "Sms Owner : "+strSmsOwner);
         String strImage = imageToString(tBitmap, ivUpdateImage);
         Api api = ApiClients.getApiClients().create(Api.class);
-        Call<ModelGetLocaion> call =api.updateLocation(strShopId,strShopName,"","",
-                "", "","","","","","",
+        Call<ModelGetLocaion> call =api.updateLocation(strShopId,strShopName,strPersonName,strPersonMobile,
+                strPersonWhatsApp, strGst,strContactName,strContactNo,strLandLineNo,strWhatsApp,strEmail,
                 strAddress, strUpdateAddress2,strUpdateAddress3, strUpdateAddress4,strUpdateAddress5,strUpdateAddress6,
                 strUpdateCity, strUpdateState,strUpdateCountry, strUpdatePinCode, strUserId, strShopStatus,
-                strImage,strAttDate, strLat, strLong);
+                strImage,strAttDate,strSmsOwner,strSmsKeyPerson, strLat, strLong);
         call.enqueue(new Callback<ModelGetLocaion>() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -411,7 +479,7 @@ public class FragRouteActivity extends Fragment {
                 if (!tModel.getError()){
                     dialog.dismiss();
                     tDialog.dismissWithAnimation();
-                    btnGetLocation.setVisibility(View.GONE);
+//                    btnGetLocation.setVisibility(View.GONE);
                     CustomToast.toastTop(getActivity(), tModel.getMessage() );
                     tvAddressRouteActivity.setVisibility(View.VISIBLE);
                     tvAddressRouteActivity.setText(strAddress+" "+ strGeoAdderss);
@@ -677,44 +745,216 @@ public class FragRouteActivity extends Fragment {
             }
         });
     }
-    private void choosePhotoFromGallery() {
-        if (CheckPermission.isReadStorageAllowed(getContext())) {
-            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, Constant.GALLERY);
-            return;
-        }
-        CheckPermission.requestStoragePermission(getActivity());
-    }
     private void takePhotoFromCamera() {
-        if (CheckPermission.isCameraAllowed(getContext())) {
-            Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, Constant.CAMERA);
-            return;
-        }
-        CheckPermission.requestCameraPermission(getActivity());
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CANCELED) {
-            return;
-        }
-       if (requestCode == Constant.CAMERA) {
-            switch (imgStatus){
-                case 1:
-                    SetImage.setCameraImage(ivUpdateImage, data);
-                    tBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-                    ivUpdateImage.setImageBitmap(tBitmap);
-                    break;
-                case 2:
-                    SetImage.setCameraImage(ivFeedback, data);
-                    tBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-                    ivFeedback.setImageBitmap(tBitmap);
-                    break;
+        if (tContext.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            if (!shouldShowRequestPermissionRationale(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                fileName = "Camera_Example.jpg";
+
+                // Create parameters for Intent with filename
+
+                ContentValues values = new ContentValues();
+
+                values.put(MediaStore.Images.Media.TITLE, fileName);
+
+                values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+
+                imageUri = tContext.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+                if (CheckPermission.isCameraAllowed(tContext)) {
+                    Intent intent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE );
+
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 10);
+
+                    startActivityForResult( intent, Constant.CAMERA);
+
+                    return;
+                }
+                CheckPermission.requestCameraPermission(getActivity());
+
             }
+            return;
+        }
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == Constant.CAMERA) {
+
+            if ( resultCode == RESULT_OK) {
+
+                String imageId = convertImageUriToFile( imageUri,getActivity());
+
+
+                //  Create and excecute AsyncTask to load capture image
+
+                new FragRouteActivity.LoadImagesFromSDCard().execute(""+imageId);
+
+            } else if ( resultCode == RESULT_CANCELED) {
+
+                Toast.makeText(tContext, " Picture was not taken ", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Toast.makeText(tContext, " Picture was not taken ", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
+
+public static String convertImageUriToFile (Uri imageUri, Activity activity )  {
+
+    Cursor cursor = null;
+    int imageID = 0;
+
+    try {
+
+        /*********** Which columns values want to get *******/
+        String [] proj={
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Thumbnails._ID,
+                MediaStore.Images.ImageColumns.ORIENTATION
+        };
+
+        cursor = activity.managedQuery(
+
+                imageUri,         //  Get data for specific image URI
+                proj,             //  Which columns to return
+                null,             //  WHERE clause; which rows to return (all rows)
+                null,             //  WHERE clause selection arguments (none)
+                null              //  Order-by clause (ascending by name)
+
+        );
+
+        //  Get Query Data
+
+        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+        int columnIndexThumb = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails._ID);
+        int file_ColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        //int orientation_ColumnIndex = cursor.
+        //    getColumnIndexOrThrow(MediaStore.Images.ImageColumns.ORIENTATION);
+
+        int size = cursor.getCount();
+
+        /*******  If size is 0, there are no images on the SD Card. *****/
+
+        if (size == 0) {
+
 
         }
+        else
+        {
+
+            int thumbID = 0;
+            if (cursor.moveToFirst()) {
+
+                /**************** Captured image details ************/
+
+                /*****  Used to show image on view in LoadImagesFromSDCard class ******/
+                imageID     = cursor.getInt(columnIndex);
+
+                thumbID     = cursor.getInt(columnIndexThumb);
+
+                Path = cursor.getString(file_ColumnIndex);
+
+                //String orientation =  cursor.getString(orientation_ColumnIndex);
+
+                CapturedImageDetails  = " CapturedImageDetails : \n\n"
+                        +" ImageID :"+imageID+"\n"
+                        +" ThumbID :"+thumbID+"\n"
+                        +" Path :"+Path+"\n";
+
+            }
+        }
+    } finally {
+        if (cursor != null) {
+            cursor.close();
+        }
     }
+
+    // Return Captured Image ImageID ( By this ImageID Image will load from sdcard )
+
+    return ""+imageID;
+}
+
+    // Class with extends AsyncTask class
+
+    public class LoadImagesFromSDCard  extends AsyncTask<String, Void, Void> {
+
+        private ProgressDialog Dialog = new ProgressDialog(tContext);
+
+
+
+        protected void onPreExecute() {
+            /****** NOTE: You can call UI Element here. *****/
+
+            // Progress Dialog
+            Dialog.setMessage(" Loading image from Sdcard..");
+            Dialog.show();
+        }
+
+
+        // Call after onPreExecute method
+        protected Void doInBackground(String... urls) {
+
+            Bitmap bitmap = null;
+            Bitmap newBitmap = null;
+            Uri uri = null;
+
+
+            try {
+                uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + urls[0]);
+                bitmap = BitmapFactory.decodeStream(tContext.getContentResolver().openInputStream(uri));
+
+                if (bitmap != null) {
+
+                    newBitmap = Bitmap.createScaledBitmap(bitmap, 400, 400, true);
+
+                    bitmap.recycle();
+
+                    if (newBitmap != null) {
+
+                        tBitmap = newBitmap;
+                    }
+                }
+            } catch (IOException e) {
+                // Error fetching image, try to recover
+
+                /********* Cancel execution of this task. **********/
+                cancel(true);
+            }
+
+            return null;
+        }
+
+
+        protected void onPostExecute(Void unused) {
+            Dialog.dismiss();
+            if(tBitmap != null)
+            {
+                switch (imgStatus){
+                    case 1:
+                        ivUpdateImage.setImageBitmap(tBitmap);
+                        break;
+                    case 2:
+                        ivFeedback.setImageBitmap(tBitmap);
+                        break;
+                }
+            }
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constant.STORAGE_PERMISSION_CODE) {

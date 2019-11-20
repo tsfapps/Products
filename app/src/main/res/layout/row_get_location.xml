@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:text="@string/get_location"
+                android:text="@string/update_shop_details"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:background="@color/colorPrimaryDark"
@@ -100,12 +100,12 @@
                     style="@style/tv_report"
                     android:text="Owner Name"
                     />
-
                 <TextView
                     android:layout_alignParentEnd="true"
                     style="@style/tv_report"
-                    android:text="Owner Mobile No"
+                    android:text="Owner WhatsApp No"
                     />
+
 
             </RelativeLayout>
             <LinearLayout
@@ -114,60 +114,71 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:inputType="textPersonName"
                     android:id="@+id/etUpdateOwnerName"
                     android:textColor="@color/colorBlack"
                     style="@style/et_main"
 
                     />
-
                 <EditText
-                    android:id="@+id/etUpdateOwnerMobNo"
-                    android:textColor="@color/colorBlack"
-                    style="@style/et_main"
-
-                    />
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    style="@style/tv_report"
-                    android:text="Owner WhatsApp No"
-                    />
-
-                <TextView
-                    android:layout_alignParentEnd="true"
-                    style="@style/tv_report"
-                    android:text="Key Person Name"
-                    />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
+                    android:inputType="phone"
                     android:id="@+id/etUpdateOwnerWhatsApp"
                     android:textColor="@color/colorBlack"
                     style="@style/et_main"
 
                     />
 
-                <EditText
-                    android:id="@+id/etUpdateKeyPersonName"
-                    android:textColor="@color/colorBlack"
-                    style="@style/et_main"
-
-                    />
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
                     style="@style/tv_report"
-                    android:text="Key Person Mobile"
+                    android:text="Owner Mobile No"
+                    />
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Subscribe SMS"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/etUpdateOwnerMobNo"
+                    android:textColor="@color/colorBlack"
+                    android:inputType="phone"
+                    style="@style/et_main" />
+
+                <RadioGroup
+                    android:id="@+id/rgSmsOwner"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <RadioButton
+                        android:checked="true"
+                        android:id="@+id/rbOwnerYes"
+                        android:text="Yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <RadioButton
+                        android:id="@+id/rbOwnerNo"
+                        android:text="No"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RadioGroup>
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Key Person Name"
                     />
 
                 <TextView
@@ -183,18 +194,68 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/etKeyPersonMobile"
+                    android:inputType="textPersonName"
+                    android:id="@+id/etUpdateKeyPersonName"
                     android:textColor="@color/colorBlack"
                     style="@style/et_main"
 
                     />
 
                 <EditText
+                    android:inputType="phone"
                     android:id="@+id/etKeyPersonWhatsApp"
                     android:textColor="@color/colorBlack"
                     style="@style/et_main"
 
                     />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/tv_report"
+                    android:text="Key Person Mobile"
+                    />
+
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    style="@style/tv_report"
+                    android:text="Subscribe SMS"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:inputType="phone"
+                    android:id="@+id/etKeyPersonMobile"
+                    android:textColor="@color/colorBlack"
+                    style="@style/et_main"
+
+                    />
+                <RadioGroup
+                    android:id="@+id/rgSmsPerson"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <RadioButton
+                        android:checked="true"
+                        android:id="@+id/rbPersonYes"
+                        android:text="Yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <RadioButton
+                        android:id="@+id/rbPersonNo"
+                        android:text="No"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RadioGroup>
+
             </LinearLayout>
 
             <RelativeLayout
@@ -228,8 +289,7 @@
                     android:id="@+id/etUpdateLandLine"
                     android:textColor="@color/colorBlack"
                     style="@style/et_main"
-
-                    />
+                    android:inputType="phone"/>
             </LinearLayout>
 
                 <TextView
@@ -241,8 +301,7 @@
                     android:id="@+id/etUpdateEmail"
                     android:textColor="@color/colorBlack"
                     style="@style/et_main"
-
-                    />
+                    android:inputType="textEmailAddress" />
 
 
 

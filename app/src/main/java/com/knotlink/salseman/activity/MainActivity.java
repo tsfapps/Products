@@ -221,18 +221,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         getCounterComplain();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-    }
 
     @OnClick(R.id.ivToolbarLogo)
     public void ivToolbarLogoClicked(View view){
@@ -537,12 +526,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onResponse(Call<ModelActiveStatus> call, Response<ModelActiveStatus> response) {
                 ModelActiveStatus tModelActive = response.body();
                 assert tModelActive != null;
+//                Log.d(Constant.TAG, "Att Status : "+tModelActive.getAttendanceStatus());
                 strSttendanceStatus = tModelActive.getAttendanceStatus();
                 strActiveStatus = tModelActive.getActiveStatus();
                 strAttDate = tModelActive.getDate();
                 callReturnApi(strAttDate);
 
-                if (Objects.requireNonNull(strActiveStatus).equalsIgnoreCase("0")){
+                if (strActiveStatus.equalsIgnoreCase("0")){
                     tSharedPrefManager.clearUserData();
                     startActivity(new Intent(tContext, LoginActivity.class));
                     finishAffinity();

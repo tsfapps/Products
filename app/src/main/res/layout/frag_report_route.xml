@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="activityCounter"
+            type="com.knotlink.salseman.model.report.ModelUserActivityCount" />
+    </data>
 <LinearLayout
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -38,17 +43,25 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tvRouteOrderMap"
-                    style="@style/tv_map_main"
-                    />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvRouteOrderMap"
+                            style="@style/tv_map_main"
+                            />
+                        <TextView
+                            android:text="@{activityCounter.newOrderCount}"
+                            style="@style/tv_activity_counter"
+                            />
+
+                    </RelativeLayout>
                 <LinearLayout
                     android:id="@+id/ll_ReportNewOrder"
                     style="@style/ll_dash">
 
                     <ImageView
-                        android:tint="@color/black"
-                        style="@style/iv_dashboard"
+                        style="@style/iv_dashboard_report"
                         android:src="@drawable/dash_new_order"
                         />
                     <TextView
@@ -64,16 +77,25 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tvRouteSpecialMap"
-                    style="@style/tv_map_main"
-                    />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvRouteSpecialMap"
+                            style="@style/tv_map_main"
+                            />
+                        <TextView
+                            android:text="@{activityCounter.specialRequestCount}"
+                            style="@style/tv_activity_counter"
+                            />
+
+                    </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_ReportSpecialRequest"
                     style="@style/ll_dash">
                     <ImageView
-                        style="@style/iv_dashboard"
-                        android:tint="@color/black"
+                        style="@style/iv_dashboard_report"
                         android:src="@drawable/dash_route_special_request"
                         />
                     <TextView
@@ -89,24 +111,38 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <LinearLayout
-                    android:id="@+id/ll_ReportNoActivity"
-                    style="@style/ll_dash">
-                    <TextView
-                        android:id="@+id/tvRouteNoActivityMap"
-                        style="@style/tv_map_main"
-                        />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/tvRouteNoActivityMap"
+                                style="@style/tv_map_main"
+                                />
+                            <TextView
+                                android:text="@{activityCounter.noActivityCount}"
+                                tools:text="@string/num_1"
+                                style="@style/tv_activity_counter"
+                                />
 
-                    <ImageView
-                        style="@style/iv_dashboard"
-                        android:tint="@color/black"
-                        android:src="@drawable/ic_no_activity"
-                        />
-                    <TextView
-                        android:text="No Activity"
-                        style="@style/tv_dash_label" />
+                        </RelativeLayout>
 
-                </LinearLayout>
+
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_ReportNoActivity"
+                        style="@style/ll_dash">
+                        <ImageView
+                            style="@style/iv_dashboard_report"
+                            android:src="@drawable/ic_no_activity"
+                            />
+                        <TextView
+                            android:text="No Activity"
+                            style="@style/tv_dash_label" />
+
+                    </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -125,16 +161,25 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tvRouteReceiptMap"
-                    style="@style/tv_map_main"
-                    />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvRouteReceiptMap"
+                            style="@style/tv_map_main"
+                            />
+                        <TextView
+                            android:text="@{activityCounter.receiptCount}"
+                            style="@style/tv_activity_counter"
+                            />
+
+                    </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_ReportReceipt"
                     style="@style/ll_dash">
                     <ImageView
-                        style="@style/iv_dashboard"
-                        android:tint="@color/black"
+                        style="@style/iv_dashboard_report"
                         android:src="@drawable/dash_route_receipt"
                         />
                     <TextView
@@ -150,17 +195,26 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tvRouteFeedbackMap"
-                    style="@style/tv_map_main"
-                    />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvRouteFeedbackMap"
+                            style="@style/tv_map_main"
+                            />
+                        <TextView
+                            android:text="@{activityCounter.complainCount}"
+                            style="@style/tv_activity_counter"
+                            />
+
+                    </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_ReportComplain"
                     style="@style/ll_dash">
                     <ImageView
-                        android:tint="@color/black"
-                        style="@style/iv_dashboard"
-                        android:src="@drawable/ic_main_receipt" />
+                        style="@style/iv_dashboard_report"
+                        android:src="@drawable/ic_report" />
                     <TextView
                         android:text="@string/feedback_complain"
                         style="@style/tv_dash_label" />
@@ -174,18 +228,27 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tvRouteNoVisit"
-                        android:padding="@dimen/dimen_4dp"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        />
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvRouteNoVisit"
+                            android:padding="@dimen/dimen_4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            />
+                        <TextView
+                            android:text="@{activityCounter.noVisitCount}"
+                            style="@style/tv_activity_counter"
+                            />
+
+                    </RelativeLayout>
+
                     <LinearLayout
                     android:id="@+id/ll_ReportNoVisit"
                     style="@style/ll_dash">
                     <ImageView
-                        android:tint="@color/black"
-                        style="@style/iv_dashboard"
+                        style="@style/iv_dashboard_report"
                         android:src="@drawable/ic_no_visit"/>
                     <TextView
                         android:text="No Visit"
@@ -200,3 +263,4 @@
 
 
 </LinearLayout>
+</layout>

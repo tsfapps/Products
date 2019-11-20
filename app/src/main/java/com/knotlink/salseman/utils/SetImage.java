@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class SetImage {
 
-    public static void setGalleryImage(Context tContext, ImageView imageView, Intent data){
+    public static void setGalleryImage(Context tContext, ImageView imageView, Intent data) {
         Uri contentURI = data.getData();
         try {
             Bitmap bitmap = null;
@@ -25,11 +25,11 @@ public class SetImage {
             e.printStackTrace();
         }
     }
-    public static void setCameraImage(ImageView imageView, Intent data){
+
+    public static void setCameraImage(ImageView imageView, Intent data) {
         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
         imageView.setImageBitmap(bitmap);
 
     }
-
 
 }

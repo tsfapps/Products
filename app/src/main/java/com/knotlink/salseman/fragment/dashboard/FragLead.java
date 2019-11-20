@@ -1,11 +1,19 @@
 package com.knotlink.salseman.fragment.dashboard;
-
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -43,6 +51,7 @@ import com.knotlink.salseman.utils.DateUtils;
 import com.knotlink.salseman.utils.SetImage;
 import com.knotlink.salseman.utils.SetTitle;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,9 +68,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 import static com.knotlink.salseman.utils.ImageConverter.imageToString;
 
 public class FragLead extends Fragment implements AdapterView.OnItemSelectedListener {
+    final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 23;
+    private Uri imageUri = null;
+    public static String CapturedImageDetails;
+    public static String Path;
+    public static String fileName;
+
+
     private ModelLead tModels;
     private Context tContext;
     private SharedPrefManager tSharedPrefManager;
@@ -143,7 +160,7 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
         pbSpnLeadRoute.setVisibility(View.VISIBLE);
         strVendorType = "Customer";
         tSharedPrefManager = new SharedPrefManager(tContext);
-        SetTitle.tbTitle("Lead Generation", getActivity());
+        SetTitle.tbTitle("Lead", getActivity());
         tvLeadNextMeetingDate.setText(DateUtils.getTodayDate());
         rgLead.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -224,13 +241,13 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
                 int i;
                 tModelsCustomerList = response.body();
 //                if (tModelsCustomerList.size() > 0) {
-                    ArrayList<String> searchArrayList = new ArrayList<String>();
+                ArrayList<String> searchArrayList = new ArrayList<String>();
 
-                    for (i = 0; i < tModelsCustomerList.size(); i++) {
-                        searchArrayList.add(tModelsCustomerList.get(i).getShopName());
-                    }
-                    AdapterCustomerList adapter = new AdapterCustomerList(tContext, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, searchArrayList);
-                    aCtvLeadOrgName.setAdapter(adapter);
+                for (i = 0; i < tModelsCustomerList.size(); i++) {
+                    searchArrayList.add(tModelsCustomerList.get(i).getShopName());
+                }
+                AdapterCustomerList adapter = new AdapterCustomerList(tContext, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, searchArrayList);
+                aCtvLeadOrgName.setAdapter(adapter);
 //                }else {
 //                    Toast.makeText(tContext, "Customer list is empty", Toast.LENGTH_LONG).show();
 //                }
@@ -246,26 +263,208 @@ public class FragLead extends Fragment implements AdapterView.OnItemSelectedList
 
     @OnClick(R.id.iv_upload_lead)
     public void onUploadLeadClicked(View view){
-        takePhotoFromCamera();
-    }
-    private void takePhotoFromCamera() {
-        if (CheckPermission.isCameraAllowed(getContext())) {
-            Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, Constant.CAMERA);
+
+        if (tContext.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            if (!shouldShowRequestPermissionRationale(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                fileName = "Camera_Example.jpg";
+
+                // Create parameters for Intent with filename
+
+                ContentValues values = new ContentValues();
+
+                values.put(MediaStore.Images.Media.TITLE, fileName);
+
+                values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+
+                imageUri = tContext.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+                if (CheckPermission.isCameraAllowed(tContext)) {
+                    Intent intent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE );
+
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 10);
+
+                    startActivityForResult( intent, Constant.CAMERA);
+
+                    return;
+                }
+                CheckPermission.requestCameraPermission(getActivity());
+
+            }
             return;
         }
-        CheckPermission.requestCameraPermission(getActivity());
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
     }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CANCELED) {
-            return;
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == Constant.CAMERA) {
+
+            if ( resultCode == RESULT_OK) {
+
+                String imageId = convertImageUriToFile( imageUri,getActivity());
+
+                new FragLead.LoadImagesFromSDCard().execute(""+imageId);
+
+            } else if ( resultCode == RESULT_CANCELED) {
+
+                Toast.makeText(tContext, " Picture was not taken ", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Toast.makeText(tContext, " Picture was not taken ", Toast.LENGTH_SHORT).show();
+            }
         }
-            SetImage.setCameraImage(ivUploadLead, data);
-            tBitmap = (Bitmap) data.getExtras().get("data");
-            ivUploadLead.setImageBitmap(tBitmap);
     }
+
+    public static String convertImageUriToFile ( Uri imageUri, Activity activity )  {
+
+        Cursor cursor = null;
+        int imageID = 0;
+
+        try {
+
+            /*********** Which columns values want to get *******/
+            String [] proj={
+                    MediaStore.Images.Media.DATA,
+                    MediaStore.Images.Media._ID,
+                    MediaStore.Images.Thumbnails._ID,
+                    MediaStore.Images.ImageColumns.ORIENTATION
+            };
+
+            cursor = activity.managedQuery(
+
+                    imageUri,         //  Get data for specific image URI
+                    proj,             //  Which columns to return
+                    null,             //  WHERE clause; which rows to return (all rows)
+                    null,             //  WHERE clause selection arguments (none)
+                    null              //  Order-by clause (ascending by name)
+
+            );
+
+            //  Get Query Data
+
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+            int columnIndexThumb = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails._ID);
+            int file_ColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            //int orientation_ColumnIndex = cursor.
+            //    getColumnIndexOrThrow(MediaStore.Images.ImageColumns.ORIENTATION);
+
+            int size = cursor.getCount();
+
+            /*******  If size is 0, there are no images on the SD Card. *****/
+
+            if (size == 0) {
+
+
+            }
+            else
+            {
+
+                int thumbID = 0;
+                if (cursor.moveToFirst()) {
+
+                    /**************** Captured image details ************/
+
+                    /*****  Used to show image on view in LoadImagesFromSDCard class ******/
+                    imageID     = cursor.getInt(columnIndex);
+
+                    thumbID     = cursor.getInt(columnIndexThumb);
+
+                    Path = cursor.getString(file_ColumnIndex);
+
+                    //String orientation =  cursor.getString(orientation_ColumnIndex);
+
+                    CapturedImageDetails  = " CapturedImageDetails : \n\n"
+                            +" ImageID :"+imageID+"\n"
+                            +" ThumbID :"+thumbID+"\n"
+                            +" Path :"+Path+"\n";
+
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        // Return Captured Image ImageID ( By this ImageID Image will load from sdcard )
+
+        return ""+imageID;
+    }
+    public class LoadImagesFromSDCard  extends AsyncTask<String, Void, Void> {
+
+        private ProgressDialog Dialog = new ProgressDialog(tContext);
+
+
+
+        protected void onPreExecute() {
+            /****** NOTE: You can call UI Element here. *****/
+
+            // Progress Dialog
+            Dialog.setMessage(" Loading image from Sdcard..");
+            Dialog.show();
+        }
+
+
+        // Call after onPreExecute method
+        protected Void doInBackground(String... urls) {
+
+            Bitmap bitmap = null;
+            Bitmap newBitmap = null;
+            Uri uri = null;
+
+
+            try {
+                uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + urls[0]);
+                bitmap = BitmapFactory.decodeStream(tContext.getContentResolver().openInputStream(uri));
+
+                if (bitmap != null) {
+
+                    newBitmap = Bitmap.createScaledBitmap(bitmap, 400, 400, true);
+
+                    bitmap.recycle();
+
+                    if (newBitmap != null) {
+
+                        tBitmap = newBitmap;
+                    }
+                }
+            } catch (IOException e) {
+                // Error fetching image, try to recover
+
+                /********* Cancel execution of this task. **********/
+                cancel(true);
+            }
+
+            return null;
+        }
+
+
+        protected void onPostExecute(Void unused) {
+
+            // NOTE: You can call UI Element here.
+
+            // Close progress dialog
+            Dialog.dismiss();
+
+            if(tBitmap != null)
+            {
+                // Set Image to ImageView
+
+                ivUploadLead.setImageBitmap(tBitmap);
+            }
+
+        }
+
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constant.STORAGE_PERMISSION_CODE) {

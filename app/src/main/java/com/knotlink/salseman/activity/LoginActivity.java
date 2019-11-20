@@ -1,18 +1,9 @@
 package com.knotlink.salseman.activity;
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatSpinner;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -57,15 +48,16 @@ public class LoginActivity extends AppCompatActivity {
         submitBtn();
     }
     private void submitBtn() {
-        String mPhoneNo = et_phone.getText().toString().trim();
-        String mPass = et_password.getText().toString().trim();
-        if (mPhoneNo.isEmpty()) {
+        String tPhoneNo = et_phone.getText().toString().trim();
+        String tPass = et_password.getText().toString().trim();
+        String tImei = GetImei.getDeviceIMEI(LoginActivity.this, this);
+        if (tPhoneNo.isEmpty()) {
             et_phone.setError("Enter phone no");
-        } else if (mPass.isEmpty()) {
+        } else if (tPass.isEmpty()) {
             et_password.setError("Enter the password");
         } else {
             Api api = ApiClients.getApiClients().create(Api.class);
-            Call<ModelUser> call = api.getUserDetail(GetImei.getDeviceIMEI(LoginActivity.this, this), mPhoneNo, mPass);
+            Call<ModelUser> call = api.getUserDetail(tImei, tPhoneNo, tPass);
             call.enqueue(new Callback<ModelUser>() {
                 @Override
                 public void onResponse(Call<ModelUser> call, Response<ModelUser> response) {
@@ -84,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                         String strImage = tModels.getUser().getUserImage();
                         String strVehicleNo = tModels.getUser().getUserVehicleNo();
                         String strUserType = tModels.getUser().getUserType();
-
                         tSharedPrefManager.setUserData(strUserId, strName, strAddress, strPhone,
                         strEmail, strAdhar, strAsmId, strSmId,
                         strDob, strDoj, strImage, strVehicleNo, strUserType);

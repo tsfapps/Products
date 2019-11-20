@@ -1,5 +1,4 @@
 package com.knotlink.salseman.utils;
-
 import android.app.Activity;
 
 import com.knotlink.salseman.activity.MainActivity;
